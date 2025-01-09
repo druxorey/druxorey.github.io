@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>how-to-install-arch-linux</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles/global.css">
+    <link rel="stylesheet" type="text/css" href="/static/styles/post.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/logo.svg">
+	<script src="/scripts/toggleSidebar.js"></script>
+	<script src="/scripts/blog/copyToClipboard.js"></script>
+</head>
+
+<body>
+
+    <header class="header-root">
+        <div class="header-container">
+
+            <div class="header-left-section">
+                <a id="header-logo-section" href="/index.html">
+                    <img id="header-logo" src="/static/images/logo.svg">
+                    <p class="header-text-link">home</p>
+                </a>
+            </div>
+
+            <div class="header-middle-section">
+                <a class="header-text-link" href="/structure/projects.html">proyects</a>
+                <a class="header-text-link" href="/structure/blog.html">blog</a>
+                <a class="header-text-link" href="/structure/about.html">about me</a>
+            </div>
+
+            <div class="header-right-section">
+				<img id="header-menu" src="/static/images/menu.svg" onclick="toggleSidebar()">
+            </div>
+
+        </div>
+    </header>
+
+	<div class="main-root">
+		<div class="main-post">
+			<h1 id="post-header">Cozy Guide To Install Arch Linux</h1>
+<p>This guide is rooted in the official <a
+href="https://wiki.archlinux.org/">Arch Linux Wiki</a> to ensure that
+you’re receiving accurate and up-to-date information. For further
+information and support, the official Arch Linux forum is an invaluable
+resource. Here, you’ll find the official <a
+href="https://wiki.archlinux.org/title/installation_guide"><strong>Installation
+Guide</strong></a>, along with a wealth of knowledge from the Arch Linux
+community.</p>
+<p>In addition to the standard procedures, this guide adds different
+commands and strategies designed to make the installation process faster
+and easier whether you are an experienced Linux user or a newcomer to
+the world of open source operating systems.</p>
+<p>We have to clarify that this guide will focus on the basic
+installation of Arch. If you want to use a graphical environment, you
+can consult the rest of our guides:</p>
+<ul>
+<li><a href="how-to-install-bspwm-in-arch.md">BSPWM</a></li>
+</ul>
+<p>Also you can check out the official Arch Wiki, which provides
+comprehensive guides for installing various <a
+href="https://wiki.archlinux.org/title/Desktop_environment">desktop
+environments</a>.</p>
+<h1 id="pre-installation">Pre-Installation</h1>
+<p><em>- <strong>Note</strong>: It’s important to clarify that
+everything done in the pre-installation section will not have any impact
+on the computer. However, from the <a href="#drive-preparation">drive
+preparation</a> onwards, the changes will be irreversible.</em></p>
+<h2 id="installation-media-preparation">Installation Media
+Preparation</h2>
+<p><em>- <strong>Omission</strong>: If you are gonna carry out this
+process on a virtual machine you can skip this step.</em></p>
+<p>Before we start, we need to obtain the installation image (ISO). You
+can get it from the <a href="https://archlinux.org/download/">Arch Linux
+Downloads</a> section where you can download it via Magnet Link,
+Torrent, or HTTP direct.</p>
+<p>After downloading the ISO, we need to prepare the installation
+medium. For this, you can use any program to create USB boot drives,
+however, we recommend using <a
+href="https://www.ventoy.net/en/index.html">Ventoy</a>. If you use
+Windows, you can also use <a href="https://rufus.ie/en/">Rufus</a>.</p>
+<p>Once the installation medium is created and booted from it, you will
+reach the Arch Linux welcome screen and you will be logged in as the
+root user in the virtual console.</p>
+<p><em>- <strong>Note</strong>: The Arch Linux image does not support
+Secure Boot. You will need to disable it on your machine to be able to
+boot from the installation medium.</em></p>
+<h2 id="network-configuration">Network Configuration</h2>
+<p><em>- <strong>Omission</strong>: If the computer on which you are
+going to install Arch is connected by cable, you can skip the following
+part, as it is the configuration of the wireless connection.</em></p>
+<p>We are gonna use the tool <code>iwctl</code> for the internet
+configuration</p>
+<div class="source-code" id="cb1"><button class="button-to-clipboard" onclick="copyToClipboard('#cb1 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">iwctl</span></span></code></pre></div>
+<p>After executing the command you have to look for the technical name
+of your wifi card with the command <code>device list</code>.</p>
+<div class="source-code" id="cb2"><button class="button-to-clipboard" onclick="copyToClipboard('#cb2 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">device</span> list</span></code></pre></div>
+<p>The name of your wifi card will be the one you will place in the
+<strong>wlan</strong> section.</p>
+<div class="source-code" id="cb3"><button class="button-to-clipboard" onclick="copyToClipboard('#cb3 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">station</span> <span class="op">&lt;</span>wlan<span class="op">&gt;</span> connect <span class="op">&lt;</span>Network Name<span class="op">&gt;</span></span></code></pre></div>
+<p><em>- <strong>Note</strong>: If your network is hidden, you must
+replace the <code>connect</code> with the <code>connect-hidden</code>
+attribute.</em></p>
+<p>After this, it is advisable to test the connection with the
+<code>ping</code> command.</p>
+<h1 id="drive-preparation">Drive Preparation</h1>
+<p><em>- <strong>Note</strong>: If you want to do an easier
+installation, you can use the <code>archinstall</code> script. However,
+in this guide, we are going to use the manual installation. If you want
+to use the script, you can refer to the <a
+href="https://wiki.archlinux.org/title/Archinstall">official
+documentation</a>.</em></p>
+<h2 id="partitioning-the-disk">Partitioning The Disk</h2>
+<p>The first step is to identify the path of the partition we want to
+manage. We can do this by using the <code>fdisk -l</code> command, which
+lists all the disks and their partitions.</p>
+<p>When you run <code>fdisk -l</code>, look for your disk in the output.
+You can identify your disk based on its size or model. In this case, We
+have an NVMe drive, so it appears as <code>nvme0n1</code>.</p>
+<p>Once you’ve identified your disk, you can use the <code>cfdisk</code>
+command followed by the path to your disk. In our case, the command
+would be:</p>
+<div class="source-code" id="cb4"><button class="button-to-clipboard" onclick="copyToClipboard('#cb4 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cfdisk</span> /dev/nvme0n1</span></code></pre></div>
+<p>We will be using the <code>cfdisk</code> tool to partition the disk
+into three sections: boot, swap, and root. It is advisable to use the
+<strong>gpt</strong> label type, as it is prevalent in UEFI systems. If
+you have partitions already created from a previous operating system,
+you will need to delete all of them.</p>
+<ul>
+<li><strong>The boot partition</strong>: This partition is essential for
+the system to boot up. It is recommended to allocate at least 100M for
+the boot partition.</li>
+<li><strong>The swap partition</strong>: The swap partition acts as an
+overflow for your system memory, ensuring smooth operation when your RAM
+is fully utilized. The size of the swap partition should be a power of 2
+(2, 4, 8, 16, etc.), depending on the size of your hard drive. In this
+case, it is recommended that the swap partition be at least 8GB.</li>
+<li><strong>The root partition</strong>: This partition will contain
+your operating system, applications, and files. Allocate the remaining
+hard drive space to the root partition.</li>
+</ul>
+<p>Once you have partitioned the disk, write the changes and exit the
+<code>cfdisk</code> tool.</p>
+<p>To list the partitions and track your progress, use the
+<code>lsblk</code> command. This command is crucial for confirming the
+ID, size, and type of the partitions. If you did it correctly, when
+listing the partitions they should come out as follows:</p>
+<pre><code>NAME        MAJ:MIN RM   SIZE RO TYPE
+nvme0n1     259:0    0 476.9G  0 disk 
+├─nvme0n1p1 259:1    0   100M  0 part 
+├─nvme0n1p2 259:2    0     8G  0 part 
+└─nvme0n1p3 259:3    0 468.8G  0 part </code></pre>
+<p>It is important to know the number at the end of the partitions, as
+it will be necessary to be able to format them and mount them in the
+correct way. In this case, the partition that ends in 1 is the boot, the
+one that ends in 2 is the swap, and the one that ends in 3 is the
+root.</p>
+<h2 id="formatting-the-partitions">Formatting The Partitions</h2>
+<p>In this step, we will format the three partitions that we have
+created.</p>
+<p><em>- <strong>Note:</strong> Remember to replace
+<code>/dev/nvme0n1pX</code> with your actual partition paths if they are
+different. Always double-check your commands before executing them to
+avoid data loss.</em></p>
+<ol type="1">
+<li><p><strong>Root Partition</strong>: The first partition we need to
+format is the root partition. This command formats the partition as an
+<strong>ext4</strong> filesystem, which is a common choice for Linux
+installations due to its robustness and excellent performance. This can
+be accomplished using the next command:</p>
+<div class="source-code" id="cb6"><button class="button-to-clipboard" onclick="copyToClipboard('#cb6 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mkfs.ext4</span> /dev/nvme0n1p3</span></code></pre></div></li>
+<li><p><strong>Boot Partition</strong>: Next we will format the boot
+partition with a <strong>FAT32</strong> filesystem. FAT32 is commonly
+used for boot partitions as it is universally supported by almost all
+operating systems.</p>
+<div class="source-code" id="cb7"><button class="button-to-clipboard" onclick="copyToClipboard('#cb7 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mkfs.fat</span> <span class="at">-F</span> 32 /dev/nvme0n1p1</span></code></pre></div></li>
+<li><p><strong>Swap Partition</strong>: Finally, we will set up the swap
+partition with the following command that initializes the partition to
+be used as swap space.:</p>
+<div class="source-code" id="cb8"><button class="button-to-clipboard" onclick="copyToClipboard('#cb8 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mkswap</span> /dev/nvme0n1p2</span></code></pre></div></li>
+</ol>
+<h2 id="mounting-the-partitions">Mounting The Partitions</h2>
+<p>In this step, we will be mounting the partitions. First, let’s start
+with the <strong>root</strong> partition. You can mount it using the
+command below:</p>
+<div class="source-code" id="cb9"><button class="button-to-clipboard" onclick="copyToClipboard('#cb9 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> /dev/nvme0n1p3 /mnt</span></code></pre></div>
+<p>Next, we need to mount the <strong>boot</strong> partition. However,
+the required path does not exist yet. Therefore, we will create it using
+the following command:</p>
+<div class="source-code" id="cb10"><button class="button-to-clipboard" onclick="copyToClipboard('#cb10 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /mnt/boot/efi</span></code></pre></div>
+<p>With the path now created, we can proceed to mount the
+<strong>boot</strong> partition:</p>
+<div class="source-code" id="cb11"><button class="button-to-clipboard" onclick="copyToClipboard('#cb11 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> /dev/nvme0n1p1 /mnt/boot/efi</span></code></pre></div>
+<p>Lastly, the <strong>swap</strong> partition does not need to be
+mounted in the traditional sense. Instead, it needs to be activated. You
+can do this with the following command:</p>
+<div class="source-code" id="cb12"><button class="button-to-clipboard" onclick="copyToClipboard('#cb12 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">swapon</span> /dev/nvme0n1p2</span></code></pre></div>
+<h1 id="system-installation">System Installation</h1>
+<h2 id="basic-packages">Basic Packages</h2>
+<p>The installation process involves selecting the desired packages and
+mounting them in the <code>/mnt</code> directory. It is recommended to
+install at least the following packages: <code>base</code>,
+<code>linux</code>, <code>linux-firmware</code>,
+<code>base-devel</code>, <code>grub</code>, <code>efibootmgr</code>,
+<code>nano</code>, <code>networkmanager</code>, <code>git</code>,
+<code>pulseaudio</code> and <code>intel-ucode</code>.</p>
+<p><em>- <strong>Note</strong>: For those using an AMD processor, it’s
+necessary to install the <code>amd-ucode</code> package instead of
+<code>intel-ucode</code>. This will ensure your system has the latest
+microcode updates from AMD.</em></p>
+<p>To install these packages, use the command below:</p>
+<div class="source-code" id="cb13"><button class="button-to-clipboard" onclick="copyToClipboard('#cb13 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pacstrap</span> /mnt base linux linux-firmware base-devel grub efibootmgr nano networkmanager git pulseaudio intel-ucode</span></code></pre></div>
+<p>This command will install the base system along with the Linux kernel
+and firmware, development tools, the GRUB bootloader, EFI boot manager,
+a basic text editor (nano), network manager, Git for version control,
+and microcode for Intel processors.</p>
+<h2 id="file-system-tab">File System Tab</h2>
+<p>Once you’ve installed the necessary tools, the next step is to
+generate a <strong>fstab</strong> file, which allows your system to
+automatically mount partitions upon booting. You can generate a
+<strong>fstab</strong> file using the following command:</p>
+<div class="source-code" id="cb14"><button class="button-to-clipboard" onclick="copyToClipboard('#cb14 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">genfstab</span> /mnt</span></code></pre></div>
+<p>This command will display information about the currently mounted
+files. However, you need to transfer this information to disk. To do
+this, you can redirect the output of the <code>genfstab</code> command
+to the <strong>fstab</strong> file located in the <code>/mnt/etc/</code>
+directory:</p>
+<div class="source-code" id="cb15"><button class="button-to-clipboard" onclick="copyToClipboard('#cb15 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">genfstab</span> /mnt <span class="op">&gt;</span> /mnt/etc/fstab</span></code></pre></div>
+<p>To ensure that the <strong>fstab</strong> file has been correctly
+generated, you can use the <code>cat</code> command to display its
+contents:</p>
+<div class="source-code" id="cb16"><button class="button-to-clipboard" onclick="copyToClipboard('#cb16 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /mnt/etc/fstab</span></code></pre></div>
+<p>The output should match the initial output of the
+<code>genfstab /mnt</code> command. If it does, then you’ve successfully
+generated your <strong>fstab</strong> file and are ready to proceed to
+the next step of the installation process.</p>
+<h2 id="switching-to-the-installed-system-changing-root">Switching To
+The Installed System (Changing Root)</h2>
+<p>In this step, we will transition into our newly installed system
+environment. To do this, we use the following command:</p>
+<div class="source-code" id="cb17"><button class="button-to-clipboard" onclick="copyToClipboard('#cb17 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arch-chroot</span> /mnt</span></code></pre></div>
+<p><em>- <strong>Note</strong>: It’s important to explain that
+everything we had done up until now had been on the installation medium,
+however with the previous command we switched to our PC. This means that
+in case there is a problem and we cannot access our PC, we can use the
+installation medium to access the PC (Clarifying that once we put a
+password on our PC we will need it if we want to access it
+externally).</em></p>
+<h1 id="internal-configuration">Internal Configuration</h1>
+<h2 id="setting-the-time-zone">Setting the Time Zone</h2>
+<p>The first step in our internal configuration process is to set the
+system’s time zone. This can be done by creating a symbolic link between
+our desired time zone and <code>/etc/localtime</code>. After setting the
+time zone, we will check the system date and synchronize the hardware
+clock with the system clock. The commands are as follows:</p>
+<p><em>- <strong>Note</strong>: Replace ‘Continent’ and ‘City’ with your
+specific location.</em></p>
+<div class="source-code" id="cb18"><button class="button-to-clipboard" onclick="copyToClipboard('#cb18 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> /usr/share/zoneinfo/Continent/City /etc/localtime</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">hwclock</span> <span class="at">--systohc</span></span></code></pre></div>
+<h2 id="configuring-localization">Configuring Localization</h2>
+<p>Next, we will configure the system’s locale settings. This involves
+editing the <code>locale.gen</code> file to uncomment the line
+corresponding to our desired locale. In this case, we will be using
+<code>en_US.UTF-8 UTF-8</code>. After saving the changes, we generate
+the new locale configuration using the <code>locale-gen</code>
+command.</p>
+<div class="source-code" id="cb19"><button class="button-to-clipboard" onclick="copyToClipboard('#cb19 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> /etc/locale.gen</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment the line: en_US.UTF-8 UTF-8</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ex">locale-gen</span></span></code></pre></div>
+<p>For certain programs to function correctly, we need to specify our
+locale in the <code>/etc/locale.conf</code> file. We can do this by
+adding the line <code>LANG=en_US.UTF-8</code> to the file.</p>
+<div class="source-code" id="cb20"><button class="button-to-clipboard" onclick="copyToClipboard('#cb20 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> LANG=en_US.UTF-8 <span class="op">&gt;</span> /etc/locale.conf</span></code></pre></div>
+<p>Now, your system-wide locale is set and will be recognized by all
+locale-aware programs on your system. Remember to replace
+<code>en_US.UTF-8</code> with your desired locale if it’s different.</p>
+<h2 id="configuring-the-keyboard-layout-keymap">Configuring the Keyboard
+Layout (Keymap)</h2>
+<p>If you’re using an english keyboard, this step may not be necessary.
+However, if you need to change the keyboard layout, you can do so by
+modifying the <code>/etc/vconsole.conf</code> file.</p>
+<p>To set the keyboard layout to US English, add the following line to
+the file:</p>
+<div class="source-code" id="cb21"><button class="button-to-clipboard" onclick="copyToClipboard('#cb21 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> KEYMAP=us <span class="op">&gt;</span> /etc/vconsole.conf</span></code></pre></div>
+<p>If you want to use a variant of the US layout, such as the
+international layout, you would add it like this:</p>
+<div class="source-code" id="cb22"><button class="button-to-clipboard" onclick="copyToClipboard('#cb22 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> KEYMAP=us-acentos <span class="op">&gt;</span> /etc/vconsole.conf</span></code></pre></div>
+<h2 id="setting-the-hostname">Setting the Hostname</h2>
+<p>The hostname is a crucial aspect of your system configuration because
+it determines the internal name of your computer. To set the hostname,
+you need to access the file located at <code>/etc/hostname</code> and
+enter your desired name there. Here’s how you can do it:</p>
+<div class="source-code" id="cb23"><button class="button-to-clipboard" onclick="copyToClipboard('#cb23 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> YourDesiredHostname <span class="op">&gt;</span> /etc/hostname</span></code></pre></div>
+<p>Replace ‘YourDesiredHostname’ with the name you want to assign to
+your computer.</p>
+<h2 id="setting-the-root-password">Setting the Root Password</h2>
+<p>Setting the root password it’s vital for your system’s security. The
+root password is what you’ll use every time you need to access as sudo,
+so it should be complex to prevent unauthorized access.</p>
+<p>You can set the root password using the <code>passwd</code> command.
+After entering the command, you’ll be prompted to type your password
+twice to confirm it. Here’s how you can do it:</p>
+<div class="source-code" id="cb24"><button class="button-to-clipboard" onclick="copyToClipboard('#cb24 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">passwd</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># You&#39;ll be prompted to type your password twice</span></span></code></pre></div>
+<p>Remember, a strong password typically includes a mix of upper and
+lower case letters, numbers, and special characters.</p>
+<h2 id="creating-a-new-user">Creating a New User</h2>
+<p>We will use the <code>useradd</code> command with the <code>-m</code>
+flag, which instructs the system to create a <code>/home</code>
+directory for the new account. The <code>-G</code> option is used to
+specify the group that should own the user’s home directory, in this
+case, <code>wheel</code>. The <code>-s</code> option sets the default
+shell for the user, which we will set to <code>/bin/bash</code>. Replace
+‘(name)’ with the desired username.</p>
+<div class="source-code" id="cb25"><button class="button-to-clipboard" onclick="copyToClipboard('#cb25 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">useradd</span> <span class="at">-m</span> <span class="at">-G</span> wheel <span class="at">-s</span> /bin/bash <span class="er">(</span><span class="ex">name</span><span class="kw">)</span></span></code></pre></div>
+<p>Now we will need a password for our new user:</p>
+<div class="source-code" id="cb26"><button class="button-to-clipboard" onclick="copyToClipboard('#cb26 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">passwd</span> <span class="er">(</span><span class="ex">name</span><span class="kw">)</span></span></code></pre></div>
+<p>Next, we will set up sudo for the new user. As it stands, if we
+switch to our new user using the <code>su (user)</code> command and
+attempt to execute a command with sudo (for example,
+<code>sudo pacman -Syu</code>), we will encounter an error.</p>
+<p><em>- <strong>Note</strong>: If you switch to your new user using the
+<code>su (user)</code> command, you will need to exit your user session
+using either the <code>exit</code> command or <code>sudo su</code>. This
+is because we need root privileges to be able to modify the
+file.</em></p>
+<p>To rectify this, we will open the sudoers file using the
+<strong>visudo</strong> command with our preferred editor set by the
+<strong>EDITOR</strong> environment variable:</p>
+<div class="source-code" id="cb27"><button class="button-to-clipboard" onclick="copyToClipboard('#cb27 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="va">EDITOR</span><span class="op">=</span>nano <span class="ex">visudo</span></span></code></pre></div>
+<p>In the sudoers file, locate and uncomment the line
+<code>%wheel ALL=(ALL) ALL</code>. This grants all members of the
+<strong>wheel</strong> group full sudo privileges.</p>
+<p>Now, if we switch back to our new user and attempt to use sudo
+commands, we should be able to do so without encountering any
+errors.</p>
+<h2 id="enabling-network-manager">Enabling Network Manager</h2>
+<p>To ensure that your system can connect to the internet, you’ll need
+to enable the <strong>Network Manager</strong>. This can be done by
+running the following command:</p>
+<div class="source-code" id="cb28"><button class="button-to-clipboard" onclick="copyToClipboard('#cb28 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> enable NetworkManager</span></code></pre></div>
+<h2 id="installing-the-bootloader">Installing the Bootloader</h2>
+<p>The next step, which is arguably the most crucial, involves
+installing a bootloader, because without a bootloader your system will
+not be able to start. In this guide, we’ll be using GRUB as our
+bootloader. To install GRUB, execute the following command:</p>
+<div class="source-code" id="cb29"><button class="button-to-clipboard" onclick="copyToClipboard('#cb29 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">grub-install</span> /dev/nvme0n1</span></code></pre></div>
+<p>After installing GRUB we need to be configure it with the following
+command:</p>
+<div class="source-code" id="cb30"><button class="button-to-clipboard" onclick="copyToClipboard('#cb30 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">grub-mkconfig</span> <span class="at">-o</span> /boot/grub/grub.cfg</span></code></pre></div>
+<h2 id="final-steps-and-rebooting-the-system">Final Steps and Rebooting
+the System</h2>
+<p>Once GRUB has been configured, you can exit the root user, unmount
+all mounted filesystems, and reboot your system. This can be done by
+running the following commands:</p>
+<div class="source-code" id="cb31"><button class="button-to-clipboard" onclick="copyToClipboard('#cb31 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">umount</span> <span class="at">-a</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="ex">reboot</span></span></code></pre></div>
+<p>After rebooting, your Arch Linux installation should be complete and
+ready to use.</p>
+<h1 id="post-installation-tasks">Post-Installation Tasks</h1>
+<h2 id="extra-configurations">Extra Configurations</h2>
+<p>In the <code>/etc/pacman.conf</code> file, we highly recommend making
+a few adjustments to enhance your experience. First, find the line that
+reads <code>Color</code> and uncomment it. This will enable colored
+output, making it easier to read and understand the information
+displayed in your terminal.</p>
+<p>Next, look for <code>ParallelDownloads</code> and set its value to 5.
+This allows for multiple packages to be downloaded simultaneously,
+speeding up the installation process.</p>
+<p>Finally, uncomment the <code>ILoveCandy</code> line. While this
+doesn’t impact the functionality, it does replace the standard download
+progress bar with a fun, candy-themed one. It’s a small touch, but it
+adds a bit of whimsy to your Arch Linux setup process.</p>
+<h2 id="establishing-the-internet-connection">Establishing the Internet
+Connection</h2>
+<p>Once the system is installed, it’s recommended to retest the internet
+connection. This can be done using the <code>ping</code> command.</p>
+<div class="source-code" id="cb32"><button class="button-to-clipboard" onclick="copyToClipboard('#cb32 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> <span class="at">-c</span> 3 www.google.com</span></code></pre></div>
+<p>If you’re unable to establish an internet connection, you will have
+to use the <code>nmcli</code> command.</p>
+<h3 id="adding-a-new-wireless-connection">Adding a new wireless
+connection</h3>
+<p>To add a new connection, you can use the following command:</p>
+<div class="source-code" id="cb33"><button class="button-to-clipboard" onclick="copyToClipboard('#cb33 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> c add type wifi con-name <span class="op">&lt;</span>connect name<span class="op">&gt;</span> ifname <span class="op">&lt;</span>wlan<span class="op">&gt;</span> ssid <span class="op">&lt;</span>ssid<span class="op">&gt;</span></span></code></pre></div>
+<p>This command creates a new connection with the type
+<code>wifi</code>. The <code>&lt;connect name&gt;</code> is the name you
+assign to the connection, <code>&lt;wlan&gt;</code> is the interface
+name, and <code>&lt;ssid&gt;</code> is the SSID of the wireless
+network.</p>
+<p><em>- <strong>Note</strong>: The <code>connect name</code> is a
+customizable identifier that you can assign to your network. This name
+is not fixed and can be changed according to your preference.</em></p>
+<h3 id="connecting-to-a-existing-wireless-connection">Connecting to a
+existing wireless connection</h3>
+<p>To connect to a wireless network, use:</p>
+<div class="source-code" id="cb34"><button class="button-to-clipboard" onclick="copyToClipboard('#cb34 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> dev wifi connect <span class="op">&lt;</span>ssid<span class="op">&gt;</span> password <span class="op">&lt;</span>password<span class="op">&gt;</span></span></code></pre></div>
+<p><em>- <strong>Note</strong>: If your Wi-Fi connection is hidden, you
+must add the <code>hidden yes</code> parameter to the end of the
+previous command.</em></p>
+<h3 id="deleting-a-existing-wireless-connection">Deleting a existing
+wireless connection</h3>
+<p>If you need to delete a connection, you can do so with:</p>
+<div class="source-code" id="cb35"><button class="button-to-clipboard" onclick="copyToClipboard('#cb35 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> c delete <span class="op">&lt;</span>connect name<span class="op">&gt;</span></span></code></pre></div>
+<h2 id="configuring-the-dns">Configuring the DNS</h2>
+<p>One of the crucial steps in setting up your internet connection is
+configuring the Domain Name System (DNS). This step is important to
+ensure seamless connectivity and to avoid potential issues, such as
+those that might occur with Microsoft services.</p>
+<p>To begin, you need to identify the name of your connection. This can
+be done by executing the following command in your terminal:</p>
+<div class="source-code" id="cb36"><button class="button-to-clipboard" onclick="copyToClipboard('#cb36 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> con</span></code></pre></div>
+<p>This command will list all your active connections. Identify the
+connection for which you want to set the DNS.</p>
+<p>Once you have the name of your connection (referred to as
+<code>&lt;ssid&gt;</code>), you can modify its DNS settings.
+CloudFlare’s DNS servers (<code>1.1.1.1</code> and <code>1.0.0.1</code>)
+are commonly used due to their reliability. To set these as your DNS
+servers, use the following command:</p>
+<div class="source-code" id="cb37"><button class="button-to-clipboard" onclick="copyToClipboard('#cb37 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> con mod <span class="st">&quot;&lt;ssid&gt;&quot;</span> ipv4.dns <span class="st">&quot;1.1.1.1 1.0.0.1&quot;</span></span></code></pre></div>
+<p>Replace <code>&lt;ssid&gt;</code> with the name of your connection.
+This command sets the DNS servers for your specified connection to
+Google’s DNS servers.</p>
+<h2 id="firewall-configuration">Firewall Configuration</h2>
+<p>Configuring the Firewall is a very important step if you want to have
+a secure system, the easiest way is using the <code>ufw</code> package,
+you can install it with the following command:</p>
+<div class="source-code" id="cb38"><button class="button-to-clipboard" onclick="copyToClipboard('#cb38 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> ufw</span></code></pre></div>
+<p>Once installed, you need to configure some rules to set it up:</p>
+<div class="source-code" id="cb39"><button class="button-to-clipboard" onclick="copyToClipboard('#cb39 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw limit 22/tcp</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw allow 80/tcp</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw allow 443/tcp</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw default deny incoming</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw default allow outgoing</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw enable</span></code></pre></div>
+<p>These commands limit the connection attempts to port 22, and allow
+all incoming connections to ports 80 and 443, which are the standard
+ports for HTTP requests. It also sets the default policy to deny all
+incoming connections. It also sets the default policy to allow all
+outgoing connections. And finally, it enables the firewall.</p>
+<h2 id="battery-optimization">Battery Optimization</h2>
+<p>If you’re installing Arch Linux on a laptop, optimizing battery life
+is crucial. One effective tool for this purpose is
+<code>auto-cpufreq</code>. This utility dynamically adjusts the
+frequency of your CPU based on load and power source. Here’s how you can
+install and use it:</p>
+<p>First, clone the repository from GitHub:</p>
+<div class="source-code" id="cb40"><button class="button-to-clipboard" onclick="copyToClipboard('#cb40 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/AdnanHodzic/auto-cpufreq.git</span></code></pre></div>
+<p>Next, navigate to the cloned directory and run the installer:</p>
+<div class="source-code" id="cb41"><button class="button-to-clipboard" onclick="copyToClipboard('#cb41 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> auto-cpufreq <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> ./auto-cpufreq-installer</span></code></pre></div>
+<p>Once the installation is complete, you need to activate
+<code>auto-cpufreq</code>. You can do this by running the following
+command:</p>
+<div class="source-code" id="cb42"><button class="button-to-clipboard" onclick="copyToClipboard('#cb42 code')">Copiar</button><pre
+class="source-code-bash"><code class="source-code-bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> auto-cpufreq <span class="at">--install</span></span></code></pre></div>
+<p>Remember, <code>auto-cpufreq</code> requires root privileges to make
+changes to your system. Always be cautious when using <code>sudo</code>
+with any command.</p>
+<p>With <code>auto-cpufreq</code> installed and active, your laptop
+should now be better optimized for battery life. For more detailed
+information about your system’s performance, you can use the
+<code>auto-cpufreq --stats</code> command to display real-time
+statistics.</p>
+<hr />
+<p>The subsequent steps largely depend on the user’s preferences, but
+it’s generally advisable to set up a graphical environment for ease of
+use.</p>
+<p>Remember, the beauty of Arch Linux lies in its flexibility. You can
+customize your system to suit your preferences. Enjoy the journey of
+making Arch Linux your own!</p>
+		</div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+@import url("root-colorsheme.css");
+@import url("root-values.css");
+
+.main-post {
+    margin: 4rem 0rem 4rem 0rem;
+    font-size: var(--font-text-2);
+	width: 42vw;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-foreground-1);
+}
+
+a {
+    color: var(--color-purple-2);
+	text-decoration: none;
+}
+
+em {
+	font-style: normal;
+}
+
+p {
+    line-height: var(--size-line-height);
+    color: var(--color-foreground-1);
+	text-align: justify;
+}
+
+li {
+	line-height: 1.6;
+	color: var(--color-foreground-1);
+	margin-top: var(--size-paragraph-separation);
+}
+
+#post-header {
+	text-align: center;
+	font-size: 4rem;
+	font-weight: 600;
+	padding: 5rem 0rem 5rem 0rem;
+}
+
+code {
+	font-family: monospace;
+    background-color: var(--color-background-2);
+	font-size: 1rem;
+    color: var(--color-foreground-3);
+    padding: 2px 4px;
+    border-radius: var(--size-border-radius);
+}
+
+.source-code {
+	position: relative;
+    overflow-x: auto;
+    background-color: var(--color-background-2);
+	line-height: var(--size-line-height);
+    border-radius: var(--size-border-radius);
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.button-to-clipboard {
+	position: absolute;
+	z-index: 1;
+	top: 1rem;
+	right: 1rem;
+	background-color: var(--color-background-1);
+	color: var(--color-foreground01);
+	padding: 2px 4px;
+	border-radius: var(--size-border-radius);
+	padding: 0.25rem;
+	border: none;
+	transition: var(--speed-transition-fast) ease;
+}
+
+.button-to-clipboard:hover {
+	background-color: var(--color-background-3);
+	transition: var(--speed-transition-fast) ease;
+}
+
+
+pre {
+    background-color: var(--color-background-2);
+	padding: 2rem;
+	border-radius: 0.5rem;
+	/* TEMPORAL TAG */
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 1600px) {
+	.main {
+		margin: 4rem 20rem 4rem 20rem;
+		font-size: 1.15rem;
+	}
+}

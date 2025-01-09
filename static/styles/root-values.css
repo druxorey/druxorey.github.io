@@ -1,0 +1,71 @@
+@import url("root-colorsheme.css");
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+	color: var(--color-foreground-1);
+	font-size: 16px;
+	font-family: "Noto Sans", serif;
+
+	--speed-transition-fast: 0.25s;
+	--speed-transition-slow: 0.25s;
+	--size-border-radius: 0.5rem;
+	--size-line-height: 1.6;
+	--size-paragraph-separation: 1.5rem;
+	--font-title-1: 5.00rem;
+	--font-title-2: 2.25rem;
+	--font-text-1: 1.50rem;
+	--font-text-2: 1.25rem;
+}
+
+html {
+	width: 100%;
+}
+
+body {
+	background-color: var(--color-background-4);
+}
+
+.main-root {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.not-found-content {
+	display: flex;
+	margin-top: 16vh;
+	font-size: 2rem;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.not-found-title {
+	color: var(--color-purple-2);
+}
+
+footer {
+	background-color: red;
+	height: 4rem;
+}
+
+a {
+	color: var(--color-purple-2);
+	text-decoration: none;
+}
+
+::-webkit-scrollbar {
+	width: 0.75rem;
+	height: 0.75rem;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--color-background-1);
+	border-radius: var(--size-border-radius);
+}
+
+::-webkit-scrollbar-track {
+	background: var(--color-background-3);
+}

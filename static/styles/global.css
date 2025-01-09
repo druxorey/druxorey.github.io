@@ -1,0 +1,235 @@
+@import url("root-colorsheme.css");
+@import url("root-values.css");
+
+
+/* HEADER SECTION */
+
+
+.header-root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 8rem;
+	top: 0;
+	left: 0;
+
+    background-color: var(--color-background-5);
+	box-shadow: 0 0 32px var(--color-shadow-2);
+	transition: var(--speed-transition-fast) ease;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: calc(100vw - 40vw);
+    height: 100%;
+	transition: var(--speed-transition-fast) ease;
+}
+
+.header-left-section, .header-right-section {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+
+	width: 30rem;
+	transition: var(--speed-transition-fast) ease;
+}
+
+.header-left-section {
+	justify-content: left;
+}
+
+.header-right-section {
+	justify-content: right;
+}
+
+.header-middle-section {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.header-text-link{
+	font-size: var(--font-text-2);
+	font-weight: 600;
+	text-decoration: none;
+
+	padding: 0.5em;
+	color: var(--color-foreground-1);
+}
+
+.header-text-link:hover {
+	color: var(--color-purple-2);
+	transition: var(--speed-transition-fast) ease;
+}
+
+#header-logo-section {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+
+	width: 8.25rem;
+
+	text-decoration: none;
+	transition: var(--speed-transition-fast) ease;
+}
+
+#header-logo-section:hover {
+	color: var(--color-purple-2);
+	transition: var(--speed-transition-fast) ease;
+	filter: drop-shadow(0 0 0.15rem var(--color-purple-2));
+}
+
+#header-logo {
+    width: 3rem;
+	height: 3rem;
+}
+
+#header-menu {
+    width: 2rem;
+	height: 2rem;
+	cursor: pointer;
+}
+
+@media (max-width: 1150px) {
+	.header-content {
+		width: calc(100vw - 30vw);
+		transition: var(--speed-transition-fast) ease;
+	}
+
+	.header-left-section, .header-right-section {
+		width: 20vw;
+		transition: var(--speed-transition-fast) ease;
+	}
+}
+
+@media (max-width: 1000px) {
+	.blog-card {
+		height: 1rem;
+	}
+
+	.blog-summary {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	.blog-image {
+		display: none;
+	}
+}
+
+@media (max-width: 775px) {
+	.header-content {
+		width: calc(100vw - 16vw);
+		transition: var(--speed-transition-fast) ease;
+	}
+
+}
+
+
+/* blog SECTION */
+
+
+.main-blog {
+    margin: 4rem 0rem 4rem 0rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 72rem;
+}
+
+.blog-card {
+	background-color: var(--color-background-2);
+	height: 20rem;
+	margin: 1rem 0rem 1rem 0rem;
+	width: 90%;
+	border-radius: var(--size-border-radius);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.blog-card:hover {
+	background-color: var(--color-purple-2);
+	transition: var(--speed-transition-fast) ease;
+}
+
+.blog-summary {
+	margin: 2rem;
+	width: 100%;
+	max-height: 100%;
+	height: 100%;
+	font-size: var(--font-text-2);
+}
+
+.blog-title {
+	font-size: var(--font-title-2);
+	font-weight: 600;
+	text-align: left;
+	color: var(--color-foreground-1);
+}
+
+.blog-description {
+	text-align: justify;
+	overflow-y: hidden;
+	color: var(--color-foreground-1);
+}
+
+.blog-image {
+	height: 100%;
+    border-top-right-radius: var(--size-border-radius);
+    border-bottom-right-radius: var(--size-border-radius);
+	object-fit: cover;
+    width: 100%;
+    max-width: 20rem;
+	min-width: 20rem;
+}
+
+
+/* HOME SECTION */
+
+
+.main-home {
+    margin: 4rem 0rem 4rem 0rem;
+    min-height: calc(100vh - 22rem);
+	width: 60vw;
+	transition: var(--speed-transition-fast) ease;
+}
+
+#home-presentation-name{
+	font-size: var(--font-title-1);
+	transition: var(--speed-transition-fast) ease;
+	cursor: pointer;
+	color: var(--color-foreground-1);
+	font-weight: 600;
+	text-decoration: none;
+	width: fit-content;
+	margin: 0rem;
+}
+
+#home-presentation-name:hover {
+	color: var(--color-purple-2);
+	transition: var(--speed-transition-fast) ease;
+	text-shadow: 0 0 4px var(--color-purple-2);
+}
+
+#home-presentation-description {
+	font-size: var(--font-text-1);
+	line-height: var(--size-line-height);
+	margin: 3rem 0rem 0rem 0rem;
+}
+
+.home-presentation-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 32rem;
+}

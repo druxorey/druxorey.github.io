@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>DRUXOREY</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles/global.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/logo.svg">
+	<script src="/scripts/toggleSidebar.js"></script>
+</head>
+
+<body>
+
+    <header class="header-root">
+        <div class="header-container">
+
+            <div class="header-left-section">
+                <a id="header-logo-section" href="/index.html">
+                    <img id="header-logo" src="/static/images/logo.svg">
+                    <p class="header-text-link">home</p>
+                </a>
+            </div>
+
+            <div class="header-middle-section">
+                <a class="header-text-link" href="/structure/projects.html">proyects</a>
+                <a class="header-text-link" href="/structure/blog.html">blog</a>
+                <a class="header-text-link" href="/structure/about.html">about me</a>
+            </div>
+
+            <div class="header-right-section">
+				<img id="header-menu" src="/static/images/menu.svg" onclick="toggleSidebar()">
+            </div>
+
+        </div>
+    </header>
+
+    <div class="main-root">
+        <div class="main-blog">
+                <a class="blog-card" href="/structure/posts/how-to-install-arch-linux.html">
+                    <div class="blog-summary">
+                        <p class="blog-title">Cozy Guide to Install Arch Linux</p>
+                        <p class="blog-description">In addition to the standard procedures, this guide adds different commands and strategies designed to make the installation process faster and easier whether you are an experienced Linux user or a newcomer to the world of open source operating systems.</p>
+						<p class="blog-description">2024-04-13</p>
+                    </div>
+                    <img class="blog-image" src="/static/images/how-to-install-arch-linux.webp">
+                </a>
+                <a class="blog-card" href="/structure/posts/how-to-install-bspwm-in-arch.html">
+                    <div class="blog-summary">
+                        <p class="blog-title">Cozy Guide to Install Bspwm in Arch</p>
+                        <p class="blog-description">ds and strategies designed to make the installation process faster and easier whether you are an experienced Linux user or a newcomer to the world of open source operating systems.</p>
+						<p class="blog-description">2024-04-13</p>
+                    </div>
+                    <img class="blog-image" src="/static/images/how-to-install-bspwm-in-arch.webp">
+                </a>
+        </div>
+    </div>
+
+</body>
+
+</html>

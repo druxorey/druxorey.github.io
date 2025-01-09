@@ -1,13 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="style.css">
-    <title>Website In Development</title>
+    <meta charset="utf-8">
+    <title>DRUXOREY</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles/global.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/logo.svg">
+	<script src="/scripts/toggleSidebar.js"></script>
 </head>
+
 <body>
-    <h1>Website In Development</h1>
-	<img src="resources/logo.svg" alt="imagen">
+
+    <header class="header-root">
+        <div class="header-container">
+
+            <div class="header-left-section">
+                <a id="header-logo-section" href="/index.html">
+                    <img id="header-logo" src="/static/images/logo.svg">
+                    <p class="header-text-link">home</p>
+                </a>
+            </div>
+
+            <div class="header-middle-section">
+                <a class="header-text-link" href="/structure/projects.html">proyects</a>
+                <a class="header-text-link" href="/structure/blog.html">blog</a>
+                <a class="header-text-link" href="/structure/about.html">about me</a>
+            </div>
+
+            <div class="header-right-section">
+				<img id="header-menu" src="/static/images/menu.svg" onclick="toggleSidebar()">
+            </div>
+
+        </div>
+    </header>
+
+    <div class="main-root">
+        <div class="main-home">
+			<div class="home-presentation-container">
+				<a id="home-presentation-name" href="/structure/about.html">Hi, i'm Druxorey</a>
+				<p id="home-presentation-description">Junior DevOps Specialist with a strong focus on Linux and Open Source projects. Currently pursuing a degree in Computer Science. Passionate about Open Source Software and eager to collaborate on projects involving Linux, Python, and C++.</p>
+			</div>
+        </div>
+    </div>
+
 </body>
+
 </html>
