@@ -80,7 +80,7 @@ code {
 
 pre {
     background-color: var(--color-background-2);
-	padding: 2rem;
+	padding: 1rem 2rem 1rem 2rem;
 	border-radius: 0.5rem;
 	/* TEMPORAL TAG */
     overflow-x: auto;
@@ -91,4 +91,11 @@ pre {
 		margin: 4rem 20rem 4rem 20rem;
 		font-size: 1.15rem;
 	}
+}
+
+blockquote {
+	padding: 1rem;
+	margin: 1rem 0rem 1rem 0rem;
+	background-color: #BD93F940;
+	border-radius: var(--size-border-radius);
 }
