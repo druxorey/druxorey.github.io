@@ -32,7 +32,7 @@ li {
 	margin-top: var(--size-paragraph-separation);
 }
 
-#post-header {
+.post-header {
 	text-align: center;
 	font-size: 4rem;
 	font-weight: 600;
