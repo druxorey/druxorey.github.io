@@ -1,21 +1,36 @@
 @import url("root-colorsheme.css");
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+	font-family: "Noto Sans";
+	src: url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+}
+
+@font-face {
+	font-family: "Hack Nerd Font";
+	src: '/static/fonts/hack/HackNerdFont-Regular.ttf';
+}
+
+@font-face {
+	font-family: "Symbols";
+	src: '/static/fonts/symbols/SymbolsNerdFont-Regular.ttf';
+}
 
 :root {
 	color: var(--color-foreground-1);
 	font-size: 16px;
-	font-family: "Noto Sans", serif;
+	font-family: "Noto Sans";
 
 	--speed-transition-fast: 0.25s;
-	--speed-transition-slow: 0.25s;
+	--speed-transition-slow: 1.00s;
 	--size-border-radius: 0.5rem;
 	--size-line-height: 1.6;
 	--size-paragraph-separation: 1.5rem;
 	--font-title-1: 5.00rem;
 	--font-title-2: 2.25rem;
-	--font-text-1: 1.50rem;
-	--font-text-2: 1.25rem;
+	--font-title-3: 2.00rem;
+	--font-text-1: 1.25rem;
+	--font-text-2: 1.15rem;
+	--font-text-3: 1.05rem;
 }
 
 html {
