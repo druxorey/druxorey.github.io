@@ -192,8 +192,8 @@
     border-bottom-right-radius: var(--size-border-radius);
 	object-fit: cover;
     width: 100%;
-    max-width: 20rem;
-	min-width: 20rem;
+    max-width: 25rem;
+	min-width: 25rem;
 }
 
 .blog-selector {
