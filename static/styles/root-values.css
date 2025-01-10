@@ -33,17 +33,23 @@ body {
 	justify-content: center;
 }
 
-.not-found-content {
+.not-found-container {
 	display: flex;
-	margin-top: 16vh;
-	font-size: 2rem;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	margin-top: 16vh;
+	width: 80%;
 }
 
 .not-found-title {
+	font-size: var(--font-title-1);
 	color: var(--color-purple-2);
+}
+
+.not-found-description {
+	text-align: center;
+	font-size: var(--font-title-2);
 }
 
 footer {
@@ -68,4 +74,5 @@ a {
 
 ::-webkit-scrollbar-track {
 	background: var(--color-background-3);
+	border-radius: var(--size-border-radius);
 }
