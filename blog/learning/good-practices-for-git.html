@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>good-practices-for-git</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles/global.css">
+    <link rel="stylesheet" type="text/css" href="/static/styles/post.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/logo.svg">
+	<script src="/scripts/toggleSidebar.js"></script>
+	<script src="/scripts/blog/copyToClipboard.js"></script>
+</head>
+
+<body>
+
+    <header class="header-root">
+        <div class="header-container">
+
+            <div class="header-left-section">
+                <a id="header-logo-section" href="/index.html">
+                    <img id="header-logo" src="/static/images/logo.webp">
+                    <p id="header-home" class="header-text-link">home</p>
+                </a>
+            </div>
+
+            <div class="header-middle-section">
+                <a class="header-text-link" href="/projects.html">projects</a>
+                <a class="header-text-link" href="/blog.html">blog</a>
+                <a class="header-text-link" href="/about.html">about me</a>
+            </div>
+
+            <div class="header-right-section">
+				<img id="header-menu" src="/static/images/menu.svg" onclick="toggleSidebar()">
+            </div>
+
+        </div>
+    </header>
+
+	<div class="main-root">
+		<div class="main-post">
+			<h1 class="post-header">Learning Good Practices For Git</h1>
+<p>This guide will provide you with a solid foundation for adopting best
+practices in using Git, a version control system essential in software
+development. Good practices in Git are fundamental to maintaining a
+clean, traceable, and understandable change history, which in turn
+contributes to more efficient collaboration and the creation of
+higher-quality software.</p>
+<p>I will focus on the Conventional Commits specification, a standard
+that facilitates writing clear and concise commit messages, following a
+predefined structure. By adopting this standard, you will improve
+communication among team members, automate processes such as changelog
+generation, and facilitate version management.</p>
+<h2 id="how-to-write-commits-correctly">How to Write Commits
+Correctly</h2>
+<p>The format of a Conventional Commit is as follows:</p>
+<pre><code>&lt;type&gt;[optional: (scope)]: &lt;description&gt;
+
+[optional: body]
+
+[optional: footer]</code></pre>
+<p>Where:</p>
+<ol type="1">
+<li><p><strong>Type</strong>: This is an identifier that indicates the
+type of change being introduced. Common types include <code>feat</code>
+(new feature), <code>fix</code> (bug fix), <code>chore</code> (changes
+to the build process or auxiliary tools), <code>docs</code>
+(documentation changes), <code>style</code> (changes that do not affect
+the meaning of the code, such as whitespace, formatting, missing
+semicolons, etc.), <code>refactor</code> (a change in the code that
+neither fixes a bug nor adds a feature), <code>perf</code> (a code
+change that improves performance), <code>test</code> (adding missing
+tests or correcting existing1 ones).</p></li>
+<li><p><strong>Scope (optional)</strong>: This is an identifier that
+indicates the section of the code that is affected by the
+commit.</p></li>
+<li><p><strong>Description</strong>: This is a brief description of the
+changes introduced in the commit. It should be clear and
+concise.</p></li>
+<li><p><strong>Body (optional)</strong>: This is a more detailed
+description of the changes introduced in the commit. It is written after
+the description and after leaving a blank line.</p></li>
+<li><p><strong>Footer (optional)</strong>: This is used to reference
+issue numbers that are closed with the commit.</p></li>
+</ol>
+<p>Here are some examples:</p>
+<ul>
+<li><strong>A new feature</strong>: Add new endpoint for login. Include
+tests and documentation.</li>
+</ul>
+<pre><code>feat(user-auth): add login functionality</code></pre>
+<ul>
+<li><strong>A bug fix</strong>: This commit fixes the server crash that
+was happening because of an undefined variable.</li>
+</ul>
+<pre><code>fix(server): fix server crash on startup</code></pre>
+<ul>
+<li><strong>A documentation change</strong>: This commit adds more
+details to the installation instructions in the README file.</li>
+</ul>
+<pre><code>docs(readme): update installation instructions</code></pre>
+<h2 id="how-to-name-your-branches-effectively">How to Name Your Branches
+Effectively</h2>
+<p>Like commit messages, branch names play a crucial role in organizing
+and understanding your development history. A good practice is to follow
+a naming convention that reflects the purpose of the branch.</p>
+<pre><code>&lt;type&gt;/&lt;branch-name&gt;</code></pre>
+<p>Where:</p>
+<ul>
+<li><p><strong>Type:</strong> As in commits, the type indicates the
+primary purpose of the branch. The same types as in Conventional Commits
+are usually used.</p></li>
+<li><p><strong>Branch name:</strong> A concise and descriptive
+description of the changes being implemented in the branch. Use hyphens
+(<code>-</code>) to separate words and avoid using uppercase
+letters.</p></li>
+</ul>
+<h3 id="examples">Examples</h3>
+<ul>
+<li><strong>New search functionality:</strong>
+<code>feature/search-bar</code></li>
+<li><strong>Fixing a bug in the registration form:</strong>
+<code>fix/registration-form-validation</code></li>
+<li><strong>Refactoring authentication code:</strong>
+<code>refactor/authentication-code</code></li>
+<li><strong>Updating API documentation:</strong>
+<code>docs/api-documentation</code></li>
+</ul>
+		</div>
+    </div>
+
+</body>
+
+</html>
