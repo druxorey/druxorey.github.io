@@ -84,7 +84,7 @@ blockquote {
 	top: 1rem;
 	right: 1rem;
 	background-color: var(--color-background-1);
-	color: var(--color-foreground01);
+	color: var(--color-foreground-1);
 	border-radius: var(--size-border-radius);
 	padding: 0.5rem;
 	border: none;

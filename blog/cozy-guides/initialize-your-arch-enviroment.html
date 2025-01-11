@@ -53,14 +53,14 @@ set up your Arch system the way I like it.</p>
 Connection</h1>
 <p>Once the system is installed, it’s recommended to retest the internet
 connection. This can be done using the <code>ping</code> command.</p>
-<div class="source-code" id="cb1"><button class="button-to-clipboard" onclick="copyToClipboard('#cb1 code')">Copy</button><pre
+<div class="source-code" id="cb1"><button class="button-to-clipboard" onclick="copyToClipboard('#cb1 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> <span class="at">-c</span> 3 www.google.com</span></code></pre></div>
 <p>If you’re unable to establish an internet connection, you will have
 to use the <code>nmcli</code> command.</p>
 <h2 id="adding-a-new-wireless-connection">Adding a new wireless
 connection</h2>
 <p>To add a new connection, you can use the following command:</p>
-<div class="source-code" id="cb2"><button class="button-to-clipboard" onclick="copyToClipboard('#cb2 code')">Copy</button><pre
+<div class="source-code" id="cb2"><button class="button-to-clipboard" onclick="copyToClipboard('#cb2 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> c add type wifi con-name <span class="op">&lt;</span>connect name<span class="op">&gt;</span> ifname <span class="op">&lt;</span>wlan<span class="op">&gt;</span> ssid <span class="op">&lt;</span>ssid<span class="op">&gt;</span></span></code></pre></div>
 <p>This command creates a new connection with the type
 <code>wifi</code>. The <code>&lt;connect name&gt;</code> is the name you
@@ -75,7 +75,7 @@ is not fixed and can be changed according to your preference.</p>
 <h2 id="connecting-to-a-existing-wireless-connection">Connecting to a
 existing wireless connection</h2>
 <p>To connect to a wireless network, use:</p>
-<div class="source-code" id="cb3"><button class="button-to-clipboard" onclick="copyToClipboard('#cb3 code')">Copy</button><pre
+<div class="source-code" id="cb3"><button class="button-to-clipboard" onclick="copyToClipboard('#cb3 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> dev wifi connect <span class="op">&lt;</span>ssid<span class="op">&gt;</span> password <span class="op">&lt;</span>password<span class="op">&gt;</span></span></code></pre></div>
 <blockquote>
 <p><strong>Note:</strong> If your Wi-Fi connection is hidden, you must
@@ -85,7 +85,7 @@ command.</p>
 <h2 id="deleting-a-existing-wireless-connection">Deleting a existing
 wireless connection</h2>
 <p>If you need to delete a connection, you can do so with:</p>
-<div class="source-code" id="cb4"><button class="button-to-clipboard" onclick="copyToClipboard('#cb4 code')">Copy</button><pre
+<div class="source-code" id="cb4"><button class="button-to-clipboard" onclick="copyToClipboard('#cb4 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> c delete <span class="op">&lt;</span>connect name<span class="op">&gt;</span></span></code></pre></div>
 <h1 id="configuring-the-dns">Configuring the DNS</h1>
 <p>One of the crucial steps in setting up your internet connection is
@@ -93,7 +93,7 @@ configuring the Domain Name System (DNS). This step is important to
 ensure seamless connectivity and to avoid potential issues.</p>
 <p>To begin, you need to identify the name of your connection. This can
 be done by executing the following command in your terminal:</p>
-<div class="source-code" id="cb5"><button class="button-to-clipboard" onclick="copyToClipboard('#cb5 code')">Copy</button><pre
+<div class="source-code" id="cb5"><button class="button-to-clipboard" onclick="copyToClipboard('#cb5 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> con</span></code></pre></div>
 <p>This command will list all your active connections. Identify the
 connection for which you want to set the DNS.</p>
@@ -102,7 +102,7 @@ connection for which you want to set the DNS.</p>
 CloudFlare’s DNS servers (<code>1.1.1.1</code> and <code>1.0.0.1</code>)
 are commonly used due to their reliability. To set these as your DNS
 servers, use the following command:</p>
-<div class="source-code" id="cb6"><button class="button-to-clipboard" onclick="copyToClipboard('#cb6 code')">Copy</button><pre
+<div class="source-code" id="cb6"><button class="button-to-clipboard" onclick="copyToClipboard('#cb6 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> con mod <span class="st">&quot;&lt;ssid&gt;&quot;</span> ipv4.dns <span class="st">&quot;1.1.1.1 1.0.0.1&quot;</span></span></code></pre></div>
 <p>Replace <code>&lt;ssid&gt;</code> with the name of your connection.
 This command sets the DNS servers for your specified connection to
@@ -125,10 +125,10 @@ adds a bit of whimsy to your Arch Linux setup process.</p>
 <p>Configuring the Firewall is a very important step if you want to have
 a secure system, the easiest way is using the <code>ufw</code> package,
 you can install it with the following command:</p>
-<div class="source-code" id="cb7"><button class="button-to-clipboard" onclick="copyToClipboard('#cb7 code')">Copy</button><pre
+<div class="source-code" id="cb7"><button class="button-to-clipboard" onclick="copyToClipboard('#cb7 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> ufw</span></code></pre></div>
 <p>Once installed, you need to configure some rules to set it up:</p>
-<div class="source-code" id="cb8"><button class="button-to-clipboard" onclick="copyToClipboard('#cb8 code')">Copy</button><pre
+<div class="source-code" id="cb8"><button class="button-to-clipboard" onclick="copyToClipboard('#cb8 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw limit 22/tcp</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw allow 80/tcp</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw allow 443/tcp</span>
@@ -147,15 +147,15 @@ is crucial. One effective tool for this purpose is
 frequency of your CPU based on load and power source. Here’s how you can
 install and use it:</p>
 <p>First, clone the repository from GitHub:</p>
-<div class="source-code" id="cb9"><button class="button-to-clipboard" onclick="copyToClipboard('#cb9 code')">Copy</button><pre
+<div class="source-code" id="cb9"><button class="button-to-clipboard" onclick="copyToClipboard('#cb9 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/AdnanHodzic/auto-cpufreq.git</span></code></pre></div>
 <p>Next, navigate to the cloned directory and run the installer:</p>
-<div class="source-code" id="cb10"><button class="button-to-clipboard" onclick="copyToClipboard('#cb10 code')">Copy</button><pre
+<div class="source-code" id="cb10"><button class="button-to-clipboard" onclick="copyToClipboard('#cb10 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> auto-cpufreq <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> ./auto-cpufreq-installer</span></code></pre></div>
 <p>Once the installation is complete, you need to activate
 <code>auto-cpufreq</code>. You can do this by running the following
 command:</p>
-<div class="source-code" id="cb11"><button class="button-to-clipboard" onclick="copyToClipboard('#cb11 code')">Copy</button><pre
+<div class="source-code" id="cb11"><button class="button-to-clipboard" onclick="copyToClipboard('#cb11 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> auto-cpufreq <span class="at">--install</span></span></code></pre></div>
 <p>Remember, <code>auto-cpufreq</code> requires root privileges to make
 changes to your system. Always be cautious when using <code>sudo</code>
@@ -172,16 +172,16 @@ process. If you want to hide this screen, follow these steps:</p>
 <p>First, open the file located at <code>/etc/default/grub</code> for
 editing. Remember to use root privileges, which you can achieve with the
 following command:</p>
-<div class="source-code" id="cb12"><button class="button-to-clipboard" onclick="copyToClipboard('#cb12 code')">Copy</button><pre
+<div class="source-code" id="cb12"><button class="button-to-clipboard" onclick="copyToClipboard('#cb12 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/default/grub</span></code></pre></div>
 <p>Inside the file, find the line that says
 <code>GRUB_TIMEOUT_STYLE</code> and change its value to
 <code>hidden</code> as shown below:</p>
-<div class="source-code" id="cb13"><button class="button-to-clipboard" onclick="copyToClipboard('#cb13 code')">Copy</button><pre
+<div class="source-code" id="cb13"><button class="button-to-clipboard" onclick="copyToClipboard('#cb13 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="va">GRUB_TIMEOUT_STYLE</span><span class="op">=</span>hidden</span></code></pre></div>
 <p>Finally, save the file and update the GRUB configuration using this
 command:</p>
-<div class="source-code" id="cb14"><button class="button-to-clipboard" onclick="copyToClipboard('#cb14 code')">Copy</button><pre
+<div class="source-code" id="cb14"><button class="button-to-clipboard" onclick="copyToClipboard('#cb14 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> grub-mkconfig <span class="at">-o</span> /boot/grub/grub.cfg</span></code></pre></div>
 <hr />
 <p>This guide has covered essential post-installation configurations.

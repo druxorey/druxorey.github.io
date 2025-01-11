@@ -64,25 +64,25 @@ interface for configuration. Finally, <code>xorg</code>, which is the
 most popular public, free, and open-source window system.</p>
 <p>To install these packages, open a terminal and run the following
 command:</p>
-<div class="source-code" id="cb1"><button class="button-to-clipboard" onclick="copyToClipboard('#cb1 code')">Copy</button><pre
+<div class="source-code" id="cb1"><button class="button-to-clipboard" onclick="copyToClipboard('#cb1 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings xorg</span></code></pre></div>
 <h2 id="enabling-the-display-manager">Enabling the Display Manager</h2>
 <p>Now we have to initialize the LightDM display manager. This can be
 done by enabling it through the system control as follows:</p>
-<div class="source-code" id="cb2"><button class="button-to-clipboard" onclick="copyToClipboard('#cb2 code')">Copy</button><pre
+<div class="source-code" id="cb2"><button class="button-to-clipboard" onclick="copyToClipboard('#cb2 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable lightdm</span></code></pre></div>
 <h2 id="configuring-bspwm-and-sxhkd">Configuring BSPWM and SXHKD</h2>
 <p>Next, we need to create custom directories for BSPWM and SXHKD in the
 <code>.config</code> directory. This can be done using the
 <code>mkdir</code> command:</p>
-<div class="source-code" id="cb3"><button class="button-to-clipboard" onclick="copyToClipboard('#cb3 code')">Copy</button><pre
+<div class="source-code" id="cb3"><button class="button-to-clipboard" onclick="copyToClipboard('#cb3 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.config/<span class="dt">{bspwm</span><span class="op">,</span><span class="dt">sxhkd}</span></span></code></pre></div>
 <p>Once the directories are created, we can proceed to install the
 necessary files with the appropriate permissions. We’ll use the
 <code>install</code> command to copy the example configuration files
 from the BSPWM and SXHKD documentation to our newly created
 directories:</p>
-<div class="source-code" id="cb4"><button class="button-to-clipboard" onclick="copyToClipboard('#cb4 code')">Copy</button><pre
+<div class="source-code" id="cb4"><button class="button-to-clipboard" onclick="copyToClipboard('#cb4 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span> <span class="at">-Dm755</span> /usr/share/doc/bspwm/examples/bspwmrc ~/.config/bspwm/</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span> <span class="at">-Dm644</span> /usr/share/doc/bspwm/examples/sxhkdrc ~/.config/sxhkd/</span></code></pre></div>
 <p>After installing the files, it’s crucial to modify the
@@ -93,7 +93,7 @@ correctly, you may encounter issues when trying to open a terminal after
 a system restart.</p>
 <p>In my case we will use <code>Kitty</code> as our terminal emulator,
 so the configuration would be as follows:</p>
-<div class="source-code" id="cb5"><button class="button-to-clipboard" onclick="copyToClipboard('#cb5 code')">Copy</button><pre
+<div class="source-code" id="cb5"><button class="button-to-clipboard" onclick="copyToClipboard('#cb5 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># kitty</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">super</span> + Return</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">kitty</span></span></code></pre></div>
@@ -105,7 +105,7 @@ environment.</p>
 <p><code>LXAppearance</code> is a desktop-independent theme manager that
 allows us to change the appearance of our desktop environment. To
 install it, run the following command:</p>
-<div class="source-code" id="cb6"><button class="button-to-clipboard" onclick="copyToClipboard('#cb6 code')">Copy</button><pre
+<div class="source-code" id="cb6"><button class="button-to-clipboard" onclick="copyToClipboard('#cb6 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> lxappearance</span></code></pre></div>
 <p>Once installed, you can run <code>lxappearance</code> in the terminal
 to open the graphical user interface. Here you can change the GTK theme,
@@ -114,7 +114,7 @@ the icon theme, the font, and the cursor.</p>
 <p><code>Picom</code> is an independent compositor for Xorg, famous for
 providing shading and transparency effects to windows. To install it,
 run the following command:</p>
-<div class="source-code" id="cb7"><button class="button-to-clipboard" onclick="copyToClipboard('#cb7 code')">Copy</button><pre
+<div class="source-code" id="cb7"><button class="button-to-clipboard" onclick="copyToClipboard('#cb7 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> picom</span></code></pre></div>
 <p>After installation, you can start Picom with the command
 <code>picom &amp;</code>. To configure it, create a configuration file
@@ -125,7 +125,7 @@ according to your needs.</p>
 <p><code>Nitrogen</code> is a utility for changing the desktop
 background in X Window systems. To install it, run the following
 command:</p>
-<div class="source-code" id="cb8"><button class="button-to-clipboard" onclick="copyToClipboard('#cb8 code')">Copy</button><pre
+<div class="source-code" id="cb8"><button class="button-to-clipboard" onclick="copyToClipboard('#cb8 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> nitrogen</span></code></pre></div>
 <p>After installation, you can run
 <code>nitrogen /path/to/your/images/</code> to select an image as a
@@ -134,7 +134,7 @@ desktop background.</p>
 <p>If you want these programs to run when you start your computer, you
 can add the following configuration to your <code>.bspwmrc</code>
 file:</p>
-<div class="source-code" id="cb9"><button class="button-to-clipboard" onclick="copyToClipboard('#cb9 code')">Copy</button><pre
+<div class="source-code" id="cb9"><button class="button-to-clipboard" onclick="copyToClipboard('#cb9 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nitrogen</span> <span class="at">--restore</span> % <span class="kw">&amp;</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">picom</span> <span class="at">--config</span> ~/.config/picom/picom.conf <span class="kw">&amp;</span></span></code></pre></div>
 <hr />

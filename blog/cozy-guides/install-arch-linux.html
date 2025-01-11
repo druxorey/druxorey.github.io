@@ -106,15 +106,15 @@ it is the configuration of the wireless connection.</p>
 </blockquote>
 <p>We are gonna use the tool <code>iwctl</code> for the internet
 configuration</p>
-<div class="source-code" id="cb1"><button class="button-to-clipboard" onclick="copyToClipboard('#cb1 code')">Copy</button><pre
+<div class="source-code" id="cb1"><button class="button-to-clipboard" onclick="copyToClipboard('#cb1 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">iwctl</span></span></code></pre></div>
 <p>After executing the command you have to look for the technical name
 of your wifi card with the command <code>device list</code>.</p>
-<div class="source-code" id="cb2"><button class="button-to-clipboard" onclick="copyToClipboard('#cb2 code')">Copy</button><pre
+<div class="source-code" id="cb2"><button class="button-to-clipboard" onclick="copyToClipboard('#cb2 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">device</span> list</span></code></pre></div>
 <p>The name of your wifi card will be the one you will place in the
 <strong>wlan</strong> section.</p>
-<div class="source-code" id="cb3"><button class="button-to-clipboard" onclick="copyToClipboard('#cb3 code')">Copy</button><pre
+<div class="source-code" id="cb3"><button class="button-to-clipboard" onclick="copyToClipboard('#cb3 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">station</span> <span class="op">&lt;</span>wlan<span class="op">&gt;</span> connect <span class="op">&lt;</span>Network Name<span class="op">&gt;</span></span></code></pre></div>
 <blockquote>
 <p><strong>Note:</strong> If your network is hidden, you must replace
@@ -134,7 +134,7 @@ have an NVMe drive, so it appears as <code>nvme0n1</code>.</p>
 <p>Once you’ve identified your disk, you can use the <code>cfdisk</code>
 command followed by the path to your disk. In my case, the command would
 be:</p>
-<div class="source-code" id="cb4"><button class="button-to-clipboard" onclick="copyToClipboard('#cb4 code')">Copy</button><pre
+<div class="source-code" id="cb4"><button class="button-to-clipboard" onclick="copyToClipboard('#cb4 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cfdisk</span> /dev/nvme0n1</span></code></pre></div>
 <p>I will be using the <code>cfdisk</code> tool to partition the disk
 into three sections: boot, swap, and root. It is advisable to use the
@@ -186,39 +186,39 @@ format is the root partition. This command formats the partition as an
 <strong>ext4</strong> filesystem, which is a common choice for Linux
 installations due to its robustness and excellent performance. This can
 be accomplished using the next command:</p>
-<div class="source-code" id="cb6"><button class="button-to-clipboard" onclick="copyToClipboard('#cb6 code')">Copy</button><pre
+<div class="source-code" id="cb6"><button class="button-to-clipboard" onclick="copyToClipboard('#cb6 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mkfs.ext4</span> /dev/nvme0n1p3</span></code></pre></div></li>
 <li><p><strong>Boot Partition</strong>: Next we will format the boot
 partition with a <strong>FAT32</strong> filesystem. FAT32 is commonly
 used for boot partitions as it is universally supported by almost all
 operating systems.</p>
-<div class="source-code" id="cb7"><button class="button-to-clipboard" onclick="copyToClipboard('#cb7 code')">Copy</button><pre
+<div class="source-code" id="cb7"><button class="button-to-clipboard" onclick="copyToClipboard('#cb7 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mkfs.fat</span> <span class="at">-F</span> 32 /dev/nvme0n1p1</span></code></pre></div></li>
 <li><p><strong>Swap Partition</strong>: Finally, we will set up the swap
 partition with the following command that initializes the partition to
 be used as swap space:</p>
-<div class="source-code" id="cb8"><button class="button-to-clipboard" onclick="copyToClipboard('#cb8 code')">Copy</button><pre
+<div class="source-code" id="cb8"><button class="button-to-clipboard" onclick="copyToClipboard('#cb8 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mkswap</span> /dev/nvme0n1p2</span></code></pre></div></li>
 </ol>
 <h2 id="mounting-the-partitions">Mounting The Partitions</h2>
 <p>In this step, we will be mounting the partitions. First, let’s start
 with the <strong>root</strong> partition. You can mount it using the
 command below:</p>
-<div class="source-code" id="cb9"><button class="button-to-clipboard" onclick="copyToClipboard('#cb9 code')">Copy</button><pre
+<div class="source-code" id="cb9"><button class="button-to-clipboard" onclick="copyToClipboard('#cb9 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> /dev/nvme0n1p3 /mnt</span></code></pre></div>
 <p>Next, we need to mount the <strong>boot</strong> partition. However,
 the required path does not exist yet. Therefore, we will create it using
 the following command:</p>
-<div class="source-code" id="cb10"><button class="button-to-clipboard" onclick="copyToClipboard('#cb10 code')">Copy</button><pre
+<div class="source-code" id="cb10"><button class="button-to-clipboard" onclick="copyToClipboard('#cb10 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /mnt/boot/efi</span></code></pre></div>
 <p>With the path now created, we can proceed to mount the
 <strong>boot</strong> partition:</p>
-<div class="source-code" id="cb11"><button class="button-to-clipboard" onclick="copyToClipboard('#cb11 code')">Copy</button><pre
+<div class="source-code" id="cb11"><button class="button-to-clipboard" onclick="copyToClipboard('#cb11 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> /dev/nvme0n1p1 /mnt/boot/efi</span></code></pre></div>
 <p>Lastly, the <strong>swap</strong> partition does not need to be
 mounted in the traditional sense. Instead, it needs to be activated. You
 can do this with the following command:</p>
-<div class="source-code" id="cb12"><button class="button-to-clipboard" onclick="copyToClipboard('#cb12 code')">Copy</button><pre
+<div class="source-code" id="cb12"><button class="button-to-clipboard" onclick="copyToClipboard('#cb12 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">swapon</span> /dev/nvme0n1p2</span></code></pre></div>
 <h1 id="system-installation">System Installation</h1>
 <h2 id="basic-packages">Basic Packages</h2>
@@ -236,7 +236,7 @@ necessary to install the <code>amd-ucode</code> package instead of
 microcode updates from AMD.</p>
 </blockquote>
 <p>To install these packages, use the command below:</p>
-<div class="source-code" id="cb13"><button class="button-to-clipboard" onclick="copyToClipboard('#cb13 code')">Copy</button><pre
+<div class="source-code" id="cb13"><button class="button-to-clipboard" onclick="copyToClipboard('#cb13 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pacstrap</span> /mnt base linux linux-firmware base-devel grub efibootmgr nano networkmanager git pulseaudio intel-ucode</span></code></pre></div>
 <p>This command will install the base system along with the Linux kernel
 and firmware, development tools, the GRUB bootloader, EFI boot manager,
@@ -247,19 +247,19 @@ and microcode for Intel processors.</p>
 generate a <strong>fstab</strong> file, which allows your system to
 automatically mount partitions upon booting. You can generate a
 <strong>fstab</strong> file using the following command:</p>
-<div class="source-code" id="cb14"><button class="button-to-clipboard" onclick="copyToClipboard('#cb14 code')">Copy</button><pre
+<div class="source-code" id="cb14"><button class="button-to-clipboard" onclick="copyToClipboard('#cb14 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">genfstab</span> /mnt</span></code></pre></div>
 <p>This command will display information about the currently mounted
 files. However, you need to transfer this information to disk. To do
 this, you can redirect the output of the <code>genfstab</code> command
 to the <strong>fstab</strong> file located in the <code>/mnt/etc/</code>
 directory:</p>
-<div class="source-code" id="cb15"><button class="button-to-clipboard" onclick="copyToClipboard('#cb15 code')">Copy</button><pre
+<div class="source-code" id="cb15"><button class="button-to-clipboard" onclick="copyToClipboard('#cb15 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">genfstab</span> /mnt <span class="op">&gt;</span> /mnt/etc/fstab</span></code></pre></div>
 <p>To ensure that the <strong>fstab</strong> file has been correctly
 generated, you can use the <code>cat</code> command to display its
 contents:</p>
-<div class="source-code" id="cb16"><button class="button-to-clipboard" onclick="copyToClipboard('#cb16 code')">Copy</button><pre
+<div class="source-code" id="cb16"><button class="button-to-clipboard" onclick="copyToClipboard('#cb16 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /mnt/etc/fstab</span></code></pre></div>
 <p>The output should match the initial output of the
 <code>genfstab /mnt</code> command. If it does, then you’ve successfully
@@ -269,7 +269,7 @@ the next step of the installation process.</p>
 The Installed System (Changing Root)</h2>
 <p>In this step, we will transition into our newly installed system
 environment. To do this, we use the following command:</p>
-<div class="source-code" id="cb17"><button class="button-to-clipboard" onclick="copyToClipboard('#cb17 code')">Copy</button><pre
+<div class="source-code" id="cb17"><button class="button-to-clipboard" onclick="copyToClipboard('#cb17 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arch-chroot</span> /mnt</span></code></pre></div>
 <blockquote>
 <p><strong>Warning:</strong> It’s important to remember that everything
@@ -289,7 +289,7 @@ clock with the system clock. The commands are as follows:</p>
 <p><strong>Note:</strong> Replace ‘&lt;continent&gt;’ and ‘&lt;city&gt;’
 with your specific location.</p>
 </blockquote>
-<div class="source-code" id="cb18"><button class="button-to-clipboard" onclick="copyToClipboard('#cb18 code')">Copy</button><pre
+<div class="source-code" id="cb18"><button class="button-to-clipboard" onclick="copyToClipboard('#cb18 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> /usr/share/zoneinfo/<span class="op">&lt;</span>continent<span class="op">&gt;</span>/<span class="op">&lt;</span>city<span class="op">&gt;</span> /etc/localtime</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">hwclock</span> <span class="at">--systohc</span></span></code></pre></div>
@@ -300,14 +300,14 @@ corresponding to our desired locale. In this case, we will be using
 <code>en_US.UTF-8 UTF-8</code>. After saving the changes, we generate
 the new locale configuration using the <code>locale-gen</code>
 command.</p>
-<div class="source-code" id="cb19"><button class="button-to-clipboard" onclick="copyToClipboard('#cb19 code')">Copy</button><pre
+<div class="source-code" id="cb19"><button class="button-to-clipboard" onclick="copyToClipboard('#cb19 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> /etc/locale.gen</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment the line: en_US.UTF-8 UTF-8</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ex">locale-gen</span></span></code></pre></div>
 <p>For certain programs to function correctly, we need to specify our
 locale in the <code>/etc/locale.conf</code> file. We can do this by
 adding the line <code>LANG=en_US.UTF-8</code> to the file.</p>
-<div class="source-code" id="cb20"><button class="button-to-clipboard" onclick="copyToClipboard('#cb20 code')">Copy</button><pre
+<div class="source-code" id="cb20"><button class="button-to-clipboard" onclick="copyToClipboard('#cb20 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> LANG=en_US.UTF-8 <span class="op">&gt;</span> /etc/locale.conf</span></code></pre></div>
 <p>Now, your system-wide locale is set and will be recognized by all
 locale-aware programs on your system. Remember to replace
@@ -319,18 +319,18 @@ However, if you need to change the keyboard layout, you can do so by
 modifying the <code>/etc/vconsole.conf</code> file.</p>
 <p>To set the keyboard layout to US English, add the following line to
 the file:</p>
-<div class="source-code" id="cb21"><button class="button-to-clipboard" onclick="copyToClipboard('#cb21 code')">Copy</button><pre
+<div class="source-code" id="cb21"><button class="button-to-clipboard" onclick="copyToClipboard('#cb21 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> KEYMAP=us <span class="op">&gt;</span> /etc/vconsole.conf</span></code></pre></div>
 <p>If you want to use a variant of the US layout, such as the
 international layout, you would add it like this:</p>
-<div class="source-code" id="cb22"><button class="button-to-clipboard" onclick="copyToClipboard('#cb22 code')">Copy</button><pre
+<div class="source-code" id="cb22"><button class="button-to-clipboard" onclick="copyToClipboard('#cb22 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> KEYMAP=us-acentos <span class="op">&gt;</span> /etc/vconsole.conf</span></code></pre></div>
 <h2 id="setting-the-hostname">Setting the Hostname</h2>
 <p>The hostname is a crucial aspect of your system configuration because
 it determines the internal name of your computer. To set the hostname,
 you need to access the file located at <code>/etc/hostname</code> and
 enter your desired name there. Here’s how you can do it:</p>
-<div class="source-code" id="cb23"><button class="button-to-clipboard" onclick="copyToClipboard('#cb23 code')">Copy</button><pre
+<div class="source-code" id="cb23"><button class="button-to-clipboard" onclick="copyToClipboard('#cb23 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> YourDesiredHostname <span class="op">&gt;</span> /etc/hostname</span></code></pre></div>
 <p>Replace ‘YourDesiredHostname’ with the name you want to assign to
 your computer.</p>
@@ -341,7 +341,7 @@ so it should be complex to prevent unauthorized access.</p>
 <p>You can set the root password using the <code>passwd</code> command.
 After entering the command, you’ll be prompted to type your password
 twice to confirm it. Here’s how you can do it:</p>
-<div class="source-code" id="cb24"><button class="button-to-clipboard" onclick="copyToClipboard('#cb24 code')">Copy</button><pre
+<div class="source-code" id="cb24"><button class="button-to-clipboard" onclick="copyToClipboard('#cb24 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">passwd</span></span></code></pre></div>
 <p>Remember, a strong password typically includes a mix of upper and
 lower case letters, numbers, and special characters.</p>
@@ -353,10 +353,10 @@ specify the group that should own the user’s home directory, in this
 case, <code>wheel</code>. The <code>-s</code> option sets the default
 shell for the user, which we will set to <code>/bin/bash</code>. Replace
 ‘(name)’ with the desired username.</p>
-<div class="source-code" id="cb25"><button class="button-to-clipboard" onclick="copyToClipboard('#cb25 code')">Copy</button><pre
+<div class="source-code" id="cb25"><button class="button-to-clipboard" onclick="copyToClipboard('#cb25 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">useradd</span> <span class="at">-m</span> <span class="at">-G</span> wheel <span class="at">-s</span> /bin/bash <span class="er">(</span><span class="ex">name</span><span class="kw">)</span></span></code></pre></div>
 <p>Now we will need a password for our new user:</p>
-<div class="source-code" id="cb26"><button class="button-to-clipboard" onclick="copyToClipboard('#cb26 code')">Copy</button><pre
+<div class="source-code" id="cb26"><button class="button-to-clipboard" onclick="copyToClipboard('#cb26 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">passwd</span> <span class="er">(</span><span class="ex">name</span><span class="kw">)</span></span></code></pre></div>
 <p>Next, we will set up sudo for the new user. As it stands, if we
 switch to our new user using the <code>su (user)</code> command and
@@ -371,7 +371,7 @@ is because we need root privileges to be able to modify the file.</p>
 <p>To rectify this, we will open the sudoers file using the
 <strong>visudo</strong> command with our preferred editor set by the
 <strong>EDITOR</strong> environment variable:</p>
-<div class="source-code" id="cb27"><button class="button-to-clipboard" onclick="copyToClipboard('#cb27 code')">Copy</button><pre
+<div class="source-code" id="cb27"><button class="button-to-clipboard" onclick="copyToClipboard('#cb27 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="va">EDITOR</span><span class="op">=</span>nano <span class="ex">visudo</span></span></code></pre></div>
 <p>In the sudoers file, locate and uncomment the line
 <code>%wheel ALL=(ALL) ALL</code>. This grants all members of the
@@ -383,25 +383,25 @@ errors.</p>
 <p>To ensure that your system can connect to the internet, you’ll need
 to enable the <strong>Network Manager</strong>. This can be done by
 running the following command:</p>
-<div class="source-code" id="cb28"><button class="button-to-clipboard" onclick="copyToClipboard('#cb28 code')">Copy</button><pre
+<div class="source-code" id="cb28"><button class="button-to-clipboard" onclick="copyToClipboard('#cb28 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> enable NetworkManager</span></code></pre></div>
 <h2 id="installing-the-bootloader">Installing the Bootloader</h2>
 <p>The next step, which is arguably the most crucial, involves
 installing a bootloader, because without a bootloader your system will
 not be able to start. In this guide, we’ll be using GRUB as our
 bootloader. To install GRUB, execute the following command:</p>
-<div class="source-code" id="cb29"><button class="button-to-clipboard" onclick="copyToClipboard('#cb29 code')">Copy</button><pre
+<div class="source-code" id="cb29"><button class="button-to-clipboard" onclick="copyToClipboard('#cb29 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">grub-install</span> /dev/nvme0n1</span></code></pre></div>
 <p>After installing GRUB we need to be configure it with the following
 command:</p>
-<div class="source-code" id="cb30"><button class="button-to-clipboard" onclick="copyToClipboard('#cb30 code')">Copy</button><pre
+<div class="source-code" id="cb30"><button class="button-to-clipboard" onclick="copyToClipboard('#cb30 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">grub-mkconfig</span> <span class="at">-o</span> /boot/grub/grub.cfg</span></code></pre></div>
 <h2 id="final-steps-and-rebooting-the-system">Final Steps and Rebooting
 the System</h2>
 <p>Once GRUB has been configured, you can exit the root user, unmount
 all mounted filesystems, and reboot your system. This can be done by
 running the following commands:</p>
-<div class="source-code" id="cb31"><button class="button-to-clipboard" onclick="copyToClipboard('#cb31 code')">Copy</button><pre
+<div class="source-code" id="cb31"><button class="button-to-clipboard" onclick="copyToClipboard('#cb31 code'); changeButtonColor(this);">Copy</button><pre
 class="source-code-bash"><code class="source-code-bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">umount</span> <span class="at">-a</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="ex">reboot</span></span></code></pre></div>
