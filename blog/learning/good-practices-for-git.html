@@ -39,18 +39,21 @@
 
 	<div class="main-root">
 		<div class="main-post">
-			<h1 class="post-header">Learning Good Practices For Git</h1>
+			<h1 id="learning-good-practices-for-git">Learning Good Practices For
+Git</h1>
 <p>This guide will provide you with a solid foundation for adopting best
 practices in using Git, a version control system essential in software
 development. Good practices in Git are fundamental to maintaining a
 clean, traceable, and understandable change history, which in turn
 contributes to more efficient collaboration and the creation of
 higher-quality software.</p>
-<p>I will focus on the Conventional Commits specification, a standard
-that facilitates writing clear and concise commit messages, following a
-predefined structure. By adopting this standard, you will improve
-communication among team members, automate processes such as changelog
-generation, and facilitate version management.</p>
+<p>I will focus on the <a
+href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional
+Commits</a> specification, a standard that facilitates writing clear and
+concise commit messages, following a predefined structure. By adopting
+this standard, you will improve communication among team members,
+automate processes such as changelog generation, and facilitate version
+management.</p>
 <h2 id="how-to-write-commits-correctly">How to Write Commits
 Correctly</h2>
 <p>The format of a Conventional Commit is as follows:</p>
@@ -62,18 +65,28 @@ Correctly</h2>
 <p>Where:</p>
 <ol type="1">
 <li><p><strong>Type</strong>: This is an identifier that indicates the
-type of change being introduced. Common types include <code>feat</code>
-(new feature), <code>fix</code> (bug fix), <code>chore</code> (changes
-to the build process or auxiliary tools), <code>docs</code>
-(documentation changes), <code>style</code> (changes that do not affect
-the meaning of the code, such as whitespace, formatting, missing
-semicolons, etc.), <code>refactor</code> (a change in the code that
-neither fixes a bug nor adds a feature), <code>perf</code> (a code
-change that improves performance), <code>test</code> (adding missing
-tests or correcting existing1 ones).</p></li>
+type of change being introduced. Common types include:</p>
+<ul>
+<li><code>feat</code>: Adds or remove a new feature.</li>
+<li><code>fix</code>: Bug fix.</li>
+<li><code>chore</code>: Changes to the build process or auxiliary
+tools.</li>
+<li><code>docs</code>: Commits that affect documentation only.</li>
+<li><code>style</code>: Changes that do not affect the meaning of the
+code, such as whitespace, formatting, missing semicolons, etc.</li>
+<li><code>refactor</code>: Rewrite / restructure your code, however does
+not change any API behaviou.</li>
+<li><code>perf</code>: Code change that improves performance.</li>
+<li><code>test</code>: Adding missing tests or correcting existing
+ones.</li>
+</ul></li>
 <li><p><strong>Scope (optional)</strong>: This is an identifier that
 indicates the section of the code that is affected by the
 commit.</p></li>
+<li><p><strong>Breaking Changes Indicator (optional)</strong>: Breaking
+changes should be indicated by an <code>!</code> before
+the <code>:</code> in the subject line
+e.g. <code>feat(api)!: remove status endpoint</code></p></li>
 <li><p><strong>Description</strong>: This is a brief description of the
 changes introduced in the commit. It should be clear and
 concise.</p></li>
@@ -85,25 +98,21 @@ issue numbers that are closed with the commit.</p></li>
 </ol>
 <p>Here are some examples:</p>
 <ul>
-<li><strong>A new feature</strong>: Add new endpoint for login. Include
-tests and documentation.</li>
+<li><p><strong>A new feature</strong>: Add new endpoint for login.
+Include tests and documentation.</p>
+<pre><code>feat(user-auth): add login functionality</code></pre></li>
+<li><p><strong>A bug fix</strong>: This commit fixes the server crash
+that was happening because of an undefined variable.</p>
+<pre><code>fix(server): fix server crash on startup</code></pre></li>
+<li><p><strong>A documentation change</strong>: This commit adds more
+details to the installation instructions in the README file.</p>
+<pre><code>docs(readme): update installation instructions</code></pre></li>
 </ul>
-<pre><code>feat(user-auth): add login functionality</code></pre>
-<ul>
-<li><strong>A bug fix</strong>: This commit fixes the server crash that
-was happening because of an undefined variable.</li>
-</ul>
-<pre><code>fix(server): fix server crash on startup</code></pre>
-<ul>
-<li><strong>A documentation change</strong>: This commit adds more
-details to the installation instructions in the README file.</li>
-</ul>
-<pre><code>docs(readme): update installation instructions</code></pre>
 <h2 id="how-to-name-your-branches-effectively">How to Name Your Branches
 Effectively</h2>
 <p>Like commit messages, branch names play a crucial role in organizing
 and understanding your development history. A good practice is to follow
-a naming convention that reflects the purpose of the branch.</p>
+a naming convention that reflects the purpose of the branch. 7</p>
 <pre><code>&lt;type&gt;/&lt;branch-name&gt;</code></pre>
 <p>Where:</p>
 <ul>
