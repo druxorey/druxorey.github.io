@@ -19,7 +19,6 @@ p {
 	font-size: var(--font-text-1);
     line-height: var(--size-line-height);
     color: var(--color-foreground-1);
-	transition: var(--speed-transition-slow) ease;
 }
 
 li {
@@ -35,7 +34,6 @@ code {
     color: var(--color-foreground-3);
     padding: 2px 4px;
     border-radius: var(--size-border-radius);
-	transition: var(--speed-transition-slow) ease;
 }
 
 pre {
@@ -57,7 +55,6 @@ blockquote {
     margin: 4rem 0rem 4rem 0rem;
 	width: 48rem;
     font-size: var(--font-text-2);
-	transition: var(--speed-transition-slow) ease;
 }
 
 .post-header {
@@ -65,7 +62,6 @@ blockquote {
 	font-size: var(--font-title-1);
 	font-weight: 600;
 	padding: 5rem 0rem 5rem 0rem;
-	transition: var(--speed-transition-slow) ease;
 }
 
 .source-code {
@@ -94,13 +90,13 @@ blockquote {
 
 .button-to-clipboard:hover {
 	background-color: var(--color-purple-2);
+	cursor: pointer;
 	transition: var(--speed-transition-fast) ease;
 }
 
 @media (max-width: 992px) {
 	.main-post {
 		width: 90%;
-		transition: var(--speed-transition-slow) ease;
 	}
 }
 
@@ -108,17 +104,14 @@ blockquote {
 	.post-header {
 		font-size: var(--font-title-2);
 		padding: 2rem 0rem 2rem 0rem;
-		transition: var(--speed-transition-slow) ease;
 	}
 
 	p {
 		font-size: var(--font-text-2);
-		transition: var(--speed-transition-slow) ease;
 	}
 
 	code {
 		font-size: var(--font-text-3);
-		transition: var(--speed-transition-slow) ease;
 	}
 }
 
