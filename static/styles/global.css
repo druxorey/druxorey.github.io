@@ -157,12 +157,23 @@
 	transition: var(--speed-transition-fast) ease;
 }
 
-.blog-summary {
+.blog-data {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	width: 100%;
-	padding: 0rem 2rem 1rem 2rem;
-	max-height: 100%;
 	height: 100%;
+	padding: 0rem 2rem 1rem 2rem;
 	font-size: var(--font-text-2);
+}
+
+.blog-summary-container {
+}
+
+.blog-date-container {
+	display: flex;
+	align-items: center;
+	height: 3rem;
 }
 
 .blog-title {
