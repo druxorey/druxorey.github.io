@@ -15,6 +15,10 @@
 	src: '/static/fonts/symbols/SymbolsNerdFont-Regular.ttf';
 }
 
+* {
+	font-family: "Noto Sans", sans-serif;
+}
+
 :root {
 	color: var(--color-foreground-1);
 	font-size: 16px;
