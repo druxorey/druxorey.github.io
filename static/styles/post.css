@@ -2,16 +2,9 @@
 @import url("root-values.css");
 
 h1, h2, h3, h4, h5, h6 {
-    color: var(--color-foreground-1);
-}
-
-a {
-    color: var(--color-purple-2);
-	text-decoration: none;
-}
-
-em {
-	font-style: normal;
+	border-bottom: 2px solid var(--color-background-1);
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
 }
 
 p {
@@ -22,14 +15,15 @@ p {
 }
 
 li {
-	line-height: 1.6;
+	font-size: var(--font-text-1);
+    line-height: var(--size-line-height);
 	color: var(--color-foreground-1);
 	margin-top: var(--size-paragraph-separation);
 }
 
 code {
-	font-family: 'Hack Nerd Font', monospace;
-	font-size: var(--font-text-3);
+	font-family: "Hack Nerd Font";
+	font-size: var(--font-text-2);
     background-color: var(--color-background-2);
     color: var(--color-foreground-3);
     padding: 2px 4px;
@@ -38,17 +32,24 @@ code {
 
 pre {
     background-color: var(--color-background-2);
-	padding: 1rem 2rem 1rem 2rem;
-	border-radius: 0.5rem;
-	/* TEMPORAL TAG */
-    overflow-x: auto;
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: var(--size-border-radius);
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 blockquote {
-	padding: 1rem;
+	padding: 1rem 2rem 1rem 2rem;
 	margin: 1rem 0rem 1rem 0rem;
 	background-color: #BD93F940;
 	border-radius: var(--size-border-radius);
+}
+
+hr {
+	border: var(--size-border-radius);
+	height: 2px;
+	background-color: var(--color-background-1);
+	margin: 2rem 0rem 2rem 0rem;
 }
 
 .main-post {
@@ -62,6 +63,7 @@ blockquote {
 	font-size: var(--font-title-1);
 	font-weight: 600;
 	padding: 5rem 0rem 5rem 0rem;
+	border: none;
 }
 
 .source-code {
@@ -70,8 +72,6 @@ blockquote {
     background-color: var(--color-background-2);
 	line-height: var(--size-line-height);
     border-radius: var(--size-border-radius);
-	padding-left: 1rem;
-	padding-right: 1rem;
 }
 
 .button-to-clipboard {
@@ -85,7 +85,7 @@ blockquote {
 	padding: 0.5rem;
 	border: none;
 	transition: var(--speed-transition-fast) ease;
-	font-family: "Noto Sans";
+	font-family: "Hack Nerd Font";
 }
 
 .button-to-clipboard:hover {

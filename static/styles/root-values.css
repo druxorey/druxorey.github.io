@@ -15,10 +15,6 @@
 	src: '/static/fonts/symbols/SymbolsNerdFont-Regular.ttf';
 }
 
-* {
-	font-family: "Noto Sans", sans-serif;
-}
-
 :root {
 	color: var(--color-foreground-1);
 	font-size: 16px;
@@ -27,7 +23,7 @@
 	--speed-transition-fast: 0.25s;
 	--speed-transition-slow: 1.00s;
 	--size-border-radius: 0.5rem;
-	--size-line-height: 1.6;
+	--size-line-height: 1.75;
 	--size-paragraph-separation: 1.5rem;
 	--font-title-1: 5.00rem;
 	--font-title-2: 2.25rem;
@@ -43,6 +39,17 @@ html {
 
 body {
 	background-color: var(--color-background-4);
+}
+
+a {
+	color: var(--color-purple-2);
+	text-decoration: none;
+	transition: var(--speed-transition-fast) ease;
+}
+
+a:hover {
+	color: var(--color-purple-1);
+	transition: var(--speed-transition-fast) ease;
 }
 
 .main-root {
@@ -69,16 +76,6 @@ body {
 .not-found-description {
 	text-align: center;
 	font-size: var(--font-title-2);
-}
-
-footer {
-	background-color: red;
-	height: 4rem;
-}
-
-a {
-	color: var(--color-purple-2);
-	text-decoration: none;
 }
 
 ::-webkit-scrollbar {
