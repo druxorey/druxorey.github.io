@@ -121,47 +121,143 @@ def preprocess_wikilinks(md_text):
 
 # ─── Procesadores HTML (aplicados al output de Pandoc) ───────────────────────
 
+CALLOUT_ICONS = {
+    "RESOURCES": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>',
+    "REFERENCE": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>',
+    "REFERENCES": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>',
+    "NOTE": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+    "INFO": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+    "TIP": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg>',
+    "HINT": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg>',
+    "IMPORTANT": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>',
+    "WARNING": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>',
+    "CAUTION": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>',
+    "EXAMPLE": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>',
+}
+
+DEFAULT_TITLES = {
+    "RESOURCES": "REFERENCIAS",
+    "REFERENCE": "REFERENCIAS",
+    "REFERENCES": "REFERENCIAS",
+    "NOTE": "NOTA",
+    "INFO": "INFORMACIÓN",
+    "TIP": "CONSEJO",
+    "HINT": "PISTA",
+    "IMPORTANT": "IMPORTANTE",
+    "WARNING": "ADVERTENCIA",
+    "CAUTION": "PRECAUCIÓN",
+    "EXAMPLE": "EJEMPLO",
+}
+
+CALLOUT_FLAVORS = {
+    "RESOURCES": "resources",
+    "REFERENCE": "resources",
+    "REFERENCES": "resources",
+    "NOTE": "note",
+    "INFO": "note",
+    "TIP": "tip",
+    "HINT": "tip",
+    "IMPORTANT": "important",
+    "WARNING": "warning",
+    "CAUTION": "warning",
+    "EXAMPLE": "example",
+}
+
 def process_callouts(html):
     def replace_callout(match):
-        ctype      = match.group(1).upper()
-        first_line = match.group(2).strip()
-        rest_body  = match.group(3).strip() if match.group(3) else ""
-        flavor     = "important" if ctype in ("IMPORTANT", "WARNING", "CAUTION") else "note"
-        title_text = "IMPORTANTE" if flavor == "important" else ("NOTA" if ctype == "NOTE" else ctype)
-        inner      = f"<p>{first_line}</p>\n{rest_body}" if first_line else rest_body
+        ctype = match.group(1).upper()
+        custom_title = (match.group(2) or "").strip()
+        body = match.group(3).strip() if match.group(3) else ""
+
+        flavor = CALLOUT_FLAVORS.get(ctype, "note")
+        icon_svg = CALLOUT_ICONS.get(ctype, CALLOUT_ICONS["NOTE"])
+        title_text = custom_title if custom_title else DEFAULT_TITLES.get(ctype, ctype)
+
         return (
-            f'<div class="callout-box {flavor}">'
-            f'<div class="callout-title">✦ {title_text}</div>\n'
-            f'{inner}\n</div>'
+            f'<div class="callout-box {flavor}">\n'
+            f'  <div class="callout-title">\n'
+            f'    <span class="callout-icon">{icon_svg}</span>\n'
+            f'    <span class="callout-title-text">{title_text}</span>\n'
+            f'  </div>\n'
+            f'  <div class="callout-content">\n'
+            f'{body}\n'
+            f'  </div>\n'
+            f'</div>'
         )
 
-    pattern = r"<blockquote>\s*<p>\[!([A-Za-z]+)\]\s*(.*?)</p>(.*?)</blockquote>"
+    pattern = r"<blockquote>\s*<p>\[!([A-Za-z]+)\](?:\s*(.*?))?</p>(.*?)</blockquote>"
     return re.sub(pattern, replace_callout, html, flags=re.DOTALL)
+
+
+LANG_DISPLAY = {
+    "bash": "Shell",
+    "sh": "Shell",
+    "shell": "Shell",
+    "zsh": "Shell",
+    "git": "Git",
+    "python": "Python",
+    "py": "Python",
+    "c": "C",
+    "cpp": "C++",
+    "c++": "C++",
+    "rust": "Rust",
+    "rs": "Rust",
+    "go": "Go",
+    "golang": "Go",
+    "javascript": "JavaScript",
+    "js": "JavaScript",
+    "typescript": "TypeScript",
+    "ts": "TypeScript",
+    "html": "HTML",
+    "css": "CSS",
+    "json": "JSON",
+    "yaml": "YAML",
+    "yml": "YAML",
+    "lua": "Lua",
+    "markdown": "Markdown",
+    "md": "Markdown",
+    "sql": "SQL",
+}
+
+def format_lang(raw_lang):
+    clean = raw_lang.strip().lower()
+    return LANG_DISPLAY.get(clean, clean.capitalize() if clean else "Text")
 
 
 def process_code_blocks(html):
     def wrap(lang, code_body):
+        display_lang = format_lang(lang)
         return (
-            f'<div class="code-block-wrapper">'
-            f'<span class="code-block-lang">{lang}</span>'
-            f"<pre><code>{code_body}</code></pre>"
-            f'<button class="copy-code-btn" type="button">Copiar</button>'
-            f"</div>"
+            f'<div class="code-block-wrapper">\n'
+            f'  <button class="copy-code-btn" type="button" data-lang="{display_lang}" title="Copiar código al portapapeles">{display_lang}</button>\n'
+            f'  <pre class="code-pre"><code>{code_body.strip()}</code></pre>\n'
+            f'</div>'
         )
 
-    # Pandoc sourceCode divs
+    # 1. Pandoc sourceCode divs (allows multiline attributes)
     html = re.sub(
-        r'<div class="sourceCode"[^>]*><pre class="sourceCode ([^"]*)">'
-        r'<code[^>]*>(.*?)</code></pre></div>',
+        r'<div\s+class="sourceCode"[^>]*>\s*<pre\s+class="sourceCode\s+([^"]*)"\s*><code[^>]*>(.*?)</code>\s*</pre>\s*</div>',
         lambda m: wrap(m.group(1) or "code", m.group(2)),
-        html, flags=re.DOTALL
+        html,
+        flags=re.DOTALL | re.IGNORECASE
     )
-    # Generic pre>code blocks
+
+    # 2. Pre with class (e.g. <pre class="git"><code>...</code></pre>), ignoring already wrapped .code-pre
     html = re.sub(
-        r'<pre><code(?: class="language-([^"]*)")?>( .*?)</code></pre>',
+        r'<pre\s+class="(?!code-pre)([^"]+)"\s*><code[^>]*>(.*?)</code>\s*</pre>',
         lambda m: wrap(m.group(1) or "code", m.group(2)),
-        html, flags=re.DOTALL
+        html,
+        flags=re.DOTALL | re.IGNORECASE
     )
+
+    # 3. Generic bare pre>code blocks (ignoring already wrapped .code-pre)
+    html = re.sub(
+        r'<pre(?:\s+class="(?!code-pre)([^"]*)")?\s*><code(?:\s+class="(?:language-)?([^"]*)")?\s*>(.*?)</code>\s*</pre>',
+        lambda m: wrap(m.group(1) or m.group(2) or "code", m.group(3)),
+        html,
+        flags=re.DOTALL | re.IGNORECASE
+    )
+
     return html
 
 

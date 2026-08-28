@@ -84,8 +84,6 @@ de las Ramas</a></li>
 Gestión del Proyecto en GitHub</a></li>
 <li class="toc-item toc-sub"><a class="toc-link" href="#archivos-clave-en-el-directorio-.github">3.1. Archivos Clave en
 el Directorio .github/</a></li>
-<li class="toc-item"><a class="toc-link" href="#módulos-específicos-asignados-a-sus-especialistas">Módulos
-específicos asignados a sus especialistas:</a></li>
 <li class="toc-item toc-sub"><a class="toc-link" href="#reglas-de-protección-de-ramas-branch-protection">3.2. Reglas de
 Protección de Ramas (Branch Protection)</a></li>
 <li class="toc-item toc-sub"><a class="toc-link" href="#gestión-y-tamaño-de-pull-requests">3.3. Gestión y Tamaño de Pull
@@ -166,9 +164,15 @@ pieza de inmediato.</p>
 Redacción</h4>
 <p>La estructura básica se mapea directamente con la arquitectura del
 proyecto:</p>
-<pre class="git"><code>&lt;scope&gt;: &lt;descripcion_en_imperativo&gt;</code></pre>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Git" title="Copiar código al portapapeles">Git</button>
+  <pre class="code-pre"><code>&lt;scope&gt;: &lt;descripcion_en_imperativo&gt;</code></pre>
+</div>
 <p>Para cambios dentro de submódulos o directorios anidados:</p>
-<pre class="git"><code>&lt;scope&gt;/&lt;sub-scope&gt;: &lt;descripcion_en_imperativo&gt;</code></pre>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Git" title="Copiar código al portapapeles">Git</button>
+  <pre class="code-pre"><code>&lt;scope&gt;/&lt;sub-scope&gt;: &lt;descripcion_en_imperativo&gt;</code></pre>
+</div>
 <p><strong>Reglas de estilo:</strong></p>
 <ul>
 <li><p><strong>Ámbitos base (<code>scope</code>):</strong> Nombres de
@@ -181,17 +185,28 @@ responde a: «Al aplicar este commit, el código…».</p></li>
 propios o constantes), sin punto final y manteniendo la primera línea en
 menos de <span class="math inline">72</span> caracteres.</p></li>
 </ul>
-<div class="callout-box note"><div class="callout-title">✦ EXAMPLE</div>
-<p><strong>Ejemplo 1:</strong> Comparación de Convenciones en
-el Log</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Comparación de Convenciones en
+el Log</span>
+  </div>
+  <div class="callout-content">
 <p><strong>Conventional Commits:</strong></p>
-<pre class="git"><code>fix(auth): resolve memory leak on token refresh
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Git" title="Copiar código al portapapeles">Git</button>
+  <pre class="code-pre"><code>fix(auth): resolve memory leak on token refresh
 feat(ui/button): add loading spinner state
 chore(deps): bump postgresql driver to v4.2</code></pre>
+</div>
 <p><strong>Scoped Commits:</strong></p>
-<pre class="git"><code>auth: resolve memory leak on token refresh
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Git" title="Copiar código al portapapeles">Git</button>
+  <pre class="code-pre"><code>auth: resolve memory leak on token refresh
 ui/button: add loading spinner state
 deps: bump postgresql driver to v4.2</code></pre>
+</div>
+  </div>
 </div>
 <p>En Scoped Commits, el lector identifica el módulo de inmediato
 (<code>auth</code>, <code>ui/button</code>, <code>deps</code>). La
@@ -229,7 +244,10 @@ Ramas Basada en Ámbitos</h3>
 <p>Las ramas deben seguir el mismo principio que los Scoped Commits,
 eliminando prefijos como <code>feature/</code> o
 <code>bugfix/</code>.</p>
-<pre class="git"><code>&lt;scope&gt;/&lt;accion-breve&gt;[-&lt;ticket&gt;]</code></pre>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Git" title="Copiar código al portapapeles">Git</button>
+  <pre class="code-pre"><code>&lt;scope&gt;/&lt;accion-breve&gt;[-&lt;ticket&gt;]</code></pre>
+</div>
 <ul>
 <li><strong>Mapeo directo:</strong> El primer segmento indica el módulo
 sobre el que se trabajará.</li>
@@ -240,13 +258,24 @@ palabras.</li>
 Linear, GitHub Issues), se incluye el código al final para mantener
 trazabilidad.</li>
 </ul>
-<div class="callout-box note"><div class="callout-title">✦ EXAMPLE</div>
-<p><strong>Ejemplo 2:</strong> Declaración de Ramas de
-Trabajo</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Declaración de Ramas de
+Trabajo</span>
+  </div>
+  <div class="callout-content">
 <p>Para trabajar en la autenticación con Google (Tarea SEC-45):</p>
-<pre class="git"><code>git checkout -b auth/google-oauth-login-SEC-45</code></pre>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Git" title="Copiar código al portapapeles">Git</button>
+  <pre class="code-pre"><code>git checkout -b auth/google-oauth-login-SEC-45</code></pre>
+</div>
 <p>Para ajustar la tabla de usuarios en la interfaz (Tarea UI-12):</p>
-<pre class="git"><code>git checkout -b ui/virtualized-table-UI-12</code></pre>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Git" title="Copiar código al portapapeles">Git</button>
+  <pre class="code-pre"><code>git checkout -b ui/virtualized-table-UI-12</code></pre>
+</div>
+  </div>
 </div>
 <h3  id="tipos-y-ciclo-de-vida-de-las-ramas">2.3. Tipos y Ciclo de Vida
 de las Ramas</h3>
@@ -278,19 +307,24 @@ qué y cómo probarlo.</p></li>
 que los reportes de errores y solicitudes de funciones incluyan datos
 mínimos (pasos para reproducir, capturas, logs).</p></li>
 </ul>
-<div class="callout-box note"><div class="callout-title">✦ EXAMPLE</div>
-<p><strong>Ejemplo 3:</strong> Configuración de
-<code>CODEOWNERS</code></p>
-<p>```plain text # Por defecto, todo el repositorio requiere revisión
-del equipo general: * <span class="citation"
-data-cites="equipo-core">@equipo-core</span></p>
-<h2  id="módulos-específicos-asignados-a-sus-especialistas">Módulos
-específicos asignados a sus especialistas:</h2>
-<p>/src/auth/ <span class="citation"
-data-cites="seguridad-backend">@seguridad-backend</span> /src/ui/ <span
-class="citation" data-cites="frontend-lead">@frontend-lead</span>
-/infra/ <span class="citation" data-cites="devops">@devops</span>
-```</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3:</strong> Configuración de
+<code>CODEOWNERS</code></span>
+  </div>
+  <div class="callout-content">
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Code" title="Copiar código al portapapeles">Code</button>
+  <pre class="code-pre"><code>Por defecto, todo el repositorio requiere revisión del equipo general:
+*                   @equipo-core
+
+Módulos específicos asignados a sus especialistas:
+/src/auth/          @seguridad-backend
+/src/ui/            @frontend-lead
+/infra/             @devops</code></pre>
+</div>
+  </div>
 </div>
 <h3  id="reglas-de-protección-de-ramas-branch-protection">3.2. Reglas de
 Protección de Ramas (Branch Protection)</h3>
@@ -336,19 +370,23 @@ Silenciosa (<code>git commit --amend</code>)</h4>
 <p>Si acabas de hacer un commit y olvidaste guardar un archivo o dejaste
 un error tipográfico, no crees un commit extra tipo «oops» o «fix
 typo»:</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Agrega el archivo corregido al stage</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add src/auth/jwt.go</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Únelo al último commit sin cambiar el mensaje</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span> <span class="at">--no-edit</span></span></code></pre></div>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Agrega el archivo corregido al stage</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add src/auth/jwt.go</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Únelo al último commit sin cambiar el mensaje</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span> <span class="at">--no-edit</span></span></code></pre>
+</div>
 <h4 id="rebase-interactivo-git-rebase--i">4.1.2. Rebase Interactivo
 (<code>git rebase -i</code>)</h4>
 <p>Permite reordenar, fusionar o renombrar commits locales antes de
 enviarlos al repositorio remoto.</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifica los últimos 3 commits</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rebase <span class="at">-i</span> HEAD~3</span></code></pre></div>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifica los últimos 3 commits</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rebase <span class="at">-i</span> HEAD~3</span></code></pre>
+</div>
 <p>El editor muestra la lista de commits. Los comandos más usados
 son:</p>
 <ul>
@@ -359,20 +397,31 @@ mensajes.</li>
 <li><code>fixup</code>: Une el commit con el anterior y descarta el
 mensaje secundario (ideal para ajustes menores).</li>
 </ul>
-<div class="callout-box note"><div class="callout-title">✦ EXAMPLE</div>
-<p><strong>Ejemplo 4:</strong> Limpieza de Historial con
-<code>fixup</code></p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 4:</strong> Limpieza de Historial con
+<code>fixup</code></span>
+  </div>
+  <div class="callout-content">
 <p><strong>Editor interactivo inicial:</strong></p>
-<pre class="git"><code>pick 4b1a2c3 ui/button: add loading state
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Git" title="Copiar código al portapapeles">Git</button>
+  <pre class="code-pre"><code>pick 4b1a2c3 ui/button: add loading state
 pick 8f3d1e2 ui/button: fix spinner alignment
 pick 9c2a7b1 ui/button: remove console log</code></pre>
+</div>
 <p><strong>Configuración ordenada:</strong></p>
-<pre class="git"><code>pick 4b1a2c3 ui/button: add loading state
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Git" title="Copiar código al portapapeles">Git</button>
+  <pre class="code-pre"><code>pick 4b1a2c3 ui/button: add loading state
 fixup 8f3d1e2 ui/button: fix spinner alignment
 fixup 9c2a7b1 ui/button: remove console log</code></pre>
+</div>
 <p>Al guardar, los tres commits se consolidan en uno solo
 (<code>ui/button: add loading state</code>), borrando los pasos
 intermedios de prueba.</p>
+  </div>
 </div>
 <h3  id="diagnóstico-y-depuración">4.2. Diagnóstico y Depuración</h3>
 <h4 id="git-reflog-la-red-de-seguridad">4.2.1. Git Reflog: La Red de
@@ -383,22 +432,26 @@ de rama, rebases, commits modificados o resets).</p>
 <p>Si ejecutas un <code>git reset --hard</code> por error y parece que
 perdiste tus cambios, <code>reflog</code> guarda el historial de dónde
 estuvo tu puntero:</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Inspecciona el registro de movimientos</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reflog</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Regresa la rama al estado previo al error (ejemplo: HEAD@{2})</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> HEAD@{2}</span></code></pre></div>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Inspecciona el registro de movimientos</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reflog</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Regresa la rama al estado previo al error (ejemplo: HEAD@{2})</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> HEAD@{2}</span></code></pre>
+</div>
 <h4 id="depuración-con-git-bisect">4.2.2. Depuración con Git Bisect</h4>
 <p>Cuando aparece un bug y no sabes qué commit lo causó,
 <code>git bisect</code> aplica búsqueda binaria sobre el historial para
 hallar la confirmación exacta en tiempo <span
 class="math inline">𝒪(log <em>n</em>)</span>.</p>
 <p><strong>Paso 1: Iniciar la sesión de búsqueda</strong></p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect start</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect bad                 <span class="co"># La versión actual tiene el bug</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect good v1.4.0         <span class="co"># El tag o commit donde todo funcionaba bien</span></span></code></pre></div>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect start</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect bad                 <span class="co"># La versión actual tiene el bug</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect good v1.4.0         <span class="co"># El tag o commit donde todo funcionaba bien</span></span></code></pre>
+</div>
 <p><strong>Paso 2: Evaluar los puntos medios</strong></p>
 <p>Git moverá el código automáticamente al punto medio del historial.
 Pruebas la aplicación y marcas:</p>
@@ -409,14 +462,18 @@ Pruebas la aplicación y marcas:</p>
 <p><strong>Paso 3: Cerrar la sesión</strong></p>
 <p>Al terminar, Git te dirá el hash y autor exacto del commit que
 introdujo el error. Para volver a tu rama normal:</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect reset</span></code></pre></div>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect reset</span></code></pre>
+</div>
 <h4 id="búsqueda-por-contenido-con-pickaxe--s">4.2.3. Búsqueda por
 Contenido con Pickaxe (<code>-S</code>)</h4>
 <p>Para encontrar en qué commit se introdujo o eliminó una función,
 variable o texto específico en todo el historial del proyecto:</p>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-S</span> <span class="st">&quot;AUTH_SECRET_KEY&quot;</span> <span class="at">--oneline</span></span></code></pre></div>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-S</span> <span class="st">&quot;AUTH_SECRET_KEY&quot;</span> <span class="at">--oneline</span></span></code></pre>
+</div>
 <h2  id="estrategias-de-fusión-y-sincronización">5. Estrategias de Fusión
 y Sincronización</h2>
 <h3  id="comparación-de-estrategias-de-integración">5.1. Comparación de
@@ -442,27 +499,34 @@ Ruido</h3>
 <p>Para evitar que <code>git pull</code> genere commits de fusión
 automáticos innecesarios (<code>Merge branch 'main' of...</code>),
 configura tu entorno para sincronizar siempre mediante rebase:</p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebasar cambios locales sobre los remotos al hacer pull</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> pull.rebase true</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpiar automáticamente referencias a ramas que ya fueron borradas en remoto</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> fetch.prune true</span></code></pre></div>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebasar cambios locales sobre los remotos al hacer pull</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> pull.rebase true</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpiar automáticamente referencias a ramas que ya fueron borradas en remoto</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> fetch.prune true</span></code></pre>
+</div>
 <hr />
-<div class="callout-box note"><div class="callout-title">✦ RESOURCES</div>
-<p>REFERENCIAS</p>
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
 <ul>
-<li><strong>Scoped Commits Initiative.</strong> <em>A simplified
+<li><p><strong>Scoped Commits Initiative.</strong> <em>A simplified
 alternative to Conventional Commits</em>. Recuperado de <a
 href="https://scopedcommits.com/"
-title="null">scopedcommits.com</a></li>
-<li><strong>Scott Chacon &amp; Ben Straub.</strong> <em>Pro Git
+title="null">scopedcommits.com</a></p></li>
+<li><p><strong>Scott Chacon &amp; Ben Straub.</strong> <em>Pro Git
 Book</em>. Recuperado de <a href="https://git-scm.com/book/en/v2"
-title="null">git-scm.com</a></li>
-<li><strong>Git Documentation.</strong> <em>Git Reference Manual</em>.
-Recuperado de <a href="https://git-scm.com/doc"
-title="null">git-scm.com</a></li>
+title="null">git-scm.com</a></p></li>
+<li><p><strong>Git Documentation.</strong> <em>Git Reference
+Manual</em>. Recuperado de <a href="https://git-scm.com/doc"
+title="null">git-scm.com</a></p></li>
 </ul>
+  </div>
 </div>
 
           </div>
