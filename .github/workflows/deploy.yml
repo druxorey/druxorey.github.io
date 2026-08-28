@@ -1,0 +1,61 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main          # Se ejecuta en cada push a main
+  workflow_dispatch:  # Permite dispararlo manualmente desde la UI de GitHub
+
+# Permisos necesarios para escribir en gh-pages
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del código fuente
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Instalar Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Instalar Python 3 (viene preinstalado en ubuntu-latest)
+      - name: Verify Python
+        run: python3 --version
+
+      # 4. Instalar Pandoc (necesario para compilar Markdown → HTML)
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y pandoc
+
+      # 5. Instalar dependencias de Node
+      - name: Install Node dependencies
+        run: npm ci
+
+      # 6. Build completo:
+      #    - prebuild.py → fetch GitHub projects + compila blog/markdown/ → blog/
+      #    - tsc → TypeScript type checking
+      #    - vite build → bundle final en dist/
+      - name: Build site
+        run: npm run build
+
+      # 7. Deploy: publica dist/ en la rama gh-pages
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          # Fuerza que la rama gh-pages esté limpia en cada deploy
+          force_orphan: true
+          # Evita que gh-pages agregue un archivo .nojekyll redundante
+          # (Vite ya genera el output correcto)
+          enable_jekyll: false
+          commit_message: "deploy: ${{ github.sha }}"

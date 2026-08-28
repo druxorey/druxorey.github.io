@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buenas Prácticas de Gestión de Repositorios | Druxorey</title>
+  <meta name="description" content="La gestión profesional de repositorios se basa en el uso de Scoped Commits y convenciones de nomenclatura claras para transformar el historial de cambios en una herramienta de navegación intuitiva. Al integrar PRs atómicas, protección de ramas y buenas prácticas de higiene del código, es posible elevar la calidad del desarrollo y simplificar la colaboración en proyectos de cualquier escala.">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/about.html" class="nav-link">Trayectoria</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/about.html" class="nav-link">Trayectoria</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/blog.html" class="nav-link active">Blog</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Article Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/blog.html" class="article-back-link">
+          ← Volver al catálogo de artículos
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Article Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#fundamentos-de-scoped-commits-frente-a-conventional-commits">1.
+Fundamentos de Scoped Commits frente a Conventional Commits</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#limitaciones-de-conventional-commits">1.1. Limitaciones de
+Conventional Commits</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#filosofía-y-estructura-de-scoped-commits">1.2. Filosofía y
+Estructura de Scoped Commits</a></li>
+<li class="toc-item"><a class="toc-link" href="#convenciones-de-nombres-para-repositorios-y-ramas">2.
+Convenciones de Nombres para Repositorios y Ramas</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#nomenclatura-de-repositorios">2.1. Nomenclatura de
+Repositorios</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#nomenclatura-de-ramas-basada-en-ámbitos">2.2. Nomenclatura de
+Ramas Basada en Ámbitos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#tipos-y-ciclo-de-vida-de-las-ramas">2.3. Tipos y Ciclo de Vida
+de las Ramas</a></li>
+<li class="toc-item"><a class="toc-link" href="#gobernanza-y-gestión-del-proyecto-en-github">3. Gobernanza y
+Gestión del Proyecto en GitHub</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#archivos-clave-en-el-directorio-.github">3.1. Archivos Clave en
+el Directorio .github/</a></li>
+<li class="toc-item"><a class="toc-link" href="#módulos-específicos-asignados-a-sus-especialistas">Módulos
+específicos asignados a sus especialistas:</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#reglas-de-protección-de-ramas-branch-protection">3.2. Reglas de
+Protección de Ramas (Branch Protection)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#gestión-y-tamaño-de-pull-requests">3.3. Gestión y Tamaño de Pull
+Requests</a></li>
+<li class="toc-item"><a class="toc-link" href="#operaciones-de-higiene-diagnóstico-y-recuperación">4.
+Operaciones de Higiene, Diagnóstico y Recuperación</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#higiene-del-historial-local">4.1. Higiene del Historial
+Local</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#diagnóstico-y-depuración">4.2. Diagnóstico y Depuración</a></li>
+<li class="toc-item"><a class="toc-link" href="#estrategias-de-fusión-y-sincronización">5. Estrategias de Fusión
+y Sincronización</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#comparación-de-estrategias-de-integración">5.1. Comparación de
+Estrategias de Integración</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#sincronización-local-sin-ruido">5.2. Sincronización Local sin
+Ruido</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Article Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Artículo · Investigación</div>
+          <h1 class="article-title">Buenas Prácticas de Gestión de Repositorios</h1>
+
+          <div class="article-meta">
+            <time datetime="2026-06-14">2026-06-14</time>
+            <span>·</span>
+            <span>10 min de lectura</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            <span class="tag">#investigaciones</span>
+          </div>
+
+          <!-- Featured Banner Image -->
+          
+          <div class="article-banner-wrapper">
+            <img class="article-banner-img" src="/images/post/buenas-practicas-de-gestion-de-repositorios.avif" alt="Buenas Prácticas de Gestión de Repositorios">
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <h2  id="fundamentos-de-scoped-commits-frente-a-conventional-commits">1.
+Fundamentos de Scoped Commits frente a Conventional Commits</h2>
+<h3  id="limitaciones-de-conventional-commits">1.1. Limitaciones de
+Conventional Commits</h3>
+<p>Conventional Commits clasifica los cambios anteponiendo el tipo de
+acción administrativa (<code>feat</code>, <code>fix</code>,
+<code>chore</code>, <code>refactor</code>). En el día a día de proyectos
+medianos y grandes, este esquema presenta fricciones:</p>
+<ul>
+<li><p><strong>Ruido visual en el historial:</strong> Al revisar
+<code>git log</code>, la columna izquierda se satura con las mismas
+cuatro palabras repetidas, ocultando qué parte del sistema se
+modificó.</p></li>
+<li><p><strong>Pérdida de tiempo en categorizaciones:</strong> La
+diferencia práctica entre un <code>refactor</code>, un <code>perf</code>
+y un <code>fix</code> interno suele ser subjetiva. Debatir la etiqueta
+distrae del objetivo del cambio.</p></li>
+<li><p><strong>Falta de ubicación espacial:</strong> Para depurar o
+entender la evolución de un archivo, la información crítica no es la
+intención administrativa, sino el componente o módulo exacto que fue
+alterado.</p></li>
+</ul>
+<h3  id="filosofía-y-estructura-de-scoped-commits">1.2. Filosofía y
+Estructura de Scoped Commits</h3>
+<p>Un Scoped Commit es un formato de mensaje de confirmación que elimina
+el prefijo de acción administrativa y coloca como sujeto principal el
+componente, módulo o directorio modificado:
+<code>&lt;scope&gt;: &lt;descripción&gt;</code>.</p>
+<p>Para entender la diferencia, piensa en un taller mecánico: si guardas
+repuestos en cajas etiquetadas como «adición» o «arreglo», nadie sabe
+qué hay adentro. En cambio, si las cajas dicen «frenos: pastillas
+delanteras» o «motor: filtro de aceite», cualquier mecánico ubica la
+pieza de inmediato.</p>
+<h4 id="anatomía-y-reglas-de-redacción">1.2.1. Anatomía y Reglas de
+Redacción</h4>
+<p>La estructura básica se mapea directamente con la arquitectura del
+proyecto:</p>
+<pre class="git"><code>&lt;scope&gt;: &lt;descripcion_en_imperativo&gt;</code></pre>
+<p>Para cambios dentro de submódulos o directorios anidados:</p>
+<pre class="git"><code>&lt;scope&gt;/&lt;sub-scope&gt;: &lt;descripcion_en_imperativo&gt;</code></pre>
+<p><strong>Reglas de estilo:</strong></p>
+<ul>
+<li><p><strong>Ámbitos base (<code>scope</code>):</strong> Nombres de
+módulos reales del repositorio (<code>auth</code>, <code>api</code>,
+<code>ui</code>, <code>db</code>, <code>deps</code>, <code>infra</code>,
+<code>docs</code>).</p></li>
+<li><p><strong>Verbo en presente imperativo:</strong> La descripción
+responde a: «Al aplicar este commit, el código…».</p></li>
+<li><p><strong>Formato:</strong> Todo en minúsculas (salvo nombres
+propios o constantes), sin punto final y manteniendo la primera línea en
+menos de <span class="math inline">72</span> caracteres.</p></li>
+</ul>
+<div class="callout-box note"><div class="callout-title">✦ EXAMPLE</div>
+<p><strong>Ejemplo 1:</strong> Comparación de Convenciones en
+el Log</p>
+<p><strong>Conventional Commits:</strong></p>
+<pre class="git"><code>fix(auth): resolve memory leak on token refresh
+feat(ui/button): add loading spinner state
+chore(deps): bump postgresql driver to v4.2</code></pre>
+<p><strong>Scoped Commits:</strong></p>
+<pre class="git"><code>auth: resolve memory leak on token refresh
+ui/button: add loading spinner state
+deps: bump postgresql driver to v4.2</code></pre>
+</div>
+<p>En Scoped Commits, el lector identifica el módulo de inmediato
+(<code>auth</code>, <code>ui/button</code>, <code>deps</code>). La
+naturaleza del cambio (si es corrección, ajuste o mejora) se entiende
+directamente al leer la acción o el diff del código.</p>
+<h2  id="convenciones-de-nombres-para-repositorios-y-ramas">2.
+Convenciones de Nombres para Repositorios y Ramas</h2>
+<h3  id="nomenclatura-de-repositorios">2.1. Nomenclatura de
+Repositorios</h3>
+<p>Un buen nombre de repositorio debe ser autoexplicativo, predecible y
+fácil de escribir en terminal.</p>
+<ul>
+<li><p><strong>Uso estricto de kebab-case:</strong> Todo en minúsculas y
+separado por guiones medios (ej. <code>payment-gateway</code>). Nunca
+usar mayúsculas, espacios ni guiones bajos.</p></li>
+<li><p><strong>Prefijos por tipo de componente:</strong> En
+organizaciones con varios repositorios, ayuda clasificar el rol del
+proyecto:</p>
+<ul>
+<li><code>app-</code>: Aplicaciones de usuario final o clientes
+web/móvil (ej. <code>app-admin-portal</code>).</li>
+<li><code>svc-</code>: Servicios o APIs backend (ej.
+<code>svc-orders</code>).</li>
+<li><code>lib-</code>: Librerías o utilidades compartidas (ej.
+<code>lib-logger</code>).</li>
+<li><code>infra-</code>: Automatización, contenedores o scripts de
+despliegue (ej. <code>infra-k8s-configs</code>).</li>
+</ul></li>
+<li><p><strong>Sin sufijos temporales:</strong> Prohibido usar
+<code>-v2</code>, <code>-new</code> o <code>-final</code>. El control de
+versiones ya gestiona la evolución temporal.</p></li>
+</ul>
+<h3  id="nomenclatura-de-ramas-basada-en-ámbitos">2.2. Nomenclatura de
+Ramas Basada en Ámbitos</h3>
+<p>Las ramas deben seguir el mismo principio que los Scoped Commits,
+eliminando prefijos como <code>feature/</code> o
+<code>bugfix/</code>.</p>
+<pre class="git"><code>&lt;scope&gt;/&lt;accion-breve&gt;[-&lt;ticket&gt;]</code></pre>
+<ul>
+<li><strong>Mapeo directo:</strong> El primer segmento indica el módulo
+sobre el que se trabajará.</li>
+<li><strong>Acción en kebab-case:</strong> Resumen corto de <span
+class="math inline">2</span> a <span class="math inline">4</span>
+palabras.</li>
+<li><strong>ID de tarea:</strong> Si se usa un gestor de tareas (Jira,
+Linear, GitHub Issues), se incluye el código al final para mantener
+trazabilidad.</li>
+</ul>
+<div class="callout-box note"><div class="callout-title">✦ EXAMPLE</div>
+<p><strong>Ejemplo 2:</strong> Declaración de Ramas de
+Trabajo</p>
+<p>Para trabajar en la autenticación con Google (Tarea SEC-45):</p>
+<pre class="git"><code>git checkout -b auth/google-oauth-login-SEC-45</code></pre>
+<p>Para ajustar la tabla de usuarios en la interfaz (Tarea UI-12):</p>
+<pre class="git"><code>git checkout -b ui/virtualized-table-UI-12</code></pre>
+</div>
+<h3  id="tipos-y-ciclo-de-vida-de-las-ramas">2.3. Tipos y Ciclo de Vida
+de las Ramas</h3>
+<ul>
+<li><p><strong>Rama principal (<code>main</code>):</strong> Refleja el
+código listo para producción. No se envían commits directamente a
+ella.</p></li>
+<li><p><strong>Ramas de trabajo
+(<code>&lt;scope&gt;/...</code>):</strong> Ramas cortas creadas para
+resolver una tarea puntual. Su ciclo de vida ideal es de <span
+class="math inline">1</span> a <span class="math inline">3</span> días y
+deben eliminarse del servidor remoto tras ser integradas.</p></li>
+</ul>
+<h2  id="gobernanza-y-gestión-del-proyecto-en-github">3. Gobernanza y
+Gestión del Proyecto en GitHub</h2>
+<h3  id="archivos-clave-en-el-directorio-.github">3.1. Archivos Clave en
+el Directorio <code>.github/</code></h3>
+<p>Configurar buenas herramientas dentro de <code>.github/</code>
+automatiza el orden del equipo sin necesidad de reuniones de
+coordinación constantes:</p>
+<ul>
+<li><p><strong><code>CODEOWNERS</code>:</strong> Asigna de forma
+automática a los revisores responsables según los archivos modificados
+en una Pull Request.</p></li>
+<li><p><strong><code>PULL_REQUEST_TEMPLATE.md</code>:</strong>
+Formulario predeterminado que guía al autor a describir qué cambió, por
+qué y cómo probarlo.</p></li>
+<li><p><strong><code>ISSUE_TEMPLATE/</code>:</strong> Plantillas para
+que los reportes de errores y solicitudes de funciones incluyan datos
+mínimos (pasos para reproducir, capturas, logs).</p></li>
+</ul>
+<div class="callout-box note"><div class="callout-title">✦ EXAMPLE</div>
+<p><strong>Ejemplo 3:</strong> Configuración de
+<code>CODEOWNERS</code></p>
+<p>```plain text # Por defecto, todo el repositorio requiere revisión
+del equipo general: * <span class="citation"
+data-cites="equipo-core">@equipo-core</span></p>
+<h2  id="módulos-específicos-asignados-a-sus-especialistas">Módulos
+específicos asignados a sus especialistas:</h2>
+<p>/src/auth/ <span class="citation"
+data-cites="seguridad-backend">@seguridad-backend</span> /src/ui/ <span
+class="citation" data-cites="frontend-lead">@frontend-lead</span>
+/infra/ <span class="citation" data-cites="devops">@devops</span>
+```</p>
+</div>
+<h3  id="reglas-de-protección-de-ramas-branch-protection">3.2. Reglas de
+Protección de Ramas (Branch Protection)</h3>
+<p>Para evitar accidentes en la rama <code>main</code>, se deben activar
+las siguientes restricciones en GitHub:</p>
+<ul>
+<li><p><strong>Aprobaciones obligatorias:</strong> Exigir al menos <span
+class="math inline">1</span> o <span class="math inline">2</span>
+revisiones aprobadas por pares antes de habilitar el merge.</p></li>
+<li><p><strong>Status Checks requeridos:</strong> La PR no se puede
+integrar si los tests automáticos, linters o compilaciones de CI
+fallan.</p></li>
+<li><p><strong>Historial lineal obligatorio:</strong> Bloquea la
+creación de merge commits desordenados forzando rebase o
+squash.</p></li>
+<li><p><strong>Bloqueo de <code>push --force</code>:</strong> Impide que
+alguien sobreescriba accidentalmente el historial compartido de
+<code>main</code>.</p></li>
+</ul>
+<h3  id="gestión-y-tamaño-de-pull-requests">3.3. Gestión y Tamaño de Pull
+Requests</h3>
+<p>Un error común es acumular dos semanas de trabajo en una sola PR de
+<span class="math inline">2000</span> líneas. Esto hace que las
+revisiones sean superficiales y los bugs pasen inadvertidos.</p>
+<ul>
+<li><p><strong>PRs atómicas y pequeñas:</strong> Cada PR debe abarcar un
+único cambio funcional, manteniéndose idealmente por debajo de <span
+class="math inline">300</span> - <span class="math inline">400</span>
+líneas.</p></li>
+<li><p><strong>Draft PRs (Borradores):</strong> Abre la PR como borrador
+desde el primer commit. Esto permite que el CI valide el código temprano
+y el equipo pueda ver en qué estás trabajando sin pedir una revisión
+formal todavía.</p></li>
+</ul>
+<h2  id="operaciones-de-higiene-diagnóstico-y-recuperación">4.
+Operaciones de Higiene, Diagnóstico y Recuperación</h2>
+<h3  id="higiene-del-historial-local">4.1. Higiene del Historial
+Local</h3>
+<p>Antes de pedir revisión en una PR, el historial local debe quedar
+limpio y estructurado.</p>
+<h4 id="enmienda-silenciosa-git-commit---amend">4.1.1. Enmienda
+Silenciosa (<code>git commit --amend</code>)</h4>
+<p>Si acabas de hacer un commit y olvidaste guardar un archivo o dejaste
+un error tipográfico, no crees un commit extra tipo «oops» o «fix
+typo»:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Agrega el archivo corregido al stage</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add src/auth/jwt.go</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Únelo al último commit sin cambiar el mensaje</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span> <span class="at">--no-edit</span></span></code></pre></div>
+<h4 id="rebase-interactivo-git-rebase--i">4.1.2. Rebase Interactivo
+(<code>git rebase -i</code>)</h4>
+<p>Permite reordenar, fusionar o renombrar commits locales antes de
+enviarlos al repositorio remoto.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifica los últimos 3 commits</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rebase <span class="at">-i</span> HEAD~3</span></code></pre></div>
+<p>El editor muestra la lista de commits. Los comandos más usados
+son:</p>
+<ul>
+<li><code>pick</code>: Mantiene el commit.</li>
+<li><code>reword</code>: Pausa el proceso para corregir el mensaje.</li>
+<li><code>squash</code>: Une el commit con el anterior y combina los
+mensajes.</li>
+<li><code>fixup</code>: Une el commit con el anterior y descarta el
+mensaje secundario (ideal para ajustes menores).</li>
+</ul>
+<div class="callout-box note"><div class="callout-title">✦ EXAMPLE</div>
+<p><strong>Ejemplo 4:</strong> Limpieza de Historial con
+<code>fixup</code></p>
+<p><strong>Editor interactivo inicial:</strong></p>
+<pre class="git"><code>pick 4b1a2c3 ui/button: add loading state
+pick 8f3d1e2 ui/button: fix spinner alignment
+pick 9c2a7b1 ui/button: remove console log</code></pre>
+<p><strong>Configuración ordenada:</strong></p>
+<pre class="git"><code>pick 4b1a2c3 ui/button: add loading state
+fixup 8f3d1e2 ui/button: fix spinner alignment
+fixup 9c2a7b1 ui/button: remove console log</code></pre>
+<p>Al guardar, los tres commits se consolidan en uno solo
+(<code>ui/button: add loading state</code>), borrando los pasos
+intermedios de prueba.</p>
+</div>
+<h3  id="diagnóstico-y-depuración">4.2. Diagnóstico y Depuración</h3>
+<h4 id="git-reflog-la-red-de-seguridad">4.2.1. Git Reflog: La Red de
+Seguridad</h4>
+<p>El <code>reflog</code> es un registro local que guarda
+cronológicamente cada movimiento del puntero <code>HEAD</code> (cambios
+de rama, rebases, commits modificados o resets).</p>
+<p>Si ejecutas un <code>git reset --hard</code> por error y parece que
+perdiste tus cambios, <code>reflog</code> guarda el historial de dónde
+estuvo tu puntero:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Inspecciona el registro de movimientos</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reflog</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Regresa la rama al estado previo al error (ejemplo: HEAD@{2})</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> HEAD@{2}</span></code></pre></div>
+<h4 id="depuración-con-git-bisect">4.2.2. Depuración con Git Bisect</h4>
+<p>Cuando aparece un bug y no sabes qué commit lo causó,
+<code>git bisect</code> aplica búsqueda binaria sobre el historial para
+hallar la confirmación exacta en tiempo <span
+class="math inline">𝒪(log <em>n</em>)</span>.</p>
+<p><strong>Paso 1: Iniciar la sesión de búsqueda</strong></p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect start</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect bad                 <span class="co"># La versión actual tiene el bug</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect good v1.4.0         <span class="co"># El tag o commit donde todo funcionaba bien</span></span></code></pre></div>
+<p><strong>Paso 2: Evaluar los puntos medios</strong></p>
+<p>Git moverá el código automáticamente al punto medio del historial.
+Pruebas la aplicación y marcas:</p>
+<ul>
+<li>Si el bug está presente: <code>git bisect bad</code></li>
+<li>Si el código funciona bien: <code>git bisect good</code></li>
+</ul>
+<p><strong>Paso 3: Cerrar la sesión</strong></p>
+<p>Al terminar, Git te dirá el hash y autor exacto del commit que
+introdujo el error. Para volver a tu rama normal:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect reset</span></code></pre></div>
+<h4 id="búsqueda-por-contenido-con-pickaxe--s">4.2.3. Búsqueda por
+Contenido con Pickaxe (<code>-S</code>)</h4>
+<p>Para encontrar en qué commit se introdujo o eliminó una función,
+variable o texto específico en todo el historial del proyecto:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-S</span> <span class="st">&quot;AUTH_SECRET_KEY&quot;</span> <span class="at">--oneline</span></span></code></pre></div>
+<h2  id="estrategias-de-fusión-y-sincronización">5. Estrategias de Fusión
+y Sincronización</h2>
+<h3  id="comparación-de-estrategias-de-integración">5.1. Comparación de
+Estrategias de Integración</h3>
+<p>Al cerrar una Pull Request, existen tres métodos principales para
+incorporar los cambios a <code>main</code>:</p>
+<ul>
+<li><p><strong>Merge Commit clásico (<code>--no-ff</code>):</strong>
+Crea un commit explícito con dos ramas padre. Conserva exactamente la
+historia de la rama, pero si el equipo es grande puede generar un grafo
+enredado lleno de bifurcaciones cruzadas.</p></li>
+<li><p><strong>Rebase and Merge (Fast-Forward):</strong> Aplica los
+commits de la rama uno por uno sobre la punta de <code>main</code>. Deja
+un historial totalmente lineal, pero requiere que cada commit individual
+de la rama sea atómico y estable.</p></li>
+<li><p><strong>Squash and Merge:</strong> Toma todos los commits de la
+rama y los compacta en un único commit directo sobre <code>main</code>.
+Es la mejor opción cuando la rama de trabajo contiene muchos commits de
+prueba o desordenados.</p></li>
+</ul>
+<h3  id="sincronización-local-sin-ruido">5.2. Sincronización Local sin
+Ruido</h3>
+<p>Para evitar que <code>git pull</code> genere commits de fusión
+automáticos innecesarios (<code>Merge branch 'main' of...</code>),
+configura tu entorno para sincronizar siempre mediante rebase:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebasar cambios locales sobre los remotos al hacer pull</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> pull.rebase true</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpiar automáticamente referencias a ramas que ya fueron borradas en remoto</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> fetch.prune true</span></code></pre></div>
+<hr />
+<div class="callout-box note"><div class="callout-title">✦ RESOURCES</div>
+<p>REFERENCIAS</p>
+<ul>
+<li><strong>Scoped Commits Initiative.</strong> <em>A simplified
+alternative to Conventional Commits</em>. Recuperado de <a
+href="https://scopedcommits.com/"
+title="null">scopedcommits.com</a></li>
+<li><strong>Scott Chacon &amp; Ben Straub.</strong> <em>Pro Git
+Book</em>. Recuperado de <a href="https://git-scm.com/book/en/v2"
+title="null">git-scm.com</a></li>
+<li><strong>Git Documentation.</strong> <em>Git Reference Manual</em>.
+Recuperado de <a href="https://git-scm.com/doc"
+title="null">git-scm.com</a></li>
+</ul>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/about.html">Trayectoria</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/blog.html">Blog</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/scripts/main.ts"></script>
+  <script type="module" src="/src/scripts/copy-code.ts"></script>
+  <script type="module" src="/src/scripts/article.ts"></script>
+</body>
+</html>

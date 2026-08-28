@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Druxorey | Blog & Notas de Investigación</title>
-  <meta name="description" content="Artículos, notas técnicas e investigaciones sobre Linux, programación de sistemas y computación escritas por Druxorey.">
+  <title>Druxorey | Proyectos - Linux & Sistemas</title>
+  <meta name="description" content="Proyectos de software, herramientas de sistemas y scripts desarrollados por Druxorey.">
   <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
   <link rel="stylesheet" href="/src/styles/main.css">
 </head>
@@ -21,8 +21,8 @@
         <ul class="nav-links">
           <li><a href="./index.html" class="nav-link">Sobre mí</a></li>
           <li><a href="./about.html" class="nav-link">Trayectoria</a></li>
-          <li><a href="./projects.html" class="nav-link">Proyectos</a></li>
-          <li><a href="./blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="./projects.html" class="nav-link active">Proyectos</a></li>
+          <li><a href="./blog.html" class="nav-link">Blog</a></li>
           <li><a href="./contact.html" class="nav-link">Contacto</a></li>
         </ul>
       </nav>
@@ -37,8 +37,8 @@
     <div id="mobileMenu" class="mobile-menu">
       <a href="./index.html" class="nav-link">Sobre mí</a>
       <a href="./about.html" class="nav-link">Trayectoria</a>
-      <a href="./projects.html" class="nav-link">Proyectos</a>
-      <a href="./blog.html" class="nav-link active">Blog</a>
+      <a href="./projects.html" class="nav-link active">Proyectos</a>
+      <a href="./blog.html" class="nav-link">Blog</a>
       <a href="./contact.html" class="nav-link">Contacto</a>
     </div>
   </header>
@@ -47,34 +47,18 @@
     <div class="container">
 
       <header class="page-header">
-        <h1 class="page-title">Blog e Investigaciones</h1>
+        <h1 class="page-title">Proyectos</h1>
       </header>
 
-      <section class="blog-search-section">
-        <div class="blog-search-wrap">
-          <input
-            type="text"
-            id="blogSearchInput"
-            class="input-search"
-            placeholder="Buscar por título, contenido o etiqueta (ej. #linux, git, kernel)..."
-            aria-label="Buscar artículos en el blog"
-          />
-        </div>
-
-        <div class="blog-filters-row">
-          <div id="blogTagsContainer" class="blog-tags-list"></div>
-          <span id="articleCount" class="blog-article-count">
-            Cargando artículos...
-          </span>
-        </div>
-      </section>
-
-      <section id="articlesContainer" class="articles-list">
+      <!-- Projects Grid -->
+      <section id="projectsContainer" class="projects-grid">
+        <!-- Populated dynamically via TypeScript -->
       </section>
 
     </div>
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div>
@@ -92,6 +76,6 @@
   </footer>
 
   <script type="module" src="/src/scripts/main.ts"></script>
-  <script type="module" src="/src/scripts/blog.ts"></script>
+  <script type="module" src="/src/scripts/projects.ts"></script>
 </body>
 </html>

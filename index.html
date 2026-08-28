@@ -1,49 +1,426 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRUXOREY</title>
-    <link rel="stylesheet" type="text/css" href="/static/styles/global.css">
-    <link rel="icon" type="image/x-icon" href="/static/images/logo.svg">
-	<script src="/scripts/toggleSidebar.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre mí | Guillermo Galavís (Druxorey)</title>
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <link rel="stylesheet" href="/src/styles/main.css">
 </head>
-
 <body>
 
-    <header class="header-root">
-        <div class="header-container">
+  <header class="navbar">
+    <div class="container">
+      <a href="./index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
 
-            <div class="header-left-section">
-                <a id="header-logo-section" href="/index.html">
-                    <img id="header-logo" src="/static/images/logo.webp">
-                    <p id="header-home" class="header-text-link">home</p>
-                </a>
-            </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="./index.html" class="nav-link active">Sobre mí</a></li>
+          <li><a href="./about.html" class="nav-link">Trayectoria</a></li>
+          <li><a href="./projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="./blog.html" class="nav-link">Blog</a></li>
+          <li><a href="./contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
 
-            <div class="header-middle-section">
-                <a class="header-text-link" href="/projects.html">projects</a>
-                <a class="header-text-link" href="/blog.html">blog</a>
-                <a class="header-text-link" href="/about.html">about me</a>
-            </div>
-
-            <div class="header-right-section">
-				<img id="header-menu" src="/static/images/menu.svg" onclick="toggleSidebar()">
-            </div>
-
-        </div>
-    </header>
-
-    <div class="main-root">
-        <div class="main-home">
-			<div class="home-presentation-container">
-				<a id="home-presentation-name" href="/about.html">Hi, i'm Druxorey</a>
-				<p id="home-presentation-description">Junior DevOps Specialist with a strong focus on Linux and Open Source projects. Currently pursuing a degree in Computer Science. Passionate about Open Source Software and eager to collaborate on projects involving Linux, Python, and C++.</p>
-			</div>
-        </div>
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
 
-</body>
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="./index.html" class="nav-link active">Sobre mí</a>
+      <a href="./about.html" class="nav-link">Trayectoria</a>
+      <a href="./projects.html" class="nav-link">Proyectos</a>
+      <a href="./blog.html" class="nav-link">Blog</a>
+      <a href="./contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
 
+  <main class="main-content">
+    <div class="container">
+
+      <section class="page-section" aria-label="Presentación y terminal">
+
+        <div>
+          <div class="terminal-window" aria-label="Terminal fastfetch de sistema">
+            <div class="terminal-titlebar">
+              <div class="terminal-buttons">
+                <span class="terminal-dot close"></span>
+                <span class="terminal-dot minimize"></span>
+                <span class="terminal-dot maximize"></span>
+              </div>
+              <span class="terminal-title">druxorey@archlinux: ~ (fastfetch)</span>
+            </div>
+
+            <div class="terminal-body">
+              <div class="fastfetch-layout">
+                <div class="fastfetch-logo-col">
+                  <pre class="fastfetch-ascii-logo">       /\
+      /  \
+     /\   \
+    /      \
+   /   ,,   \
+  /   |  |  -\
+ /_-''    ''-_\</pre>
+                </div>
+
+                <div class="fastfetch-info-col">
+                  <div class="fastfetch-user-host">
+                    druxorey<span class="text-comment">@</span><span class="host-name">archlinux</span>
+                  </div>
+                  <div class="fastfetch-separator">-----------------</div>
+
+                  <div class="fastfetch-item">
+                    <span class="fastfetch-key">Rol:</span>
+                    <span class="fastfetch-val">Estudiante de Ciencias de la Computación</span>
+                  </div>
+
+                  <div class="fastfetch-item">
+                    <span class="fastfetch-key">Ubicación:</span>
+                    <span class="fastfetch-val">Universidad Central de Venezuela (UCV)</span>
+                  </div>
+
+                  <div class="fastfetch-item">
+                    <span class="fastfetch-key">Enfoque:</span>
+                    <span class="fastfetch-val">Redes, Arquitectura de SO y Programación a bajo nivel</span>
+                  </div>
+
+                  <div class="fastfetch-item">
+                    <span class="fastfetch-key">Lenguajes:</span>
+                    <span class="fastfetch-val">C, C++, Python, Bash, Golang, Lua</span>
+                  </div>
+
+                  <div class="fastfetch-item">
+                    <span class="fastfetch-key">Stack:</span>
+                    <span class="fastfetch-val">Neovim, Tmux, Ssh</span>
+                  </div>
+
+                  <div class="fastfetch-item">
+                    <span class="fastfetch-key">Esquema:</span>
+                    <span class="fastfetch-val">Dracula Theme</span>
+                  </div>
+
+                  <div class="fastfetch-item fastfetch-spacer">
+                    <span class="fastfetch-key">Links:</span>
+                    <span class="fastfetch-val">
+                      <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer" class="terminal-link">github</a>
+                      <a href="https://linkedin.com/in/guillermo-galavis" target="_blank" rel="noopener noreferrer" class="terminal-link">linkedin</a>
+                      <a href="./contact.html" class="terminal-link">contacto</a>
+                    </span>
+                  </div>
+
+                  <div class="fastfetch-item fastfetch-spacer">
+                    <span class="fastfetch-key"></span>
+                    <div class="fastfetch-val">
+                      <div class="fastfetch-palette">
+                        <span class="palette-block black" title="Black / Base"></span>
+                        <span class="palette-block red" title="Red"></span>
+                        <span class="palette-block green" title="Green"></span>
+                        <span class="palette-block yellow" title="Yellow"></span>
+                        <span class="palette-block blue" title="Blue"></span>
+                        <span class="palette-block magenta" title="Pink"></span>
+                        <span class="palette-block cyan" title="Cyan"></span>
+                        <span class="palette-block white" title="White"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="page-section">
+        <div class="section-title-wrap">
+          <h2 class="section-title">¿Qué Hago?</h2>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon-box purple">
+              <span>&lt;/&gt;</span>
+            </div>
+            <h3 class="feature-title">Sistemas Operativos &amp; Bajo Nivel</h3>
+            <p class="feature-text">
+              Programación estructurada en C y C++, llamadas al sistema POSIX, gestión de memoria y concurrencia. Interés profundo en la interacción directa entre software y hardware.
+            </p>
+            <div class="feature-tags">
+              <span class="tag">C</span>
+              <span class="tag">C++</span>
+              <span class="tag">POSIX API</span>
+              <span class="tag">GDB / Valgrind</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Networking -->
+          <div class="feature-card">
+            <div class="feature-icon-box cyan">
+              <span>☲</span>
+            </div>
+            <h3 class="feature-title">Redes &amp; Telecomunicaciones</h3>
+            <p class="feature-text">
+              Análisis e inspección de paquetes con Wireshark, desarrollo de sockets en red, configuración de topologías locales y comprensión de los protocolos TCP/IP y DNS.
+            </p>
+            <div class="feature-tags">
+              <span class="tag">Wireshark</span>
+              <span class="tag">Sockets</span>
+              <span class="tag">TCP/IP</span>
+              <span class="tag">DNS</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Linux Ricing & Homelab -->
+          <div class="feature-card">
+            <div class="feature-icon-box pink">
+              <span>◈</span>
+            </div>
+            <h3 class="feature-title">Linux Ricing &amp; Homelab</h3>
+            <p class="feature-text">
+              Personalización avanzada de entornos en Arch Linux manteniendo coherencia visual con esquemas Dracula. Servidores domésticos, virtualización ligera y almacenamiento centralizado.
+            </p>
+            <div class="feature-tags">
+              <span class="tag">Arch Linux</span>
+              <span class="tag">Dracula Theme</span>
+              <span class="tag">Docker</span>
+              <span class="tag">TrueNAS</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Automation & Scripting -->
+          <div class="feature-card">
+            <div class="feature-icon-box green">
+              <span>⚡</span>
+            </div>
+            <h3 class="feature-title">Automatización &amp; Scripting</h3>
+            <p class="feature-text">
+              Construcción de scripts avanzados en Bash y herramientas de terminal en Python/Go para optimizar flujos diarios de trabajo, compilación y despliegue local.
+            </p>
+            <div class="feature-tags">
+              <span class="tag">Bash</span>
+              <span class="tag">Python</span>
+              <span class="tag">Go</span>
+              <span class="tag">Neovim</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Habilidades y Tecnologías -->
+      <section class="page-section">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Habilidades y Tecnologías</h2>
+        </div>
+
+        <!-- Native GitHub Languages Distribution Bar -->
+        <div class="lang-stat-box lang-stat-bar-box">
+          <div class="lang-stat-header">
+            <span class="lang-stat-title">Lenguajes Más Usados</span>
+          </div>
+
+          <div class="lang-bar" role="progressbar" aria-label="Distribución de lenguajes">
+            <div class="lang-bar-segment pink" style="width: 51.7%;" title="C++: 51.7%"></div>
+            <div class="lang-bar-segment green" style="width: 12.9%;" title="C: 12.9%"></div>
+            <div class="lang-bar-segment yellow" style="width: 11.0%;" title="Java: 11.0%"></div>
+            <div class="lang-bar-segment purple" style="width: 8.0%;" title="Shell: 8.0%"></div>
+            <div class="lang-bar-segment cyan" style="width: 7.6%;" title="Lua: 7.6%"></div>
+            <div class="lang-bar-segment orange" style="width: 8.8%;" title="Otros: 8.8%"></div>
+          </div>
+
+          <div class="lang-legend">
+            <div class="lang-legend-item">
+              <span class="lang-legend-dot pink"></span>
+              <span>C++ 51.7%</span>
+            </div>
+            <div class="lang-legend-item">
+              <span class="lang-legend-dot green"></span>
+              <span>C 12.9%</span>
+            </div>
+            <div class="lang-legend-item">
+              <span class="lang-legend-dot yellow"></span>
+              <span>Java 11.0%</span>
+            </div>
+            <div class="lang-legend-item">
+              <span class="lang-legend-dot purple"></span>
+              <span>Shell 8.0%</span>
+            </div>
+            <div class="lang-legend-item">
+              <span class="lang-legend-dot cyan"></span>
+              <span>Lua 7.6%</span>
+            </div>
+            <div class="lang-legend-item">
+              <span class="lang-legend-dot orange"></span>
+              <span>Otros 8.8%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-card-header">
+              <h3 class="skill-card-title pink">Lenguajes de Programación</h3>
+            </div>
+            <div class="skill-tag-list">
+              <span class="tag">C</span>
+              <span class="tag">C++</span>
+              <span class="tag">Python</span>
+              <span class="tag">Bash</span>
+              <span class="tag">Java</span>
+              <span class="tag">Golang</span>
+              <span class="tag">Lua</span>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-card-header">
+              <h3 class="skill-card-title cyan">Sistemas Operativos &amp; Redes</h3>
+            </div>
+            <div class="skill-tag-list">
+              <span class="tag">Linux</span>
+              <span class="tag">POSIX API</span>
+              <span class="tag">Wireshark</span>
+              <span class="tag">Redes TCP/IP</span>
+              <span class="tag">Sockets en C</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Systemd</span>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-card-header">
+              <h3 class="skill-card-title purple">Entorno de Trabajo</h3>
+            </div>
+            <div class="skill-tag-list">
+              <span class="tag">Neovim</span>
+              <span class="tag">Git</span>
+              <span class="tag">Make</span>
+              <span class="tag">GDB</span>
+              <span class="tag">Kitty</span>
+              <span class="tag">Obsidian</span>
+              <span class="tag">Tmux</span>
+              <span class="tag">LaTeX</span>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-card-header">
+              <h3 class="skill-card-title yellow">Homelab</h3>
+            </div>
+            <div class="skill-tag-list">
+              <span class="tag">TrueNAS</span>
+              <span class="tag">ZFS</span>
+              <span class="tag">SSH</span>
+              <span class="tag">Tailscale</span>
+              <span class="tag">Jails / Docker</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <div class="card github-contrib-card">
+          <div class="skill-card-header">
+            <h3 class="skill-card-title">Contribuciones en GitHub</h3>
+          </div>
+          <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer" class="github-contrib-link">
+            <img
+              src="/images/github-contributions.svg"
+              alt="Gráfico de contribuciones de Druxorey en GitHub"
+              class="github-contrib-img"
+              loading="lazy"
+            />
+          </a>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Intereses Personales</h2>
+        </div>
+
+        <div class="interests-grid">
+          <div class="interest-card">
+            <h3 class="interest-card-title">
+              <span class="interest-icon text-green">󰢷</span> Minecraft Técnico &amp; Videojuegos
+            </h3>
+            <p class="interest-card-desc">
+              Soy jugador técnico desde 2014. Me apasiona el diseño de granjas automatizadas a gran escala, la lógica combinacional con Redstone y entender a fondo las mecánicas del motor.
+            </p>
+          </div>
+
+          <div class="interest-card">
+            <h3 class="interest-card-title">
+              <span class="interest-icon text-cyan">✦</span> Astronomía
+            </h3>
+            <p class="interest-card-desc">
+              Tengo una gran fascinación por el cosmos, la astrofísica y las leyes físicas que rigen el universo. Disfruto de la observación astronómica y de seguir los avances en exploración espacial.
+            </p>
+          </div>
+
+          <div class="interest-card">
+            <h3 class="interest-card-title">
+              <span class="interest-icon text-pink"></span> Fotografía
+            </h3>
+            <p class="interest-card-desc">
+              Me interesa capturar los detalles visuales de paisajes urbanos y naturales, juego de luces y sombras y composición. Una forma creativa de documentar perspectivas y momentos.
+            </p>
+          </div>
+
+          <div class="interest-card">
+            <h3 class="interest-card-title">
+              <span class="interest-icon text-purple">⚙</span> Homelabbing &amp; Self-Hosting
+            </h3>
+            <p class="interest-card-desc">
+              Me encanta montar servidores propios con hardware reutilizado, gestionar mis propios servicios de almacenamiento y copias de seguridad cifradas, promoviendo la soberanía digital y el aprendizaje práctico continuo.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="cta-content">
+          <div class="cta-text">
+            <h2 class="cta-title">
+              ¿Quieres conocer más sobre mi trayectoria o colaborar?
+            </h2>
+            <p class="cta-description">
+              Descubre mi cronología en la sección Trayectoria o escríbeme directamente a través del formulario de contacto.
+            </p>
+          </div>
+          <div class="cta-actions">
+            <a href="./about.html" class="btn btn-secondary">Ver Trayectoria</a>
+            <a href="./contact.html" class="btn btn-primary">Formulario de Contacto</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="./index.html">Sobre mí</a>
+        <a href="./about.html">Trayectoria</a>
+        <a href="./projects.html">Proyectos</a>
+        <a href="./blog.html">Blog</a>
+        <a href="./contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/scripts/main.ts"></script>
+</body>
 </html>

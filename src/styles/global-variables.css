@@ -1,0 +1,39 @@
+:root {
+	--drx-border-radius-sm: 4px;
+	--drx-border-radius: 6px;
+	--drx-border-radius-lg: 10px;
+	--drx-border-radius-pill: 9999px;
+
+	--drx-transition-fast: 0.15s ease;
+	--drx-transition-normal: 0.25s ease;
+
+	--drx-font-sans: "Noto Sans", "Symbols Nerd Font", "Hack Nerd Font", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	--drx-font-mono: "Hack Nerd Font", "Symbols Nerd Font", "Hack", monospace;
+	--drx-font-nerd: "Symbols Nerd Font", "Hack Nerd Font", monospace;
+
+	--drx-line-height: 1.75;
+	--drx-line-height-tight: 1.3;
+
+	--drx-font-size-xs: 0.8rem;
+	--drx-font-size-sm: 0.9rem;
+	--drx-font-size-base: 1rem;
+	--drx-font-size-md: 1.15rem;
+	--drx-font-size-lg: 1.35rem;
+	--drx-font-size-xl: 1.75rem;
+	--drx-font-size-2xl: 2.25rem;
+	--drx-font-size-title: 2.75rem;
+
+	--drx-spacing-xs: 0.35rem;
+	--drx-spacing-sm: 0.65rem;
+	--drx-spacing-md: 1.25rem;
+	--drx-spacing-lg: 1.75rem;
+	--drx-spacing-xl: 2.5rem;
+	--drx-spacing-2xl: 3.5rem;
+
+	--drx-max-width: 920px;
+	--drx-max-width-article: 1200px;
+	--drx-max-width-wide: 1280px;
+
+	--drx-border-subtle: 1px solid var(--drx-color-overlay);
+	--drx-border-highlight: 1px solid var(--drx-color-highlight);
+}

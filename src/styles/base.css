@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+@font-face {
+	font-family: "Hack Nerd Font";
+	src: url('/fonts/hack/HackNerdFont-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Symbols Nerd Font";
+	src: url('/fonts/symbols/SymbolsNerdFont-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+*, *::before, *::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-size: 16px;
+	scroll-behavior: smooth;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	font-family: var(--drx-font-sans);
+	font-size: var(--drx-font-size-base);
+	line-height: var(--drx-line-height);
+	color: var(--drx-color-text);
+	background-color: var(--drx-color-base);
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Headings with consistent weight and proportion */
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--drx-font-sans);
+	color: var(--drx-color-text);
+	font-weight: 600;
+	line-height: var(--drx-line-height-tight);
+}
+
+h1 { font-size: var(--drx-font-size-2xl); }
+h2 { font-size: var(--drx-font-size-xl); }
+h3 { font-size: var(--drx-font-size-lg); }
+h4 { font-size: var(--drx-font-size-md); }
+
+p {
+	color: var(--drx-color-subtext);
+	margin-bottom: var(--drx-spacing-md);
+	font-size: var(--drx-font-size-base);
+}
+
+/* Links: Dracula Purple & Pink hover */
+a {
+	color: var(--drx-color-purple-2);
+	text-decoration: none;
+	transition: color var(--drx-transition-fast);
+}
+
+a:hover {
+	color: var(--drx-color-pink-2);
+	text-decoration: underline;
+}
+
+/* Code & Preformatted: strictly Hack Nerd Font */
+code, kbd, samp {
+	font-family: var(--drx-font-mono);
+	font-size: 0.9em;
+	background-color: var(--drx-color-surface);
+	color: var(--drx-color-pink-2);
+	padding: 0.15rem 0.4rem;
+	border-radius: var(--drx-border-radius-sm);
+	border: var(--drx-border-subtle);
+}
+
+pre {
+	font-family: var(--drx-font-mono);
+	background-color: var(--drx-color-surface);
+	border-radius: var(--drx-border-radius);
+	border: var(--drx-border-subtle);
+	padding: var(--drx-spacing-md);
+	overflow-x: auto;
+	margin-bottom: var(--drx-spacing-md);
+}
+
+pre code {
+	background-color: transparent;
+	padding: 0;
+	border: none;
+	color: var(--drx-color-text);
+	font-size: var(--drx-font-size-sm);
+	line-height: 1.55;
+}
+
+/* Lists */
+ul, ol {
+	padding-left: var(--drx-spacing-lg);
+	color: var(--drx-color-subtext);
+	margin-bottom: var(--drx-spacing-md);
+}
+
+li {
+	margin-bottom: var(--drx-spacing-xs);
+	line-height: 1.6;
+}
+
+/* Horizontal Rule */
+hr {
+	border: none;
+	border-top: var(--drx-border-subtle);
+	margin: var(--drx-spacing-xl) 0;
+}
+
+/* Dracula Scrollbar */
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--drx-color-base);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--drx-color-highlight);
+	border-radius: var(--drx-border-radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--drx-color-comment);
+}
