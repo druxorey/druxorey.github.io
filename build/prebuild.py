@@ -19,9 +19,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def run(script, label):
-    print(f"\n{'─' * 60}")
-    print(f"  {label}")
-    print(f"{'─' * 60}")
+    print(f"\n{label}")
     result = subprocess.run(
         [sys.executable, os.path.join(ROOT, script)],
         cwd=ROOT,
@@ -32,17 +30,9 @@ def run(script, label):
 
 
 def main():
-    print("\n" + "═" * 60)
-    print("  DRUXOREY-WEB — PRE-BUILD")
-    print("═" * 60)
-
-    run("build/fetch-github-projects.py", "Paso 1 · Sincronizando proyectos y contribuciones de GitHub")
-    run("build/build-blog.py",            "Paso 2 · Compilando artículos Markdown → HTML")
-
-    print("\n" + "═" * 60)
-    print("  PRE-BUILD COMPLETADO ✓")
-    print("═" * 60 + "\n")
-
+    run("build/fetch-github-projects.py", "1. Syncing GitHub projects and contributions")
+    run("build/build-blog.py",            "2. Compiling Markdown → HTML articles")
+    print("")
 
 if __name__ == "__main__":
     main()

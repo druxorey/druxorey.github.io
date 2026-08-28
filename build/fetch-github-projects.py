@@ -29,7 +29,7 @@ FEATURED_REPOS = [
 ]
 
 DRACULA_PALETTE = {
-    "0": "#21222c",
+    "0": "#191a21",
     "1": "#483c6c",
     "2": "#70539b",
     "3": "#9d72d6",
@@ -37,10 +37,8 @@ DRACULA_PALETTE = {
 }
 
 
-# ─── GitHub API ───────────────────────────────────────────────────────────────
-
-def fetch_repos():
-    print(f"\n── Sincronizando repositorios de @{GITHUB_USERNAME} ──")
+def fetchRepos():
+    print(f"\n · Synchronizing repositories from @{GITHUB_USERNAME}")
     headers = {
         "User-Agent": "Mozilla/5.0 (DruxoreyWeb-SyncScript)",
         "Accept":     "application/vnd.github.v3+json",
@@ -50,14 +48,14 @@ def fetch_repos():
         with urllib.request.urlopen(req, timeout=15) as resp:
             if resp.status == 200:
                 return json.loads(resp.read().decode("utf-8"))
-            print(f"  ✗  API GitHub: HTTP {resp.status}", file=sys.stderr)
+            print(f"   ✗  API GitHub: HTTP {resp.status}", file=sys.stderr)
             return None
     except Exception as e:
-        print(f"  ✗  Error conectando con GitHub API: {e}", file=sys.stderr)
+        print(f"   ✗  Error connecting to GitHub API: {e}", file=sys.stderr)
         return None
 
 
-def transform_repo(repo):
+def transformRepo(repo):
     name        = repo.get("name", "")
     description = repo.get("description") or (
         f"Repositorio de software libre en {repo.get('language') or 'código abierto'}."
@@ -85,15 +83,13 @@ def transform_repo(repo):
     }
 
 
-# ─── Gráfico de contribuciones ────────────────────────────────────────────────
-
-def fetch_contributions_graph():
-    print("\n── Actualizando gráfico de contribuciones (paleta Dracula) ──")
+def fetchContributionsGraph():
+    print("\n · Updating contribution chart")
     url = f"https://ghchart.rshah.org/BD93F9/{GITHUB_USERNAME}"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
-            raw_svg = resp.read().decode("utf-8")
+            rawSvg = resp.read().decode("utf-8")
 
         def transform_rect(m):
             tag   = m.group(0)
@@ -103,20 +99,18 @@ def fetch_contributions_graph():
             tag   = re.sub(r"<rect ", '<rect rx="2" ry="2" ', tag)
             return tag
 
-        processed = re.sub(r"<rect [^>]+>", transform_rect, raw_svg)
+        processed = re.sub(r"<rect [^>]+>", transform_rect, rawSvg)
         processed = processed.replace("#767676", "#6272a4").replace("#444", "#6272a4")
 
         os.makedirs(os.path.dirname(CONTRIBUTIONS_SVG), exist_ok=True)
         with open(CONTRIBUTIONS_SVG, "w", encoding="utf-8") as out:
             out.write(processed)
-        print(f"  ✓  {CONTRIBUTIONS_SVG}")
+        print(f"   ✓  {CONTRIBUTIONS_SVG}")
     except Exception as e:
-        print(f"  ⚠  No se pudo actualizar el gráfico: {e}")
+        print(f"   ⚠  Could not update chart: {e}")
 
 
-# ─── projects.ts ──────────────────────────────────────────────────────────────
-
-def write_projects_ts(projects):
+def writeProjectsTs(projects):
     ts = (
         "export interface Project {\n"
         "  id: string;\n"
@@ -138,24 +132,22 @@ def write_projects_ts(projects):
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(ts)
-    print(f"  ✓  {OUTPUT_FILE} ({len(projects)} proyectos)")
+    print(f"   ✓  {OUTPUT_FILE} ({len(projects)} projects)")
 
-
-# ─── Punto de entrada ─────────────────────────────────────────────────────────
 
 def main():
-    fetch_contributions_graph()
+    fetchContributionsGraph()
 
-    repos = fetch_repos()
+    repos = fetchRepos()
     if not repos:
-        print("  ⚠  Se mantendrá el archivo projects.ts existente.")
+        print("   ⚠  The existing projects.ts file will be kept.")
         return
 
-    valid_repos = [r for r in repos if not r.get("fork", False) or r.get("name") in FEATURED_REPOS]
-    projects    = [transform_repo(r) for r in valid_repos]
+    validRepos = [r for r in repos if not r.get("fork", False) or r.get("name") in FEATURED_REPOS]
+    projects    = [transformRepo(r) for r in validRepos]
     projects.sort(key=lambda p: (not p["featured"], p["year"]), reverse=False)
 
-    write_projects_ts(projects)
+    writeProjectsTs(projects)
 
 
 if __name__ == "__main__":
