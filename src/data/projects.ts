@@ -14,6 +14,20 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
+    "id": "druxorey.github.io",
+    "title": "druxorey.github.io",
+    "description": "A personal portfolio and blog showcasing my projects and writings",
+    "tags": [
+      "HTML"
+    ],
+    "featured": true,
+    "links": {
+      "github": "https://github.com/druxorey/druxorey.github.io",
+      "demo": "https://druxorey.github.io/"
+    },
+    "year": "2026"
+  },
+  {
     "id": "dotfiles",
     "title": "dotfiles",
     "description": "A minimalist repository of my dotfiles for arch linux and a bootstrap to automate its installation",
@@ -28,20 +42,6 @@ export const projectsData: Project[] = [
     "links": {
       "github": "https://github.com/druxorey/dotfiles",
       "demo": "https://druxorey.github.io"
-    },
-    "year": "2026"
-  },
-  {
-    "id": "druxorey.github.io",
-    "title": "druxorey.github.io",
-    "description": "A personal portfolio and blog showcasing my projects and writings",
-    "tags": [
-      "HTML"
-    ],
-    "featured": true,
-    "links": {
-      "github": "https://github.com/druxorey/druxorey.github.io",
-      "demo": "https://druxorey.github.io/"
     },
     "year": "2026"
   },

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prontuario para Instalar Arch Linux | Druxorey</title>
+  <meta name="description" content="Guía práctica y comprensible para instalar Arch Linux paso a paso en sistemas UEFI/GPT, explicando el propósito de cada comando, partición y paquete base para entender el sistema a fondo.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/about.html" class="nav-link">Trayectoria</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/about.html" class="nav-link">Trayectoria</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/blog.html" class="nav-link active">Blog</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Article Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/blog.html" class="article-back-link">
+          ← Volver al catálogo de artículos
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Article Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#pre-instalación">1. Pre-Instalación</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#preparación-del-medio-de-instalación">1.1. Preparación del Medio
+de Instalación</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#configuración-de-red">1.2. Configuración de Red</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#sincronización-del-reloj-del-sistema">1.3. Sincronización del
+Reloj del Sistema</a></li>
+<li class="toc-item"><a class="toc-link" href="#preparación-de-la-unidad-de-almacenamiento">2. Preparación de la
+Unidad de Almacenamiento</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#identificación-y-particionado-del-disco">2.1. Identificación y
+Particionado del Disco</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#formateo-de-los-sistemas-de-archivos">2.2. Formateo de los
+Sistemas de Archivos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#montaje-de-las-unidades">2.3. Montaje de las Unidades</a></li>
+<li class="toc-item"><a class="toc-link" href="#instalación-del-sistema-base">3. Instalación del Sistema
+Base</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#instalación-de-paquetes-básicos">3.1. Instalación de Paquetes
+Básicos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#generación-del-archivo-fstab">3.2. Generación del Archivo
+fstab</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#entorno-de-trabajo-interno-con-arch-chroot">3.3. Entorno de
+Trabajo Interno con arch-chroot</a></li>
+<li class="toc-item"><a class="toc-link" href="#configuración-del-sistema-operativo">4. Configuración del
+Sistema Operativo</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#zona-horaria-y-reloj-de-hardware">4.1. Zona Horaria y Reloj de
+Hardware</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#localización-e-idioma-del-sistema">4.2. Localización e Idioma
+del Sistema</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#distribución-del-teclado-en-consola">4.3. Distribución del
+Teclado en Consola</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#nombre-del-equipo-hostname">4.4. Nombre del Equipo
+(Hostname)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#contraseña-del-administrador-root">4.5. Contraseña del
+Administrador (root)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#creación-de-tu-usuario-personal-con-privilegios-sudo">4.6.
+Creación de tu Usuario Personal con Privilegios sudo</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#habilitar-servicios-esenciales">4.7. Habilitar Servicios
+Esenciales</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#instalación-y-configuración-del-bootloader-grub-en-uefi">4.8.
+Instalación y Configuración del Bootloader (GRUB en UEFI)</a></li>
+<li class="toc-item"><a class="toc-link" href="#primer-arranque">5. Primer Arranque</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Article Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Artículo · Investigación</div>
+          <h1 class="article-title">Prontuario para Instalar Arch Linux</h1>
+
+          <div class="article-meta">
+            <time datetime="2024-03-22">2024-03-22</time>
+            <span>·</span>
+            <span>15 min de lectura</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            <span class="tag">#prontuario</span>
+          </div>
+
+          <!-- Featured Banner Image -->
+          
+          <div class="article-banner-wrapper">
+            <img class="article-banner-img" src="/images/post/instalar-arch-linux.avif" alt="Prontuario para Instalar Arch Linux">
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <p>Arch Linux ha arrastrado históricamente un aura de elitismo, lo que
+ha llevado a considerar su instalación como una tarea reservada
+exclusivamente para usuarios expertos. Sin embargo, la realidad es mucho
+más sencilla: el proceso solo requiere capacidad de lectura y un poco de
+sentido común (el cual curiosamente parece ser el sentido menos común).
+Mi primer contacto con esta distribución fue a finales de 2020, armado
+únicamente con una laptop y mi teléfono para consultar la <a
+href="https://wiki.archlinux.org/">Arch Linux Wiki</a>.</p>
+<p>La Arch Wiki es, probablemente, la fuente de información sobre Linux
+más completa y mejor estructurada de internet, siendo un recurso
+indispensable para resolver problemas en casi cualquier distribución. No
+obstante, considero que su guía de instalación oficial puede resultar
+intimidante para los recién llegados, ya que da por sentados ciertos
+conocimientos técnicos.</p>
+<p>Por esa razón, tras haber instalado Arch decenas de veces en
+diferentes entornos, preparé este prontuario. Mi objetivo es guiarte de
+forma directa para que no solo copies y pegues comandos en la terminal,
+sino que entiendas qué hace cada herramienta, por qué la ejecutamos y
+cómo encaja en tu nuevo sistema operativo.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
+    <span class="callout-title-text"><strong>ADVERTENCIA DE SEGURIDAD (PROCESO
+DESTRUCTIVO):</strong></span>
+  </div>
+  <div class="callout-content">
+<p>Este proceso formateará y reparticionará la unidad de almacenamiento
+que elijas, lo que significa que <strong>se borrarán todos los datos
+existentes de forma definitiva e irreversible</strong>. Antes de
+continuar, respalda cualquier archivo personal importante en una memoria
+externa o en la nube. Revisa siempre con mucha atención las rutas de
+disco (<code>/dev/...</code>) antes de presionar Enter.</p>
+  </div>
+</div>
+<p>Esta guía se enfoca en una instalación manual limpia sobre equipos
+modernos con arquitectura <strong>UEFI y tabla de particiones
+GPT</strong>. Si en algún momento prefieres un método asistido por menús
+automatizados, Arch incluye el script oficial <code>archinstall</code>,
+cuya guía puedes revisar en la <a
+href="https://wiki.archlinux.org/title/Archinstall"
+title="null">documentación oficial de Archinstall</a>.</p>
+<p>Ten presente que aquí dejaremos listo el <strong>sistema base por
+línea de comandos</strong>, con red y privilegios de usuario
+configurados. Para añadir una interfaz gráfica después, puedes apoyarte
+en:</p>
+<ul>
+<li><a href="#241122-install-bspwm-in-arch-linux">Prontuario sobre Cómo
+Instalar BSPWM en Arch Linux</a></li>
+<li>La wiki oficial sobre los <a
+href="https://wiki.archlinux.org/title/Desktop_environment"
+title="null">Entornos de Escritorio en la Arch Wiki</a></li>
+</ul>
+<h2  id="pre-instalación">1. Pre-Instalación</h2>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">En esta primera etapa nada de lo que hagas modificará tu
+disco duro. El instalador de Arch se ejecuta completamente en la memoria
+RAM dentro de un entorno temporal conocido como <em>Live
+Environment</em>.</span>
+  </div>
+  <div class="callout-content">
+
+  </div>
+</div>
+<h3  id="preparación-del-medio-de-instalación">1.1. Preparación del Medio
+de Instalación</h3>
+<ol type="1">
+<li><p><strong>Descarga de la imagen:</strong> Obtén el archivo
+<code>.iso</code> oficial y verificado desde la página de <a
+href="https://archlinux.org/download/" title="null">Descargas de Arch
+Linux</a>.</p></li>
+<li><p><strong>Creación del USB Booteable:</strong></p>
+<ul>
+<li><p>Si estás en Linux o buscas la herramienta más versátil, te
+recomiendo <a href="https://www.ventoy.net/en/index.html"
+title="null">Ventoy</a>, que te permite arrastrar imágenes ISO a la
+memoria sin formatearla cada vez.</p></li>
+<li><p>Si preparas la USB desde Windows, <a href="https://rufus.ie/en/"
+title="null">Rufus</a> en modo <em>DD</em> o <em>ISO</em> es la opción
+más sólida y confiable.</p></li>
+</ul></li>
+<li><p><strong>Ajustes en la BIOS/UEFI:</strong> Inserta la memoria USB
+en tu equipo, enciéndelo y presiona la tecla de acceso a la BIOS o al
+menú de arranque (<em>Boot Menu</em>, usualmente <code>F12</code>,
+<code>F11</code>, <code>F8</code> o <code>Supr</code>).</p></li>
+</ol>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text"><strong>Desactiva Secure Boot en tu BIOS:</strong></span>
+  </div>
+  <div class="callout-content">
+<p>Por defecto, el kernel y los módulos estándar de la ISO de Arch no
+cuentan con las firmas criptográficas de Microsoft, por lo que Secure
+Boot bloqueará el arranque del instalador si permanece encendido.</p>
+  </div>
+</div>
+<p>Al arrancar la USB, verás el menú de bienvenida y en pocos segundos
+tendrás una consola interactiva con privilegios de superusuario
+(<code>root@archiso ~ #</code>).</p>
+<h3  id="configuración-de-red">1.2. Configuración de Red</h3>
+<p>Arch Linux es una distribución rolling release minimalista: la ISO
+apenas contiene los instaladores esenciales y descarga los paquetes más
+actualizados directamente desde los repositorios durante la instalación.
+Por ello, contar con conexión a internet es indispensable.</p>
+<h4 id="cable-de-red-ethernet">1.2.1. Cable de red (Ethernet)</h4>
+<p>Si tu equipo está conectado por cable, el protocolo DHCP negociará
+automáticamente tu dirección IP. Solo debes verificar la conexión:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> <span class="at">-c</span> 3 archlinux.org</span></code></pre>
+</div>
+<h4 id="red-inalámbrica-wi-fi">1.2.2. Red Inalámbrica (Wi-Fi)</h4>
+<p>Para redes Wi-Fi utilizaremos la utilidad interactiva
+<code>iwctl</code>:</p>
+<ol type="1">
+<li><p>Abre el intérprete de iwd:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">iwctl</span></span></code></pre>
+</div></li>
+<li><p>Consulta el nombre de tu tarjeta inalámbrica (normalmente aparece
+como <code>wlan0</code>):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">device</span> list</span></code></pre>
+</div></li>
+<li><p>Escanea las redes disponibles y conéctate sustituyendo
+<code>&lt;interfaz&gt;</code> por tu dispositivo (ej.
+<code>wlan0</code>) y <code>&lt;NombreDeRed&gt;</code> por tu red
+Wi-Fi:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">station</span> <span class="op">&lt;</span>interfaz<span class="op">&gt;</span> scan</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">station</span> <span class="op">&lt;</span>interfaz<span class="op">&gt;</span> get-networks</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">station</span> <span class="op">&lt;</span>interfaz<span class="op">&gt;</span> connect <span class="st">&quot;&lt;NombreDeRed&gt;&quot;</span></span></code></pre>
+</div></li>
+</ol>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">Si tu red está oculta, utiliza
+<code>station &lt;interfaz&gt; connect-hidden "&lt;NombreDeRed&gt;"</code></span>
+  </div>
+  <div class="callout-content">
+
+  </div>
+</div>
+<ol start="4" type="1">
+<li><p>Introduce tu contraseña cuando te la solicite y escribe
+<code>exit</code> para volver a la terminal principal.</p></li>
+<li><p>Comprueba el enlace:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> <span class="at">-c</span> 3 archlinux.org</span></code></pre>
+</div></li>
+</ol>
+<h3  id="sincronización-del-reloj-del-sistema">1.3. Sincronización del
+Reloj del Sistema</h3>
+<p>Antes de descargar paquetes o generar certificados de seguridad, es
+necesario sincronizar el reloj interno de la computadora a través de
+internet mediante NTP (<em>Network Time Protocol</em>):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">timedatectl</span> set-ntp true</span></code></pre>
+</div>
+<h2  id="preparación-de-la-unidad-de-almacenamiento">2. Preparación de la
+Unidad de Almacenamiento</h2>
+<p>Aquí definiremos el esquema de particiones donde residirá tu nuevo
+sistema.</p>
+<h3  id="identificación-y-particionado-del-disco">2.1. Identificación y
+Particionado del Disco</h3>
+<p>Primero, identifica cómo nombra el kernel a tus discos de
+almacenamiento:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fdisk</span> <span class="at">-l</span></span></code></pre>
+</div>
+<p>Verás unidades identificadas según su tecnología:</p>
+<ul>
+<li>Discos NVMe: <code>/dev/nvme0n1</code></li>
+<li>Discos SATA / SSD / USB: <code>/dev/sda</code>,
+<code>/dev/sdb</code></li>
+</ul>
+<p>Identifica la unidad por su tamaño y capacidad. En este prontuario
+utilizaremos como ejemplo <code>/dev/nvme0n1</code>. Inicia la
+herramienta visual <code>cfdisk</code> indicando la ruta de tu
+disco:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cfdisk</span> /dev/nvme0n1</span></code></pre>
+</div>
+<ol type="1">
+<li><p><strong>Tabla de Particiones:</strong> Si el disco está vacío o
+nuevo, selecciona la etiqueta <strong><code>gpt</code></strong> (el
+estándar obligatorio para UEFI).</p></li>
+<li><p><strong>Eliminar particiones viejas:</strong> Si tienes
+particiones de instalaciones anteriores que ya no necesitas,
+selecciónalas y pulsa <strong><code>Delete</code></strong>.</p></li>
+<li><p><strong>Estructura recomendada de particiones:</strong></p></li>
+</ol>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Partición</th>
+<th>Tamaño sugerido</th>
+<th>Tipo en <code>cfdisk</code></th>
+<th>Propósito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Boot / EFI (ESP)</strong></td>
+<td><code>512M</code> a <code>1G</code></td>
+<td><code>EFI System</code></td>
+<td>Aloja el gestor de arranque (GRUB) y los archivos de inicio de la
+placa base.</td>
+</tr>
+<tr>
+<td><strong>Swap</strong></td>
+<td><code>4G</code> a <code>8G</code></td>
+<td><code>Linux swap</code></td>
+<td>Memoria de intercambio virtual cuando la RAM física se satura o para
+hibernación.</td>
+</tr>
+<tr>
+<td><strong>Root (<code>/</code>)</strong></td>
+<td>Resto del disco</td>
+<td><code>Linux filesystem</code></td>
+<td>Contiene el sistema operativo, programas, librerías y tus carpetas
+personales.</td>
+</tr>
+</tbody>
+</table>
+<ol start="4" type="1">
+<li><strong>Guardar cambios:</strong> Dirígete con las flechas a
+<strong><code>[ Write ]</code></strong>, escribe <code>yes</code> para
+confirmar la escritura en el disco y sal con
+<strong><code>[ Quit ]</code></strong>.</li>
+</ol>
+<p>Verifica el resultado ejecutando:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lsblk</span></span></code></pre>
+</div>
+<p>Tu salida mostrará una estructura similar a esta:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Console" title="Copiar código al portapapeles">Console</button>
+  <pre class="code-pre"><code>NAME         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+nvme0n1      259:0    0 476.9G  0 disk 
+├─nvme0n1p1  259:1    0     1G  0 part 
+├─nvme0n1p2  259:2    0     8G  0 part 
+└─nvme0n1p3  259:3    0 467.9G  0 part</code></pre>
+</div>
+<h3  id="formateo-de-los-sistemas-de-archivos">2.2. Formateo de los
+Sistemas de Archivos</h3>
+<p>Una partición es solo un contenedor; para almacenar datos necesita
+una estructura organizada de archivos.</p>
+<ol type="1">
+<li><p><strong>Partición Boot / EFI (FAT32):</strong> La especificación
+UEFI exige obligatoriamente un sistema de archivos FAT32 para que la
+placa base pueda leer el gestor de arranque:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mkfs.fat</span> <span class="at">-F</span> 32 /dev/nvme0n1p1</span></code></pre>
+</div></li>
+<li><p><strong>Partición Swap:</strong> La inicializamos como espacio de
+intercambio:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mkswap</span> /dev/nvme0n1p2</span></code></pre>
+</div></li>
+<li><p><strong>Partición Root (ext4):</strong> Formateamos la partición
+principal en <code>ext4</code>, un sistema de archivos sumamente
+estable, rápido y con journaling para evitar corrupción de datos:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mkfs.ext4</span> /dev/nvme0n1p3</span></code></pre>
+</div></li>
+</ol>
+<h3  id="montaje-de-las-unidades">2.3. Montaje de las Unidades</h3>
+<p>Montar una partición significa enlazar ese bloque de almacenamiento a
+un directorio dentro del árbol de archivos de Linux, haciéndolo
+accesible.</p>
+<ol type="1">
+<li><p><strong>Montar la raíz (<code>/</code>)</strong> en el directorio
+temporal <code>/mnt</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> /dev/nvme0n1p3 /mnt</span></code></pre>
+</div></li>
+<li><p><strong>Crear el punto de montaje EFI y montar la partición
+Boot:</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /mnt/boot/efi</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> /dev/nvme0n1p1 /mnt/boot/efi</span></code></pre>
+</div></li>
+<li><p><strong>Activar la partición Swap:</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">swapon</span> /dev/nvme0n1p2</span></code></pre>
+</div></li>
+</ol>
+<h2  id="instalación-del-sistema-base">3. Instalación del Sistema
+Base</h2>
+<p>Ahora que el disco está formateado y montado, volcaremos los paquetes
+esenciales de Arch Linux dentro de <code>/mnt</code>.</p>
+<h3  id="instalación-de-paquetes-básicos">3.1. Instalación de Paquetes
+Básicos</h3>
+<p>El comando <code>pacstrap</code> es un script especial que descarga e
+instala paquetes en una jerarquía de directorios externa. Instalaremos
+los siguientes componentes indispensables:</p>
+<ul>
+<li><code>base</code>: El núcleo mínimo de herramientas Unix de Arch
+Linux.</li>
+<li><code>linux</code> y <code>linux-firmware</code>: El kernel de Linux
+y los controladores binarios para soporte de hardware (tarjetas
+gráficas, wifi, bluetooth, etc.).</li>
+<li><code>base-devel</code>: Herramientas esenciales para compilar
+software (incluye <code>gcc</code>, <code>make</code>,
+<code>sudo</code>, <code>fakeroot</code>, necesarias para usar el AUR
+más adelante).</li>
+<li><code>grub</code> y <code>efibootmgr</code>: El gestor de arranque y
+la utilidad para registrar entradas de inicio en la memoria NVRAM de tu
+placa UEFI.</li>
+<li><code>micro</code>: Un editor de texto sencillo para terminal.</li>
+<li><code>networkmanager</code>: Demonio completo para gestionar
+conexiones de red (cable, wifi, VPNs) de forma automática.</li>
+<li><code>git</code>: Control de versiones fundamental para clonar
+programas y repositorios.</li>
+<li><code>pipewire</code> y <code>pipewire-pulse</code>: El servidor de
+audio moderno y eficiente para Linux.</li>
+<li><code>intel-ucode</code> o <code>amd-ucode</code>: Parches de
+microcódigo del procesador para mitigar fallas de seguridad a nivel de
+silicio y mejorar la estabilidad del CPU.</li>
+</ul>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">Si tu procesador es <strong>AMD</strong>, cambia
+<code>intel-ucode</code> por <code>amd-ucode</code> en el siguiente
+comando:</span>
+  </div>
+  <div class="callout-content">
+
+  </div>
+</div>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pacstrap</span> /mnt base linux linux-firmware base-devel grub efibootmgr micro networkmanager git pipewire pipewire-pulse intel-ucode</span></code></pre>
+</div>
+<h3  id="generación-del-archivo-fstab">3.2. Generación del Archivo
+<code>fstab</code></h3>
+<p>El archivo <code>fstab</code> (<em>File Systems Table</em>) contiene
+el mapa que le dice al sistema qué particiones montar automáticamente
+cada vez que la computadora enciende. Generaremos este archivo
+utilizando identificadores únicos universales (<strong>UUIDs</strong>)
+con el parámetro <code>-U</code>. Esto evita problemas si los nombres de
+los discos cambian de orden al conectar otros dispositivos USB:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">genfstab</span> <span class="at">-U</span> /mnt <span class="op">&gt;&gt;</span> /mnt/etc/fstab</span></code></pre>
+</div>
+<p>Comprueba que la información se haya generado correctamente
+inspeccionando su contenido:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /mnt/etc/fstab</span></code></pre>
+</div>
+<p>Deberías ver listadas tus tres particiones (<code>/</code>,
+<code>/boot/efi</code> y <code>swap</code>) con sus respectivos
+UUIDs.</p>
+<h3  id="entorno-de-trabajo-interno-con-arch-chroot">3.3. Entorno de
+Trabajo Interno con <code>arch-chroot</code></h3>
+<p>Hasta este momento, estábamos operando desde la memoria USB. Con el
+comando <code>arch-chroot</code>, cambiamos la raíz del sistema
+operativo a <code>/mnt</code>. A partir de este instante, cualquier
+comando que ejecutes afectará directamente al sistema instalado en tu
+disco duro:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arch-chroot</span> /mnt</span></code></pre>
+</div>
+<p>Notarás que el prompt de tu terminal cambia a
+<code>[root@archiso /]#</code>. Ya estás dentro de tu nueva
+instalación.</p>
+<h2  id="configuración-del-sistema-operativo">4. Configuración del
+Sistema Operativo</h2>
+<p>Estando dentro de la jaula <code>chroot</code>, configuraremos la
+identidad, zona horaria, usuarios y arranque del sistema.</p>
+<h3  id="zona-horaria-y-reloj-de-hardware">4.1. Zona Horaria y Reloj de
+Hardware</h3>
+<ol type="1">
+<li><p>Crea un enlace simbólico entre la base de datos de zonas horarias
+y el archivo de hora local. Sustituye <code>Region</code> y
+<code>Ciudad</code> por tu ubicación geográfica (por ejemplo:
+<code>America/Caracas</code>, <code>America/Mexico_City</code>,
+<code>America/Argentina/Buenos_Aires</code>,
+<code>Europe/Madrid</code>):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> /usr/share/zoneinfo/America/Caracas /etc/localtime</span></code></pre>
+</div></li>
+<li><p>Sincroniza el reloj del hardware interno de la placa base (RTC)
+con la hora del sistema:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hwclock</span> <span class="at">--systohc</span></span></code></pre>
+</div></li>
+</ol>
+<h3  id="localización-e-idioma-del-sistema">4.2. Localización e Idioma
+del Sistema</h3>
+<p>La localización define el idioma, codificación de caracteres y
+formatos numéricos de tus aplicaciones.</p>
+<ol type="1">
+<li><p>Abre el archivo de generación de idiomas:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">micro</span> /etc/locale.gen</span></code></pre>
+</div></li>
+<li><p>Busca tu idioma eliminando el símbolo <code>#</code> al inicio de
+la línea correspondiente. Se recomienda descomentar siempre la versión
+UTF-8 en inglés y la de tu país y luego guarda en micro con
+<code>Ctrl + S</code>, presiona Enter y sal con
+<code>Ctrl + Q</code>):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Console" title="Copiar código al portapapeles">Console</button>
+  <pre class="code-pre"><code>en_US.UTF-8 UTF-8
+es_ES.UTF-8 UTF-8
+es_VE.UTF-8 UTF-8</code></pre>
+</div></li>
+<li><p>Genera las tablas de idioma en el sistema:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">locale-gen</span></span></code></pre>
+</div></li>
+<li><p>Define el idioma predeterminado del sistema creando el archivo
+<code>locale.conf</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> LANG=en_US.UTF-8 <span class="op">&gt;</span> /etc/locale.conf</span></code></pre>
+</div></li>
+</ol>
+<h3  id="distribución-del-teclado-en-consola">4.3. Distribución del
+Teclado en Consola</h3>
+<p>Si tu teclado físico tiene distribución en español o latinoamericano,
+configura la consola de texto para que reconozca los caracteres
+especiales (como la <code>ñ</code> o tildes):</p>
+<ul>
+<li><p>Para teclado en <strong>Español (España)</strong>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;KEYMAP=es&quot;</span> <span class="op">&gt;</span> /etc/vconsole.conf</span></code></pre>
+</div></li>
+<li><p>Para teclado <strong>Latinoamericano</strong>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;KEYMAP=la-latin1&quot;</span> <span class="op">&gt;</span> /etc/vconsole.conf</span></code></pre>
+</div></li>
+<li><p>Para teclado <strong>Inglés</strong> pero con soporte a
+caractéres <strong>Internacionales</strong>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> KEYMAP=us-acentos <span class="op">&gt;</span> /etc/vconsole.conf</span></code></pre>
+</div></li>
+</ul>
+<h3  id="nombre-del-equipo-hostname">4.4. Nombre del Equipo
+(<em>Hostname</em>)</h3>
+<p>El hostname es el nombre de red que identifica a tu computadora en tu
+red local y en la terminal.</p>
+<ol type="1">
+<li><p>Asigna el nombre que desees (ejemplo:
+<code>arch-workstation</code>):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;arch-workstation&quot;</span> <span class="op">&gt;</span> /etc/hostname</span></code></pre>
+</div></li>
+<li><p>Configura la tabla local de resolución de nombres editando
+<code>/etc/hosts</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">micro</span> /etc/hosts</span></code></pre>
+</div></li>
+</ol>
+<p>Añade las siguientes líneas reemplazando
+<code>arch-workstation</code> por el nombre que elegiste:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Text" title="Copiar código al portapapeles">Text</button>
+  <pre class="code-pre"><code>127.0.0.1   localhost
+::1         localhost
+127.0.1.1   arch-workstation.localdomain arch-workstation</code></pre>
+</div>
+<h3  id="contraseña-del-administrador-root">4.5. Contraseña del
+Administrador (<em>root</em>)</h3>
+<p>Asigna una contraseña para el usuario root ejecutando el comando:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">passwd</span></span></code></pre>
+</div>
+<p>Escribe tu contraseña (por seguridad, no se mostrarán caracteres en
+pantalla mientras escribes) y presiona Enter para confirmarla.</p>
+<h3  id="creación-de-tu-usuario-personal-con-privilegios-sudo">4.6.
+Creación de tu Usuario Personal con Privilegios <code>sudo</code></h3>
+<p>Utilizar la cuenta <code>root</code> para tareas cotidianas es un
+riesgo de seguridad. Crearemos tu usuario normal y lo añadiremos al
+grupo <code>wheel</code> para otorgarle acceso a tareas administrativas
+mediante <code>sudo</code>.</p>
+<ol type="1">
+<li><p>Crea el nuevo usuario (sustituye <code>user</code> por tu nombre
+de usuario deseado):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">useradd</span> <span class="at">-m</span> <span class="at">-G</span> wheel <span class="at">-s</span> /bin/bash user</span></code></pre>
+</div></li>
+</ol>
+<p>El parámetro <code>-m</code> crea la carpeta personal
+<code>/home/usuario</code> y <code>-s /bin/bash</code> establece Bash
+como tu shell predeterminado.</p>
+<ol start="2" type="1">
+<li><p>Asígnale una contraseña a tu nuevo usuario:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">passwd</span> user</span></code></pre>
+</div></li>
+<li><p>Habilita los permisos de superusuario para el grupo
+<code>wheel</code> abriendo el archivo de configuración con
+<code>visudo</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="va">EDITOR</span><span class="op">=</span>micro <span class="ex">visudo</span></span></code></pre>
+</div></li>
+</ol>
+<p>Busca la línea que dice:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Text" title="Copiar código al portapapeles">Text</button>
+  <pre class="code-pre"><code># %wheel ALL=(ALL:ALL) ALL</code></pre>
+</div>
+<p>Borra el <code>#</code> al principio para descomentarla y que quede
+exactamente así:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Text" title="Copiar código al portapapeles">Text</button>
+  <pre class="code-pre"><code>%wheel ALL=(ALL:ALL) ALL</code></pre>
+</div>
+<p>Guarda y sal del editor (<code>Ctrl + S</code>, Enter,
+<code>Ctrl + Q</code>).</p>
+<h3  id="habilitar-servicios-esenciales">4.7. Habilitar Servicios
+Esenciales</h3>
+<p>Para que el sistema tenga conectividad de red de forma automática al
+encender sin necesidad de configurarla manualmente en cada sesión,
+habilita el servicio de NetworkManager:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> enable NetworkManager.service</span></code></pre>
+</div>
+<h3  id="instalación-y-configuración-del-bootloader-grub-en-uefi">4.8.
+Instalación y Configuración del Bootloader (GRUB en UEFI)</h3>
+<p>El bootloader es el programa que la placa base ejecuta al encender
+para cargar el kernel de Linux en la memoria RAM.</p>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">En sistemas <strong>UEFI/GPT</strong>,
+<code>grub-install</code> no debe apuntar a la raíz del disco físico
+(como se hacía antiguamente en BIOS/MBR), sino a la partición EFI que
+montamos en <code>/boot/efi</code>.</span>
+  </div>
+  <div class="callout-content">
+
+  </div>
+</div>
+<ol type="1">
+<li><p>Instala los binarios de GRUB en la partición EFI del sistema:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">grub-install</span> <span class="at">--target</span><span class="op">=</span>x86_64-efi <span class="at">--efi-directory</span><span class="op">=</span>/boot/efi <span class="at">--bootloader-id</span><span class="op">=</span>GRUB</span></code></pre>
+</div></li>
+<li><p>Genera el archivo de configuración de arranque
+(<code>grub.cfg</code>), el cual detectará automáticamente el kernel, el
+microcódigo y los parámetros de inicio:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">grub-mkconfig</span> <span class="at">-o</span> /boot/grub/grub.cfg</span></code></pre>
+</div></li>
+</ol>
+<h2  id="primer-arranque">5. Primer Arranque</h2>
+<p>¡Felicidades! Has instalado y configurado con éxito la base completa
+de Arch Linux desde cero. Solo resta salir de la jaula chroot, desmontar
+las particiones de forma segura para asegurar que todos los datos en
+caché se escriban en el disco y reiniciar el equipo:</p>
+<ol type="1">
+<li><p>Sal del entorno chroot:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre>
+</div></li>
+<li><p>Desmonta recursivamente todas las particiones:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">umount</span> <span class="at">-R</span> /mnt</span></code></pre>
+</div></li>
+<li><p>Reinicia la computadora:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">reboot</span></span></code></pre>
+</div></li>
+</ol>
+<p>Retira la memoria USB durante el reinicio para que tu computadora
+arranque directamente desde el disco duro. Al iniciar, verás el menú de
+GRUB, seguido de la pantalla de bienvenida de Arch Linux pidiéndote tu
+usuario y contraseña. A partir de aquí, tienes un sistema limpio, rápido
+y preparado para que construyas tu entorno visual y flujo de trabajo
+preferido.</p>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Arch Wiki.</strong> <em>Pacman</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/Pacman">wiki.archlinux.org/title/Pacman</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>Arch User Repository</em>.
+Recuperado de <a
+href="https://wiki.archlinux.org/title/Arch_User_Repository">wiki.archlinux.org/title/Arch_User_Repository</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>GRUB</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/GRUB">wiki.archlinux.org/title/GRUB</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>Systemd</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/Systemd">wiki.archlinux.org/title/Systemd</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>PipeWire</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/PipeWire">wiki.archlinux.org/title/PipeWire</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>Desktop environment</em>.
+Recuperado de <a
+href="https://wiki.archlinux.org/title/Desktop_environment">wiki.archlinux.org/title/Desktop_environment</a></p></li>
+<li><p><strong>The Linux Kernel.</strong> <em>Documentation</em>.
+Recuperado de <a
+href="https://www.kernel.org/doc/html/latest/">kernel.org/doc/html/latest/</a></p></li>
+<li><p><strong>Ventoy.</strong> <em>Documentation</em>. Recuperado de <a
+href="https://www.ventoy.net/en/doc_start.html">ventoy.net/en/doc_start.html</a></p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/about.html">Trayectoria</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/blog.html">Blog</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/scripts/main.ts"></script>
+  <script type="module" src="/src/scripts/copy-code.ts"></script>
+  <script type="module" src="/src/scripts/article.ts"></script>
+</body>
+</html>

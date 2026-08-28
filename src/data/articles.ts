@@ -21,5 +21,17 @@ export const articlesData: Article[] = [
       "investigaciones"
     ],
     "image": "/images/post/buenas-practicas-de-gestion-de-repositorios.avif"
+  },
+  {
+    "id": "instalar-arch-linux",
+    "title": "Prontuario para Instalar Arch Linux",
+    "slug": "instalar-arch-linux.html",
+    "summary": "Guía práctica y comprensible para instalar Arch Linux paso a paso en sistemas UEFI/GPT, explicando el propósito de cada comando, partición y paquete base para entender el sistema a fondo.",
+    "date": "2024-03-22",
+    "readingTime": "15 min de lectura",
+    "tags": [
+      "prontuario"
+    ],
+    "image": "/images/post/instalar-arch-linux.avif"
   }
 ];
