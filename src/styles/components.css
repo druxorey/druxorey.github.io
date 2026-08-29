@@ -1249,6 +1249,20 @@
 	align-items: stretch;
 	padding: 0.85rem 0.85rem 0.85rem 1.25rem;
 	gap: 1.25rem;
+	text-decoration: none !important;
+	color: inherit;
+	cursor: pointer;
+}
+
+.blog-card-row:hover,
+.blog-card-row:focus,
+.blog-card-row:active {
+	text-decoration: none !important;
+	color: inherit;
+}
+
+.blog-card-row * {
+	text-decoration: none !important;
 }
 
 .blog-card-body {
@@ -1259,18 +1273,6 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-}
-
-.blog-card-body:hover,
-.blog-card-body:focus,
-.blog-card-body:active,
-.blog-card-row:hover .blog-card-body {
-	text-decoration: none !important;
-	color: inherit;
-}
-
-.blog-card-body * {
-	text-decoration: none !important;
 }
 
 .blog-card-meta {

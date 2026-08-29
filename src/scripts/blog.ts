@@ -98,8 +98,8 @@ export function initializeBlog(): void {
 			: '';
 
 		return `
-			<article class="card card-interactive blog-card-row">
-				<a href="./blog/${article.slug}" class="blog-card-body">
+			<a href="./blog/${article.slug}" class="card card-interactive blog-card-row" aria-label="${article.title}">
+				<div class="blog-card-body">
 					<div>
 						<div class="blog-card-meta">
 							<time datetime="${article.date}">${article.date}</time>
@@ -119,10 +119,10 @@ export function initializeBlog(): void {
 					<div class="blog-card-tags">
 						${tagsHtml}
 					</div>
-				</a>
+				</div>
 
 				${imageHtml}
-			</article>
+			</a>
 		`;
 	}
 
