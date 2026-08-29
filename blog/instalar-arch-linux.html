@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prontuario para Instalar Arch Linux | Druxorey</title>
-  <meta name="description" content="Guía práctica y comprensible para instalar Arch Linux paso a paso en sistemas UEFI/GPT, explicando el propósito de cada comando, partición y paquete base para entender el sistema a fondo.">
+  <meta name="description" content="La instalación manual de Arch Linux representa una oportunidad invaluable para comprender a fondo el funcionamiento de un sistema operativo GNU/Linux. Al configurar desde cero el particionado de discos, el gestor de arranque y los servicios esenciales, se adquiere un dominio técnico superior sobre el hardware y el software, transformando un proceso intimidante en una experiencia de aprendizaje fundamental para cualquier usuario avanzado.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
@@ -123,7 +123,7 @@ Instalación y Configuración del Bootloader (GRUB en UEFI)</a></li>
           </div>
 
           <div class="article-tags-row">
-            <span class="tag">#prontuario</span>
+            <span class="tag">#prontuario</span> <span class="tag">#linux</span>
           </div>
 
           <!-- Featured Banner Image -->
@@ -178,14 +178,9 @@ title="null">documentación oficial de Archinstall</a>.</p>
 <p>Ten presente que aquí dejaremos listo el <strong>sistema base por
 línea de comandos</strong>, con red y privilegios de usuario
 configurados. Para añadir una interfaz gráfica después, puedes apoyarte
-en:</p>
-<ul>
-<li><a href="#241122-install-bspwm-in-arch-linux">Prontuario sobre Cómo
-Instalar BSPWM en Arch Linux</a></li>
-<li>La wiki oficial sobre los <a
+en la wiki oficial sobre los <a
 href="https://wiki.archlinux.org/title/Desktop_environment"
-title="null">Entornos de Escritorio en la Arch Wiki</a></li>
-</ul>
+title="null">Entornos de Escritorio en la Arch Wiki</a></p>
 <h2  id="pre-instalación">1. Pre-Instalación</h2>
 <div class="callout-box important">
   <div class="callout-title">
@@ -703,13 +698,13 @@ para cargar el kernel de Linux en la memoria RAM.</p>
 <div class="callout-box important">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
-    <span class="callout-title-text">En sistemas <strong>UEFI/GPT</strong>,
-<code>grub-install</code> no debe apuntar a la raíz del disco físico
-(como se hacía antiguamente en BIOS/MBR), sino a la partición EFI que
-montamos en <code>/boot/efi</code>.</span>
+    <span class="callout-title-text">IMPORTANTE</span>
   </div>
   <div class="callout-content">
-
+<p>En sistemas <strong>UEFI/GPT</strong>, <code>grub-install</code> no
+debe apuntar a la raíz del disco físico (como se hacía antiguamente en
+BIOS/MBR), sino a la partición EFI que montamos en
+<code>/boot/efi</code>.</p>
   </div>
 </div>
 <ol type="1">
@@ -762,25 +757,29 @@ preferido.</p>
   </div>
   <div class="callout-content">
 <ul>
-<li><p><strong>Arch Wiki.</strong> <em>Pacman</em>. Recuperado de <a
-href="https://wiki.archlinux.org/title/Pacman">wiki.archlinux.org/title/Pacman</a></p></li>
 <li><p><strong>Arch Wiki.</strong> <em>Arch User Repository</em>.
 Recuperado de <a
 href="https://wiki.archlinux.org/title/Arch_User_Repository">wiki.archlinux.org/title/Arch_User_Repository</a></p></li>
 <li><p><strong>Arch Wiki.</strong> <em>GRUB</em>. Recuperado de <a
 href="https://wiki.archlinux.org/title/GRUB">wiki.archlinux.org/title/GRUB</a></p></li>
-<li><p><strong>Arch Wiki.</strong> <em>Systemd</em>. Recuperado de <a
-href="https://wiki.archlinux.org/title/Systemd">wiki.archlinux.org/title/Systemd</a></p></li>
-<li><p><strong>Arch Wiki.</strong> <em>PipeWire</em>. Recuperado de <a
-href="https://wiki.archlinux.org/title/PipeWire">wiki.archlinux.org/title/PipeWire</a></p></li>
 <li><p><strong>Arch Wiki.</strong> <em>Desktop environment</em>.
 Recuperado de <a
 href="https://wiki.archlinux.org/title/Desktop_environment">wiki.archlinux.org/title/Desktop_environment</a></p></li>
 <li><p><strong>The Linux Kernel.</strong> <em>Documentation</em>.
 Recuperado de <a
 href="https://www.kernel.org/doc/html/latest/">kernel.org/doc/html/latest/</a></p></li>
-<li><p><strong>Ventoy.</strong> <em>Documentation</em>. Recuperado de <a
-href="https://www.ventoy.net/en/doc_start.html">ventoy.net/en/doc_start.html</a></p></li>
+<li><p><strong>YouTube.</strong> <em>Arch Linux: A ℂ𝕠𝕞𝕗𝕪 Install
+Guide</em>. Recuperado de <a
+href="https://youtu.be/68z11VAYMS8">youtu.be/68z11VAYMS8</a></p></li>
+<li><p><strong>GitHub Gist.</strong> <em>A modern, updated installation
+guide for Arch Linux with BTRFS on an UEFI system</em>. Recuperado de <a
+href="https://gist.github.com/mjkstra/96ce7a5689d753e7a6bdd92cdc169bae">gist.github.com/mjkstra/96ce7a5689d753e7a6bdd92cdc169bae</a></p></li>
+<li><p><strong>Linuxiac.</strong> <em>How to Install Arch Linux: A
+Beginner’s Practical Guide</em>. Recuperado de <a
+href="https://linuxiac.com/arch-linux-install/">linuxiac.com/arch-linux-install/</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>Installation guide</em>.
+Recuperado de <a
+href="https://wiki.archlinux.org/title/Installation_guide">wiki.archlinux.org/title/Installation_guide</a></p></li>
 </ul>
   </div>
 </div>
