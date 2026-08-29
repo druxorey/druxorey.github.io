@@ -23,9 +23,35 @@ export const articlesData: Article[] = [
     "image": "/images/post/buenas-practicas-de-gestion-de-repositorios.avif"
   },
   {
-    "id": "crea-un-servidor-dedicado-de-minecraft-en-linux",
+    "id": "publicar-y-mantener-paquetes-en-el-aur",
+    "title": "Prontuario para Publicar y Mantener Paquetes en el AUR",
+    "slug": "publicar-y-mantener-paquetes-en-el-aur.html",
+    "summary": "El Arch User Repository (AUR) es el corazón de la comunidad de Arch Linux. Esta guía detalla cómo empaquetar software mediante archivos PKGBUILD, cubriendo desde la configuración SSH hasta la gestión de variantes estándar, binarias y VCS. Aprenderás a redactar recetas limpias, generar metadatos .SRCINFO y mantener paquetes de forma profesional, contribuyendo activamente al ecosistema más grande de Linux.",
+    "date": "2026-04-02",
+    "readingTime": "14 min de lectura",
+    "tags": [
+      "prontuario",
+      "linux"
+    ],
+    "image": "/images/post/publicar-y-mantener-paquetes-en-el-aur.avif"
+  },
+  {
+    "id": "instalar-un-kernel-customizado-en-una-chromebook",
+    "title": "Prontuario para Instalar un Kernel Customizado en una Chromebook",
+    "slug": "instalar-un-kernel-customizado-en-una-chromebook.html",
+    "summary": "Liberar una Chromebook de las restricciones de ChromeOS permite transformarla en una computadora estándar y versátil. Esta guía detalla el proceso técnico para desactivar la protección física de escritura, flashear un firmware UEFI Coreboot mediante las herramientas de MrChromebox e instalar un sistema Linux personalizado. Aprenderás a recuperar el control total sobre tu hardware, superando las limitaciones de fábrica originales.",
+    "date": "2025-12-20",
+    "readingTime": "7 min de lectura",
+    "tags": [
+      "prontuario",
+      "linux"
+    ],
+    "image": "/images/post/instalar-un-kernel-customizado-en-una-chromebook.avif"
+  },
+  {
+    "id": "crear-un-servidor-dedicado-de-minecraft-en-linux",
     "title": "Prontuario para Instalar un Servidor de Minecraft en Linux",
-    "slug": "crea-un-servidor-dedicado-de-minecraft-en-linux.html",
+    "slug": "crear-un-servidor-dedicado-de-minecraft-en-linux.html",
     "summary": "Transformar hardware antiguo en un servidor doméstico es una excelente forma de aprovechar recursos. Esta guía enseña a desplegar un servidor de Minecraft optimizado con Fabric, utilizando Java 21 en modo headless para maximizar el rendimiento. Aprenderás a configurar entornos en Arch Linux o Debian, automatizar servicios en segundo plano y gestionar conexiones seguras sin complicaciones innecesarias en tu red.",
     "date": "2025-12-18",
     "readingTime": "10 min de lectura",
@@ -34,7 +60,7 @@ export const articlesData: Article[] = [
       "linux",
       "juegos"
     ],
-    "image": "/images/post/crea-un-servidor-dedicado-de-minecraft-en-linux.avif"
+    "image": "/images/post/crear-un-servidor-dedicado-de-minecraft-en-linux.avif"
   },
   {
     "id": "inicializar-tu-entorno-de-arch-linux",

@@ -122,7 +122,7 @@ del Túnel</a></li>
           <!-- Featured Banner Image -->
           
           <div class="article-banner-wrapper">
-            <img class="article-banner-img" src="/images/post/crea-un-servidor-dedicado-de-minecraft-en-linux.avif" alt="Prontuario para Instalar un Servidor de Minecraft en Linux">
+            <img class="article-banner-img" src="/images/post/crear-un-servidor-dedicado-de-minecraft-en-linux.avif" alt="Prontuario para Instalar un Servidor de Minecraft en Linux">
           </div>
 
           <!-- Rendered Markdown Body -->
@@ -143,15 +143,15 @@ internet sin necesidad de tocar los puertos de tu router.</p>
 <div class="callout-box important">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
-    <span class="callout-title-text">Esta guía asume que ya tienes instalado un sistema base
-limpio (únicamente en modo terminal, sin entornos gráficos pesados que
-consuman memoria RAM innecesariamente). Si necesitas preparar tu sistema
-desde cero, puedes consultar previamente el <a
-href="#240322-instalar-arch-linux">Prontuario para Instalar Arch
-Linux</a>.</span>
+    <span class="callout-title-text">IMPORTANTE</span>
   </div>
   <div class="callout-content">
-
+<p>Esta guía asume que ya tienes instalado un sistema base limpio
+(únicamente en modo terminal, sin entornos gráficos pesados que consuman
+memoria RAM innecesariamente). Si necesitas preparar tu sistema desde
+cero, puedes consultar previamente el <a
+href="#240322-instalar-arch-linux">Prontuario para Instalar Arch
+Linux</a>.</p>
   </div>
 </div>
 <h2  id="preparación-del-sistema-y-dependencias">1. Preparación del
@@ -188,12 +188,12 @@ Gestión de Energía en Laptops (Ignorar la Tapa Cerrada)</h3>
 <div class="callout-box important">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
-    <span class="callout-title-text">Si usas una pc de escritorio o un servidor, puedes
-saltar directamente a la siguiente sección. Este paso es exclusivo para
-evitar que una laptop se apague o suspenda al cerrarla.</span>
+    <span class="callout-title-text">IMPORTANTE</span>
   </div>
   <div class="callout-content">
-
+<p>Si usas una pc de escritorio o un servidor, puedes saltar
+directamente a la siguiente sección. Este paso es exclusivo para evitar
+que una laptop se apague o suspenda al cerrarla.</p>
   </div>
 </div>
 <p>Por defecto, Linux entra en modo de suspensión (<em>sleep</em>)
@@ -393,11 +393,11 @@ lag (<em>lag spikes</em>).</p>
   <pre class="code-pre"><code><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x start.sh</span></code></pre>
 </div></li>
 </ol>
-<div class="callout-box tip">
+<div class="callout-box note">
   <div class="callout-title">
-    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg></span>
-    <span class="callout-title-text"><strong>¿Por qué fijar <code>-Xms</code> y <code>-Xmx</code>
-con el mismo valor?</strong></span>
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
+    <span class="callout-title-text">¿Por qué fijar <code>-Xms</code> y <code>-Xmx</code> con
+el mismo valor?</span>
   </div>
   <div class="callout-content">
 <p>Al igualar la memoria mínima (<code>-Xms</code>) y máxima

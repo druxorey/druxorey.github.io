@@ -293,19 +293,11 @@ Uno de los más populares y ligeros es <code>yay</code>:</p>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">makepkg</span> <span class="at">-si</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .. <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> <span class="at">-rf</span> yay-bin</span></code></pre>
 </div>
-<div class="callout-box note">
-  <div class="callout-title">
-    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
-    <span class="callout-title-text">INFORMACIÓN</span>
-  </div>
-  <div class="callout-content">
 <p>A partir de este momento, puedes instalar cualquier paquete de los
 repositorios oficiales o del AUR usando
 <code>yay -S &lt;nombre_paquete&gt;</code> sin anteponer
 <code>sudo</code> (el propio asistente te pedirá la contraseña cuando
 sea necesario).</p>
-  </div>
-</div>
 <h3  id="optimización-de-mirrors-con-rate-mirrors">2.3. Optimización de
 Mirrors con <code>rate-mirrors</code></h3>
 <p>Los repositorios de Arch Linux están distribuidos en servidores
@@ -343,10 +335,10 @@ tu archivo <code>mirrorlist</code>:</p>
   <pre class="code-pre"><code><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">rate-mirrors</span> arch <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/pacman.d/mirrorlist</span></code></pre>
 </div></li>
 </ol>
-<div class="callout-box tip">
+<div class="callout-box note">
   <div class="callout-title">
-    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg></span>
-    <span class="callout-title-text"><strong>¿Qué hace este comando?</strong></span>
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
+    <span class="callout-title-text">¿Qué hace este comando?</span>
   </div>
   <div class="callout-content">
 <ul>
@@ -372,7 +364,7 @@ locales contra el nuevo mirror principal:</p>
 <div class="callout-box tip">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg></span>
-    <span class="callout-title-text">El parámetro <code>-yy</code> obliga a renovar todas las
+    <span class="callout-title-text">TIP: El parámetro <code>-yy</code> obliga a renovar todas las
 listas de paquetes aunque el sistema crea que ya están al día.</span>
   </div>
   <div class="callout-content">
@@ -494,13 +486,13 @@ equipo esté conectado a la corriente o usando la batería.</p>
 <div class="callout-box warning">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
-    <span class="callout-title-text">No utilices TLP junto con
-<code>power-profiles-daemon</code> (que suele venir instalado en
-escritorios como GNOME o KDE), ya que ambos servicios entrarán en
-conflicto intentando gestionar el mismo hardware.</span>
+    <span class="callout-title-text">ADVERTENCIA</span>
   </div>
   <div class="callout-content">
-
+<p>No utilices TLP junto con <code>power-profiles-daemon</code> (que
+suele venir instalado en escritorios como GNOME o KDE), ya que ambos
+servicios entrarán en conflicto intentando gestionar el mismo
+hardware.</p>
   </div>
 </div>
 <h4 id="desactivación-del-auto-arranque-de-bluetooth">4.2.2.
@@ -682,7 +674,7 @@ para X11 (<code>~/.Xresources</code>)</h3>
 <div class="callout-box important">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
-    <span class="callout-title-text"><strong>Aclaratoria X11 vs. Wayland:</strong></span>
+    <span class="callout-title-text">X11 VS WAYLAND</span>
   </div>
   <div class="callout-content">
 <p>La configuración de <code>~/.Xresources</code> <strong>solo aplica

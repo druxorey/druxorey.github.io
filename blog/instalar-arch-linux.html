@@ -153,11 +153,10 @@ diferentes entornos, preparé este prontuario. Mi objetivo es guiarte de
 forma directa para que no solo copies y pegues comandos en la terminal,
 sino que entiendas qué hace cada herramienta, por qué la ejecutamos y
 cómo encaja en tu nuevo sistema operativo.</p>
-<div class="callout-box note">
+<div class="callout-box warning">
   <div class="callout-title">
-    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
-    <span class="callout-title-text"><strong>ADVERTENCIA DE SEGURIDAD (PROCESO
-DESTRUCTIVO):</strong></span>
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">ADVERTENCIA DE SEGURIDAD: Proceso Destructivo</span>
   </div>
   <div class="callout-content">
 <p>Este proceso formateará y reparticionará la unidad de almacenamiento
@@ -185,13 +184,12 @@ title="null">Entornos de Escritorio en la Arch Wiki</a></p>
 <div class="callout-box important">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
-    <span class="callout-title-text">En esta primera etapa nada de lo que hagas modificará tu
-disco duro. El instalador de Arch se ejecuta completamente en la memoria
-RAM dentro de un entorno temporal conocido como <em>Live
-Environment</em>.</span>
+    <span class="callout-title-text">IMPORTANTE</span>
   </div>
   <div class="callout-content">
-
+<p>En esta primera etapa nada de lo que hagas modificará tu disco duro.
+El instalador de Arch se ejecuta completamente en la memoria RAM dentro
+de un entorno temporal conocido como <em>Live Environment</em>.</p>
   </div>
 </div>
 <h3  id="preparación-del-medio-de-instalación">1.1. Preparación del Medio
@@ -219,7 +217,7 @@ menú de arranque (<em>Boot Menu</em>, usualmente <code>F12</code>,
 <div class="callout-box important">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
-    <span class="callout-title-text"><strong>Desactiva Secure Boot en tu BIOS:</strong></span>
+    <span class="callout-title-text">DESACTIVA SECURE BOOT EN TU BIOS</span>
   </div>
   <div class="callout-content">
 <p>Por defecto, el kernel y los módulos estándar de la ISO de Arch no
@@ -268,10 +266,10 @@ Wi-Fi:</p>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">station</span> <span class="op">&lt;</span>interfaz<span class="op">&gt;</span> connect <span class="st">&quot;&lt;NombreDeRed&gt;&quot;</span></span></code></pre>
 </div></li>
 </ol>
-<div class="callout-box important">
+<div class="callout-box tip">
   <div class="callout-title">
-    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
-    <span class="callout-title-text">Si tu red está oculta, utiliza
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg></span>
+    <span class="callout-title-text">TIP: Si tu red está oculta, utiliza
 <code>station &lt;interfaz&gt; connect-hidden "&lt;NombreDeRed&gt;"</code></span>
   </div>
   <div class="callout-content">
@@ -476,12 +474,12 @@ silicio y mejorar la estabilidad del CPU.</li>
 <div class="callout-box important">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
-    <span class="callout-title-text">Si tu procesador es <strong>AMD</strong>, cambia
-<code>intel-ucode</code> por <code>amd-ucode</code> en el siguiente
-comando:</span>
+    <span class="callout-title-text">IMPORTANTE</span>
   </div>
   <div class="callout-content">
-
+<p>Si tu procesador es <strong>AMD</strong>, cambia
+<code>intel-ucode</code> por <code>amd-ucode</code> en el siguiente
+comando:</p>
   </div>
 </div>
 <div class="code-block-wrapper">
@@ -624,7 +622,7 @@ red local y en la terminal.</p>
 <p>Añade las siguientes líneas reemplazando
 <code>arch-workstation</code> por el nombre que elegiste:</p>
 <div class="code-block-wrapper">
-  <button class="copy-code-btn" type="button" data-lang="Text" title="Copiar código al portapapeles">Text</button>
+  <button class="copy-code-btn" type="button" data-lang="Plaintext" title="Copiar código al portapapeles">Plaintext</button>
   <pre class="code-pre"><code>127.0.0.1   localhost
 ::1         localhost
 127.0.1.1   arch-workstation.localdomain arch-workstation</code></pre>
