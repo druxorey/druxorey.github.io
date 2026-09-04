@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#02 - Modelos en Capas y Protocolos de Red | Druxorey</title>
+  <meta name="description" content="Los modelos en capas estructuran la comunicación de red mediante jerarquías funcionales que facilitan la interoperabilidad y escalabilidad de sistemas heterogéneos. Mientras el modelo OSI actúa como marco conceptual, la pila TCP/IP constituye la arquitectura práctica de Internet, gestionando el encapsulamiento de datos, el direccionamiento IP y los mecanismos de transporte confiable o eficiente, optimizados actualmente mediante protocolos modernos como QUIC.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="../images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="../assets/main-C862Lgn9.js"></script>
+  <script type="module" crossorigin src="../assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="../assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/main-DFGYH4cW.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="../images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#modelos-de-arquitectura-en-capas">1. Modelos de Arquitectura en
+Capas</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#modelo-de-referencia-osi">1.1. Modelo de Referencia OSI</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#pila-tcpip-y-mecánica-de-encapsulamiento">1.2. Pila TCP/IP y
+Mecánica de Encapsulamiento</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#la-pila-moderna-y-el-protocolo-quic-y-http3">1.3. La Pila
+Moderna y el Protocolo QUIC y HTTP/3</a></li>
+<li class="toc-item"><a class="toc-link" href="#protocolos-de-las-capas-de-red-y-transporte">2. Protocolos de
+las Capas de Red y Transporte</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#capa-de-red-ipv4-ipv6">2.1. Capa de Red (IPv4 &amp; IPv6)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#capa-de-transporte-udp-tcp">2.2. Capa de Transporte (UDP &amp;
+TCP)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#control-de-flujo-por-ventana-deslizante">2.3. Control de Flujo
+por Ventana Deslizante</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ciclo-de-vida-de-la-conexión-tcp">2.4. Ciclo de Vida de la
+Conexión TCP</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Comunicación de datos</div>
+          <h1 class="article-title">#02 - Modelos en Capas y Protocolos de Red</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota #02</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            <span class="tag">#académico</span>
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>Los <strong>modelos en capas</strong> estructuran la comunicación de
+red mediante jerarquías funcionales que facilitan la interoperabilidad y
+escalabilidad de sistemas heterogéneos. Mientras el <strong>modelo
+OSI</strong> actúa como marco conceptual, la <strong>pila
+TCP/IP</strong> constituye la arquitectura práctica de Internet,
+gestionando el <strong>encapsulamiento de datos</strong>,
+el <strong>direccionamiento IP</strong> y los mecanismos
+de <strong>transporte</strong> confiable o eficiente, optimizados
+actualmente mediante protocolos modernos como <strong>QUIC</strong>.</p>
+  </div>
+</div>
+<h2  id="modelos-de-arquitectura-en-capas">1. Modelos de Arquitectura en
+Capas</h2>
+<p>La complejidad de las redes exige una estructura que permita
+gestionar los dispositivos y tecnologías que interactúan entre si. Al
+descomponer el proceso de comunicación en capas jerárquicas con
+funciones delimitadas, es posible aislar las tareas críticas,
+facilitando así el diseño de sistemas robustos y escalables. Esto no
+solo simplifica la arquitectura de red, sino que establece un lenguaje
+común para que sistemas heterogéneos puedan intercambiar información de
+manera predecible.</p>
+<h3  id="modelo-de-referencia-osi">1.1. Modelo de Referencia OSI</h3>
+<p>El modelo OSI (<em>Open Systems Interconnection</em>), propuesto por
+la ISO, es un marco conceptual de siete capas:</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 12%" />
+<col style="width: 55%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr>
+<th>Nivel</th>
+<th>Capa</th>
+<th>Función Principal</th>
+<th>Protocolos / Ejemplos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>7</strong></td>
+<td><strong>Aplicación</strong></td>
+<td>Interfaz directa con los programas del usuario.</td>
+<td>HTTP, DNS, SMTP, SSH</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Presentación</strong></td>
+<td>Traduce formatos, comprime datos y gestiona el cifrado.</td>
+<td>TLS/SSL, JPEG, ASCII, UTF-8</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Sesión</strong></td>
+<td>Abre, mantiene y finaliza los diálogos entre aplicaciones.</td>
+<td>Sockets, RPC, NetBIOS</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Transporte</strong></td>
+<td>Entrega confiable o no confiable de extremo a extremo, puertos y
+control de flujo.</td>
+<td>TCP, UDP</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Red</strong></td>
+<td>Direccionamiento lógico global y cálculo de rutas entre redes
+distintas.</td>
+<td>IPv4, IPv6, ICMP, enrutadores</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Enlace de Datos</strong></td>
+<td>Detección de errores, control de acceso al medio y direccionamiento
+local (MAC).</td>
+<td>Ethernet (802.3), Wi-Fi, switches</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Física</strong></td>
+<td>Transmite la secuencia de bits crudos sobre el cable, fibra o
+aire.</td>
+<td>Cables de cobre, fibra óptica, conectores</td>
+</tr>
+</tbody>
+</table>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">¿Por qué OSI no se usa en la práctica?</span>
+  </div>
+  <div class="callout-content">
+<p>Aunque hoy estudiamos el modelo OSI a fondo, ninguna red real
+funciona con sus protocolos. En los años 80, la ISO tardó tanto tiempo
+en definirlo que, para cuando estuvo listo, TCP/IP ya estaba instalado
+en las universidades, venía gratis en los sistemas UNIX y resolvía muy
+bien la conexión entre computadoras. Además, los primeros intentos de
+usar OSI fueron lentos y muy complicados. Por eso, OSI se quedó para
+siempre en los libros como el mapa conceptual perfecto para aprender y
+entender cómo se divide el trabajo en una red, mientras que la
+arquitectura práctica que realmente mueve los datos en Internet es la
+que veremos a continuación: la pila TCP/IP.</p>
+  </div>
+</div>
+<h3  id="pila-tcpip-y-mecánica-de-encapsulamiento">1.2. Pila TCP/IP y
+Mecánica de Encapsulamiento</h3>
+<p>En la práctica se utiliza la pila TCP/IP simplificada en una
+<strong>pila híbrida de cinco capas</strong>, que agrupa las capas 5, 6
+y 7 de OSI en una única capa de aplicación.</p>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 25%" />
+<col style="width: 32%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Capa Pila Híbrida</th>
+<th>Nombre de la PDU</th>
+<th>Identificador Utilizado</th>
+<th>Dispositivo Representativo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Capa 5: Aplicación</strong></td>
+<td>Datos / Mensaje</td>
+<td>Nombre de dominio / URL / Tipo de servicio</td>
+<td>Navegador web, cliente de correo</td>
+</tr>
+<tr>
+<td><strong>Capa 4: Transporte</strong></td>
+<td>Segmento (TCP) / Datagrama (UDP)</td>
+<td>Puerto lógico (<span class="math inline">0\text{ a
+}65535</span>)</td>
+<td>Balanceador de carga, kernel</td>
+</tr>
+<tr>
+<td><strong>Capa 3: Red</strong></td>
+<td>Paquete</td>
+<td>Dirección IP lógica (IPv4 / IPv6)</td>
+<td>Enrutador (Router), switch L3</td>
+</tr>
+<tr>
+<td><strong>Capa 2: Enlace</strong></td>
+<td>Trama («Frame»)</td>
+<td>Dirección física MAC (48 bits)</td>
+<td>Conmutador (Switch L2)</td>
+</tr>
+<tr>
+<td><strong>Capa 1: Física</strong></td>
+<td>Bit</td>
+<td>Niveles de voltaje, luz o radio</td>
+<td>Cable, transceptor, repetidor</td>
+</tr>
+</tbody>
+</table>
+<h4 id="mecanismo-de-encapsulación-y-desencapsulación">1.2.1. Mecanismo
+de Encapsulación y Desencapsulación</h4>
+<p>Cuando un proceso genera un mensaje, los datos sufren una serie de
+transformaciones estructurales al descender por la pila de
+protocolos:</p>
+<ol type="1">
+<li><p><strong>Capa de Aplicación:</strong> El proceso emisor genera un
+flujo continuo de bytes de datos brutos <span
+class="math inline">M</span>.</p></li>
+<li><p><strong>Capa de Transporte:</strong> El protocolo (ej. TCP)
+fragmenta <span class="math inline">M</span> en bloques manejables y
+antepone una cabecera de transporte <span class="math inline">H_t</span>
+que incluye puertos de origen/destino, número de secuencia y códigos de
+verificación. El bloque resultante es un segmento: <span
+class="math display">S = [H_t \mid M]</span></p></li>
+<li><p><strong>Capa de Internet:</strong> El protocolo IP toma el
+segmento <span class="math inline">S</span> y le antepone una cabecera
+de red <span class="math inline">H_n</span> con las direcciones lógicas
+IP de origen y destino, tiempo de vida (<em>TTL</em>) y parámetros de
+fragmentación. El bloque resultante es un paquete: <span
+class="math display">P = [H_n \mid S] = [H_n \mid H_t \mid
+M]</span></p></li>
+<li><p><strong>Capa de Acceso a la Red:</strong> El controlador del
+enlace físico toma el paquete <span class="math inline">P</span> y le
+añade una cabecera de enlace <span class="math inline">H_l</span>
+(direcciones físicas MAC) y una cola de control <span
+class="math inline">T_l</span> (típicamente una secuencia de
+verificación de trama mediante redundancia cíclica o <em>CRC</em>). El
+resultado es una trama: <span class="math display">F = [H_l \mid P \mid
+T_l] = [H_l \mid H_n \mid H_t \mid M \mid T_l]</span></p></li>
+<li><p><strong>Capa Física:</strong> La trama <span
+class="math inline">F</span> se serializa y se inyecta en el canal
+físico en forma de variaciones continuas de magnitudes físicas
+(corriente, voltaje, pulsos de luz o fases de onda portadora).</p></li>
+<li><p><strong>Recepción (Desencapsulación):</strong> El receptor
+ejecuta el proceso inverso: verifica el <span
+class="math inline">CRC</span>, retira las cabeceras <span
+class="math inline">H_l, H_n, H_t</span> capa por capa en orden
+ascendente y entrega los datos limpios <span
+class="math inline">M</span> al proceso receptor en la capa de
+aplicación.</p></li>
+</ol>
+<h4 id="comparativa-estructural">1.2.2. Comparativa Estructural</h4>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 38%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parámetro de Diseño</th>
+<th>Modelo OSI</th>
+<th>Pila TCP/IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enfoque de origen</strong></td>
+<td>Estrictamente teórico, académico y formal.</td>
+<td>Práctico, experimental y orientado a la implementación.</td>
+</tr>
+<tr>
+<td><strong>Complejidad estructural</strong></td>
+<td>7 capas bien diferenciadas.</td>
+<td>4 capas funcionales simplificadas.</td>
+</tr>
+<tr>
+<td><strong>Separación conceptual</strong></td>
+<td>Distinción explícita entre servicios, interfaces y protocolos.</td>
+<td>No delimita con claridad la separación entre servicios e
+interfaces.</td>
+</tr>
+<tr>
+<td><strong>Adopción en el mercado</strong></td>
+<td>Muy baja en implementaciones reales; estándar de modelado.</td>
+<td>Dominio total; es la base funcional de Internet.</td>
+</tr>
+<tr>
+<td><strong>Manejo de estados</strong></td>
+<td>Orientado a conexión rígida en múltiples niveles.</td>
+<td>Capa de red sin conexión (<em>best-effort</em>); robusta ante fallos
+de enlaces.</td>
+</tr>
+</tbody>
+</table>
+<h3  id="la-pila-moderna-y-el-protocolo-quic-y-http3">1.3. La Pila
+Moderna y el Protocolo QUIC y HTTP/3</h3>
+<p>La pila clásica TCP/IP (HTTP/1.1 sobre TCP y TLS como capa
+intermedia) presenta limitaciones estructurales severas para el tráfico
+web contemporáneo:</p>
+<ul>
+<li><p><strong>Bloqueo de Cabeza de Línea (<em>Head-of-Line
+Blocking</em>):</strong> Dado que TCP garantiza entrega en orden
+estricto, la pérdida de un único paquete detiene la entrega de todos los
+datos recibidos posteriormente en el búfer de la máquina, aun cuando
+correspondan a solicitudes web independientes multiplexadas sobre la
+misma conexión.</p></li>
+<li><p><strong>Sobrecarga de Establecimiento de Conexión:</strong>
+Establecer una sesión segura bajo TCP + TLS 1.2 requiere al menos tres
+viajes de ida y vuelta (<em>Round-Trip Time</em>, RTT): el acuerdo de
+tres vías (<em>handshake</em>) de TCP sumado a los intercambios
+criptográficos de TLS.</p></li>
+</ul>
+<p>Para superar estos problemas, la arquitectura moderna ha sustituido
+la base de transporte tradicional:</p>
+<ul>
+<li><p><strong>QUIC (RFC 9000):</strong> Se ejecuta en el espacio de
+usuario sobre datagramas UDP. Elimina el bloqueo de cabeza de línea al
+implementar múltiples flujos independientes (<em>streams</em>) dentro de
+una sola conexión física: la caída o retraso de un paquete en un flujo
+no interrumpe el procesamiento de los demás.</p></li>
+<li><p><strong>Criptografía nativa (TLS 1.3):</strong> QUIC integra la
+negociación de claves en el propio establecimiento de conexión, logrando
+aperturas de sesión en <span class="math inline">1\text{ RTT}</span> y
+reanudaciones inmediatas con en vío de datos en cero esperas (<span
+class="math inline">0\text{-RTT}</span>).</p></li>
+</ul>
+<h2  id="protocolos-de-las-capas-de-red-y-transporte">2. Protocolos de
+las Capas de Red y Transporte</h2>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 1:</strong> Protocolo</span>
+  </div>
+  <div class="callout-content">
+<p>Un protocolo es un conjunto formal de reglas, convenciones y
+procedimientos estandarizados que gobiernan el formato, la
+sincronización, la secuencia y la gestión de errores en el intercambio
+de información entre dos o más entidades dentro de un sistema de
+comunicación, garantizando así la interoperabilidad y la coherencia en
+la transferencia de datos.</p>
+  </div>
+</div>
+<p>La capa de red se encarga de que los paquetes viajen de origen a
+destino a través de múltiples rutas intermedias, mientras que la capa de
+transporte garantiza que los datos se entreguen a la aplicación correcta
+dentro de cada equipo.</p>
+<h3  id="capa-de-red-ipv4-ipv6">2.1. Capa de Red (IPv4 &amp; IPv6)</h3>
+<p>El protocolo IP (<em>Internet Protocol</em>) funciona bajo el
+principio del «mejor esfuerzo»: no establece una conexión previa, no
+confirma si el paquete llegó a su destino y no corrige paquetes
+desordenados; su objetivo se centra en encaminar cada fragmento de forma
+individual.</p>
+<h4 id="estructura-del-encabezado-ipv4">2.1.1. Estructura del Encabezado
+IPv4</h4>
+<p>El encabezado de IPv4 tiene un tamaño típico de <span
+class="math inline">20\text{ bytes}</span> (extensible a <span
+class="math inline">60\text{ bytes}</span> con opciones):</p>
+<ul>
+<li><p><strong>Versión (4 bits):</strong> Indica la versión del
+protocolo (<code>0100</code> para IPv4).</p></li>
+<li><p><strong>IHL (4 bits):</strong> Longitud del encabezado en
+palabras de 32 bits (valor mínimo <span class="math inline">= 5</span>,
+equivalente a <span class="math inline">5 \times 4 = 20\text{
+bytes}</span>).</p></li>
+<li><p><strong>DSCP / ECN (8 bits):</strong> Prioridad del paquete para
+Calidad de Servicio (QoS) y notificación de congestión.</p></li>
+<li><p><strong>Longitud Total (16 bits):</strong> Tamaño total del
+paquete (encabezado más datos), con un límite superior de <span
+class="math inline">2^{16} - 1 = 65535\text{ bytes}</span>.</p></li>
+<li><p><strong>Identificación (16 bits), Banderas (3 bits) y
+Desplazamiento (13 bits):</strong> Campos para dividir paquetes grandes
+que superan el tamaño máximo que admite el medio físico (<span
+class="math inline">\text{MTU}</span>) y reconstruirlos en el
+destino.</p></li>
+<li><p><strong>TTL (Time to Live - 8 bits):</strong> Contador que
+disminuye en 1 cada vez que el paquete cruza un router. Si llega a 0, el
+router descarta el paquete para evitar que quede dando vueltas
+indefinidamente en la red.</p></li>
+<li><p><strong>Protocolo (8 bits):</strong> Indica qué protocolo de la
+capa superior viene adentro (<code>6</code> para TCP, <code>17</code>
+para UDP, <code>1</code> para ICMP).</p></li>
+<li><p><strong>Checksum de Cabecera (16 bits):</strong> Código
+matemático para verificar si el encabezado se corrompió en el camino.
+Los routers lo recalculan en cada salto debido al cambio en el
+TTL.</p></li>
+<li><p><strong>Dirección IP de Origen y Destino (32 bits cada
+una):</strong> Identificadores numéricos que limitan el espacio total de
+IPv4 a <span class="math inline">2^{32} \approx 4.29 \times 10^9</span>
+direcciones.</p></li>
+</ul>
+<h4 id="estructura-del-encabezado-ipv6">2.1.2. Estructura del Encabezado
+IPv6</h4>
+<p>IPv6 soluciona el agotamiento de direcciones de IPv4 ofreciendo
+direcciones de 128 bits (<span class="math inline">2^{128} \approx 3.4
+\times 10^{38}</span> direcciones) y cuenta con una cabecera de tamaño
+fijo de <span class="math inline">40\text{ bytes}</span>. Alguna de las
+mejores clave en IPv6 con respecto a IPv4 fue la eliminación del
+Checksum del encabezado (la verificación de errores se delega a las
+capas 2 y 4 para acelerar el reenvío) y se prohibió que los enrutadores
+fragmenten paquetes en ruta; si un paquete es demasiado grande, el
+emisor se encarga de reducirlo antes de transmitirlo. Entonces, la
+estructura completa del encabezado es la siguiente:</p>
+<ul>
+<li><p><strong>Versión (4 bits):</strong> Valor fijo
+<code>0110</code>.</p></li>
+<li><p><strong>Clase de Tráfico (8 bits):</strong> Cumple la misma
+función de prioridad que el DSCP de IPv4.</p></li>
+<li><p><strong>Etiqueta de Flujo («Flow Label» - 20 bits):</strong>
+Marca secuencias de paquetes para que los enrutadores intermedios los
+procesen sin tener que inspeccionar los campos interiores.</p></li>
+<li><p><strong>Longitud de Carga Útil (16 bits):</strong> Tamaño en
+bytes de los datos que vienen detrás del encabezado fijo de 40
+bytes.</p></li>
+<li><p><strong>Siguiente Encabezado (8 bits):</strong> Indica el tipo de
+cabecera de extensión que sigue o el protocolo de la Capa 4 (reemplaza
+al campo Protocolo de IPv4).</p></li>
+<li><p><strong>Límite de Saltos («Hop Limit» - 8 bits):</strong>
+Reemplazo directo del campo TTL.</p></li>
+<li><p><strong>Direcciones de Origen y Destino (128 bits cada
+una):</strong> Espacio masivo expresado en grupos de dígitos
+hexadecimales.</p></li>
+</ul>
+<h3  id="capa-de-transporte-udp-tcp">2.2. Capa de Transporte (UDP &amp;
+TCP)</h3>
+<p>La capa 4 utiliza números de puerto (<span
+class="math inline">0\text{ a }65535</span>) para entregar la
+información al proceso exacto que la espera en el sistema operativo,
+pero ofrece dos formas distintas de transporte:</p>
+<h4 id="protocolo-udp-user-datagram-protocol">2.2.1. Protocolo UDP (User
+Datagram Protocol)</h4>
+<p>Es un protocolo liviano, sin conexión y sin confirmaciones. Su
+cabecera mide solo <span class="math inline">8\text{ bytes}</span>:</p>
+<ul>
+<li>Puerto de Origen (16 bits) y Puerto de Destino (16 bits).</li>
+<li>Longitud (16 bits).</li>
+<li>Checksum (16 bits).</li>
+</ul>
+<p>UDP no frena el flujo de datos ante congestión ni retransmite
+paquetes perdidos. Su ventaja es la mínima sobrecarga y el retardo
+reducido, siendo el estándar para transmisiones de video y audio en
+vivo, videojuegos en línea y consultas rápidas de DNS.</p>
+<h4 id="protocolo-tcp-transmission-control-protocol">2.2.2. Protocolo
+TCP (Transmission Control Protocol)</h4>
+<p>Es un protocolo orientado a conexión, confiable y bidireccional.
+Convierte un canal de red con posibles pérdidas en un flujo de bytes
+ordenado y sin errores. Su cabecera base mide <span
+class="math inline">20\text{ bytes}</span> (extensible a <span
+class="math inline">60\text{ bytes}</span> con opciones):</p>
+<ul>
+<li><p><strong>Número de Secuencia (32 bits):</strong> Indica la
+posición del primer byte del segmento dentro del flujo total de
+datos.</p></li>
+<li><p><strong>Número de Reconocimiento (ACK - 32 bits):</strong>
+Informa cuál es el siguiente byte que el receptor espera
+recibir.</p></li>
+<li><p><strong>Data Offset (4 bits):</strong> Tamaño del encabezado TCP
+en palabras de 32 bits.</p></li>
+<li><p><strong>Banderas de Control (9 bits):</strong> Señales lógicas
+para gestionar la sesión (<code>SYN</code>, <code>ACK</code>,
+<code>FIN</code>, <code>RST</code>, <code>PSH</code>,
+<code>URG</code>).</p></li>
+<li><p><strong>Tamaño de Ventana (16 bits):</strong> Cantidad de bytes
+que el receptor puede almacenar en su búfer en ese momento sin
+desbordarse.</p></li>
+<li><p><strong>Checksum (16 bits):</strong> Validación matemática
+obligatoria de integridad que cubre la cabecera, los datos y una
+pseudocabecera IP.</p></li>
+</ul>
+<h3  id="control-de-flujo-por-ventana-deslizante">2.3. Control de Flujo
+por Ventana Deslizante</h3>
+<p>Para enviar varios paquetes seguidos sin tener que frenar y esperar
+una confirmación por cada uno, TCP utiliza el método de la ventana
+deslizante.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 2:</strong> Invariante de la
+Ventana Deslizante</span>
+  </div>
+  <div class="callout-content">
+<p>Sean <span class="math inline">\text{LastByteSent}</span> el número
+de secuencia del último byte transmitido, <span
+class="math inline">\text{LastByteAcked}</span> el último byte
+confirmado por el receptor, y <span class="math inline">rwnd</span> el
+tamaño de la ventana de recepción anunciado. El emisor asegura que la
+masa de datos en vuelo cumpla siempre la desigualdad:</p>
+<p><span class="math display">\text{LastByteSent} - \text{LastByteAcked}
+\le rwnd</span></p>
+  </div>
+</div>
+<p>Para visualizar este mecanismo, imaginemos una tolva en una línea de
+montaje que deposita piezas en una canasta de trabajo. La canasta tiene
+capacidad para almacenar exactamente 5 piezas (<span
+class="math inline">rwnd = 5</span>). El operario de la tolva puede
+dejar caer hasta 5 piezas seguidas sin esperar.</p>
+<p>A medida que el operario de la mesa procesa una pieza y la pasa a la
+siguiente sección, levanta una tarjeta de color verde para avisar que se
+liberó un espacio en la canasta. Al ver la tarjeta, el operario de la
+tolva libera de inmediato una nueva pieza. Si el operario de la mesa se
+demora y la canasta se llena con las 5 piezas, no levanta tarjetas; el
+operador de la tolva se detiene de inmediato para no desbordar la
+canasta ni tirar piezas al suelo.</p>
+<h3  id="ciclo-de-vida-de-la-conexión-tcp">2.4. Ciclo de Vida de la
+Conexión TCP</h3>
+<p>TCP sincroniza la apertura y el cierre de la comunicación mediante
+secuencias formales de control.</p>
+<h4 id="establecimiento-de-tres-vías-three-way-handshake">2.4.1.
+Establecimiento de Tres Vías («Three-Way Handshake»)</h4>
+<ol type="1">
+<li><p><strong>Paso 1 (SYN):</strong> El cliente genera un Número de
+Secuencia Inicial aleatorio (<span class="math inline">ISN_c = x</span>)
+y transmite un segmento con la bandera <span
+class="math inline">\text{SYN} = 1</span>. El cliente pasa al estado
+<code>SYN_SENT</code>.</p></li>
+<li><p><strong>Paso 2 (SYN-ACK):</strong> El servidor recibe la
+petición, reserva memoria para los búferes de la conexión, genera su
+propio número inicial (<span class="math inline">ISN_s = y</span>) y
+responde con <span class="math inline">\text{SYN} = 1</span>, <span
+class="math inline">\text{ACK} = 1</span> y <span
+class="math inline">Ack = x + 1</span>. El servidor pasa al estado
+<code>SYN_RCVD</code>.</p></li>
+<li><p><strong>Paso 3 (ACK):</strong> El cliente confirma la respuesta
+enviando un segmento con <span class="math inline">\text{ACK} =
+1</span>, <span class="math inline">Seq = x + 1</span> y <span
+class="math inline">Ack = y + 1</span>. Ambos extremos quedan en estado
+<code>ESTABLISHED</code> y el canal queda listo para transmitir
+datos.</p></li>
+</ol>
+<h4 id="cierre-de-cuatro-pasos-graceful-teardown">2.4.2. Cierre de
+Cuatro Pasos («Graceful Teardown»)</h4>
+<p>Dado que TCP es bidireccional, cada sentido de la transmisión se
+cierra por separado:</p>
+<ol type="1">
+<li><p><strong>Paso 1 (FIN del Cliente):</strong> El cliente concluye el
+envío de datos y emite un segmento con <span
+class="math inline">\text{FIN} = 1</span> y secuencia <span
+class="math inline">Seq = u</span>. Pasa al estado
+<code>FIN_WAIT_1</code>.</p></li>
+<li><p><strong>Paso 2 (ACK del Servidor):</strong> El servidor confirma
+el cierre enviando un segmento con <span class="math inline">Ack = u +
+1</span>. El cliente entra en <code>FIN_WAIT_2</code>. El servidor entra
+en <code>CLOSE_WAIT</code>; en este estado, el servidor todavía puede
+enviar datos pendientes hacia el cliente.</p></li>
+<li><p><strong>Paso 3 (FIN del Servidor):</strong> Tras vaciar sus
+búferes pendientes, el servidor envía su propio segmento con <span
+class="math inline">\text{FIN} = 1</span> y secuencia <span
+class="math inline">Seq = v</span>. Pasa al estado
+<code>LAST_ACK</code>.</p></li>
+<li><p><strong>Paso 4 (ACK del Cliente):</strong> El cliente confirma
+con <span class="math inline">Ack = v + 1</span>. El servidor cierra la
+conexión. El cliente entra en un estado temporal de espera denominado
+<code>TIME_WAIT</code> (con una duración de <span
+class="math inline">2\text{MSL}</span>, «Maximum Segment Lifetime») para
+asegurarse de absorber cualquier paquete retrasado en la red antes de
+liberar el puerto.</p></li>
+</ol>
+<h4 id="manejo-de-errores-y-seguridad">2.4.3. Manejo de Errores y
+Seguridad</h4>
+<ul>
+<li><p><strong>Ataque SYN Flood:</strong> Ataque de denegación de
+servicio donde un atacante emite ráfagas de paquetes <code>SYN</code>
+con direcciones IP falsas. El servidor reserva memoria y espera un
+<code>ACK</code> final que nunca llega, agotando sus recursos. Se mitiga
+utilizando «SYN Cookies», una técnica que codifica el estado en el
+número de secuencia inicial sin apartar memoria de inmediato.</p></li>
+<li><p><strong>Bandera Reset (<code>RST</code>):</strong> Señal de
+desconexión abrupta que emite un host cuando recibe un paquete dirigido
+a un puerto cerrado o cuando ocurre un error insalvable por reinicio
+inesperado del sistema.</p></li>
+</ul>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>International Organization for Standardization.</strong>
+<em>ISO/IEC 7498-1: Information Technology — Open Systems
+Interconnection — Basic Reference Model: The Basic Model</em>.
+Recuperado de <a
+href="https://www.iso.org/standard/20269.html">iso.org</a></p></li>
+<li><p><strong>Postel, J.</strong> <em>RFC 791: Internet Protocol</em>.
+Recuperado de <a
+href="https://datatracker.ietf.org/doc/html/rfc791">datatracker.ietf.org</a></p></li>
+<li><p><strong>Deering, S. &amp; Hinden, R.</strong> <em>RFC 8200:
+Internet Protocol, Version 6 (IPv6) Specification</em>. Recuperado de <a
+href="https://datatracker.ietf.org/doc/html/rfc8200">datatracker.ietf.org</a></p></li>
+<li><p><strong>Postel, J.</strong> <em>RFC 768: User Datagram
+Protocol</em>. Recuperado de <a
+href="https://datatracker.ietf.org/doc/html/rfc768">datatracker.ietf.org</a></p></li>
+<li><p><strong>Eddy, W.</strong> <em>RFC 9293: Transmission Control
+Protocol (TCP)</em>. Recuperado de <a
+href="https://datatracker.ietf.org/doc/html/rfc9293">datatracker.ietf.org</a></p></li>
+<li><p><strong>Iyengar, J. &amp; Thomson, M.</strong> <em>RFC 9000:
+QUIC: A UDP-Based Multiplexed and Secure Transport</em>. Recuperado de
+<a
+href="https://datatracker.ietf.org/doc/html/rfc9000">datatracker.ietf.org</a></p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>

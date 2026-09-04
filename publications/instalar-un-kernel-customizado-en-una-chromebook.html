@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prontuario para Instalar un Kernel Customizado en una Chromebook | Druxorey</title>
+  <meta name="description" content="Liberar una Chromebook de las restricciones de ChromeOS es posible mediante la instalación de un firmware UEFI personalizado. Al desactivar la protección física contra escritura y flashear Coreboot, transformas un equipo limitado en una computadora x86 estándar. Este proceso te otorga control total sobre el hardware, permitiéndote instalar distribuciones como Arch Linux y optimizar el kernel para un rendimiento absoluto.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="../images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="../assets/main-C862Lgn9.js"></script>
+  <script type="module" crossorigin src="../assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="../assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/main-DFGYH4cW.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="../images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link active">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link active">Publicaciones</a>
+      <a href="/notes.html" class="nav-link">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Article Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/publications.html" class="article-back-link">
+          ← Volver al catálogo de publicaciones
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Article Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#herramientas-y-preparativos-de-hardware">1. Herramientas y
+Preparativos de Hardware</a></li>
+<li class="toc-item"><a class="toc-link" href="#desactivación-de-la-protección-contra-escritura-física-write-protect">2.
+Desactivación de la Protección Contra Escritura Física
+(Write-Protect)</a></li>
+<li class="toc-item"><a class="toc-link" href="#habilitación-del-modo-desarrollador">3. Habilitación del Modo
+Desarrollador</a></li>
+<li class="toc-item"><a class="toc-link" href="#descarga-y-ejecución-del-script-de-mrchromebox">4. Descarga y
+Ejecución del Script de MrChromebox</a></li>
+<li class="toc-item"><a class="toc-link" href="#flasheo-del-firmware-full-rom-uefi-coreboot">5. Flasheo del
+Firmware Full ROM (UEFI Coreboot)</a></li>
+<li class="toc-item"><a class="toc-link" href="#arranque-e-instalación-del-sistema-operativo">6. Arranque e
+Instalación del Sistema Operativo</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Article Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Publicación · Investigación</div>
+          <h1 class="article-title">Prontuario para Instalar un Kernel Customizado en una Chromebook</h1>
+
+          <div class="article-meta">
+            <time datetime="2025-12-20">2025-12-20</time>
+            <span>·</span>
+            <span>7 min de lectura</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            <span class="tag">#prontuario</span> <span class="tag">#linux</span>
+          </div>
+
+          <!-- Featured Banner Image -->
+          
+          <div class="article-banner-wrapper">
+            <img class="article-banner-img" src="../images/post/instalar-un-kernel-customizado-en-una-chromebook.avif" alt="Prontuario para Instalar un Kernel Customizado en una Chromebook">
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <p>Mi primer acercamiento a la programación de manera seria ocurrió
+frente a una modesta Dell Chromebook P22T. Aunque el equipo era
+sumamente portátil y ligero, ChromeOS pronto se convirtió en una jaula:
+el almacenamiento interno eMMC era diminuto, el sistema impedía acceder
+a utilidades de desarrollo avanzadas y el kernel compilado por Google
+venía recortado y bloqueado de fábrica. Para tener un control absoluto
+sobre los recursos de la máquina y compilar código sin limitaciones, no
+bastaba con arreglos temporales en espacio de usuario; necesitaba
+reemplazar el sistema operativo por completo y montar un kernel
+personalizado optimizado para el hardware sobre una base limpia como
+Arch Linux.</p>
+<p>Lograr esto exigió intervenir el dispositivo desde adentro: desarmar
+la laptop para desactivar el bloqueo físico de la placa base, sustituir
+el firmware original por una BIOS UEFI abierta utilizando las utilidades
+de <strong>MrChromebox</strong> y reconfigurar la gestión de
+controladores a nivel de kernel. A continuación, encontrarás el
+procedimiento detallado y actualizado para transformar tu Chromebook en
+una computadora x86 plenamente libre y estándar.</p>
+<div class="callout-box warning">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">ADVERTENCIA DE SEGURIDAD: Modificación de Firmware</span>
+  </div>
+  <div class="callout-content">
+<p>Este procedimiento implica abrir físicamente el equipo para modificar
+la placa base y sobrescribir el chip de memoria SPI Flash
+(<em>BIOS</em>). Si interrumpes el proceso de flasheo o cortas la
+energía, el dispositivo podría quedar brickeado. Realiza una copia de
+seguridad obligatoria del firmware de fábrica cuando el script te lo
+solicite y procede bajo tu propia responsabilidad.</p>
+  </div>
+</div>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">IMPORTANTE</span>
+  </div>
+  <div class="callout-content">
+<p>Esta guía toma como referencia el procedimiento en una <strong>Dell
+Chromebook 11 (P22T / modelo <em>Candy</em>)</strong>. Aunque el script
+de MrChromebox es compatible con la mayoría de arquitecturas x86 de
+ChromeOS, la ubicación física del mecanismo de protección contra
+escritura varía notablemente según el fabricante y año del modelo.</p>
+  </div>
+</div>
+<h2  id="herramientas-y-preparativos-de-hardware">1. Herramientas y
+Preparativos de Hardware</h2>
+<p>No es posible realizar este procedimiento únicamente mediante
+software; necesitarás herramientas manuales y periféricos
+auxiliares:</p>
+<ul>
+<li><p><strong>Destornillador de precisión (Phillips #0 o #1):</strong>
+Para retirar la tapa inferior y remover el tornillo de protección de la
+placa base.</p></li>
+<li><p><strong>Unidad USB con instalador UEFI:</strong> Una memoria USB
+booteable con tu distribución Linux preferida (por ejemplo, el
+instalador base de Arch Linux).</p></li>
+<li><p><strong>Segunda memoria USB (Formateada en FAT32):</strong> Para
+guardar el respaldo (<em>backup</em>) del firmware original de
+Google.</p></li>
+<li><p><strong>Teclado y mouse USB externos:</strong> Durante la primera
+instalación, muchos kernels genéricos no integran los controladores del
+bus I2C para el touchpad o el teclado interno de las
+Chromebooks.</p></li>
+<li><p><strong>Conexión a internet estable:</strong> Indispensable para
+que el script descargue la imagen de Coreboot correspondiente a tu
+procesador.</p></li>
+</ul>
+<h2 
+id="desactivación-de-la-protección-contra-escritura-física-write-protect">2.
+Desactivación de la Protección Contra Escritura Física
+(Write-Protect)</h2>
+<p>Google protege el chip de memoria flash del firmware mediante una
+línea de voltaje enlazada a un tornillo físico en la placa base
+(<em>Hardware Write-Protect</em>). Mientras este contacto permanezca
+cerrado, el chip impedirá cualquier operación de sobreescritura en las
+secciones críticas de la memoria ROM.</p>
+<ol type="1">
+<li><p>Apaga la Chromebook por completo, desconecta el cargador y dale
+la vuelta sobre una superficie suave.</p></li>
+<li><p>Retira todos los tornillos del chasis inferior con tu
+destornillador y retira la tapa con cuidado.</p></li>
+<li><p>Localiza el <strong>tornillo Write-Protect (WP)</strong>. En la
+Dell Chromebook 11 P22T, suele ser un tornillo metálico visible cerca
+del módulo del ventilador/disipador, marcado con una pista circular
+dividida en la placa base.</p></li>
+<li><p>Desatornilla y retira dicho tornillo por completo; guárdalo en un
+lugar seguro.</p></li>
+<li><p>Vuelve a colocar la tapa trasera y atorníllala antes de encender
+el equipo.</p></li>
+</ol>
+<h2  id="habilitación-del-modo-desarrollador">3. Habilitación del Modo
+Desarrollador</h2>
+<p>El mecanismo <em>Verified Boot</em> de ChromeOS valida la firma
+criptográfica del sistema antes de cada arranque. Para abrir una
+terminal con privilegios de root dentro de ChromeOS, debemos forzar al
+sistema a ingresar en el modo para desarrolladores.</p>
+<ol type="1">
+<li><p>Con el equipo apagado, mantén presionadas las teclas
+<strong><code>Esc</code> + <code>Refresh</code> (tecla de recargar/F3) +
+<code>Power</code></strong> para iniciar en la pantalla de recuperación
+(<em>Recovery Screen</em>).</p></li>
+<li><p>En la pantalla con el signo de exclamación amarillo, presiona la
+combinación <strong><code>Ctrl + D</code></strong>.</p></li>
+<li><p>Presiona <strong><code>Enter</code></strong> cuando el sistema
+solicite confirmación para activar el modo desarrollador.</p></li>
+<li><p>La Chromebook ejecutará un formateo de fábrica
+(<em>Powerwash</em>) para borrar todos los datos de usuario locales.
+Este proceso tomará entre 5 y 10 minutos.</p></li>
+</ol>
+<h2  id="descarga-y-ejecución-del-script-de-mrchromebox">4. Descarga y
+Ejecución del Script de MrChromebox</h2>
+<p>Una vez que el sistema termine de reiniciar, realiza la configuración
+inicial mínima de ChromeOS únicamente para conectarte a tu red Wi-Fi
+(puedes entrar como invitado).</p>
+<ol type="1">
+<li><p>Abre la consola de ChromeOS (<em>Crosh</em>) presionando
+<strong><code>Ctrl + Alt + T</code></strong>.</p></li>
+<li><p>Escribe <code>shell</code> y presiona Enter para obtener un
+intérprete Bash con permisos completos.</p></li>
+<li><p>Descarga y ejecuta el script de utilidades de firmware oficial
+desarrollado por <strong>MrChromebox</strong>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span><span class="kw">;</span> <span class="ex">curl</span> <span class="at">-LO</span> https://mrchromebox.tech/firmware-util.sh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> bash firmware-util.sh</span></code></pre>
+</div></li>
+</ol>
+<p>El script analizará automáticamente el código de hardware de tu placa
+(<em>board name</em>), comprobará si el tornillo Write-Protect fue
+retirado correctamente y desplegará un menú interactivo con las opciones
+disponibles.</p>
+<h2  id="flasheo-del-firmware-full-rom-uefi-coreboot">5. Flasheo del
+Firmware Full ROM (UEFI Coreboot)</h2>
+<p>Para convertir la Chromebook en una computadora tradicional capaz de
+iniciar cualquier kernel o distribución, debemos instalar la opción
+<strong>Full ROM</strong>. Esta alternativa reemplaza la BIOS
+propietaria de Google por una implementación abierta de
+<strong>Coreboot</strong> con el gestor <strong>Tianocore
+(EDK2)</strong>.</p>
+<ol type="1">
+<li><p>En el menú del script, selecciona la opción:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Console" title="Copiar código al portapapeles">Console</button>
+  <pre class="code-pre"><code>Install/Update Full ROM Firmware</code></pre>
+</div></li>
+<li><p>Escribe <code>Y</code> para confirmar que comprendes los riesgos
+del procedimiento.</p></li>
+<li><p><strong>Copia de seguridad del Firmware:</strong> Conecta tu
+memoria USB secundaria cuando el script te lo pregunte. El sistema
+extraerá el archivo binario del firmware de fábrica
+(<code>backup.rom</code>) y lo guardará en la memoria. Conserva este
+archivo para poder restaurar ChromeOS en el futuro si alguna vez lo
+necesitas.</p></li>
+<li><p>El script descargará la imagen compilada de UEFI Coreboot para tu
+modelo específico y la escribirá en la memoria SPI.</p></li>
+<li><p>Una vez que la pantalla confirme que el proceso concluyó con
+éxito, presiona Enter y apaga el equipo
+(<code>sudo poweroff</code>).</p></li>
+</ol>
+<h2  id="arranque-e-instalación-del-sistema-operativo">6. Arranque e
+Instalación del Sistema Operativo</h2>
+<p>Tu Chromebook ha dejado de buscar las particiones firmadas de
+ChromeOS y ahora se comporta como una computadora x86 estándar gobernada
+por una BIOS UEFI completa.</p>
+<ol type="1">
+<li><p>Inserta la memoria USB booteable con el instalador de Arch Linux
+(o la distribución de tu elección) y conecta el teclado/mouse
+auxiliar.</p></li>
+<li><p>Enciende el equipo. Verás la pantalla de inicio del firmware UEFI
+de MrChromebox (representada comúnmente por el logotipo de un conejo
+blanco).</p></li>
+<li><p>Presiona la tecla <strong><code>Esc</code></strong>
+inmediatamente al encender para abrir el menú de dispositivos de
+arranque y selecciona tu unidad USB.</p></li>
+<li><p>Procede con el particionado e instalación habitual de tu sistema
+operativo.</p></li>
+</ol>
+<div class="callout-box tip">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg></span>
+    <span class="callout-title-text">TIP: Ajustes para el Kernel en Chromebooks antiguas</span>
+  </div>
+  <div class="callout-content">
+<p>En plataformas como Intel Bay Trail / Braswell (presentes en la Dell
+P22T), los controladores de audio y gestión de energía suelen requerir
+módulos específicos en el kernel de Linux. Asegúrate de instalar
+paquetes de firmware actualizados (<code>linux-firmware</code>) y, de
+ser necesario, compilar módulos del árbol de sonido ALSA específicos
+para hardware ChromeOS (<code>snd_soc_sst_acpi</code>).</p>
+  </div>
+</div>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>MrChromebox.tech (Sitio Oficial):</strong> Documentación
+técnica, matriz de compatibilidad de hardware y guías de firmware en <a
+href="https://mrchromebox.tech/">mrchromebox.tech</a>.</p></li>
+<li><p><strong>Proyecto Coreboot:</strong> Documentación del proyecto de
+firmware de código abierto para arquitecturas x86 en <a
+href="https://www.coreboot.org/">coreboot.org</a>.</p></li>
+<li><p><strong>TianoCore EDK2:</strong> Implementación de referencia
+abierta de la especificación Unified Extensible Firmware Interface
+(UEFI) en <a
+href="https://www.tianocore.org/">tianocore.org</a>.</p></li>
+<li><p><strong>Arch Wiki - ChromeOS devices:</strong> Guía detallada
+para la configuración de controladores, audio y teclado en hardware
+Chromebook dentro de <a
+href="https://www.google.com/search?q=https://wiki.archlinux.org/title/ChromeOS_devices">wiki.archlinux.org/title/ChromeOS_devices</a>.</p></li>
+<li><p><strong>Flashrom:</strong> Utilidad universal de código abierto
+para identificación y flasheo de memorias ROM/Flash en <a
+href="https://www.flashrom.org/">flashrom.org</a>.</p></li>
+<li><p><strong>The Linux Kernel - ChromeOS hardware platform:</strong>
+Documentación de controladores del kernel dedicados al subsistema de
+hardware de ChromeOS en <a
+href="https://www.google.com/search?q=https://www.kernel.org/doc/html/latest/driver-api/chromeos.html">kernel.org/doc/html/latest/driver-api/chromeos.html</a>.</p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>

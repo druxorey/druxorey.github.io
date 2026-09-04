@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prontuario para Inicializar tu Entorno de Arch Linux | Druxorey</title>
+  <meta name="description" content="Transformar una instalación base de Arch Linux en un entorno de trabajo funcional requiere ajustes precisos que maximizan el rendimiento y la estabilidad. Desde la optimización de Pacman y la gestión del AUR, hasta la configuración de seguridad, controladores gráficos y renderizado de fuentes, este proceso es el paso definitivo para convertir tu terminal en un sistema operativo profesional, eficiente y totalmente personalizado.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="../images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="../assets/main-C862Lgn9.js"></script>
+  <script type="module" crossorigin src="../assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="../assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/main-DFGYH4cW.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="../images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link active">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link active">Publicaciones</a>
+      <a href="/notes.html" class="nav-link">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Article Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/publications.html" class="article-back-link">
+          ← Volver al catálogo de publicaciones
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Article Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#verificación-y-gestión-de-conectividad">1. Verificación y
+Gestión de Conectividad</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#escaneo-y-conexión-a-redes-wi-fi">1.1. Escaneo y Conexión a
+Redes Wi-Fi</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#configuración-de-servidores-dns">1.2. Configuración de
+Servidores DNS</a></li>
+<li class="toc-item"><a class="toc-link" href="#optimización-de-pacman-y-asistente-de-aur">2. Optimización de
+Pacman y Asistente de AUR</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ajustes-en-etcpacman.conf">2.1. Ajustes en
+/etc/pacman.conf</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#instalación-de-un-asistente-para-aur-yay-o-paru">2.2.
+Instalación de un Asistente para AUR (yay o
+paru)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#optimización-de-mirrors-con-rate-mirrors">2.3. Optimización de
+Mirrors con rate-mirrors</a></li>
+<li class="toc-item"><a class="toc-link" href="#seguridad-y-mantenimiento-del-sistema">3. Seguridad y
+Mantenimiento del Sistema</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#configuración-del-firewall-con-ufw">3.1. Configuración del
+Firewall con UFW</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#mantenimiento-de-unidades-de-estado-sólido-ssd-nvme">3.2.
+Mantenimiento de Unidades de Estado Sólido (SSD / NVMe)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#optimización-del-tiempo-de-arranque-grub">3.3. Optimización del
+Tiempo de Arranque (GRUB)</a></li>
+<li class="toc-item"><a class="toc-link" href="#controladores-de-hardware-y-gestión-de-energía">4. Controladores
+de Hardware y Gestión de Energía</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#controladores-gráficos-gpu">4.1. Controladores Gráficos
+(GPU)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ajustes-específicos-para-laptops">4.2. Ajustes Específicos para
+Laptops</a></li>
+<li class="toc-item"><a class="toc-link" href="#servidor-gráfico-diferencias-entre-x11-y-wayland">5. Servidor
+Gráfico: Diferencias entre X11 y Wayland</a></li>
+<li class="toc-item"><a class="toc-link" href="#audio-y-servidor-multimedia-pipewire">6. Audio y Servidor
+Multimedia (PipeWire)</a></li>
+<li class="toc-item"><a class="toc-link" href="#refinamiento-y-renderizado-de-fuentes-tipográficas">7.
+Refinamiento y Renderizado de Fuentes Tipográficas</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#instalación-de-paquetes-de-fuentes-recomendados">7.1.
+Instalación de Paquetes de Fuentes Recomendados</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#configuración-global-con-fontconfig">7.2. Configuración Global
+con Fontconfig</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ajuste-exclusivo-para-x11-.xresources">7.3. Ajuste Exclusivo
+para X11 (~/.Xresources)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#regenerar-la-caché-de-fuentes">7.4. Regenerar la Caché de
+Fuentes</a></li>
+<li class="toc-item"><a class="toc-link" href="#optimizaciones-para-gaming">8. Optimizaciones para Gaming</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#controladores-gráficos-de-32-bits-y-soporte-vulkan">8.1.
+Controladores Gráficos de 32 bits y Soporte Vulkan</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#instalación-de-steam-y-activación-de-proton">8.2. Instalación de
+Steam y Activación de Proton</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#instalación-y-uso-de-gamemode">8.3. Instalación y Uso de
+GameMode</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Article Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Publicación · Investigación</div>
+          <h1 class="article-title">Prontuario para Inicializar tu Entorno de Arch Linux</h1>
+
+          <div class="article-meta">
+            <time datetime="2025-01-09">2025-01-09</time>
+            <span>·</span>
+            <span>17 min de lectura</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            <span class="tag">#prontuario</span> <span class="tag">#linux</span>
+          </div>
+
+          <!-- Featured Banner Image -->
+          
+          <div class="article-banner-wrapper">
+            <img class="article-banner-img" src="../images/post/inicializar-tu-entorno-de-arch-linux.avif" alt="Prontuario para Inicializar tu Entorno de Arch Linux">
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <p>Una vez que la instalación base de Arch Linux está lista y reinicias
+tu equipo, te encuentras frente a una pantalla negra con una terminal
+parpadeante. El núcleo del sistema ya funciona, pero aún queda convertir
+esa base mínima en un entorno de trabajo completo.</p>
+<p>En este prontuario me enfocaré únicamente en <strong>poner fina esa
+instalación</strong>. Aquí aprenderás a estabilizar tu conexión de red,
+acelerar el gestor de paquetes, instalar un asistente para el AUR,
+asegurar tu equipo con un firewall, optimizar el consumo de batería en
+laptops o el rendimiento en computadoras de escritorio, y preparar el
+renderizado visual tanto si decides usar el servidor gráfico tradicional
+(<strong>X11</strong>) como el protocolo moderno
+(<strong>Wayland</strong>).</p>
+<p>El objetivo de esta guía es ser lo suficientemente general para
+funcionar tanto en un entorno de escritorio completo como lo puede ser
+KDE Plasma, un Tiling Window Manager como Hyperland o la pura terminal.
+Para ello supondré que has leído ya mi <a
+href="#240322-instalar-arch-linux">Prontuario para Instalar Arch
+Linux</a>.</p>
+<h2  id="verificación-y-gestión-de-conectividad">1. Verificación y
+Gestión de Conectividad</h2>
+<p>Al iniciar por primera vez tu nuevo sistema, el demonio
+<code>NetworkManager</code> que dejamos habilitado gestionará tus
+interfaces de red. Lo primero que debes hacer es verificar si tienes
+salida a internet:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> <span class="at">-c</span> 3 archlinux.org</span></code></pre>
+</div>
+<p>Si conectaste un cable de red (Ethernet), la conexión se habrá
+establecido sola. Si estás usando Wi-Fi o necesitas conectarte a una red
+inalámbrica desde la terminal, utilizaremos <code>nmcli</code>
+(<em>NetworkManager Command Line Interface</em>).</p>
+<h3  id="escaneo-y-conexión-a-redes-wi-fi">1.1. Escaneo y Conexión a
+Redes Wi-Fi</h3>
+<p>Para ver qué redes inalámbricas detecta tu tarjeta de red,
+ejecuta:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> dev wifi list</span></code></pre>
+</div>
+<p>Conéctate a tu red sustituyendo <code>&lt;NombreDeRed&gt;</code> y
+<code>&lt;Contraseña&gt;</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> dev wifi connect <span class="st">&quot;&lt;NombreDeRed&gt;&quot;</span> password <span class="st">&quot;&lt;Contraseña&gt;&quot;</span></span></code></pre>
+</div>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">IMPORTANTE</span>
+  </div>
+  <div class="callout-content">
+<p>Si tu red Wi-Fi no emite su nombre públicamente (red oculta), añade
+el parámetro <code>hidden yes</code> al final:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> dev wifi connect <span class="st">&quot;&lt;NombreDeRed&gt;&quot;</span> password <span class="st">&quot;&lt;Contraseña&gt;&quot;</span> hidden yes</span></code></pre>
+</div>
+  </div>
+</div>
+<h3  id="configuración-de-servidores-dns">1.2. Configuración de
+Servidores DNS</h3>
+<p>Por defecto, tu proveedor de internet (ISP) te asigna sus propios
+servidores DNS, los cuales suelen ser lentos, poco privados y propensos
+a bloqueos de dominio. Es una buena práctica configurar servidores DNS
+públicos de baja latencia como los de <strong>Cloudflare</strong>
+(<code>1.1.1.1</code> y <code>1.0.0.1</code>) o <strong>Quad9</strong>
+(<code>9.9.9.9</code> enfocado en seguridad).</p>
+<ol type="1">
+<li><p>Identifica el nombre exacto de tu perfil de conexión activo:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> connection show</span></code></pre>
+</div></li>
+<li><p>Asigna los servidores DNS de Cloudflare a esa conexión (reemplaza
+<code>&lt;NombreConexion&gt;</code> por el que viste en la columna
+<code>NAME</code>):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> connection modify <span class="st">&quot;&lt;NombreConexion&gt;&quot;</span> ipv4.dns <span class="st">&quot;1.1.1.1 1.0.0.1&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> connection modify <span class="st">&quot;&lt;NombreConexion&gt;&quot;</span> ipv4.ignore-auto-dns yes</span></code></pre>
+</div></li>
+<li><p>Por último, reactiva la conexión para aplicar los cambios:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> connection up <span class="st">&quot;&lt;NombreConexion&gt;&quot;</span></span></code></pre>
+</div></li>
+</ol>
+<h2  id="optimización-de-pacman-y-asistente-de-aur">2. Optimización de
+Pacman y Asistente de AUR</h2>
+<p>Pacman es el corazón de la administración de software en Arch Linux.
+Con un par de ajustes en su archivo de configuración principal, podemos
+hacer que descargue mucho más rápido y luzca mejor en terminal.</p>
+<h3  id="ajustes-en-etcpacman.conf">2.1. Ajustes en
+<code>/etc/pacman.conf</code></h3>
+<p>Abre el archivo con privilegios de superusuario:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> micro /etc/pacman.conf</span></code></pre>
+</div>
+<p>Dentro de la sección <code>[options]</code>, localiza y ajusta las
+siguientes líneas (elimina el <code>#</code> inicial si están
+comentadas):</p>
+<ul>
+<li><p><code>Color</code>: Habilita colores en la terminal para
+distinguir fácilmente paquetes, versiones y alertas.</p></li>
+<li><p><code>VerbosePkgLists</code>: Muestra una tabla detallada con los
+nombres, versiones previas y tamaños de descarga antes de confirmar
+cualquier instalación.</p></li>
+<li><p><code>ParallelDownloads = 5</code>: Permite que Pacman descargue
+hasta 5 paquetes en simultáneo, aprovechando al máximo el ancho de banda
+de tu conexión.</p></li>
+<li><p><code>ILoveCandy</code>: Escribe esta directiva debajo de
+<code>Color</code> para transformar la barra de carga tradicional en un
+divertido homenaje visual retro.</p></li>
+</ul>
+<p>Si vas a utilizar aplicaciones de 32 bits (como el cliente de
+<strong>Steam</strong>, emuladores o <strong>Wine</strong> para ejecutar
+software de Windows), necesitas el repositorio
+<code>multilib</code>.</p>
+<p>En ese mismo archivo <code>/etc/pacman.conf</code>, baja hasta el
+final y descomenta estas dos líneas:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Plaintext" title="Copiar código al portapapeles">Plaintext</button>
+  <pre class="code-pre"><code>[multilib]
+Include = /etc/pacman.d/mirrorlist</code></pre>
+</div>
+<p>Guarda el archivo (<code>Ctrl + S</code>, <code>Ctrl + Q</code>) y
+sincroniza los repositorios para registrar los cambios:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-Syu</span></span></code></pre>
+</div>
+<h3  id="instalación-de-un-asistente-para-aur-yay-o-paru">2.2.
+Instalación de un Asistente para AUR (<code>yay</code> o
+<code>paru</code>)</h3>
+<p>El <strong>Arch User Repository (AUR)</strong> es el repositorio
+comunitario más grande del ecosistema Linux. Para instalar programas del
+AUR sin tener que compilar y resolver dependencias manualmente con
+<code>makepkg</code>, instalaremos un asistente (<em>AUR helper</em>).
+Uno de los más populares y ligeros es <code>yay</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> <span class="at">--needed</span> base-devel git</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://aur.archlinux.org/yay-bin.git</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> yay-bin</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">makepkg</span> <span class="at">-si</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .. <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> <span class="at">-rf</span> yay-bin</span></code></pre>
+</div>
+<p>A partir de este momento, puedes instalar cualquier paquete de los
+repositorios oficiales o del AUR usando
+<code>yay -S &lt;nombre_paquete&gt;</code> sin anteponer
+<code>sudo</code> (el propio asistente te pedirá la contraseña cuando
+sea necesario).</p>
+<h3  id="optimización-de-mirrors-con-rate-mirrors">2.3. Optimización de
+Mirrors con <code>rate-mirrors</code></h3>
+<p>Los repositorios de Arch Linux están distribuidos en servidores
+espejo (<em>mirrors</em>) repartidos por todo el mundo. El archivo
+<code>/etc/pacman.d/mirrorlist</code> define el orden de prioridad en el
+que Pacman consultará estos servidores. Si los primeros mirrors de tu
+lista están caídos, saturados o geográficamente lejos de ti, las
+descargas y actualizaciones del sistema se ralentizarán
+considerablemente.</p>
+<p>Aunque la herramienta tradicional suele ser <code>reflector</code>,
+<strong><code>rate-mirrors</code></strong> es una alternativa moderna
+escrita en Rust que destaca por ser significativamente más rápida:
+comprueba en paralelo no solo la latencia del servidor, sino la
+velocidad real de transferencia y qué tan sincronizado está con los
+repositorios oficiales.</p>
+<ol type="1">
+<li><p>Aprovechando el asistente de AUR (<code>yay</code>) que
+instalamos en el paso anterior, obtén la versión precompilada en binario
+para no demorar tiempo compilando:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">yay</span> <span class="at">-S</span> rate-mirrors-bin</span></code></pre>
+</div></li>
+<li><p>Antes de sobrescribir cualquier archivo crítico del sistema,
+acostumbra crear un respaldo del estado actual:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak</span></code></pre>
+</div></li>
+<li><p>Ejecuta <code>rate-mirrors</code> indicando que evalúe los
+servidores de Arch Linux y redirige el resultado ordenado directamente a
+tu archivo <code>mirrorlist</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">rate-mirrors</span> arch <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/pacman.d/mirrorlist</span></code></pre>
+</div></li>
+</ol>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">¿Qué hace este comando?</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><code>rate-mirrors arch</code>: Descarga la lista global de
+mirrors activos de Arch, evalúa su velocidad de respuesta
+simultáneamente y los ordena del más rápido al más lento.</p></li>
+<li><p><code>| sudo tee /etc/pacman.d/mirrorlist</code>: Recibe la
+salida filtrada a través de la tubería (<em>pipe</em>) y la escribe con
+permisos administrativos en el archivo de mirrors, mostrándote el
+resultado en pantalla en tiempo real.</p></li>
+</ul>
+  </div>
+</div>
+<ol start="4" type="1">
+<li><p>Al cambiar por completo el orden y origen de los servidores
+espejo, es necesario forzar a Pacman a reconstruir sus bases de datos
+locales contra el nuevo mirror principal:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-Syyu</span></span></code></pre>
+</div></li>
+</ol>
+<div class="callout-box tip">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg></span>
+    <span class="callout-title-text">TIP: El parámetro <code>-yy</code> obliga a renovar todas las
+listas de paquetes aunque el sistema crea que ya están al día.</span>
+  </div>
+  <div class="callout-content">
+
+  </div>
+</div>
+<h2  id="seguridad-y-mantenimiento-del-sistema">3. Seguridad y
+Mantenimiento del Sistema</h2>
+<h3  id="configuración-del-firewall-con-ufw">3.1. Configuración del
+Firewall con UFW</h3>
+<p>Un firewall es indispensable para controlar el tráfico de red y
+evitar accesos no autorizados a puertos abiertos en tu sistema.
+<code>ufw</code> (<em>Uncomplicated Firewall</em>) simplifica la
+administración de las reglas del kernel.</p>
+<ol type="1">
+<li><p>Instala el paquete:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> ufw</span></code></pre>
+</div></li>
+<li><p>Establece una política estricta por defecto (bloquear todo lo
+entrante, permitir todo lo saliente):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw default deny incoming</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw default allow outgoing</span></code></pre>
+</div></li>
+<li><p>Si utilizas conexiones remotas por SSH, limita los intentos de
+conexión en el puerto 22 para mitigar ataques de fuerza bruta:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw limit 22/tcp</span></code></pre>
+</div></li>
+<li><p>Habilita el servicio para que inicie siempre con el sistema:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable <span class="at">--now</span> ufw.service</span></code></pre>
+</div></li>
+</ol>
+<h3  id="mantenimiento-de-unidades-de-estado-sólido-ssd-nvme">3.2.
+Mantenimiento de Unidades de Estado Sólido (SSD / NVMe)</h3>
+<p>Si instalaste Arch en un disco SSD o NVMe, es vital activar el
+comando <strong>TRIM</strong>. Esta función le comunica al controlador
+del disco qué bloques de memoria ya no contienen datos válidos para que
+pueda limpiarlos en segundo plano, prolongando la vida útil y la
+velocidad de la unidad:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable <span class="at">--now</span> fstrim.timer</span></code></pre>
+</div>
+<p>Este temporizador de systemd ejecutará TRIM una vez por semana de
+forma automática sin afectar el rendimiento mientras usas tu equipo.</p>
+<h3  id="optimización-del-tiempo-de-arranque-grub">3.3. Optimización del
+Tiempo de Arranque (GRUB)</h3>
+<p>Si Arch Linux es el único sistema operativo instalado en tu
+computadora, la cuenta regresiva de 5 segundos del menú de GRUB solo
+retrasa el inicio del equipo.</p>
+<ol type="1">
+<li><p>Edita la configuración de GRUB:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> micro /etc/default/grub</span></code></pre>
+</div></li>
+<li><p>Localiza las siguientes directivas y ajústalas así:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Plaintext" title="Copiar código al portapapeles">Plaintext</button>
+  <pre class="code-pre"><code>GRUB_TIMEOUT=0
+GRUB_TIMEOUT_STYLE=hidden</code></pre>
+</div></li>
+<li><p>Regenera el archivo de configuración de arranque:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> grub-mkconfig <span class="at">-o</span> /boot/grub/grub.cfg</span></code></pre>
+</div></li>
+</ol>
+<h2  id="controladores-de-hardware-y-gestión-de-energía">4. Controladores
+de Hardware y Gestión de Energía</h2>
+<p>El soporte de hardware varía dependiendo de si estás configurando una
+laptop o una estación de trabajo de escritorio.</p>
+<h3  id="controladores-gráficos-gpu">4.1. Controladores Gráficos
+(GPU)</h3>
+<p>Para que tu interfaz gráfica funcione con aceleración por hardware,
+debes instalar los controladores correspondientes a tu tarjeta de
+video:</p>
+<ul>
+<li><p><strong>Tarjetas gráficas Intel (integradas):</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> mesa vulkan-intel</span></code></pre>
+</div></li>
+<li><p><strong>Tarjetas gráficas AMD (Radeon):</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> mesa vulkan-radeon xf86-video-amdgpu</span></code></pre>
+</div></li>
+<li><p><strong>Tarjetas gráficas NVIDIA (GPUs modernas Turing / Ampere /
+Ada Lovelace):</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> nvidia-open nvidia-utils</span></code></pre>
+</div></li>
+</ul>
+<p>Si tienes una tarjeta NVIDIA más antigua o prefieres los
+controladores privativos cerrados tradicionales, instala
+<code>nvidia</code> en lugar de <code>nvidia-open</code>.</p>
+<h3  id="ajustes-específicos-para-laptops">4.2. Ajustes Específicos para
+Laptops</h3>
+<h4 id="autonomía-y-eficiencia-energética-con-tlp">4.2.1. Autonomía y
+Eficiencia Energética con TLP</h4>
+<p>En una laptop, optimizar el uso de energía es crítico para que la
+batería no se agote en un par de horas. <strong>TLP</strong> ajusta
+automáticamente el consumo del procesador, discos y puertos USB según el
+equipo esté conectado a la corriente o usando la batería.</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> tlp tlp-rdw</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable tlp.service</span></code></pre>
+</div>
+<div class="callout-box warning">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">ADVERTENCIA</span>
+  </div>
+  <div class="callout-content">
+<p>No utilices TLP junto con <code>power-profiles-daemon</code> (que
+suele venir instalado en escritorios como GNOME o KDE), ya que ambos
+servicios entrarán en conflicto intentando gestionar el mismo
+hardware.</p>
+  </div>
+</div>
+<h4 id="desactivación-del-auto-arranque-de-bluetooth">4.2.2.
+Desactivación del Auto-Arranque de Bluetooth</h4>
+<p>El adaptador de Bluetooth realiza búsquedas pasivas constantes que
+drenan energía silenciosamente. Si no usas dispositivos Bluetooth todo
+el tiempo, puedes configurar el sistema para que no lo encienda de
+manera automática al arrancar:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> bluez bluez-utils</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable bluetooth.service</span></code></pre>
+</div>
+<p>Edita su archivo de configuración:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> micro /etc/bluetooth/main.conf</span></code></pre>
+</div>
+<p>En la sección <code>[Policy]</code>, cambia el parámetro a
+<code>false</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Plaintext" title="Copiar código al portapapeles">Plaintext</button>
+  <pre class="code-pre"><code>AutoEnable = false</code></pre>
+</div>
+<p>Cuando necesites conectar unos audífonos o un mouse, puedes activar
+el adaptador abriendo <code>bluetoothctl</code> en la terminal o
+mediante utilidades gráficas como <code>blueman</code>.</p>
+<h4 id="soporte-para-gestos-en-el-touchpad">4.2.3. Soporte para Gestos
+en el Touchpad</h4>
+<p>Para que tu touchpad admita gestos multitáctiles, toques para hacer
+clic (<em>tap-to-click</em>) y desplazamiento natural con dos dedos:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> libinput</span></code></pre>
+</div>
+<h2  id="servidor-gráfico-diferencias-entre-x11-y-wayland">5. Servidor
+Gráfico: Diferencias entre X11 y Wayland</h2>
+<p>Linux cuenta con dos formas de renderizar y gestionar ventanas en
+pantalla: <strong>X11</strong> (el protocolo clásico con más de 30 años
+de compatibilidad) y <strong>Wayland</strong> (el protocolo moderno, más
+seguro, fluido y con mejor manejo de pantallas de alta resolución o
+refresco mixto).</p>
+<p>Dependiendo del entorno de escritorio o gestor de ventanas que
+decidas instalar después, necesitarás herramientas base diferentes:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th><strong>Componente</strong></th>
+<th><strong>En X11 (ej. BSPWM, i3, XFCE)</strong></th>
+<th><strong>En Wayland (ej. Hyprland, Sway, KDE Wayland)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Servidor / Compositor</strong></td>
+<td><code>xorg-server</code>, <code>xorg-xinit</code></td>
+<td>Integrado en el propio compositor</td>
+</tr>
+<tr>
+<td><strong>Gestión del Portapapeles</strong></td>
+<td><code>xclip</code>, <code>xsel</code></td>
+<td><code>wl-clipboard</code></td>
+</tr>
+<tr>
+<td><strong>Capturas de pantalla</strong></td>
+<td><code>maim</code>, <code>scrot</code></td>
+<td><code>grim</code>, <code>slurp</code></td>
+</tr>
+<tr>
+<td><strong>Integración con apps y pantalla compartida</strong></td>
+<td>Nativo mediante X11</td>
+<td><code>xdg-desktop-portal</code> +
+<code>xdg-desktop-portal-wlr</code> (o hyprland)</td>
+</tr>
+<tr>
+<td><strong>Ajuste de Monitores</strong></td>
+<td><code>xrandr</code>, <code>arandr</code></td>
+<td><code>wlr-randr</code> o configuración directa en el compositor</td>
+</tr>
+</tbody>
+</table>
+<p>Instala las utilidades correspondientes al tipo de sesión que vayas a
+construir. Si vas a usar <strong>Wayland</strong>, asegúrate además de
+instalar las capas de compatibilidad para aplicaciones Qt:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> qt5-wayland qt6-wayland</span></code></pre>
+</div>
+<h2  id="audio-y-servidor-multimedia-pipewire">6. Audio y Servidor
+Multimedia (PipeWire)</h2>
+<p>Durante la instalación base instalamos <code>pipewire</code>. Ahora
+debemos asegurar que el enrutamiento de audio y el gestor de sesiones
+estén completamente listos para reproducir sonido sin problemas de
+latencia:</p>
+<ol type="1">
+<li><p>Instala el gestor de sesiones y las capas de compatibilidad con
+ALSA y Jack:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> wireplumber pipewire-alsa pipewire-jack pavucontrol</span></code></pre>
+</div></li>
+<li><p>Habilita los servicios a nivel de usuario (no uses
+<code>sudo</code> para este comando):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> <span class="at">--user</span> enable <span class="at">--now</span> pipewire.socket pipewire-pulse.socket wireplumber.service</span></code></pre>
+</div></li>
+</ol>
+<p><code>pavucontrol</code> es una interfaz gráfica liviana que te
+permitirá ajustar volúmenes, seleccionar salidas de audio (auriculares,
+HDMI, altavoces) y cambiar entradas de micrófono fácilmente.</p>
+<h2  id="refinamiento-y-renderizado-de-fuentes-tipográficas">7.
+Refinamiento y Renderizado de Fuentes Tipográficas</h2>
+<p>Para que los textos en el navegador, la terminal y los editores de
+código se vean perfectamente nítidos y sin bordes aserrados
+(<em>pixelados</em>), debemos instalar un catálogo de tipografías base y
+configurar el motor de renderizado <strong>FreeType</strong> y
+<strong>Fontconfig</strong>.</p>
+<h3  id="instalación-de-paquetes-de-fuentes-recomendados">7.1.
+Instalación de Paquetes de Fuentes Recomendados</h3>
+<p>Arch Linux no incluye tipografías por defecto. Instala este conjunto
+de fuentes de alta legibilidad métrica, símbolos para programadores y
+soporte internacional:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-nerd</span></code></pre>
+</div>
+<h3  id="configuración-global-con-fontconfig">7.2. Configuración Global
+con Fontconfig</h3>
+<p>Fontconfig es la librería universal que le indica al sistema cómo
+suavizar y ordenar los píxeles de cada letra. Crea o edita el archivo de
+configuración global:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> micro /etc/fonts/local.conf</span></code></pre>
+</div>
+<p>Pega la siguiente estructura XML que activa el antialiasing, el
+ajuste de contorno ligero (<em>hinting</em>), el patrón de subpíxeles
+RGB y el filtro LCD estándar:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Xml" title="Copiar código al portapapeles">Xml</button>
+  <pre class="code-pre"><code><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">&quot;1.0&quot;</span><span class="fu">?&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> <span class="dt">fontconfig</span> SYSTEM &quot;fonts.dtd&quot;<span class="dt">&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">fontconfig</span>&gt;</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">match</span> <span class="ot">target=</span><span class="st">&quot;font&quot;</span>&gt;</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">edit</span> <span class="ot">name=</span><span class="st">&quot;antialias&quot;</span> <span class="ot">mode=</span><span class="st">&quot;assign&quot;</span>&gt;</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">bool</span>&gt;true&lt;/<span class="kw">bool</span>&gt;</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">edit</span>&gt;</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">edit</span> <span class="ot">name=</span><span class="st">&quot;hinting&quot;</span> <span class="ot">mode=</span><span class="st">&quot;assign&quot;</span>&gt;</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">bool</span>&gt;true&lt;/<span class="kw">bool</span>&gt;</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">edit</span>&gt;</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">edit</span> <span class="ot">mode=</span><span class="st">&quot;assign&quot;</span> <span class="ot">name=</span><span class="st">&quot;hintstyle&quot;</span>&gt;</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">const</span>&gt;hintslight&lt;/<span class="kw">const</span>&gt;</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">edit</span>&gt;</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">edit</span> <span class="ot">mode=</span><span class="st">&quot;assign&quot;</span> <span class="ot">name=</span><span class="st">&quot;rgba&quot;</span>&gt;</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">const</span>&gt;rgb&lt;/<span class="kw">const</span>&gt;</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">edit</span>&gt;</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">edit</span> <span class="ot">mode=</span><span class="st">&quot;assign&quot;</span> <span class="ot">name=</span><span class="st">&quot;lcdfilter&quot;</span>&gt;</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">const</span>&gt;lcddefault&lt;/<span class="kw">const</span>&gt;</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">edit</span>&gt;</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">match</span>&gt;</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">fontconfig</span>&gt;</span></code></pre>
+</div>
+<p>Activa los ajustes predefinidos del sistema mediante enlaces
+simbólicos:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-sf</span> /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-sf</span> /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-sf</span> /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/</span></code></pre>
+</div>
+<h3  id="ajuste-exclusivo-para-x11-.xresources">7.3. Ajuste Exclusivo
+para X11 (<code>~/.Xresources</code>)</h3>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">X11 VS WAYLAND</span>
+  </div>
+  <div class="callout-content">
+<p>La configuración de <code>~/.Xresources</code> <strong>solo aplica
+para aplicaciones bajo el servidor X11</strong> o programas que corren a
+través de la capa de compatibilidad XWayland. Si utilizas un entorno
+100% nativo de Wayland, este paso no es obligatorio, ya que los
+compositores leen directamente las reglas de Fontconfig.</p>
+  </div>
+</div>
+<p>Si utilizas X11, define las propiedades de recursos de X creando tu
+archivo de configuración:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">micro</span> ~/.Xresources</span></code></pre>
+</div>
+<p>Añade las siguientes líneas:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Plaintext" title="Copiar código al portapapeles">Plaintext</button>
+  <pre class="code-pre"><code>Xft.antialias: 1
+Xft.hinting: 1
+Xft.rgba: rgb
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault</code></pre>
+</div>
+<p>Carga los cambios en la memoria del servidor gráfico ejecutando:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xrdb</span> <span class="at">-merge</span> ~/.Xresources</span></code></pre>
+</div>
+<h3  id="regenerar-la-caché-de-fuentes">7.4. Regenerar la Caché de
+Fuentes</h3>
+<p>Por último, limpia y regenera la caché del sistema para que todas tus
+aplicaciones reconozcan de inmediato las nuevas fuentes y directrices de
+renderizado:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> fc-cache <span class="at">-fv</span></span></code></pre>
+</div>
+<h2  id="optimizaciones-para-gaming">8. Optimizaciones para Gaming</h2>
+<h3  id="controladores-gráficos-de-32-bits-y-soporte-vulkan">8.1.
+Controladores Gráficos de 32 bits y Soporte Vulkan</h3>
+<p>La inmensa mayoría de los videojuegos de Windows que se ejecutan
+mediante capas de compatibilidad requieren librerías gráficas y de
+Vulkan de 32 bits (<em>multilib</em>). Si no las instalas, muchos juegos
+no arrancarán o se cerrarán con pantallas en negro. Instala las
+librerías de 32 bits correspondientes a tu tarjeta gráfica:</p>
+<ul>
+<li><p><strong>Para GPUs Intel:</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> lib32-mesa lib32-vulkan-intel</span></code></pre>
+</div></li>
+<li><p><strong>Para GPUs AMD:</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> lib32-mesa lib32-vulkan-radeon</span></code></pre>
+</div></li>
+<li><p><strong>Para GPUs NVIDIA:</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> lib32-nvidia-utils</span></code></pre>
+</div></li>
+</ul>
+<h3  id="instalación-de-steam-y-activación-de-proton">8.2. Instalación de
+Steam y Activación de Proton</h3>
+<p>Steam en Arch Linux se distribuye en los repositorios oficiales
+mediante el paquete del repositorio <code>multilib</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> steam</span></code></pre>
+</div>
+<p>Proton es la capa de compatibilidad de Valve integrada en Steam.
+Combina <strong>Wine</strong> con implementaciones de alto rendimiento
+como <strong>DXVK</strong> (que traduce DirectX 9/10/11 a Vulkan en
+tiempo real) y <strong>VKD3D</strong> (que traduce DirectX 12 a Vulkan),
+permitiendo ejecutar juegos nativos de Windows en Linux con un
+rendimiento prácticamente idéntico al original. Para activar Proton en
+todos tus juegos de Steam:</p>
+<ol type="1">
+<li>Abre Steam y dirígete a <strong>Steam &gt; Parámetros &gt;
+Compatibilidad</strong>.</li>
+<li>Marca la casilla <strong>«Habilitar Steam Play para todos los demás
+títulos»</strong>.</li>
+<li>En el menú desplegable, selecciona <strong>Proton
+Experimental</strong> (o la versión estable más reciente).</li>
+</ol>
+<h3  id="instalación-y-uso-de-gamemode">8.3. Instalación y Uso de
+GameMode</h3>
+<p>GameMode optimiza dinámicamente tu CPU, GPU y prioridades de procesos
+mientras juegas.</p>
+<ol type="1">
+<li><p>Instala GameMode junto con su biblioteca de compatibilidad de 32
+bits:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> gamemode lib32-gamemode</span></code></pre>
+</div></li>
+<li><p>Agrega tu usuario al grupo de GameMode si es necesario o
+comprueba su estado:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gamemoded</span> <span class="at">-t</span></span></code></pre>
+</div></li>
+<li><p><strong>Cómo usar GameMode en Steam:</strong></p>
+<p>Haz clic derecho sobre cualquier juego en tu biblioteca de Steam, ve
+a <strong>Propiedades &gt; General &gt; Parámetros de
+lanzamiento</strong> y escribe:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gamemoderun</span> %command%</span></code></pre>
+</div></li>
+</ol>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Arch Wiki.</strong> <em>General recommendations
+(Recomendaciones generales post-instalación)</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/General_recommendations">wiki.archlinux.org/title/General_recommendations</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>Uncomplicated Firewall
+(UFW)</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/Uncomplicated_Firewall">wiki.archlinux.org/title/Uncomplicated_Firewall</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>TLP - Gestión de energía para
+Linux</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/TLP">wiki.archlinux.org/title/TLP</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>Solid state drive (Buenas
+prácticas para unidades SSD y NVMe)</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/Solid_state_drive">wiki.archlinux.org/title/Solid_state_drive</a></p></li>
+<li><p><strong>Manjaro Wiki.</strong> <em>Improve Font Rendering</em>.
+Recuperado de <a
+href="https://wiki.manjaro.org/index.php?title=Improve_Font_Rendering">wiki.manjaro.org/index.php?title=Improve_Font_Rendering</a></p></li>
+<li><p><strong>Linuxiac.</strong> <em>Arch Linux Post-Installation
+Essential Steps</em>. Recuperado de <a
+href="https://linuxiac.com/arch-linux-post-installation-steps/">linuxiac.com/arch-linux-post-installation-steps/</a></p></li>
+<li><p><strong>Reddit.</strong> <em>Things to do after installing Arch
+Linux</em>. Recuperado de <a
+href="https://www.reddit.com/r/archlinux/comments/wdry0v/things_to_do_after_installing_arch_linux/">reddit.com/r/archlinux/comments/wdry0v/things_to_do_after_installing_arch_linux/</a></p></li>
+<li><p><strong>YouTube.</strong> <em>What to do AFTER you’ve installed
+ARCH LINUX - beginner friendly post-install guide</em>. Recuperado de <a
+href="https://youtu.be/-puvglgx6Qs">youtu.be/-puvglgx6Qs</a></p></li>
+<li><p><strong>YouTube.</strong> <em>Arch Linux post install Guide</em>.
+Recuperado de <a
+href="https://youtu.be/YPrhIfm3VJs">youtu.be/YPrhIfm3VJs</a></p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>

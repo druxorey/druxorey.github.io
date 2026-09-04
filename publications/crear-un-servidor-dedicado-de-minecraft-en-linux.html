@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prontuario para Instalar un Servidor de Minecraft en Linux | Druxorey</title>
+  <meta name="description" content="Convertir hardware antiguo en un servidor dedicado de Minecraft es la forma ideal de aprovechar recursos mientras mantienes un control total sobre tu partida. Al utilizar Fabric junto a mods de optimización, lograrás un rendimiento superior sin alterar la experiencia original. Aprenderás a automatizar el proceso con systemd y gestionar conexiones seguras mediante Playit.gg, garantizando un entorno estable, eficiente y siempre disponible.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="../images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="../assets/main-C862Lgn9.js"></script>
+  <script type="module" crossorigin src="../assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="../assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/main-DFGYH4cW.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="../images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link active">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link active">Publicaciones</a>
+      <a href="/notes.html" class="nav-link">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Article Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/publications.html" class="article-back-link">
+          ← Volver al catálogo de publicaciones
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Article Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#preparación-del-sistema-y-dependencias">1. Preparación del
+Sistema y Dependencias</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#actualización-e-instalación-de-paquetes">1.1. Actualización e
+Instalación de Paquetes</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#gestión-de-energía-en-laptops-ignorar-la-tapa-cerrada">1.2.
+Gestión de Energía en Laptops (Ignorar la Tapa Cerrada)</a></li>
+<li class="toc-item"><a class="toc-link" href="#despliegue-y-optimización-del-servidor-con-fabric">2. Despliegue
+y Optimización del Servidor con Fabric</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#creación-del-espacio-de-trabajo">2.1. Creación del Espacio de
+Trabajo</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#descarga-y-ejecución-del-instalador-de-fabric">2.2. Descarga y
+Ejecución del Instalador de Fabric</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#aceptación-del-acuerdo-de-licencia-eula">2.3. Aceptación del
+Acuerdo de Licencia (EULA)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#instalación-de-mods-de-optimización">2.4. Instalación de Mods de
+Optimización</a></li>
+<li class="toc-item"><a class="toc-link" href="#configuración-de-red-local-y-dirección-ip-estática">3.
+Configuración de Red Local y Dirección IP Estática</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#obtención-de-la-dirección-física-mac-address">3.1. Obtención de
+la Dirección Física (MAC Address)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#reserva-dhcp-en-el-router">3.2. Reserva DHCP en el Router</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#configuración-del-firewall-ufw">3.3. Configuración del Firewall
+(UFW)</a></li>
+<li class="toc-item"><a class="toc-link" href="#script-de-inicio-y-banderas-de-rendimiento">4. Script de Inicio
+y Banderas de Rendimiento</a></li>
+<li class="toc-item"><a class="toc-link" href="#automatización-como-servicio-con-systemd">5. Automatización como
+Servicio con Systemd</a></li>
+<li class="toc-item"><a class="toc-link" href="#acceso-público-seguro-con-playit.gg">6. Acceso Público Seguro
+con Playit.gg</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#instalación-del-agente-de-playit">6.1. Instalación del Agente de
+Playit</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#vinculación-y-creación-del-túnel">6.2. Vinculación y Creación
+del Túnel</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Article Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Publicación · Investigación</div>
+          <h1 class="article-title">Prontuario para Instalar un Servidor de Minecraft en Linux</h1>
+
+          <div class="article-meta">
+            <time datetime="2025-12-18">2025-12-18</time>
+            <span>·</span>
+            <span>10 min de lectura</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            <span class="tag">#prontuario</span> <span class="tag">#linux</span> <span class="tag">#juegos</span>
+          </div>
+
+          <!-- Featured Banner Image -->
+          
+          <div class="article-banner-wrapper">
+            <img class="article-banner-img" src="../images/post/crear-un-servidor-dedicado-de-minecraft-en-linux.avif" alt="Prontuario para Instalar un Servidor de Minecraft en Linux">
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <p>Darle una segunda vida al hardware que dabas por obsoleto es una de
+las experiencias más gratificantes dentro de la informática. Una laptop
+con la pantalla dañada o una PC de escritorio arrumbada tienen potencia
+más que suficiente para convertirse en un servidor doméstico rápido,
+silencioso y eficiente.</p>
+<p>En este prontuario te enseñaré a construir un servidor dedicado de
+Minecraft basado en <strong>Fabric</strong> (Sé que existen alternativas
+como PaperMC, pero alteran las mecánicas básicas y son un verdadero
+dolor de cabeza si eres un jugador técnico), diseñado para exprimir el
+rendimiento de tu máquina mediante mods de optimización a bajo nivel.
+Abordando desde la configuración energética para laptops hasta la
+automatización con servicios de segundo plano y la apertura segura a
+internet sin necesidad de tocar los puertos de tu router.</p>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">IMPORTANTE</span>
+  </div>
+  <div class="callout-content">
+<p>Esta guía asume que ya tienes instalado un sistema base limpio
+(únicamente en modo terminal, sin entornos gráficos pesados que consuman
+memoria RAM innecesariamente). Si necesitas preparar tu sistema desde
+cero, puedes consultar previamente el <a
+href="#240322-instalar-arch-linux">Prontuario para Instalar Arch
+Linux</a>.</p>
+  </div>
+</div>
+<h2  id="preparación-del-sistema-y-dependencias">1. Preparación del
+Sistema y Dependencias</h2>
+<p>Antes de descargar el software del servidor, debemos preparar el
+sistema operativo con las herramientas necesarias y el entorno de
+ejecución de Java adecuado.</p>
+<h3  id="actualización-e-instalación-de-paquetes">1.1. Actualización e
+Instalación de Paquetes</h3>
+<p>Minecraft (versión 1.20.5 en adelante, incluyendo la 1.21+) requiere
+<strong>Java 21</strong>. Para mantener el servidor lo más ligero
+posible, utilizaremos las versiones <em>headless</em> del OpenJDK; estas
+eliminan bibliotecas gráficas (como AWT o Swing) que no tienen ninguna
+utilidad en un servidor por terminal, ahorrando espacio en disco y
+memoria RAM. Ejecuta los comandos correspondientes a tu
+distribución:</p>
+<p><strong>En Arch Linux:</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-Syu</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> jre21-openjdk-headless wget nano git curl</span></code></pre>
+</div>
+<p><strong>En Debian / Ubuntu:</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> openjdk-21-jre-headless wget nano git curl</span></code></pre>
+</div>
+<p>(Si planeas ejecutar versiones antiguas del juego, como Minecraft
+1.17 a 1.20.4, instala <code>jre17-openjdk-headless</code> en su
+lugar</p>
+<h3  id="gestión-de-energía-en-laptops-ignorar-la-tapa-cerrada">1.2.
+Gestión de Energía en Laptops (Ignorar la Tapa Cerrada)</h3>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">IMPORTANTE</span>
+  </div>
+  <div class="callout-content">
+<p>Si usas una pc de escritorio o un servidor, puedes saltar
+directamente a la siguiente sección. Este paso es exclusivo para evitar
+que una laptop se apague o suspenda al cerrarla.</p>
+  </div>
+</div>
+<p>Por defecto, Linux entra en modo de suspensión (<em>sleep</em>)
+cuando detectas que la tapa de la laptop se ha cerrado. Para que puedas
+colocar tu laptop en una repisa o rincón con la pantalla cerrada y el
+servidor funcionando las 24 horas del día, debemos indicarle a
+<code>systemd-logind</code> que ignore este evento:</p>
+<ol type="1">
+<li><p>Abre el archivo de configuración del gestor de sesiones:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/systemd/logind.conf</span></code></pre>
+</div></li>
+<li><p>Localiza las siguientes directivas, elimina el <code>#</code>
+inicial y asigna el valor <code>ignore</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Plaintext" title="Copiar código al portapapeles">Plaintext</button>
+  <pre class="code-pre"><code>HandleLidSwitch=ignore
+HandleLidSwitchExternalPower=ignore
+HandleLidSwitchDocked=ignore</code></pre>
+</div></li>
+<li><p>Guarda los cambios (<code>Ctrl + O</code>, Enter,
+<code>Ctrl + X</code>) y reinicia el servicio para que surtan
+efecto:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart systemd-logind</span></code></pre>
+</div></li>
+</ol>
+<h2  id="despliegue-y-optimización-del-servidor-con-fabric">2. Despliegue
+y Optimización del Servidor con Fabric</h2>
+<p>Existen múltiples tipos de servidores para Minecraft. Aunque
+alternativas como Paper o Purpur son populares, a menudo alteran las
+mecánicas internas del juego. <strong>Fabric</strong> mantiene el
+comportamiento 100 % idéntico al juego vanilla y permite instalar mods
+de rendimiento que multiplican los FPS del servidor.</p>
+<h3  id="creación-del-espacio-de-trabajo">2.1. Creación del Espacio de
+Trabajo</h3>
+<p>Crearemos un directorio exclusivo para mantener aislados todos los
+mundos y configuraciones:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/mc_server <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/mc_server</span></code></pre>
+</div>
+<h3  id="descarga-y-ejecución-del-instalador-de-fabric">2.2. Descarga y
+Ejecución del Instalador de Fabric</h3>
+<p>Descargaremos el instalador oficial en formato <code>.jar</code>
+desde el repositorio Maven de Fabric:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://maven.fabricmc.net/net/fabricmc/fabric-installer/1.1.0/fabric-installer-1.1.0.jar <span class="at">-O</span> fabric-installer.jar</span></code></pre>
+</div>
+<p>Ejecuta el instalador indicando la versión exacta de Minecraft que
+deseas utilizar (en este ejemplo, 1.21.1) y el parámetro
+<code>-downloadMinecraft</code> para que descargue automáticamente el
+ejecutable oficial de Mojang:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">java</span> <span class="at">-jar</span> fabric-installer.jar server <span class="at">-mcversion</span> 1.21.1 <span class="at">-downloadMinecraft</span></span></code></pre>
+</div>
+<h3  id="aceptación-del-acuerdo-de-licencia-eula">2.3. Aceptación del
+Acuerdo de Licencia (EULA)</h3>
+<p>Minecraft no arrancará hasta que aceptes expresamente los términos de
+uso de Mojang. Realiza un primer arranque para generar la estructura
+básica de archivos:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">java</span> <span class="at">-jar</span> fabric-server-launch.jar nogui</span></code></pre>
+</div>
+<p>El proceso se detendrá inmediatamente generando el archivo
+<code>eula.txt</code>. Ábrelo y cambia su valor a verdadero:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">micro</span> eula.txt</span></code></pre>
+</div>
+<p>Modifica la línea para que quede así:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Plaintext" title="Copiar código al portapapeles">Plaintext</button>
+  <pre class="code-pre"><code>eula=true</code></pre>
+</div>
+<p>Guarda y sal del editor.</p>
+<h3  id="instalación-de-mods-de-optimización">2.4. Instalación de Mods de
+Optimización</h3>
+<p>En un servidor con hardware modesto, estos tres mods del lado del
+servidor son indispensables:</p>
+<ul>
+<li><p><strong>Lithium:</strong> Reescribe los algoritmos de física,
+inteligencia artificial de entidades y carga de chunks sin romper
+mecánicas <em>vanilla</em>.</p></li>
+<li><p><strong>FerriteCore:</strong> Reduce drásticamente el uso de
+memoria RAM optimizando el almacenamiento de estados de bloques en
+memoria.</p></li>
+<li><p><strong>Krypton:</strong> Optimiza la pila de red y el tráfico de
+paquetes de Minecraft, reduciendo el uso de CPU con muchos jugadores
+conectados.</p></li>
+</ul>
+<p>Descárgalos dentro de la carpeta <code>mods</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> mods <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> mods</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lithium</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://cdn.modrinth.com/data/gvQqBUqZ/versions/N08Z8wog/lithium-fabric-0.15.4%2Bmc1.21.1.jar</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># FerriteCore</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://cdn.modrinth.com/data/u6SJDs6g/versions/y993XfGf/ferritecore-7.0.0-fabric.jar</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Krypton</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://cdn.modrinth.com/data/fQEb0iXm/versions/Acz3ttTp/krypton-0.2.8.jar</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span></code></pre>
+</div>
+<h2  id="configuración-de-red-local-y-dirección-ip-estática">3.
+Configuración de Red Local y Dirección IP Estática</h2>
+<p>Para que los dispositivos dentro de tu hogar siempre encuentren el
+servidor, su dirección IP interna (ej. <code>192.168.1.50</code>) no
+debe cambiar cada vez que se reinicie el router.</p>
+<h3  id="obtención-de-la-dirección-física-mac-address">3.1. Obtención de
+la Dirección Física (MAC Address)</h3>
+<p>Identifica la interfaz de red activa y su dirección MAC mediante el
+comando <code>ip link</code>:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> link</span></code></pre>
+</div>
+<p>Identifica tu interfaz (por ejemplo <code>enp3s0</code> /
+<code>eth0</code> para cable Ethernet o <code>wlan0</code> /
+<code>wlp2s0</code> para Wi-Fi). La dirección física es la cadena
+hexadecimal de 6 pares ubicada tras <code>link/ether</code> (ejemplo:
+<code>a1:b2:c3:d4:e5:f6</code>).</p>
+<h3  id="reserva-dhcp-en-el-router">3.2. Reserva DHCP en el Router</h3>
+<p>La forma más limpia y robusta de asignar una IP fija es mediante una
+<strong>reserva DHCP</strong> desde el propio router:</p>
+<ol type="1">
+<li><p>Entra al panel de administración de tu router desde un navegador
+(usualmente <code>192.168.1.1</code> o
+<code>192.168.0.1</code>).</p></li>
+<li><p>Dirígete al apartado de <strong>DHCP Server</strong>, <strong>LAN
+Setup</strong> o <strong>Address Reservation</strong>.</p></li>
+<li><p>Añade una nueva regla ingresando la <strong>dirección
+MAC</strong> de tu servidor y asignándole la IP que desees fijar (por
+ejemplo <code>192.168.1.100</code>).</p></li>
+<li><p>Guarda los cambios. A partir de este momento, el router siempre
+entregará la misma dirección IP a tu servidor.</p></li>
+</ol>
+<h3  id="configuración-del-firewall-ufw">3.3. Configuración del Firewall
+(UFW)</h3>
+<p>Si tienes un firewall activo en tu máquina como <strong>UFW</strong>,
+debes abrir el puerto predeterminado del juego (25565 por TCP):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw allow 25565/tcp</span></code></pre>
+</div>
+<h2  id="script-de-inicio-y-banderas-de-rendimiento">4. Script de Inicio
+y Banderas de Rendimiento</h2>
+<p>Crearemos un script que inicie el servidor con parámetros avanzados
+para la máquina virtual de Java (JVM), asegurando una recolección de
+basura (<em>Garbage Collection</em>) eficiente para mitigar tirones de
+lag (<em>lag spikes</em>).</p>
+<ol type="1">
+<li><p>Crea el script de arranque:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> start.sh</span></code></pre>
+</div></li>
+<li><p>Añade la siguiente configuración:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajusta la RAM según la memoria de tu equipo (ej. 4G para un equipo con 8GB)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="va">MEMORIA</span><span class="op">=</span><span class="st">&quot;4G&quot;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span> java <span class="at">-Xms</span><span class="va">${MEMORIA}</span> <span class="at">-Xmx</span><span class="va">${MEMORIA}</span> <span class="dt">\</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:+UseG1GC</span> <span class="dt">\</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:+ParallelRefProcEnabled</span> <span class="dt">\</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:MaxGCPauseMillis</span><span class="op">=</span>200 <span class="dt">\</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:+UnlockExperimentalVMOptions</span> <span class="dt">\</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:+DisableExplicitGC</span> <span class="dt">\</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:+AlwaysPreTouch</span> <span class="dt">\</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:G1NewSizePercent</span><span class="op">=</span>30 <span class="dt">\</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:G1MaxNewSizePercent</span><span class="op">=</span>40 <span class="dt">\</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:G1ReservePercent</span><span class="op">=</span>20 <span class="dt">\</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:G1HeapWastePercent</span><span class="op">=</span>5 <span class="dt">\</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:G1MixedGCCountTarget</span><span class="op">=</span>4 <span class="dt">\</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:InitiatingHeapOccupancyPercent</span><span class="op">=</span>15 <span class="dt">\</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:G1MixedGCLiveThresholdPercent</span><span class="op">=</span>90 <span class="dt">\</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:G1RSetUpdatingPauseTimePercent</span><span class="op">=</span>5 <span class="dt">\</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:SurvivorRatio</span><span class="op">=</span>32 <span class="dt">\</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:+PerfDisableSharedMem</span> <span class="dt">\</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>   <span class="at">-XX:MaxTenuringThreshold</span><span class="op">=</span>1 <span class="dt">\</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>   <span class="at">-jar</span> fabric-server-launch.jar nogui</span></code></pre>
+</div></li>
+<li><p>Otorga permisos de ejecución al script:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x start.sh</span></code></pre>
+</div></li>
+</ol>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">¿Por qué fijar <code>-Xms</code> y <code>-Xmx</code> con
+el mismo valor?</span>
+  </div>
+  <div class="callout-content">
+<p>Al igualar la memoria mínima (<code>-Xms</code>) y máxima
+(<code>-Xmx</code>), la JVM reserva todo el bloque de memoria desde el
+inicio, evitando pausas en el juego causadas por el redimensionamiento
+dinámico de la memoria en el sistema operativo.</p>
+  </div>
+</div>
+<h2  id="automatización-como-servicio-con-systemd">5. Automatización como
+Servicio con Systemd</h2>
+<p>Si ejecutas el servidor directamente desde tu terminal por SSH, el
+proceso se cerrará en cuanto cierres la conexión. Crearemos un servicio
+de <code>systemd</code> para que Minecraft se ejecute en segundo plano y
+se inicie automáticamente cada vez que la computadora encienda.</p>
+<ol type="1">
+<li><p>Crea el archivo de servicio con permisos de superusuario:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/systemd/system/minecraft.service</span></code></pre>
+</div></li>
+<li><p>Pega la siguiente definición (reemplaza <code>tu_usuario</code>
+por tu nombre de usuario real en Linux):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Toml" title="Copiar código al portapapeles">Toml</button>
+  <pre class="code-pre"><code><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[Unit]</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Description</span><span class="op">=</span><span class="dt">Servidor</span> <span class="dt">Dedicado</span> <span class="dt">de</span> <span class="dt">Minecraft</span> <span class="er">(</span><span class="dt">Fabric</span><span class="er">)</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="dt">After</span><span class="op">=</span><span class="dt">network.target</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">[Service]</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="dt">Type</span><span class="op">=</span><span class="dt">simple</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="dt">User</span><span class="op">=</span><span class="dt">tu_usuario</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="dt">WorkingDirectory</span><span class="op">=</span><span class="er">/</span><span class="dt">home</span><span class="er">/</span><span class="dt">tu_usuario</span><span class="er">/</span><span class="dt">mc_server</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="dt">ExecStart</span><span class="op">=</span><span class="er">/</span><span class="dt">bin</span><span class="er">/</span><span class="dt">bash</span> <span class="er">/</span><span class="dt">home</span><span class="er">/</span><span class="dt">tu_usuario</span><span class="er">/</span><span class="dt">mc_server</span><span class="er">/</span><span class="dt">start.sh</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="dt">Restart</span><span class="op">=</span><span class="dt">on-failure</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="dt">RestartSec</span><span class="op">=</span><span class="dv">20</span><span class="dt">s</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="kw">[Install]</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="dt">WantedBy</span><span class="op">=</span><span class="dt">multi-user.target</span></span></code></pre>
+</div></li>
+<li><p>Recarga los demonios de systemd y activa el servicio:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl daemon-reload</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable <span class="at">--now</span> minecraft.service</span></code></pre>
+</div></li>
+</ol>
+<p>A partir de ahora, puedes controlar tu servidor con los comandos
+estándar:</p>
+<ul>
+<li><strong>Ver el estado y logs en vivo:</strong>
+<code>sudo journalctl -u minecraft.service -f</code></li>
+<li><strong>Detener el servidor:</strong>
+<code>sudo systemctl stop minecraft.service</code></li>
+<li><strong>Reiniciar el servidor:</strong>
+<code>sudo systemctl restart minecraft.service</code></li>
+</ul>
+<h2  id="acceso-público-seguro-con-playit.gg">6. Acceso Público Seguro
+con Playit.gg</h2>
+<p>Para jugar con amigos fuera de tu red local solía ser obligatorio
+abrir puertos (<em>Port Forwarding</em>) en el router. Sin embargo, si
+estás detrás de un <strong>CGNAT</strong> (donde tu proveedor no te da
+una IP pública real) o no deseas exponer la dirección IP privada de tu
+casa a internet, <strong>Playit.gg</strong> es la solución ideal.</p>
+<p>Playit crea un túnel cifrado inverso mediante un proxy seguro: tus
+amigos se conectan a un dominio público de Playit y el tráfico se
+reenvía directamente a tu servidor local.</p>
+<h3  id="instalación-del-agente-de-playit">6.1. Instalación del Agente de
+Playit</h3>
+<p>Descarga el ejecutable para Linux (arquitectura x86_64 / amd64):</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/playit-cloud/playit-agent/releases/latest/download/playit-linux-amd64 <span class="at">-O</span> playit</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x playit</span></code></pre>
+</div>
+<h3  id="vinculación-y-creación-del-túnel">6.2. Vinculación y Creación
+del Túnel</h3>
+<ol type="1">
+<li><p>Inicia el agente en tu servidor:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./playit</span></span></code></pre>
+</div></li>
+<li><p>La terminal imprimirá un enlace de reclamo (<em>Claim URL</em>)
+con un formato como
+<code>https://playit.gg/claim/xxxx-xxxx</code>.</p></li>
+<li><p>Copia el enlace y ábrelo en el navegador de tu computadora
+personal.</p></li>
+<li><p>Inicia sesión o crea una cuenta en Playit.</p></li>
+<li><p>En el panel de control, haz clic en <strong>«Add
+Tunnel»</strong>, selecciona el tipo <strong>Minecraft Java</strong> y
+confirma que el puerto local apunte al <strong>25565</strong>.</p></li>
+<li><p>El panel te entregará una dirección única (por ejemplo:
+<code>mi-servidor.playit.gg</code>). Esta es la dirección pública que
+compartirás con tus amigos para que se unan a la partida.</p></li>
+</ol>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>FabricMC.</strong> <em>Documentación Oficial</em>.
+Recuperado de <a href="https://fabricmc.net/">fabricmc.net</a></p></li>
+<li><p><strong>Modrinth.</strong> <em>Repositorio de Mods</em>.
+Recuperado de <a href="https://modrinth.com/">modrinth.com</a></p></li>
+<li><p><strong>PaperMC.</strong> <em>Optimización de Banderas JVM
+(Aikar’s Flags)</em>. Recuperado de <a
+href="https://docs.papermc.io/paper/aikars-flags">docs.papermc.io/paper/aikars-flags</a></p></li>
+<li><p><strong>Playit.gg.</strong> <em>Documentación y Soporte</em>.
+Recuperado de <a
+href="https://playit.gg/support/">playit.gg/support</a></p></li>
+<li><p><strong>Debian Wiki.</strong> <em>Gestión de Servicios con
+Systemd</em>. Recuperado de <a
+href="https://wiki.debian.org/systemd">wiki.debian.org/systemd</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>Administración de Servidores de
+Minecraft</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/Minecraft">wiki.archlinux.org/title/Minecraft</a></p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>
