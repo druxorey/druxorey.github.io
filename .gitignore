@@ -13,3 +13,5 @@ node_modules/
 dist/
 .vite/
 build/markdown/*
+__pycache__/
+*.pyc

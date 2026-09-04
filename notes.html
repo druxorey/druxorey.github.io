@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Druxorey | Proyectos - Linux & Sistemas</title>
-  <meta name="description" content="Proyectos de software, herramientas de sistemas y scripts desarrollados por Druxorey.">
+  <title>Druxorey | Apuntes Académicos</title>
+  <meta name="description" content="Apuntes universitarios, notas de estudio y resúmenes de asignaturas de informática organizados por materias y secuencia temática por Druxorey.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
@@ -25,9 +25,9 @@
         <ul class="nav-links">
           <li><a href="./index.html" class="nav-link">Sobre mí</a></li>
           <li><a href="./about.html" class="nav-link">Trayectoria</a></li>
-          <li><a href="./projects.html" class="nav-link active">Proyectos</a></li>
+          <li><a href="./projects.html" class="nav-link">Proyectos</a></li>
           <li><a href="./publications.html" class="nav-link">Publicaciones</a></li>
-          <li><a href="./notes.html" class="nav-link">Apuntes</a></li>
+          <li><a href="./notes.html" class="nav-link active">Apuntes</a></li>
           <li><a href="./contact.html" class="nav-link">Contacto</a></li>
         </ul>
       </nav>
@@ -42,9 +42,9 @@
     <div id="mobileMenu" class="mobile-menu">
       <a href="./index.html" class="nav-link">Sobre mí</a>
       <a href="./about.html" class="nav-link">Trayectoria</a>
-      <a href="./projects.html" class="nav-link active">Proyectos</a>
+      <a href="./projects.html" class="nav-link">Proyectos</a>
       <a href="./publications.html" class="nav-link">Publicaciones</a>
-      <a href="./notes.html" class="nav-link">Apuntes</a>
+      <a href="./notes.html" class="nav-link active">Apuntes</a>
       <a href="./contact.html" class="nav-link">Contacto</a>
     </div>
   </header>
@@ -53,18 +53,55 @@
     <div class="container">
 
       <header class="page-header">
-        <h1 class="page-title">Proyectos</h1>
+        <h1 class="page-title">Apuntes Universitarios</h1>
       </header>
 
-      <!-- Projects Grid -->
-      <section id="projectsContainer" class="projects-grid">
-        <!-- Populated dynamically via TypeScript -->
+      <section class="notes-search-section">
+        <div class="notes-search-wrap">
+          <input
+            type="text"
+            id="notesSearchInput"
+            class="input-search"
+            placeholder="Buscar en apuntes por título, contenido, materia o etiqueta..."
+            aria-label="Buscar apuntes académicos"
+          />
+        </div>
+
+        <div class="notes-filters-row">
+          <div id="notesTagsContainer" class="notes-tags-list"></div>
+          <span id="notesCount" class="notes-count-indicator">
+            Cargando apuntes...
+          </span>
+        </div>
       </section>
+
+      <!-- 2-Column Layout (Left: Subject Folders, Right: Notes Feed) -->
+      <div class="notes-grid-layout">
+
+        <aside class="notes-sidebar" aria-label="Navegación por materias">
+          <div class="notes-sidebar-header">
+            <svg class="notes-sidebar-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="notes-sidebar-header-title">Materias</span>
+          </div>
+
+          <ul id="notesSubjectsList" class="notes-sidebar-list">
+            <!-- Renderizado dinámico desde notes.ts -->
+          </ul>
+        </aside>
+
+        <section class="notes-main-content">
+          <div id="notesContainer" class="notes-cards-list">
+            <!-- Renderizado dinámico desde notes.ts -->
+          </div>
+        </section>
+
+      </div>
 
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div>
@@ -83,6 +120,6 @@
   </footer>
 
   <script type="module" src="/src/scripts/main.ts"></script>
-  <script type="module" src="/src/scripts/projects.ts"></script>
+  <script type="module" src="/src/scripts/notes.ts"></script>
 </body>
 </html>

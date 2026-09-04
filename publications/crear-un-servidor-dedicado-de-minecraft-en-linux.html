@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prontuario para Instalar un Servidor de Minecraft en Linux | Druxorey</title>
-  <meta name="description" content="Transformar hardware antiguo en un servidor doméstico es una excelente forma de aprovechar recursos. Esta guía enseña a desplegar un servidor de Minecraft optimizado con Fabric, utilizando Java 21 en modo headless para maximizar el rendimiento. Aprenderás a configurar entornos en Arch Linux o Debian, automatizar servicios en segundo plano y gestionar conexiones seguras sin complicaciones innecesarias en tu red.">
+  <meta name="description" content="Convertir hardware antiguo en un servidor dedicado de Minecraft es la forma ideal de aprovechar recursos mientras mantienes un control total sobre tu partida. Al utilizar Fabric junto a mods de optimización, lograrás un rendimiento superior sin alterar la experiencia original. Aprenderás a automatizar el proceso con systemd y gestionar conexiones seguras mediante Playit.gg, garantizando un entorno estable, eficiente y siempre disponible.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
   <link rel="stylesheet" href="/src/styles/main.css">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body>
 
@@ -27,7 +29,8 @@
           <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
           <li><a href="/about.html" class="nav-link">Trayectoria</a></li>
           <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
-          <li><a href="/blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="/publications.html" class="nav-link active">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link">Apuntes</a></li>
           <li><a href="/contact.html" class="nav-link">Contacto</a></li>
         </ul>
       </nav>
@@ -44,7 +47,8 @@
       <a href="/index.html" class="nav-link">Sobre mí</a>
       <a href="/about.html" class="nav-link">Trayectoria</a>
       <a href="/projects.html" class="nav-link">Proyectos</a>
-      <a href="/blog.html" class="nav-link active">Blog</a>
+      <a href="/publications.html" class="nav-link active">Publicaciones</a>
+      <a href="/notes.html" class="nav-link">Apuntes</a>
       <a href="/contact.html" class="nav-link">Contacto</a>
     </div>
   </header>
@@ -54,8 +58,8 @@
     <div class="container-article">
 
       <div class="article-back-nav">
-        <a href="/blog.html" class="article-back-link">
-          ← Volver al catálogo de artículos
+        <a href="/publications.html" class="article-back-link">
+          ← Volver al catálogo de publicaciones
         </a>
       </div>
 
@@ -104,7 +108,7 @@ del Túnel</a></li>
 
         <!-- Right Column: Article Main Content -->
         <article class="article-main">
-          <div class="article-kicker">Artículo · Investigación</div>
+          <div class="article-kicker">Publicación · Investigación</div>
           <h1 class="article-title">Prontuario para Instalar un Servidor de Minecraft en Linux</h1>
 
           <div class="article-meta">
@@ -395,7 +399,7 @@ lag (<em>lag spikes</em>).</p>
 </ol>
 <div class="callout-box note">
   <div class="callout-title">
-    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
     <span class="callout-title-text">¿Por qué fijar <code>-Xms</code> y <code>-Xmx</code> con
 el mismo valor?</span>
   </div>
@@ -540,12 +544,16 @@ href="https://wiki.archlinux.org/title/Minecraft">wiki.archlinux.org/title/Minec
         <a href="/index.html">Sobre mí</a>
         <a href="/about.html">Trayectoria</a>
         <a href="/projects.html">Proyectos</a>
-        <a href="/blog.html">Blog</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
         <a href="/contact.html">Contacto</a>
         <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </div>
   </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 
   <script type="module" src="/src/scripts/main.ts"></script>
   <script type="module" src="/src/scripts/copy-code.ts"></script>

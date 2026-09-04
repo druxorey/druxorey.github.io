@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-build/fetch-github-projects.py — Sincroniza repositorios de GitHub
+build/fetch-github-projects.py — Synchronizes GitHub repositories
 
-Consulta la API pública de GitHub para obtener los repositorios de @druxorey,
-actualiza src/data/projects.ts y regenera el SVG de contribuciones con
-la paleta Dracula.
+Fetches public repositories for @druxorey from GitHub API,
+updates src/data/projects.ts and regenerates the Dracula-themed
+contributions SVG graph.
 
-Uso:
+Usage:
   python3 build/fetch-github-projects.py
 """
 import urllib.request
@@ -15,12 +15,12 @@ import os
 import re
 import sys
 
-GITHUB_USERNAME = "druxorey"
-API_URL         = f"https://api.github.com/users/{GITHUB_USERNAME}/repos?sort=updated&per_page=50"
-OUTPUT_FILE     = "src/data/projects.ts"
-CONTRIBUTIONS_SVG = "public/images/github-contributions.svg"
+githubUsername = "druxorey"
+apiUrl = f"https://api.github.com/users/{githubUsername}/repos?sort=updated&per_page=50"
+outputFile = "src/data/projects.ts"
+contributionsSvg = "public/images/github-contributions.svg"
 
-FEATURED_REPOS = [
+featuredRepos = [
     "dotfiles",
     "drxpkg",
     "dracula-for-stylus",
@@ -28,7 +28,7 @@ FEATURED_REPOS = [
     "druxorey.github.io",
 ]
 
-DRACULA_PALETTE = {
+draculaPalette = {
     "0": "#191a21",
     "1": "#483c6c",
     "2": "#70539b",
@@ -38,80 +38,81 @@ DRACULA_PALETTE = {
 
 
 def fetchRepos():
-    print(f"\n · Synchronizing repositories from @{GITHUB_USERNAME}")
-    headers = {
+    print(f"\n · Synchronizing repositories from @{githubUsername}")
+    requestHeaders = {
         "User-Agent": "Mozilla/5.0 (DruxoreyWeb-SyncScript)",
-        "Accept":     "application/vnd.github.v3+json",
+        "Accept": "application/vnd.github.v3+json",
     }
-    req = urllib.request.Request(API_URL, headers=headers)
+    requestObject = urllib.request.Request(apiUrl, headers=requestHeaders)
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            if resp.status == 200:
-                return json.loads(resp.read().decode("utf-8"))
-            print(f"   ✗  API GitHub: HTTP {resp.status}", file=sys.stderr)
+        with urllib.request.urlopen(requestObject, timeout=15) as apiResponse:
+            if apiResponse.status == 200:
+                return json.loads(apiResponse.read().decode("utf-8"))
+            print(f"   ✗  GitHub API error: HTTP {apiResponse.status}", file=sys.stderr)
             return None
-    except Exception as e:
-        print(f"   ✗  Error connecting to GitHub API: {e}", file=sys.stderr)
+    except Exception as networkError:
+        print(f"   ✗  Error connecting to GitHub API: {networkError}", file=sys.stderr)
         return None
 
 
-def transformRepo(repo):
-    name        = repo.get("name", "")
-    description = repo.get("description") or (
-        f"Repositorio de software libre en {repo.get('language') or 'código abierto'}."
+def transformRepo(rawRepo):
+    repoName = rawRepo.get("name", "")
+    repoDescription = rawRepo.get("description") or (
+        f"Open source repository in {rawRepo.get('language') or 'software development'}."
     )
-    tags = []
-    if repo.get("language"):
-        tags.append(repo["language"])
-    for topic in repo.get("topics", []):
-        if topic.lower() not in [t.lower() for t in tags]:
-            tags.append(topic.capitalize())
-    if not tags:
-        tags = ["Linux", "Open Source"]
+    repoTags = []
+    if rawRepo.get("language"):
+        repoTags.append(rawRepo["language"])
+    for topicItem in rawRepo.get("topics", []):
+        if topicItem.lower() not in [tag.lower() for tag in repoTags]:
+            repoTags.append(topicItem.capitalize())
+    if not repoTags:
+        repoTags = ["Linux", "Open Source"]
 
     return {
-        "id":       name.lower(),
-        "title":    name,
-        "description": description,
-        "tags":     tags[:5],
-        "featured": name.lower() in [f.lower() for f in FEATURED_REPOS],
+        "id": repoName.lower(),
+        "title": repoName,
+        "description": repoDescription,
+        "tags": repoTags[:5],
+        "featured": repoName.lower() in [featuredItem.lower() for featuredItem in featuredRepos],
         "links": {
-            "github": repo.get("html_url", f"https://github.com/{GITHUB_USERNAME}/{name}"),
-            "demo":   repo.get("homepage") or None,
+            "github": rawRepo.get("html_url", f"https://github.com/{githubUsername}/{repoName}"),
+            "demo": rawRepo.get("homepage") or None,
         },
-        "year": str(repo.get("updated_at", "2025"))[:4],
+        "year": str(rawRepo.get("updated_at", "2025"))[:4],
     }
 
 
 def fetchContributionsGraph():
     print("\n · Updating contribution chart")
-    url = f"https://ghchart.rshah.org/BD93F9/{GITHUB_USERNAME}"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    chartUrl = f"https://ghchart.rshah.org/BD93F9/{githubUsername}"
+    chartRequest = urllib.request.Request(chartUrl, headers={"User-Agent": "Mozilla/5.0"})
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            rawSvg = resp.read().decode("utf-8")
+        with urllib.request.urlopen(chartRequest, timeout=15) as chartResponse:
+            rawSvg = chartResponse.read().decode("utf-8")
 
-        def transform_rect(m):
-            tag   = m.group(0)
-            score = (re.search(r'data-score="(\d+)"', tag) or type("", (), {"group": lambda s, n: "0"})()).group(1)
-            col   = DRACULA_PALETTE.get(score, "#21222c")
-            tag   = re.sub(r'style="[^"]*"', f'style="fill:{col};shape-rendering:geometricPrecision;"', tag)
-            tag   = re.sub(r"<rect ", '<rect rx="2" ry="2" ', tag)
-            return tag
+        def transformRect(matchedRect):
+            rectTag = matchedRect.group(0)
+            scoreMatch = re.search(r'data-score="(\d+)"', rectTag)
+            intensityScore = scoreMatch.group(1) if scoreMatch else "0"
+            fillColor = draculaPalette.get(intensityScore, "#21222c")
+            rectTag = re.sub(r'style="[^"]*"', f'style="fill:{fillColor};shape-rendering:geometricPrecision;"', rectTag)
+            rectTag = re.sub(r"<rect ", '<rect rx="2" ry="2" ', rectTag)
+            return rectTag
 
-        processed = re.sub(r"<rect [^>]+>", transform_rect, rawSvg)
-        processed = processed.replace("#767676", "#6272a4").replace("#444", "#6272a4")
+        processedSvg = re.sub(r"<rect [^>]+>", transformRect, rawSvg)
+        processedSvg = processedSvg.replace("#767676", "#6272a4").replace("#444", "#6272a4")
 
-        os.makedirs(os.path.dirname(CONTRIBUTIONS_SVG), exist_ok=True)
-        with open(CONTRIBUTIONS_SVG, "w", encoding="utf-8") as out:
-            out.write(processed)
-        print(f"   ✓  {CONTRIBUTIONS_SVG}")
-    except Exception as e:
-        print(f"   ⚠  Could not update chart: {e}")
+        os.makedirs(os.path.dirname(contributionsSvg), exist_ok=True)
+        with open(contributionsSvg, "w", encoding="utf-8") as svgFile:
+            svgFile.write(processedSvg)
+        print(f"   ✓  {contributionsSvg}")
+    except Exception as chartError:
+        print(f"   ⚠  Could not update chart: {chartError}")
 
 
-def writeProjectsTs(projects):
-    ts = (
+def writeProjectsTs(projectsList):
+    typeScriptContent = (
         "export interface Project {\n"
         "  id: string;\n"
         "  title: string;\n"
@@ -126,28 +127,28 @@ def writeProjectsTs(projects):
         "  year?: string;\n"
         "}\n\n"
         "export const projectsData: Project[] = "
-        + json.dumps(projects, indent=2, ensure_ascii=False)
+        + json.dumps(projectsList, indent=2, ensure_ascii=False)
         + ";\n"
     )
-    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(ts)
-    print(f"   ✓  {OUTPUT_FILE} ({len(projects)} projects)")
+    os.makedirs(os.path.dirname(outputFile), exist_ok=True)
+    with open(outputFile, "w", encoding="utf-8") as targetFile:
+        targetFile.write(typeScriptContent)
+    print(f"   ✓  {outputFile} ({len(projectsList)} projects)")
 
 
 def main():
     fetchContributionsGraph()
 
-    repos = fetchRepos()
-    if not repos:
+    fetchedRepos = fetchRepos()
+    if not fetchedRepos:
         print("   ⚠  The existing projects.ts file will be kept.")
         return
 
-    validRepos = [r for r in repos if not r.get("fork", False) or r.get("name") in FEATURED_REPOS]
-    projects    = [transformRepo(r) for r in validRepos]
-    projects.sort(key=lambda p: (not p["featured"], p["year"]), reverse=False)
+    validRepos = [repoItem for repoItem in fetchedRepos if not repoItem.get("fork", False) or repoItem.get("name") in featuredRepos]
+    projectEntries = [transformRepo(repoItem) for repoItem in validRepos]
+    projectEntries.sort(key=lambda item: (not item["featured"], item["year"]), reverse=False)
 
-    writeProjectsTs(projects)
+    writeProjectsTs(projectEntries)
 
 
 if __name__ == "__main__":

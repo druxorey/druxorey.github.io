@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prontuario para Inicializar tu Entorno de Arch Linux | Druxorey</title>
-  <meta name="description" content="Una vez instalado el sistema, la optimización del entorno es clave para maximizar el rendimiento y la autonomía. Esta guía detalla la configuración de redes, la gestión de paquetes mediante Pacman y AUR, y el ajuste de controladores gráficos y gestión energética. Aprenderás a personalizar tu equipo para lograr un sistema estable, seguro y eficiente, adaptado perfectamente a tus necesidades de hardware.">
+  <meta name="description" content="Transformar una instalación base de Arch Linux en un entorno de trabajo funcional requiere ajustes precisos que maximizan el rendimiento y la estabilidad. Desde la optimización de Pacman y la gestión del AUR, hasta la configuración de seguridad, controladores gráficos y renderizado de fuentes, este proceso es el paso definitivo para convertir tu terminal en un sistema operativo profesional, eficiente y totalmente personalizado.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
   <link rel="stylesheet" href="/src/styles/main.css">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body>
 
@@ -27,7 +29,8 @@
           <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
           <li><a href="/about.html" class="nav-link">Trayectoria</a></li>
           <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
-          <li><a href="/blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="/publications.html" class="nav-link active">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link">Apuntes</a></li>
           <li><a href="/contact.html" class="nav-link">Contacto</a></li>
         </ul>
       </nav>
@@ -44,7 +47,8 @@
       <a href="/index.html" class="nav-link">Sobre mí</a>
       <a href="/about.html" class="nav-link">Trayectoria</a>
       <a href="/projects.html" class="nav-link">Proyectos</a>
-      <a href="/blog.html" class="nav-link active">Blog</a>
+      <a href="/publications.html" class="nav-link active">Publicaciones</a>
+      <a href="/notes.html" class="nav-link">Apuntes</a>
       <a href="/contact.html" class="nav-link">Contacto</a>
     </div>
   </header>
@@ -54,8 +58,8 @@
     <div class="container-article">
 
       <div class="article-back-nav">
-        <a href="/blog.html" class="article-back-link">
-          ← Volver al catálogo de artículos
+        <a href="/publications.html" class="article-back-link">
+          ← Volver al catálogo de publicaciones
         </a>
       </div>
 
@@ -121,7 +125,7 @@ GameMode</a></li>
 
         <!-- Right Column: Article Main Content -->
         <article class="article-main">
-          <div class="article-kicker">Artículo · Investigación</div>
+          <div class="article-kicker">Publicación · Investigación</div>
           <h1 class="article-title">Prontuario para Inicializar tu Entorno de Arch Linux</h1>
 
           <div class="article-meta">
@@ -337,7 +341,7 @@ tu archivo <code>mirrorlist</code>:</p>
 </ol>
 <div class="callout-box note">
   <div class="callout-title">
-    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
     <span class="callout-title-text">¿Qué hace este comando?</span>
   </div>
   <div class="callout-content">
@@ -844,12 +848,16 @@ href="https://youtu.be/YPrhIfm3VJs">youtu.be/YPrhIfm3VJs</a></p></li>
         <a href="/index.html">Sobre mí</a>
         <a href="/about.html">Trayectoria</a>
         <a href="/projects.html">Proyectos</a>
-        <a href="/blog.html">Blog</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
         <a href="/contact.html">Contacto</a>
         <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </div>
   </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 
   <script type="module" src="/src/scripts/main.ts"></script>
   <script type="module" src="/src/scripts/copy-code.ts"></script>

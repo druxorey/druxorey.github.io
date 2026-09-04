@@ -1,38 +1,41 @@
 #!/usr/bin/env python3
 """
-build/prebuild.py — Script maestro de pre-compilación
+build/prebuild.py — Master pre-build script
 
-Ejecuta en orden todos los pasos necesarios antes de que Vite haga el bundle:
-  1. Sincroniza proyectos y gráfico de contribuciones desde GitHub
-  2. Compila los artículos Markdown de build/markdown/ → blog/
+Executes all necessary steps in order before Vite bundles the site:
+  1. Synchronizes projects and contributions chart from GitHub
+  2. Compiles Markdown publications to publications/
+  3. Compiles academic Markdown notes to notes/
 
-Este script se invoca automáticamente desde `npm run build`.
+Invoked automatically from `npm run build`.
 
-Uso manual:
+Manual usage:
   python3 build/prebuild.py
 """
 import subprocess
 import sys
 import os
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+rootDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def run(script, label):
-    print(f"\n{label}")
-    result = subprocess.run(
-        [sys.executable, os.path.join(ROOT, script)],
-        cwd=ROOT,
+def runScript(scriptPath, stepLabel):
+    print(f"\n{stepLabel}")
+    processResult = subprocess.run(
+        [sys.executable, os.path.join(rootDir, scriptPath)],
+        cwd=rootDir,
     )
-    if result.returncode != 0:
-        print(f"\n  ✗ Falló: {script} (código {result.returncode})", file=sys.stderr)
-        sys.exit(result.returncode)
+    if processResult.returncode != 0:
+        print(f"\n  ✗ Failed: {scriptPath} (exit code {processResult.returncode})", file=sys.stderr)
+        sys.exit(processResult.returncode)
 
 
 def main():
-    run("build/fetch-github-projects.py", "1. Syncing GitHub projects and contributions")
-    run("build/build-blog.py",            "2. Compiling Markdown → HTML articles")
+    runScript("build/fetch-github-projects.py", "1. Syncing GitHub projects and contributions")
+    runScript("build/build-publications.py",    "2. Compiling Markdown → HTML publications")
+    runScript("build/build-notes.py",           "3. Compiling Markdown → HTML academic notes")
     print("")
+
 
 if __name__ == "__main__":
     main()

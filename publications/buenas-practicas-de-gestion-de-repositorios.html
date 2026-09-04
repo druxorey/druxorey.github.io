@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Buenas Prácticas de Gestión de Repositorios | Druxorey</title>
-  <meta name="description" content="La gestión profesional de repositorios se basa en el uso de Scoped Commits y convenciones de nomenclatura claras para transformar el historial de cambios en una herramienta de navegación intuitiva. Al integrar PRs atómicas, protección de ramas y buenas prácticas de higiene del código, es posible elevar la calidad del desarrollo y simplificar la colaboración en proyectos de cualquier escala.">
+  <meta name="description" content="Gestionar un repositorio de forma profesional requiere abandonar el caos en favor de una arquitectura de control de versiones predecible y eficiente. Al implementar Scoped Commits, ramas basadas en módulos y una gobernanza automatizada mediante plantillas, eliminas el ruido administrativo y potencias la trazabilidad. Aprenderás a mantener un historial lineal, realizar rebase interactivo y aplicar estrategias de fusión que garantizan un código limpio, atómico y listo para producción.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
   <link rel="stylesheet" href="/src/styles/main.css">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body>
 
@@ -27,7 +29,8 @@
           <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
           <li><a href="/about.html" class="nav-link">Trayectoria</a></li>
           <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
-          <li><a href="/blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="/publications.html" class="nav-link active">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link">Apuntes</a></li>
           <li><a href="/contact.html" class="nav-link">Contacto</a></li>
         </ul>
       </nav>
@@ -44,7 +47,8 @@
       <a href="/index.html" class="nav-link">Sobre mí</a>
       <a href="/about.html" class="nav-link">Trayectoria</a>
       <a href="/projects.html" class="nav-link">Proyectos</a>
-      <a href="/blog.html" class="nav-link active">Blog</a>
+      <a href="/publications.html" class="nav-link active">Publicaciones</a>
+      <a href="/notes.html" class="nav-link">Apuntes</a>
       <a href="/contact.html" class="nav-link">Contacto</a>
     </div>
   </header>
@@ -54,8 +58,8 @@
     <div class="container-article">
 
       <div class="article-back-nav">
-        <a href="/blog.html" class="article-back-link">
-          ← Volver al catálogo de artículos
+        <a href="/publications.html" class="article-back-link">
+          ← Volver al catálogo de publicaciones
         </a>
       </div>
 
@@ -104,7 +108,7 @@ Ruido</a></li>
 
         <!-- Right Column: Article Main Content -->
         <article class="article-main">
-          <div class="article-kicker">Artículo · Investigación</div>
+          <div class="article-kicker">Publicación · Investigación</div>
           <h1 class="article-title">Buenas Prácticas de Gestión de Repositorios</h1>
 
           <div class="article-meta">
@@ -314,16 +318,15 @@ mínimos (pasos para reproducir, capturas, logs).</p></li>
 <code>CODEOWNERS</code></span>
   </div>
   <div class="callout-content">
-<div class="code-block-wrapper">
-  <button class="copy-code-btn" type="button" data-lang="Code" title="Copiar código al portapapeles">Code</button>
-  <pre class="code-pre"><code>Por defecto, todo el repositorio requiere revisión del equipo general:
-*                   @equipo-core
-
-Módulos específicos asignados a sus especialistas:
-/src/auth/          @seguridad-backend
-/src/ui/            @frontend-lead
-/infra/             @devops</code></pre>
-</div>
+<p>```plain text Por defecto, todo el repositorio requiere revisión del
+equipo general: * <span class="citation"
+data-cites="equipo-core">@equipo-core</span></p>
+<p>Módulos específicos asignados a sus especialistas: /src/auth/ <span
+class="citation"
+data-cites="seguridad-backend">@seguridad-backend</span> /src/ui/ <span
+class="citation" data-cites="frontend-lead">@frontend-lead</span>
+/infra/ <span class="citation" data-cites="devops">@devops</span>
+```</p>
   </div>
 </div>
 <h3  id="reglas-de-protección-de-ramas-branch-protection">3.2. Reglas de
@@ -372,11 +375,11 @@ un error tipográfico, no crees un commit extra tipo «oops» o «fix
 typo»:</p>
 <div class="code-block-wrapper">
   <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
-  <pre class="code-pre"><code><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Agrega el archivo corregido al stage</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add src/auth/jwt.go</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Únelo al último commit sin cambiar el mensaje</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span> <span class="at">--no-edit</span></span></code></pre>
+  <pre class="code-pre"><code><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Agrega el archivo corregido al stage</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add src/auth/jwt.go</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Únelo al último commit sin cambiar el mensaje</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span> <span class="at">--no-edit</span></span></code></pre>
 </div>
 <h4 id="rebase-interactivo-git-rebase--i">4.1.2. Rebase Interactivo
 (<code>git rebase -i</code>)</h4>
@@ -384,8 +387,8 @@ typo»:</p>
 enviarlos al repositorio remoto.</p>
 <div class="code-block-wrapper">
   <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
-  <pre class="code-pre"><code><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifica los últimos 3 commits</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rebase <span class="at">-i</span> HEAD~3</span></code></pre>
+  <pre class="code-pre"><code><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifica los últimos 3 commits</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rebase <span class="at">-i</span> HEAD~3</span></code></pre>
 </div>
 <p>El editor muestra la lista de commits. Los comandos más usados
 son:</p>
@@ -434,23 +437,23 @@ perdiste tus cambios, <code>reflog</code> guarda el historial de dónde
 estuvo tu puntero:</p>
 <div class="code-block-wrapper">
   <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
-  <pre class="code-pre"><code><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Inspecciona el registro de movimientos</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reflog</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Regresa la rama al estado previo al error (ejemplo: HEAD@{2})</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> HEAD@{2}</span></code></pre>
+  <pre class="code-pre"><code><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Inspecciona el registro de movimientos</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reflog</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Regresa la rama al estado previo al error (ejemplo: HEAD@{2})</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> HEAD@{2}</span></code></pre>
 </div>
 <h4 id="depuración-con-git-bisect">4.2.2. Depuración con Git Bisect</h4>
 <p>Cuando aparece un bug y no sabes qué commit lo causó,
 <code>git bisect</code> aplica búsqueda binaria sobre el historial para
 hallar la confirmación exacta en tiempo <span
-class="math inline">𝒪(log <em>n</em>)</span>.</p>
+class="math inline">\mathcal{O}(\log n)</span>.</p>
 <p><strong>Paso 1: Iniciar la sesión de búsqueda</strong></p>
 <div class="code-block-wrapper">
   <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
-  <pre class="code-pre"><code><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect start</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect bad                 <span class="co"># La versión actual tiene el bug</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect good v1.4.0         <span class="co"># El tag o commit donde todo funcionaba bien</span></span></code></pre>
+  <pre class="code-pre"><code><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect start</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect bad                 <span class="co"># La versión actual tiene el bug</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect good v1.4.0         <span class="co"># El tag o commit donde todo funcionaba bien</span></span></code></pre>
 </div>
 <p><strong>Paso 2: Evaluar los puntos medios</strong></p>
 <p>Git moverá el código automáticamente al punto medio del historial.
@@ -464,7 +467,7 @@ Pruebas la aplicación y marcas:</p>
 introdujo el error. Para volver a tu rama normal:</p>
 <div class="code-block-wrapper">
   <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
-  <pre class="code-pre"><code><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect reset</span></code></pre>
+  <pre class="code-pre"><code><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> bisect reset</span></code></pre>
 </div>
 <h4 id="búsqueda-por-contenido-con-pickaxe--s">4.2.3. Búsqueda por
 Contenido con Pickaxe (<code>-S</code>)</h4>
@@ -472,7 +475,7 @@ Contenido con Pickaxe (<code>-S</code>)</h4>
 variable o texto específico en todo el historial del proyecto:</p>
 <div class="code-block-wrapper">
   <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
-  <pre class="code-pre"><code><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-S</span> <span class="st">&quot;AUTH_SECRET_KEY&quot;</span> <span class="at">--oneline</span></span></code></pre>
+  <pre class="code-pre"><code><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-S</span> <span class="st">&quot;AUTH_SECRET_KEY&quot;</span> <span class="at">--oneline</span></span></code></pre>
 </div>
 <h2  id="estrategias-de-fusión-y-sincronización">5. Estrategias de Fusión
 y Sincronización</h2>
@@ -501,11 +504,11 @@ automáticos innecesarios (<code>Merge branch 'main' of...</code>),
 configura tu entorno para sincronizar siempre mediante rebase:</p>
 <div class="code-block-wrapper">
   <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
-  <pre class="code-pre"><code><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebasar cambios locales sobre los remotos al hacer pull</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> pull.rebase true</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpiar automáticamente referencias a ramas que ya fueron borradas en remoto</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> fetch.prune true</span></code></pre>
+  <pre class="code-pre"><code><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebasar cambios locales sobre los remotos al hacer pull</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> pull.rebase true</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpiar automáticamente referencias a ramas que ya fueron borradas en remoto</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> fetch.prune true</span></code></pre>
 </div>
 <hr />
 <div class="callout-box resources">
@@ -515,16 +518,16 @@ configura tu entorno para sincronizar siempre mediante rebase:</p>
   </div>
   <div class="callout-content">
 <ul>
-<li><p><strong>Scoped Commits Initiative.</strong> <em>A simplified
+<li><strong>Scoped Commits Initiative.</strong> <em>A simplified
 alternative to Conventional Commits</em>. Recuperado de <a
 href="https://scopedcommits.com/"
-title="null">scopedcommits.com</a></p></li>
-<li><p><strong>Scott Chacon &amp; Ben Straub.</strong> <em>Pro Git
+title="null">scopedcommits.com</a></li>
+<li><strong>Scott Chacon &amp; Ben Straub.</strong> <em>Pro Git
 Book</em>. Recuperado de <a href="https://git-scm.com/book/en/v2"
-title="null">git-scm.com</a></p></li>
-<li><p><strong>Git Documentation.</strong> <em>Git Reference
-Manual</em>. Recuperado de <a href="https://git-scm.com/doc"
-title="null">git-scm.com</a></p></li>
+title="null">git-scm.com</a></li>
+<li><strong>Git Documentation.</strong> <em>Git Reference Manual</em>.
+Recuperado de <a href="https://git-scm.com/doc"
+title="null">git-scm.com</a></li>
 </ul>
   </div>
 </div>
@@ -547,12 +550,16 @@ title="null">git-scm.com</a></p></li>
         <a href="/index.html">Sobre mí</a>
         <a href="/about.html">Trayectoria</a>
         <a href="/projects.html">Proyectos</a>
-        <a href="/blog.html">Blog</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
         <a href="/contact.html">Contacto</a>
         <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </div>
   </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 
   <script type="module" src="/src/scripts/main.ts"></script>
   <script type="module" src="/src/scripts/copy-code.ts"></script>

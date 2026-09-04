@@ -35,6 +35,36 @@ export function initializeArticle(): void {
 	window.addEventListener('scroll', updateActiveHeading, { passive: true });
 	updateActiveHeading();
 
+	// Renderizado automático de fórmulas KaTeX
+	function renderMath(): void {
+		// @ts-ignore
+		const katex = window.katex;
+		if (!katex) {
+			setTimeout(renderMath, 40);
+			return;
+		}
+
+		document.querySelectorAll<HTMLElement>('.math.inline').forEach((el) => {
+			try {
+				katex.render(el.textContent || '', el, {
+					displayMode: false,
+					throwOnError: false,
+				});
+			} catch (_) {}
+		});
+
+		document.querySelectorAll<HTMLElement>('.math.display').forEach((el) => {
+			try {
+				katex.render(el.textContent || '', el, {
+					displayMode: true,
+					throwOnError: false,
+				});
+			} catch (_) {}
+		});
+	}
+
+	renderMath();
+
 	const copyLinkBtn = document.getElementById('copyArticleLinkBtn');
 	if (copyLinkBtn) {
 		copyLinkBtn.addEventListener('click', async () => {

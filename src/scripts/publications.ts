@@ -1,6 +1,6 @@
-import { articlesData, type Article } from '../data/articles';
+import { publicationsData, type Publication } from '../data/publications';
 
-export function initializeBlog(): void {
+export function initializePublications(): void {
 	const container = document.getElementById('articlesContainer');
 	const tagsContainer = document.getElementById('blogTagsContainer');
 	const searchInput = document.getElementById('blogSearchInput') as HTMLInputElement | null;
@@ -9,7 +9,7 @@ export function initializeBlog(): void {
 	if (!container) return;
 
 	const allTags = new Set<string>();
-	articlesData.forEach((article) => {
+	publicationsData.forEach((article) => {
 		article.tags.forEach((tag) => allTags.add(tag));
 	});
 
@@ -48,7 +48,7 @@ export function initializeBlog(): void {
 
 		const normalizedQuery = searchQuery.trim().toLowerCase();
 
-		const filtered = articlesData.filter((article) => {
+		const filtered = publicationsData.filter((article) => {
 			const matchesTag = activeTag === 'all' || article.tags.includes(activeTag);
 			const matchesSearch = !normalizedQuery ||
 				article.title.toLowerCase().includes(normalizedQuery) ||
@@ -59,13 +59,13 @@ export function initializeBlog(): void {
 		});
 
 		if (countIndicator) {
-			countIndicator.textContent = `Mostrando ${filtered.length} de ${articlesData.length} artículos`;
+			countIndicator.textContent = `Mostrando ${filtered.length} de ${publicationsData.length} publicaciones`;
 		}
 
 		if (filtered.length === 0) {
 			container.innerHTML = `
 				<div class="card blog-empty-card">
-					<p class="blog-empty-text">No se encontraron artículos que coincidan con la búsqueda.</p>
+					<p class="blog-empty-text">No se encontraron publicaciones que coincidan con la búsqueda.</p>
 					<button id="clearSearchBtn" class="btn btn-secondary btn-sm">Limpiar filtros</button>
 				</div>
 			`;
@@ -86,7 +86,7 @@ export function initializeBlog(): void {
 		container.innerHTML = filtered.map(renderArticleCard).join('');
 	}
 
-	function renderArticleCard(article: Article): string {
+	function renderArticleCard(article: Publication): string {
 		const tagsHtml = article.tags
 			.map((t) => `<span class="tag">#${t}</span>`)
 			.join(' ');
@@ -98,7 +98,7 @@ export function initializeBlog(): void {
 			: '';
 
 		return `
-			<a href="./blog/${article.slug}" class="card card-interactive blog-card-row" aria-label="${article.title}">
+			<a href="./publications/${article.slug}" class="card card-interactive blog-card-row" aria-label="${article.title}">
 				<div class="blog-card-body">
 					<div>
 						<div class="blog-card-meta">
@@ -137,4 +137,4 @@ export function initializeBlog(): void {
 	renderArticles();
 }
 
-document.addEventListener('DOMContentLoaded', initializeBlog);
+document.addEventListener('DOMContentLoaded', initializePublications);

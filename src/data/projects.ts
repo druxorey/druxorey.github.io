@@ -14,6 +14,20 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
+    "id": "drxpkg",
+    "title": "drxpkg",
+    "description": "A terminal user interface for searching and installing Arch Linux packages",
+    "tags": [
+      "Go"
+    ],
+    "featured": true,
+    "links": {
+      "github": "https://github.com/druxorey/drxpkg",
+      "demo": null
+    },
+    "year": "2026"
+  },
+  {
     "id": "druxorey.github.io",
     "title": "druxorey.github.io",
     "description": "A personal portfolio and blog showcasing my projects and writings",
@@ -42,20 +56,6 @@ export const projectsData: Project[] = [
     "links": {
       "github": "https://github.com/druxorey/dotfiles",
       "demo": "https://druxorey.github.io"
-    },
-    "year": "2026"
-  },
-  {
-    "id": "drxpkg",
-    "title": "drxpkg",
-    "description": "A terminal user interface for searching and installing Arch Linux packages",
-    "tags": [
-      "Go"
-    ],
-    "featured": true,
-    "links": {
-      "github": "https://github.com/druxorey/drxpkg",
-      "demo": null
     },
     "year": "2026"
   },
@@ -181,7 +181,7 @@ export const projectsData: Project[] = [
   {
     "id": "ucv-proyecto-chandelure",
     "title": "ucv-proyecto-chandelure",
-    "description": "Repositorio de software libre en Python.",
+    "description": "Open source repository in Python.",
     "tags": [
       "Python",
       "Abd",

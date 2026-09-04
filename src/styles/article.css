@@ -476,6 +476,59 @@
 	line-height: 1.5;
 }
 
+/* KaTeX & LaTeX Math Typography and Vertical Spacing */
+.math.display,
+.katex-display {
+	display: block;
+	padding: 0.5rem 0;
+	text-align: center;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.article-content p:has(.katex-display),
+.article-content p:has(.math.display) {
+	margin-top: 2.25rem !important;
+	margin-bottom: 2.25rem !important;
+}
+
+.callout-content .math.display,
+.callout-content .katex-display {
+	margin: 1.6rem 0 !important;
+}
+
+.callout-content p:has(.katex-display),
+.callout-content p:has(.math.display) {
+	margin-top: 1.6rem !important;
+	margin-bottom: 1.6rem !important;
+}
+
+.katex {
+	font-size: 1.15em;
+	color: var(--drx-color-text);
+	text-rendering: optimizeLegibility;
+}
+
+.katex-display>.katex {
+	font-size: 1.25em;
+}
+
+/* Fallback MathML styles */
+math[display="block"] {
+	display: block;
+	margin: 2.25rem 0 !important;
+	padding: 0.75rem 0;
+	text-align: center;
+	font-size: 1.25em;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+math[display="inline"] {
+	font-size: 1.12em;
+	padding: 0 0.15rem;
+}
+
 /* Responsive Media Queries for Article */
 @media (max-width: 900px) {
 	.article-grid {

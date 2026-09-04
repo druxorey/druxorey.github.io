@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Druxorey | Blog & Notas de Investigación</title>
-  <meta name="description" content="Artículos, notas técnicas e investigaciones sobre Linux, programación de sistemas y computación escritas por Druxorey.">
+  <title>Druxorey | Publicaciones & Investigaciones</title>
+  <meta name="description" content="Publicaciones, artículos técnicos, prontuarios e investigaciones sobre Linux, programación de sistemas y computación escritas por Druxorey.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
@@ -26,7 +26,8 @@
           <li><a href="./index.html" class="nav-link">Sobre mí</a></li>
           <li><a href="./about.html" class="nav-link">Trayectoria</a></li>
           <li><a href="./projects.html" class="nav-link">Proyectos</a></li>
-          <li><a href="./blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="./publications.html" class="nav-link active">Publicaciones</a></li>
+          <li><a href="./notes.html" class="nav-link">Apuntes</a></li>
           <li><a href="./contact.html" class="nav-link">Contacto</a></li>
         </ul>
       </nav>
@@ -42,7 +43,8 @@
       <a href="./index.html" class="nav-link">Sobre mí</a>
       <a href="./about.html" class="nav-link">Trayectoria</a>
       <a href="./projects.html" class="nav-link">Proyectos</a>
-      <a href="./blog.html" class="nav-link active">Blog</a>
+      <a href="./publications.html" class="nav-link active">Publicaciones</a>
+      <a href="./notes.html" class="nav-link">Apuntes</a>
       <a href="./contact.html" class="nav-link">Contacto</a>
     </div>
   </header>
@@ -51,7 +53,7 @@
     <div class="container">
 
       <header class="page-header">
-        <h1 class="page-title">Blog e Investigaciones</h1>
+        <h1 class="page-title">Publicaciones e Investigaciones</h1>
       </header>
 
       <section class="blog-search-section">
@@ -61,14 +63,14 @@
             id="blogSearchInput"
             class="input-search"
             placeholder="Buscar por título, contenido o etiqueta (ej. #linux, git, kernel)..."
-            aria-label="Buscar artículos en el blog"
+            aria-label="Buscar publicaciones"
           />
         </div>
 
         <div class="blog-filters-row">
           <div id="blogTagsContainer" class="blog-tags-list"></div>
           <span id="articleCount" class="blog-article-count">
-            Cargando artículos...
+            Cargando publicaciones...
           </span>
         </div>
       </section>
@@ -88,7 +90,8 @@
         <a href="./index.html">Sobre mí</a>
         <a href="./about.html">Trayectoria</a>
         <a href="./projects.html">Proyectos</a>
-        <a href="./blog.html">Blog</a>
+        <a href="./publications.html">Publicaciones</a>
+        <a href="./notes.html">Apuntes</a>
         <a href="./contact.html">Contacto</a>
         <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
@@ -96,6 +99,6 @@
   </footer>
 
   <script type="module" src="/src/scripts/main.ts"></script>
-  <script type="module" src="/src/scripts/blog.ts"></script>
+  <script type="module" src="/src/scripts/publications.ts"></script>
 </body>
 </html>
