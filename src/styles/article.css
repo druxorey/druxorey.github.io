@@ -296,14 +296,15 @@
 }
 
 .callout-title {
-	font-weight: 700;
-	font-size: var(--drx-font-size-sm);
+	font-weight: 600;
+	font-size: 1rem;
 	color: var(--drx-color-text);
-	margin-bottom: var(--drx-spacing-sm);
+	margin-bottom: var(--drx-spacing-md);
 	display: flex;
 	align-items: center;
-	gap: 0.45rem;
-	line-height: 1.3;
+	gap: 0.65rem;
+	line-height: 1.45;
+	letter-spacing: normal;
 }
 
 .callout-icon {
@@ -311,6 +312,11 @@
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
+}
+
+.callout-icon svg {
+	width: 18px;
+	height: 18px;
 }
 
 .callout-box.resources .callout-title,
@@ -326,6 +332,11 @@
 .callout-box.important .callout-title,
 .callout-box.important .callout-icon {
 	color: var(--drx-color-pink-2);
+}
+
+.callout-box.warning .callout-title,
+.callout-box.warning .callout-icon {
+	color: var(--drx-color-yellow-2);
 }
 
 .callout-box.note .callout-title,
