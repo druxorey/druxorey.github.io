@@ -757,6 +757,50 @@
 	margin: 0;
 }
 
+/* Profile Header with Avatar (Home / Sobre Mí) */
+.profile-header {
+	display: flex;
+	align-items: center;
+	gap: var(--drx-spacing-md);
+}
+
+.profile-header .page-title {
+	margin-bottom: 0;
+}
+
+.profile-header-avatar-wrap {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.profile-header-avatar {
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2.5px solid var(--drx-color-purple-2);
+	box-shadow: 0 0 20px rgba(189, 147, 249, 0.45);
+	transition: transform var(--drx-transition-normal), box-shadow var(--drx-transition-normal);
+}
+
+.profile-header-avatar:hover {
+	transform: scale(1.12);
+	box-shadow: 0 0 25px rgba(189, 147, 249, 0.8);
+}
+
+@media (max-width: 640px) {
+	.profile-header {
+		gap: var(--drx-spacing-sm);
+	}
+
+	.profile-header-avatar {
+		width: 44px;
+		height: 44px;
+	}
+}
+
 /* About Page Bio Header Card */
 .about-bio-card {
 	display: flex;

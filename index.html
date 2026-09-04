@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
   <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
   <link rel="stylesheet" href="/src/styles/main.css">
 </head>
+
 <body>
 
   <header class="navbar">
@@ -23,7 +25,6 @@
       <nav>
         <ul class="nav-links">
           <li><a href="./index.html" class="nav-link active">Sobre mí</a></li>
-          <li><a href="./about.html" class="nav-link">Trayectoria</a></li>
           <li><a href="./projects.html" class="nav-link">Proyectos</a></li>
           <li><a href="./publications.html" class="nav-link">Publicaciones</a></li>
           <li><a href="./notes.html" class="nav-link">Apuntes</a></li>
@@ -33,14 +34,13 @@
 
       <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
         <svg class="nav-toggle-icon" viewBox="0 0 24 24">
-          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
       </button>
     </div>
 
     <div id="mobileMenu" class="mobile-menu">
       <a href="./index.html" class="nav-link active">Sobre mí</a>
-      <a href="./about.html" class="nav-link">Trayectoria</a>
       <a href="./projects.html" class="nav-link">Proyectos</a>
       <a href="./publications.html" class="nav-link">Publicaciones</a>
       <a href="./notes.html" class="nav-link">Apuntes</a>
@@ -51,7 +51,10 @@
   <main class="main-content">
     <div class="container">
 
-      <header class="page-header">
+      <header class="page-header profile-header">
+        <div class="profile-header-avatar-wrap">
+          <img src="/images/profile.avif" alt="Foto de perfil de Guillermo Galavís" class="profile-header-avatar">
+        </div>
         <h1 class="page-title">Hola, soy Guillermo</h1>
       </header>
 
@@ -119,8 +122,12 @@
                   <div class="fastfetch-item fastfetch-spacer">
                     <span class="fastfetch-key magenta">Links:</span>
                     <span class="fastfetch-val">
-                      <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer" class="terminal-link">github</a>
-                      <a href="https://linkedin.com/in/guillermo-galavis" target="_blank" rel="noopener noreferrer" class="terminal-link">linkedin</a>
+                      <a href="/curriculum-vitae.pdf" target="_blank" rel="noopener noreferrer"
+                        class="terminal-link">currículum</a>
+                      <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer"
+                        class="terminal-link">github</a>
+                      <a href="https://linkedin.com/in/guillermo-galavis" target="_blank" rel="noopener noreferrer"
+                        class="terminal-link">linkedin</a>
                       <a href="./contact.html" class="terminal-link">contacto</a>
                     </span>
                   </div>
@@ -145,7 +152,8 @@
             </div>
             <h3 class="feature-title">Sistemas Operativos &amp; Bajo Nivel</h3>
             <p class="feature-text">
-              Programación a bajo nivel en C y C++, llamadas al sistema POSIX, gestión de memoria y concurrencia. Tengo un interés profundo en la interacción directa entre software y hardware.
+              Programación a bajo nivel en C y C++, llamadas al sistema POSIX, gestión de memoria y concurrencia. Tengo
+              un interés profundo en la interacción directa entre software y hardware.
             </p>
           </div>
 
@@ -155,7 +163,8 @@
             </div>
             <h3 class="feature-title">Redes y Telecomunicaciones</h3>
             <p class="feature-text">
-              Análisis e inspección de paquetes con Wireshark, desarrollo de sockets en red, configuración de topologías locales y protocolos TCP/IP y DNS.
+              Análisis e inspección de paquetes con Wireshark, desarrollo de sockets en red, configuración de topologías
+              locales y protocolos TCP/IP y DNS.
             </p>
           </div>
 
@@ -165,7 +174,8 @@
             </div>
             <h3 class="feature-title">Automatización y Scripting</h3>
             <p class="feature-text">
-              Construcción de scripts avanzados en Bash y herramientas de terminal en Python/Go para optimizar flujos diarios de trabajo y su posterior despliegue.
+              Construcción de scripts avanzados en Bash y herramientas de terminal en Python/Go para optimizar flujos
+              diarios de trabajo y su posterior despliegue.
             </p>
           </div>
 
@@ -175,7 +185,8 @@
             </div>
             <h3 class="feature-title">Linux Ricing</h3>
             <p class="feature-text">
-              Personalización y la optimización de de herramientas y aplicaciones en Linux para asegurar una experiencia estética fluida, aplicando el esquema de colores Dracula en todo mi workflow.
+              Personalización y la optimización de de herramientas y aplicaciones en Linux para asegurar una experiencia
+              estética fluida, aplicando el esquema de colores Dracula en todo mi workflow.
             </p>
           </div>
         </div>
@@ -296,13 +307,212 @@
             <h3 class="skill-card-title">Contribuciones en GitHub</h3>
           </div>
           <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer" class="github-contrib-link">
-            <img
-              src="/images/github-contributions.svg"
-              alt="Gráfico de contribuciones de Druxorey en GitHub"
-              class="github-contrib-img"
-              loading="lazy"
-            />
+            <img src="/images/github-contributions.svg" alt="Gráfico de contribuciones de Druxorey en GitHub"
+              class="github-contrib-img" loading="lazy" />
           </a>
+        </div>
+      </section>
+
+      <section class="page-section" id="trayectoria">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Línea de Tiempo y Trayectoria</h2>
+        </div>
+
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-node cyan" title="Servicio Técnico">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+              </svg>
+            </div>
+
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <div>
+                  <h3 class="timeline-role">Servicio Técnico &amp; Soporte</h3>
+                  <h4 class="timeline-org">HIDROCAPITAL (C.A. Hidrológica de la Región Capital)</h4>
+                </div>
+                <div class="timeline-meta">
+                  <span class="timeline-badge">Labor Técnica</span>
+                  <span class="timeline-badge">Oct 2022 – Nov 2022</span>
+                </div>
+              </div>
+
+              <ul class="timeline-bullets">
+                <li>
+                  Desarrollo de labores técnicas en el área de soporte computacional bajo la coordinación de la Ing.
+                  Isis Coronel y el Lic. Gabriel Coronel.
+                </li>
+                <li>
+                  Atención directa y soporte especializado a usuarios para resolución de incidencias en estaciones de
+                  trabajo.
+                </li>
+                <li>
+                  Mantenimiento preventivo y correctivo de equipos electrónicos, ordenadores, impresoras y periféricos
+                  institucionales.
+                </li>
+                <li>
+                  Diagnóstico y solución de problemas con aplicaciones, configuración de software y fallos de
+                  conectividad de red e internet.
+                </li>
+              </ul>
+
+              <div class="timeline-tech-section">
+                <span class="timeline-tech-title">Áreas y Habilidades:</span>
+                <div class="skill-tag-list">
+                  <span class="tag">Hardware de Computación</span>
+                  <span class="tag">Mantenimiento de Sistemas</span>
+                  <span class="tag">Diagnóstico de Redes</span>
+                  <span class="tag">Soporte al Usuario</span>
+                  <span class="tag">Resolución de Incidencias</span>
+                </div>
+              </div>
+
+              <div class="timeline-achievements">
+                <div class="timeline-achieve-item">
+                  <span class="timeline-check">✓</span>
+                  <span>Restablecimiento y diagnóstico exitoso de estaciones de trabajo y conectividad de red
+                    institucional.</span>
+                </div>
+                <div class="timeline-achieve-item">
+                  <span class="timeline-check">✓</span>
+                  <span>Fortalecimiento de destrezas en soporte presencial, análisis de fallos y mantenimiento
+                    preventivo de hardware.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Milestone 2: ESTELIO -->
+          <div class="timeline-item">
+            <div class="timeline-node pink" title="Desarrollo de Software">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+              </svg>
+            </div>
+
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <div>
+                  <h3 class="timeline-role">Desarrollador Python Junior</h3>
+                  <h4 class="timeline-org pink">Estelio</h4>
+                </div>
+                <div class="timeline-meta">
+                  <span class="timeline-badge">Desarrollo de Software</span>
+                  <span class="timeline-badge">Oct 2023 – Dic 2023</span>
+                </div>
+              </div>
+
+              <ul class="timeline-bullets">
+                <li>Desarrollo de módulos a medida y parametrización de flujos de negocio en el ecosistema del ERP Odoo
+                  empleando Python.</li>
+                <li>
+                  Adaptación de modelos de datos relacionales, validaciones y lógica de negocio con persistencia en
+                  PostgreSQL.
+                </li>
+                <li>
+                  Colaboración técnica con control de versiones Git y ejecución en entornos de desarrollo bajo Linux.
+                </li>
+                <li>
+                  Depuración y aseguramiento de funcionalidad en módulos empresariales orientados a la automatización de
+                  procesos internos.
+                </li>
+              </ul>
+
+              <div class="timeline-tech-section">
+                <span class="timeline-tech-title">Tecnologías Utilizadas:</span>
+                <div class="skill-tag-list">
+                  <span class="tag">Python</span>
+                  <span class="tag">Odoo ERP</span>
+                  <span class="tag">PostgreSQL</span>
+                  <span class="tag">Git</span>
+                  <span class="tag">Linux</span>
+                </div>
+              </div>
+
+              <div class="timeline-achievements">
+                <div class="timeline-achieve-item">
+                  <span class="timeline-check">✓</span>
+                  <span>Implementación y puesta en marcha de módulos funcionales para optimización de operaciones con
+                    Odoo.</span>
+                </div>
+                <div class="timeline-achieve-item">
+                  <span class="timeline-check">✓</span>
+                  <span>Integración fluida de modelos relacionales y automatización de reglas de negocio en bases de
+                    datos.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Milestone 3: UNIVERSIDAD CENTRAL DE VENEZUELA (UCV) -->
+          <div class="timeline-item">
+            <div class="timeline-node" title="Educación Superior">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                <path d="M6 12v5c3 3 9 3 12 0v-5" />
+              </svg>
+            </div>
+
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <div>
+                  <h3 class="timeline-role">Licenciatura en Ciencias de la Computación</h3>
+                  <h4 class="timeline-org purple">Universidad Central de Venezuela (UCV)</h4>
+                </div>
+                <div class="timeline-meta">
+                  <span class="timeline-badge">Grado Universitario</span>
+                  <span class="timeline-badge green">Abril 2024 – Presente</span>
+                </div>
+              </div>
+
+              <ul class="timeline-bullets">
+                <li>
+                  Estudios universitarios de pregrado con enfoque en fundamentos formales de computación, estructuras de
+                  datos y algoritmos.
+                </li>
+                <li>
+                  Especial interés y trabajo práctico en programación en bajo nivel con C y C++, arquitectura de
+                  procesadores y sistemas operativos.
+                </li>
+                <li>
+                  Estudio y práctica de redes de computadoras, protocolos de comunicación, sockets e inspección de
+                  tráfico.
+                </li>
+                <li>
+                  Investigación independiente en software libre, entornos Arch Linux y utilidades de línea de comandos.
+                </li>
+              </ul>
+
+              <div class="timeline-tech-section">
+                <span class="timeline-tech-title">Enfoque Académico &amp; Tecnológico:</span>
+                <div class="skill-tag-list">
+                  <span class="tag">Ciencias de la Computación</span>
+                  <span class="tag">C / C++</span>
+                  <span class="tag">Sistemas Operativos</span>
+                  <span class="tag">Redes TCP/IP</span>
+                  <span class="tag">Algoritmos</span>
+                </div>
+              </div>
+
+              <div class="timeline-achievements">
+                <div class="timeline-achieve-item">
+                  <span class="timeline-check">✓</span>
+                  <span>Consolidación de bases teóricas en estructuras de datos, lógica formal y sistemas de
+                    cómputo.</span>
+                </div>
+                <div class="timeline-achieve-item">
+                  <span class="timeline-check">✓</span>
+                  <span>Desarrollo de proyectos propios aplicados de bajo nivel, scripts de automatización y
+                    homelabbing.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -317,7 +527,8 @@
               <span class="interest-icon text-green">󰢷</span> Minecraft Técnico &amp; Videojuegos
             </h3>
             <p class="interest-card-desc">
-              Soy jugador técnico desde 2014. Me apasiona el diseño de granjas automatizadas a gran escala, la lógica combinacional con Redstone y entender a fondo las mecánicas del motor.
+              Soy jugador técnico desde 2014. Me apasiona el diseño de granjas automatizadas a gran escala, la lógica
+              combinacional con Redstone y entender a fondo las mecánicas del motor.
             </p>
           </div>
 
@@ -326,7 +537,8 @@
               <span class="interest-icon text-cyan">✦</span> Astronomía
             </h3>
             <p class="interest-card-desc">
-              Tengo una gran fascinación por el cosmos, la astrofísica y las leyes físicas que rigen el universo. Disfruto de la observación astronómica y de seguir los avances en exploración espacial.
+              Tengo una gran fascinación por el cosmos, la astrofísica y las leyes físicas que rigen el universo.
+              Disfruto de la observación astronómica y de seguir los avances en exploración espacial.
             </p>
           </div>
 
@@ -335,7 +547,8 @@
               <span class="interest-icon text-pink"></span> Fotografía
             </h3>
             <p class="interest-card-desc">
-              Me interesa capturar los detalles visuales de paisajes urbanos y naturales, juego de luces y sombras y composición. Una forma creativa de documentar perspectivas y momentos.
+              Me interesa capturar los detalles visuales de paisajes urbanos y naturales, juego de luces y sombras y
+              composición. Una forma creativa de documentar perspectivas y momentos.
             </p>
           </div>
 
@@ -344,7 +557,9 @@
               <span class="interest-icon text-purple">⚙</span> Homelabbing &amp; Self-Hosting
             </h3>
             <p class="interest-card-desc">
-              Me encanta montar servidores propios con hardware reutilizado, gestionar mis propios servicios de almacenamiento y copias de seguridad cifradas, promoviendo la soberanía digital y el aprendizaje práctico continuo.
+              Me encanta montar servidores propios con hardware reutilizado, gestionar mis propios servicios de
+              almacenamiento y copias de seguridad cifradas, promoviendo la soberanía digital y el aprendizaje práctico
+              continuo.
             </p>
           </div>
         </div>
@@ -354,14 +569,14 @@
         <div class="cta-content">
           <div class="cta-text">
             <h2 class="cta-title">
-              ¿Quieres conocer más sobre mi trayectoria o colaborar?
+              ¿Quieres colaborar o ponerte en contacto?
             </h2>
             <p class="cta-description">
-              Descubre mi cronología en la sección Trayectoria o escríbeme directamente a través del formulario de contacto.
+              Explora mis proyectos de código abierto o escríbeme directamente a través del formulario de contacto.
             </p>
           </div>
           <div class="cta-actions">
-            <a href="./about.html" class="btn btn-secondary">Ver Trayectoria</a>
+            <a href="./projects.html" class="btn btn-secondary">Ver Proyectos</a>
             <a href="./contact.html" class="btn btn-primary">Formulario de Contacto</a>
           </div>
         </div>
@@ -377,7 +592,6 @@
       </div>
       <div class="footer-links">
         <a href="./index.html">Sobre mí</a>
-        <a href="./about.html">Trayectoria</a>
         <a href="./projects.html">Proyectos</a>
         <a href="./publications.html">Publicaciones</a>
         <a href="./notes.html">Apuntes</a>
@@ -389,4 +603,5 @@
 
   <script type="module" src="/src/scripts/main.ts"></script>
 </body>
+
 </html>
