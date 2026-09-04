@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#03 - Señales y Análisis Espectral | Druxorey</title>
+  <meta name="description" content="Las señales electromagnéticas constituyen la base física de la comunicación, permitiendo la transmisión de información mediante variaciones en el dominio del tiempo y la frecuencia. El análisis espectral, fundamentado en la serie de Fourier, facilita la gestión del ancho de banda y la propagación en el espacio, considerando factores críticos como las zonas de Fresnel y el efecto Doppler en sistemas inalámbricos.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/about.html" class="nav-link">Trayectoria</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/about.html" class="nav-link">Trayectoria</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#naturaleza-y-parámetros-de-las-señales-físicas">1. Naturaleza y
+Parámetros de las Señales Físicas</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#señales-analógicas-frente-a-señales-digitales">1.1. Señales
+Analógicas frente a Señales Digitales</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#parámetros-fundamentales-de-la-onda-sinusoidal">1.2. Parámetros
+Fundamentales de la Onda Sinusoidal</a></li>
+<li class="toc-item"><a class="toc-link" href="#análisis-espectral-y-dominios-de-representación">2. Análisis
+Espectral y Dominios de Representación</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#dominio-del-tiempo-frente-a-dominio-de-la-frecuencia">2.1.
+Dominio del Tiempo frente a Dominio de la Frecuencia</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#series-de-fourier-y-descomposición-armónica">2.2. Series de
+Fourier y Descomposición Armónica</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ancho-de-banda-espectral">2.3. Ancho de Banda Espectral</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#canales-paso-bajo-frente-a-paso-banda-y-tipos-de-transmisión">2.4.
+Canales Paso-Bajo frente a Paso-Banda y Tipos de Transmisión</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#aplicaciones-prácticas-del-análisis-espectral">2.5. Aplicaciones
+Prácticas del Análisis Espectral</a></li>
+<li class="toc-item"><a class="toc-link" href="#propagación-en-espacio-libre">3. Propagación en Espacio
+Libre</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#zonas-de-fresnel-y-despeje-de-enlaces-inalámbricos">3.1. Zonas
+de Fresnel y Despeje de Enlaces Inalámbricos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#efecto-doppler-en-comunicaciones-móviles">3.2. Efecto Doppler en
+Comunicaciones Móviles</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Comunicación de datos</div>
+          <h1 class="article-title">#03 - Señales y Análisis Espectral</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota #03</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            <span class="tag">#académico</span>
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>Las <strong>señales electromagnéticas</strong> constituyen la base
+física de la comunicación, permitiendo la transmisión de información
+mediante variaciones en el <strong>dominio del tiempo</strong> y
+la <strong>frecuencia</strong>. El <strong>análisis espectral</strong>,
+fundamentado en la <strong>serie de Fourier</strong>, facilita la
+gestión del <strong>ancho de banda</strong> y la propagación en el
+espacio, considerando factores críticos como las <strong>zonas de
+Fresnel</strong> y el <strong>efecto Doppler</strong> en sistemas
+inalámbricos.</p>
+  </div>
+</div>
+<h2  id="naturaleza-y-parámetros-de-las-señales-físicas">1. Naturaleza y
+Parámetros de las Señales Físicas</h2>
+<p>Cuando bajamos a la capa física de una red, dejamos de lado las
+abstracciones lógicas de paquetes y protocolos para enfrentarnos a la
+realidad: cómo viajar de un punto a otro usando fenómenos
+electromagnéticos reales.</p>
+<h3  id="señales-analógicas-frente-a-señales-digitales">1.1. Señales
+Analógicas frente a Señales Digitales</h3>
+<p>En el mundo físico encontramos dos formas de representar la
+información según cómo varía la magnitud a lo largo del tiempo.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 1:</strong> Señal
+Electromagnética</span>
+  </div>
+  <div class="callout-content">
+<p>Una señal electromagnética es una función temporal continua <span
+class="math inline">s(t)</span> que describe la oscilación acoplada de
+un campo eléctrico <span class="math inline">\vec{E}(t)</span> y un
+campo magnético <span class="math inline">\vec{B}(t)</span>, capaz de
+transferir energía e información a través del espacio libre o de un
+medio físico guiado.</p>
+  </div>
+</div>
+<p>Pensemos en una cuerda larga atada a una pared. Si movemos la mano
+arriba y abajo rítmicamente, creamos una onda mecánica que viaja por la
+cuerda. Las partículas de la cuerda no viajan hasta la pared, solo
+oscilan en su lugar; lo que viaja y entrega energía al otro extremo es
+la perturbación. Una señal electromagnética hace exactamente lo mismo,
+pero alterando los campos en el espacio sin mover materia física.</p>
+<p>La diferencia práctica entre magnitudes analógicas y digitales se
+clasifican según la naturaleza de sus variaciones en el tiempo:</p>
+<ul>
+<li><p><strong>Datos analógicos:</strong> Información del mundo real que
+varía suavemente y puede tomar infinitos valores intermedios dentro de
+un intervalo (como el sonido de la voz humana, la presión del aire o la
+temperatura de una habitación).</p></li>
+<li><p><strong>Datos digitales:</strong> Información estructurada en
+estados discretos fijos y bien delimitados (como los ceros y unos en la
+memoria de una computadora).</p></li>
+<li><p><strong>Señales analógicas:</strong> Ondas continuas cuya
+amplitud puede pasar por infinitos valores de voltaje o intensidad a
+medida que avanza el tiempo.</p></li>
+<li><p><strong>Señales digitales:</strong> Formas de onda que solo
+alternan entre un conjunto finito y predeterminado de niveles de voltaje
+(por ejemplo, <span class="math inline">+5\text{ V}</span> para un «1» y
+<span class="math inline">0\text{ V}</span> para un «0»).</p></li>
+</ul>
+<h3  id="parámetros-fundamentales-de-la-onda-sinusoidal">1.2. Parámetros
+Fundamentales de la Onda Sinusoidal</h3>
+<p>La onda sinusoidal es la señal periódica elemental. Es el bloque
+constructivo básico: cualquier señal analógica compleja, por más
+enredada que parezca, se puede descomponer en una suma de sinusoides
+puras.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 2:</strong> Onda Sinusoidal
+Pura</span>
+  </div>
+  <div class="callout-content">
+<p>Una onda sinusoidal simple se describe en el dominio del tiempo
+mediante la función matemática:</p>
+<p><span class="math display">s(t) = A \cdot \sin(2\pi f t +
+\phi)</span></p>
+<p>Donde:</p>
+<ul>
+<li><p><span class="math inline">A</span> es la amplitud pico o valor
+máximo alcanzado por la señal (medido en voltios, <span
+class="math inline">\text{V}</span>).</p></li>
+<li><p><span class="math inline">f</span> es la frecuencia de oscilación
+(medida en Hertz, <span class="math inline">\text{Hz}</span>).</p></li>
+<li><p><span class="math inline">t</span> es el tiempo continuo (en
+segundos, <span class="math inline">\text{s}</span>).</p></li>
+<li><p><span class="math inline">\phi</span> es la fase inicial en el
+instante <span class="math inline">t = 0</span> (en radianes o
+grados).</p></li>
+</ul>
+  </div>
+</div>
+<p>Imaginemos el pedal de una bicicleta que gira a velocidad constante
+visto de perfil. La distancia desde el eje central hasta la altura
+máxima que alcanza el pedal es la amplitud pico (<span
+class="math inline">A</span>). La cantidad de vueltas completas que da
+el pedal en un segundo es la frecuencia (<span
+class="math inline">f</span>). El punto exacto del giro donde decidimos
+arrancar el cronómetro determina la fase inicial (<span
+class="math inline">\phi</span>).</p>
+<h4 id="período-frecuencia-y-longitud-de-onda">1.2.1. Período,
+Frecuencia y Longitud de Onda</h4>
+<p>La oscilación en el tiempo y su propagación física en el espacio
+están conectadas directamente por la velocidad a la que viaja la onda en
+el medio.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 3:</strong> Período y Longitud de
+Onda</span>
+  </div>
+  <div class="callout-content">
+<p>El período (<span class="math inline">T</span>) es el tiempo que toma
+completar una oscilación entera:</p>
+<p><span class="math display">T = \frac{1}{f}</span></p>
+<p>La longitud de onda (<span class="math inline">\lambda</span>)
+representa la distancia física que recorre la perturbación durante el
+tiempo que dura un período (<span class="math inline">T</span>):</p>
+<p><span class="math display">\lambda = \frac{v}{f} = v \cdot
+T</span></p>
+<p>Donde <span class="math inline">v</span> es la velocidad de
+propagación de la onda en el medio. En el aire o vacío se toma la
+velocidad de la luz: <span class="math inline">c \approx 3 \times 10^8
+\text{ m/s}</span>.</p>
+  </div>
+</div>
+<p>Pensemos en un río con oleaje regular donde flota un corcho. El
+período (<span class="math inline">T</span>) es el tiempo en segundos
+que tarda el corcho en subir, bajar y regresar a la cresta más alta. La
+longitud de onda (<span class="math inline">\lambda</span>) es la
+distancia física real en metros, medida con una cinta métrica sobre el
+agua, entre una cresta y la cresta vecina.</p>
+<h4 id="amplitud-pico-frente-a-valor-eficaz-rms">1.2.2. Amplitud Pico
+frente a Valor Eficaz (RMS)</h4>
+<p>Una señal alterna no entrega su voltaje máximo de forma permanente,
+ya que su valor instantáneo cambia en cada punto del ciclo e incluso
+cruza por cero dos veces por período.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 4:</strong> Valor Cuadrático Medio
+o Eficaz (<span class="math inline">V_{\text{rms}}</span>)</span>
+  </div>
+  <div class="callout-content">
+<p>El valor eficaz (<span class="math inline">V_{\text{rms}}</span>) de
+una señal sinusoidal pura es el nivel equivalente de tensión en
+corriente continua (<span class="math inline">\text{DC}</span>) que
+disiparía exactamente la misma potencia térmica sobre una resistencia de
+carga:</p>
+<p><span class="math display">V_{\text{rms}} =
+\frac{V_{\text{pico}}}{\sqrt{2}} \approx 0.7071 \cdot V_{\text{pico}}
+\iff V_{\text{pico}} = V_{\text{rms}} \cdot \sqrt{2} \approx 1.4142
+\cdot V_{\text{rms}}</span></p>
+  </div>
+</div>
+<p>Si conectamos una bombilla a una batería de corriente continua de
+<span class="math inline">120\text{ V}</span>, el brillo es constante.
+Si la conectamos a una toma doméstica alterna que marca <span
+class="math inline">120\text{ V}_{\text{rms}}</span>, la bombilla
+brillará exactamente con la misma intensidad. Para lograr ese mismo
+calentamiento útil a pesar de pasar por cero constantemente, la onda
+alterna compensa alcanzando picos instantáneos más altos, cercanos a los
+<span class="math inline">170\text{ V}</span>.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Cálculo de Tensión Pico y
+Longitud de Onda en Microondas</span>
+  </div>
+  <div class="callout-content">
+<p>Un radioenlace de comunicaciones opera con una portadora sinusoidal
+pura de <span class="math inline">f = 6 \text{ GHz}</span> y entrega a
+la entrada del receptor un voltaje eficaz de <span
+class="math inline">V_{\text{rms}} = 120 \text{ mV}</span>. Calculamos
+la amplitud de pico real (<span
+class="math inline">V_{\text{pico}}</span>) que soporta el circuito y su
+longitud de onda (<span class="math inline">\lambda</span>) en el
+aire.</p>
+<p>Calculamos la amplitud de pico multiplicando por <span
+class="math inline">\sqrt{2}</span>:</p>
+<p><span class="math display">V_{\text{pico}} = V_{\text{rms}} \cdot
+\sqrt{2} = 120 \times 10^{-3} \text{ V} \cdot 1.4142 \approx 169.7
+\text{ mV}</span></p>
+<p>Calculamos la longitud de onda en el espacio libre dividiendo la
+velocidad de propagación entre la frecuencia:</p>
+<p><span class="math display">\lambda = \frac{c}{f} = \frac{3 \times
+10^8 \text{ m/s}}{6 \times 10^9 \text{ Hz}} = 0.05 \text{ m} = 5 \text{
+cm}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Al diseñar el receptor, no basta con
+dimensionar la protección para <span class="math inline">120\text{
+mV}</span>, porque la onda alcanza picos instantáneos de casi <span
+class="math inline">170\text{ mV}</span>. Multiplicamos el valor RMS por
+<span class="math inline">\sqrt{2}</span> para conocer la tensión real
+de pico que soportarán los semiconductores.</p>
+<p><strong>Paso 2:</strong> Pasamos la frecuencia a unidades básicas del
+Sistema Internacional (<span class="math inline">6\text{ GHz} = 6 \times
+10^9\text{ Hz}</span>) y dividimos la velocidad de la luz entre ese
+valor. Vemos que a <span class="math inline">6\text{ GHz}</span>, un
+ciclo completo mide físicamente apenas <span class="math inline">5\text{
+centímetros}</span>, lo que permite usar antenas compactas.</p>
+<h2  id="análisis-espectral-y-dominios-de-representación">2. Análisis
+Espectral y Dominios de Representación</h2>
+<p>Una sinusoide pura y solitaria no transporta datos nuevos: un tono
+fijo continuo solo indica que el transmisor está encendido. Para enviar
+información necesitamos que la señal cambie en el tiempo, lo que da
+origen a señales compuestas formadas por muchas frecuencias
+simultáneas.</p>
+<h3  id="dominio-del-tiempo-frente-a-dominio-de-la-frecuencia">2.1.
+Dominio del Tiempo frente a Dominio de la Frecuencia</h3>
+<p>Para estudiar a fondo una señal, la miramos a través de dos
+perspectivas complementarias.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 5:</strong> Dominios de
+Representación</span>
+  </div>
+  <div class="callout-content">
+<p>El <strong>dominio del tiempo</strong> muestra la señal <span
+class="math inline">s(t)</span> graficando su amplitud instantánea a lo
+largo del eje temporal continuo <span class="math inline">t</span>. El
+<strong>dominio de la frecuencia</strong> o espectro <span
+class="math inline">S(f)</span> representa la amplitud pico y la fase de
+cada una de las componentes sinusoidales elementales que componen la
+señal frente al eje de frecuencia <span
+class="math inline">f</span>.</p>
+  </div>
+</div>
+<p>Imaginemos que escuchamos una orquesta tocando un acorde. Si
+conectamos un micrófono a un osciloscopio, veremos una sola línea
+ondulada caótica subiendo y bajando en el tiempo (dominio del tiempo).
+En cambio, si miramos la partitura musical, vemos de un vistazo cada
+nota individual escrita en su renglón correspondiente: el do del piano,
+el mi del violín y el sol de la flauta (dominio de la frecuencia). Ambas
+cosas describen el mismo fenómeno sonoro, pero la partitura nos dice
+directamente qué frecuencias están sonando y con qué fuerza.</p>
+<p>En el dominio de la frecuencia:</p>
+<ul>
+<li><p>Una sinusoide pura de frecuencia <span
+class="math inline">f_0</span> se dibuja simplemente como un pico
+vertical delgado (una delta) colocado en el punto <span
+class="math inline">f = f_0</span>, con una altura igual a su
+amplitud.</p></li>
+<li><p>Las variaciones en el tiempo se estudian en el laboratorio con
+<strong>osciloscopios</strong>, mientras que las componentes
+frecuenciales se observan con <strong>analizadores de
+espectro</strong>.</p></li>
+</ul>
+<h3  id="series-de-fourier-y-descomposición-armónica">2.2. Series de
+Fourier y Descomposición Armónica</h3>
+<p>La herramienta matemática central para descomponer cualquier señal
+periódica en sus frecuencias constitutivas es la Serie de Fourier.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 6:</strong> Serie Trigonométrica
+de Fourier</span>
+  </div>
+  <div class="callout-content">
+<p>Cualquier señal periódica continua <span
+class="math inline">x(t)</span> con período fundamental <span
+class="math inline">T_0</span> y frecuencia fundamental <span
+class="math inline">f_0 = \frac{1}{T_0}</span> puede expresarse de forma
+exacta como una suma de funciones sinusoidales:</p>
+<p><span class="math display">x(t) = a_0 + \sum_{n=1}^{\infty} \left[
+a_n \cos(2\pi n f_0 t) + b_n \sin(2\pi n f_0 t) \right]</span></p>
+<p>Donde <span class="math inline">a_0</span> representa el valor medio
+o nivel de corriente continua (<span
+class="math inline">\text{DC}</span>), y los coeficientes <span
+class="math inline">a_n</span> y <span class="math inline">b_n</span>
+indican la amplitud con la que contribuye cada armónico de orden entero
+<span class="math inline">n \ge 1</span>.</p>
+  </div>
+</div>
+<p>Pensemos en un telar manual que teje una alfombra con un patrón a
+rayas que se repite. La alfombra ya confeccionada parece una sola pieza
+de tela homogénea. Si la desarmamos hilo por hilo, descubrimos que está
+formada por carretes individuales de lana de diferentes colores y
+grosores. El hilo base da el tono promedio de fondo (la componente
+continua <span class="math inline">a_0</span>), mientras que los hilos
+de colores entrelazados a ritmos múltiplos exactos forman los relieves y
+contrastes (los armónicos). La serie de Fourier es la lista detallada de
+qué hilos y en qué cantidad necesitamos para armar la alfombra.</p>
+<p>Conceptos clave que se desprenden de esta descomposición:</p>
+<ul>
+<li><p><strong>Frecuencia fundamental (</strong><span
+class="math inline">f_0</span><strong>):</strong> Es la frecuencia más
+baja presente en la señal, equivalente a la inversa de su período total
+(<span class="math inline">f_0 = 1/T_0</span>). Corresponde al armónico
+de orden <span class="math inline">n = 1</span>.</p></li>
+<li><p><strong>Armónicos (</strong><span class="math inline">n \cdot
+f_0</span><strong>):</strong> Son componentes sinusoidales cuyas
+frecuencias son múltiplos enteros de la fundamental (<span
+class="math inline">2f_0, 3f_0, 4f_0, \dots</span>).</p></li>
+<li><p><strong>Espectro discreto (de líneas):</strong> Característico de
+<strong>señales periódicas</strong>. Solo existen valores en los
+múltiplos exactos <span class="math inline">n \cdot f_0</span>; entre
+línea y línea la amplitud es cero.</p></li>
+<li><p><strong>Espectro continuo:</strong> Característico de
+<strong>señales no periódicas</strong> (como un pulso aislado o una
+ráfaga de datos aleatorios). Al no repetirse en un período finito (<span
+class="math inline">T_0 \to \infty</span>), las líneas armónicas se
+pegan infinitesimalmente hasta formar una curva continua en
+frecuencia.</p></li>
+</ul>
+<h3  id="ancho-de-banda-espectral">2.3. Ancho de Banda Espectral</h3>
+<p>Todo canal físico tiene un límite en el rango de frecuencias que
+puede dejar pasar sin deformar la señal.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 7:</strong> Ancho de Banda
+Espectral</span>
+  </div>
+  <div class="callout-content">
+<p>El ancho de banda absoluto (<span class="math inline">B</span>) de
+una señal compuesta es la diferencia cuantitativa entre la frecuencia
+más alta (<span class="math inline">f_{\text{máx}}</span>) y la
+frecuencia más baja (<span class="math inline">f_{\text{mín}}</span>)
+presentes en su espectro:</p>
+<p><span class="math display">B = f_{\text{máx}} -
+f_{\text{mín}}</span></p>
+  </div>
+</div>
+<p>Imaginemos un túnel carretero bajo una montaña con un gálibo de
+altura libre. Si un camión de carga supera la altura máxima permitida
+del túnel, la parte superior de la carga chocará contra el techo y
+quedará destruida antes de salir al otro lado. El ancho de banda del
+canal (<span class="math inline">B</span>) funciona como ese gálibo: si
+la señal contiene componentes frecuenciales más allá de lo que el canal
+tolera, esas frecuencias se perderán y la señal llegará irreconocible al
+receptor.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Cálculo de Armónicos y Ancho
+de Banda</span>
+  </div>
+  <div class="callout-content">
+<p>En una línea de transmisión se inyecta una señal periódica formada
+por una componente continua, una fundamental de <span
+class="math inline">f_0 = 2.5 \text{ kHz}</span>, su tercer armónico y
+su quinto armónico. Calculamos las frecuencias presentes y el ancho de
+banda total (<span class="math inline">B</span>).</p>
+<p>Identificamos las frecuencias armónicas:</p>
+<p><span class="math display">f_1 = f_0 = 2.5 \text{ kHz}</span><span
+class="math display">f_3 = 3 \cdot f_0 = 3 \cdot (2.5 \text{ kHz}) = 7.5
+\text{ kHz}</span><span class="math display">f_5 = 5 \cdot f_0 = 5 \cdot
+(2.5 \text{ kHz}) = 12.5 \text{ kHz}</span></p>
+<p>Calculamos el ancho de banda del conjunto de componentes
+alternas:</p>
+<p><span class="math display">B = f_{\text{máx}} - f_{\text{mín}} = 12.5
+\text{ kHz} - 2.5 \text{ kHz} = 10.0 \text{ kHz}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Al ser una señal periódica, los armónicos
+solo aparecen en múltiplos enteros de la fundamental: multiplicamos
+<span class="math inline">2.5\text{ kHz}</span> por 3 y por 5 para
+obtener <span class="math inline">7.5\text{ kHz}</span> y <span
+class="math inline">12.5\text{ kHz}</span>.</p>
+<p><strong>Paso 2:</strong> La componente de corriente continua se ubica
+en <span class="math inline">0\text{ Hz}</span>, pero el ancho de banda
+activo de oscilación se mide entre la frecuencia alterna más baja (<span
+class="math inline">2.5\text{ kHz}</span>) y la más alta (<span
+class="math inline">12.5\text{ kHz}</span>). Restamos ambos límites y
+determinamos que el canal debe ofrecer al menos <span
+class="math inline">10.0\text{ kHz}</span> de ancho de banda para no
+mutilar ninguno de los armónicos.</p>
+<h3 
+id="canales-paso-bajo-frente-a-paso-banda-y-tipos-de-transmisión">2.4.
+Canales Paso-Bajo frente a Paso-Banda y Tipos de Transmisión</h3>
+<p>La forma del espectro condiciona el tipo de canal necesario para
+transportar la señal:</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 8:</strong> Canal Paso-Bajo y
+Canal Paso-Banda</span>
+  </div>
+  <div class="callout-content">
+<p>Un <strong>canal de paso bajo</strong> (<em>low-pass</em>) deja pasar
+frecuencias que inician formalmente desde <span
+class="math inline">0\text{ Hz}</span> hasta una frecuencia de corte
+superior <span class="math inline">f_c</span> (ancho de banda <span
+class="math inline">B = f_c</span>).</p>
+<p>Un <strong>canal de paso de banda</strong> (<em>bandpass</em>) solo
+permite el paso de frecuencias comprendidas dentro de un intervalo
+acotado entre dos límites distintos de cero, <span
+class="math inline">f_1</span> y <span class="math inline">f_2</span>,
+bloqueando las frecuencias muy bajas y las muy altas (ancho de banda
+<span class="math inline">B = f_2 - f_1</span>).</p>
+  </div>
+</div>
+<p>Pensemos en hablar a través de un megáfono acústico tradicional
+frente a hablar por un walkie-talkie. Cuando usamos el megáfono, la voz
+sale tal cual, con sus tonos graves y agudos viajando directamente por
+el aire cercano (canal de paso bajo: el sonido viaja en su rango
+natural). Con el walkie-talkie no podemos mandar la vibración acústica
+directa a diez kilómetros; el aparato debe convertir la voz en un tono
+de radio de muy alta frecuencia (como <span
+class="math inline">400\text{ MHz}</span>) para que viaje por el espacio
+libre (canal de paso de banda: la información se traslada a una franja
+lejana de cero).</p>
+<p>De aquí surgen los dos modos de transmisión fundamentales:</p>
+<ul>
+<li><p><strong>Transmisión en Banda Base (<em>Baseband</em>):</strong>
+Se envían las señales directamente sobre el medio físico sin trasladar
+su frecuencia original (sin modulación analógica de portadora). Requiere
+obligatoriamente un <strong>canal de paso bajo</strong>. Es la técnica
+típica de cables de cobre de par trenzado en redes LAN (Ethernet) o
+buses de datos en circuitos integrados a distancias cortas.</p></li>
+<li><p><strong>Transmisión en Banda Ancha (<em>Broadband</em>):</strong>
+La señal original de baja frecuencia modula a una portadora sinusoidal
+de alta frecuencia para desplazar su espectro hacia la zona que el medio
+permite circular. Opera sobre <strong>canales de paso de banda</strong>.
+Es el método utilizado en la radiodifusión comercial, el Wi-Fi, la
+telefonía celular y la televisión por cable (donde múltiples canales
+conviven en frecuencias distintas dentro de un mismo cable
+coaxial).</p></li>
+</ul>
+<h4 id="el-reto-de-las-señales-digitales-sobre-canales-físicos">2.4.1.
+El Reto de las Señales Digitales sobre Canales Físicos</h4>
+<p>Un tren de pulsos digitales cuadrados (ceros y unos) tiene
+transiciones de voltaje abruptas e instantáneas. Si aplicamos la serie
+de Fourier a una onda cuadrada perfecta, descubrimos que contiene una
+suma infinita de armónicos impares:</p>
+<p><span class="math display">x_{\text{cuadrada}}(t) = \frac{4A}{\pi}
+\left[ \sin(2\pi f_0 t) + \frac{1}{3}\sin(6\pi f_0 t) +
+\frac{1}{5}\sin(10\pi f_0 t) + \dots \right]</span></p>
+<p>Para que un receptor reciba un pulso cuadrado perfectamente recto y
+con bordes afilados, el canal necesitaría un ancho de banda infinito
+(<span class="math inline">B = \infty</span>). Como los canales reales
+son limitados, las componentes de alta frecuencia se atenúan y se
+pierden. En la práctica, con dejar pasar la fundamental y los armónicos
+3 y 5, la onda resultante conserva una forma suficientemente redondeada
+pero distinguible para que el circuito receptor tome muestras de voltaje
+válidas sin confundir los bits.</p>
+<h3  id="aplicaciones-prácticas-del-análisis-espectral">2.5. Aplicaciones
+Prácticas del Análisis Espectral</h3>
+<p>El análisis frecuencial guía las decisiones de diseño en ingeniería
+de redes:</p>
+<ul>
+<li><p><strong>Diseño de filtros:</strong> Permite calcular las
+frecuencias de corte de filtros <strong>pasa-bajos</strong> (eliminan
+ruido de alta frecuencia), <strong>pasa-altos</strong> (eliminan la
+componente continua o zumbidos parásitos) y <strong>pasa-banda</strong>
+(aíslan el canal de radio sintonizado descartando las emisoras
+vecinas).</p></li>
+<li><p><strong>Transformada Rápida de Fourier (FFT):</strong> Algoritmo
+de cómputo que toma muestras digitales en el tiempo y calcula su
+espectro en milisegundos. Los receptores modernos la emplean para medir
+la relación señal-ruido en cada segmento del canal y reubicar las
+transmisiones en frecuencias limpias.</p></li>
+<li><p><strong>Evolución del espectro celular:</strong> Para lograr
+mayores anchos de banda (<span class="math inline">B</span>), las redes
+móviles han migrado históricamente hacia frecuencias cada vez más
+altas:</p>
+<ul>
+<li><p><strong>2G:</strong> Bandas bajas (<span
+class="math inline">900\text{ MHz} / 1800\text{ MHz}</span>) con canales
+delgados de <span class="math inline">200\text{ kHz}</span>.</p></li>
+<li><p><strong>3G y 4G:</strong> Bandas entre <span
+class="math inline">700\text{ MHz}</span> y <span
+class="math inline">2.6\text{ GHz}</span> con canales de hasta <span
+class="math inline">20\text{ MHz}</span>.</p></li>
+<li><p><strong>5G New Radio:</strong> Divide el trabajo en dos zonas:
+FR1 (por debajo de <span class="math inline">6\text{ GHz}</span>) para
+dar cobertura amplia, y FR2 (ondas milimétricas entre <span
+class="math inline">24\text{ GHz}</span> y <span
+class="math inline">40\text{ GHz}</span>) con canales de hasta <span
+class="math inline">400\text{ MHz}</span> de ancho para tráfico de muy
+alta tasa en zonas densas.</p></li>
+</ul></li>
+</ul>
+<h2  id="propagación-en-espacio-libre">3. Propagación en Espacio
+Libre</h2>
+<p>Cuando las señales electromagnéticas se emiten al espacio libre sin
+una guía física, su propagación depende estrechamente de la geometría
+del terreno y del movimiento de los equipos.</p>
+<h3  id="zonas-de-fresnel-y-despeje-de-enlaces-inalámbricos">3.1. Zonas
+de Fresnel y Despeje de Enlaces Inalámbricos</h3>
+<p>En los radioenlaces de línea de vista directa (LOS, <em>Line of
+Sight</em>), la energía radiada por una antena directiva no viaja
+confinada en una línea delgada como un haz láser. La energía
+electromagnética se esparce en el espacio tridimensional formando una
+serie de elipsoides concéntricos alrededor del trayecto visual.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 9:</strong> Radio de la Enésima
+Zona de Fresnel</span>
+  </div>
+  <div class="callout-content">
+<p>El radio transversal <span class="math inline">F_n</span> de la
+frontera de la zona de Fresnel de orden <span
+class="math inline">n</span>, evaluado en un obstáculo intermedio
+situado a distancias <span class="math inline">d_1</span> y <span
+class="math inline">d_2</span> de los extremos, se calcula como:</p>
+<p><span class="math display">F_n = \sqrt{\frac{n \cdot \lambda \cdot
+d_1 \cdot d_2}{d_1 + d_2}}</span></p>
+<p>Donde <span class="math inline">\lambda</span> es la longitud de onda
+de la portadora, <span class="math inline">d_1</span> es la distancia
+desde el transmisor hasta el obstáculo, y <span
+class="math inline">d_2</span> es la distancia desde el obstáculo hasta
+el receptor (todas las variables en metros).</p>
+  </div>
+</div>
+<p>Pensemos en el chorro cónico que sale de la boquilla de una manguera
+de jardín hacia un cubo colocado a distancia. Las gotas no vuelan en una
+línea rígida; se abren en el aire formando una nube abultada en forma de
+balón de fútbol americano. Si colocamos una tabla de madera cerca de la
+trayectoria central, aunque no bloquee directamente la boca de la
+manguera ni el cubo, parte de las gotas chocarán contra la tabla,
+rebotarán hacia el medio y desordenarán el flujo principal, haciendo que
+llegue menos agua limpia al cubo. El elipsoide de Fresnel representa
+exactamente ese volumen espacial donde viaja la energía de la onda.</p>
+<p>La <strong>primera zona de Fresnel (</strong><span
+class="math inline">n = 1</span><strong>)</strong> es determinante:
+todas las ondas que se difractan dentro de ese balón llegan a la antena
+receptora con un desfase menor a <span
+class="math inline">180^\circ</span> respecto a la trayectoria central
+directa, sumándose de forma constructiva. Las zonas pares (<span
+class="math inline">n = 2, 4, \dots</span>) llegan con desfases mayores
+que provocan cancelaciones destructivas.</p>
+<h4 id="fórmula-práctica-en-el-punto-medio-y-regla-del-60">3.1.1.
+Fórmula Práctica en el Punto Medio y Regla del 60%</h4>
+<p>En el centro del enlace (<span class="math inline">d_1 = d_2 =
+d_{\text{total}}/2</span>), la ecuación se simplifica a unidades
+estándar de telecomunicaciones:</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 10:</strong> Radio Simplificado en
+el Punto Medio y Criterio de Despeje</span>
+  </div>
+  <div class="callout-content">
+<p>En el punto medio de un trayecto simétrico, el radio de la primera
+zona de Fresnel (<span class="math inline">F_1</span>) se calcula
+mediante:</p>
+<p><span class="math display">F_1 = 17.3 \cdot \sqrt{\frac{d_1 \cdot
+d_2}{f \cdot (d_1 + d_2)}} \implies F_{1,\text{centro}} = 8.65 \cdot
+\sqrt{\frac{d_{\text{total}}}{f}}</span></p>
+<p>Con <span class="math inline">F_1</span> en metros (<span
+class="math inline">\text{m}</span>), distancias <span
+class="math inline">d_1, d_2, d_{\text{total}}</span> en kilómetros
+(<span class="math inline">\text{km}</span>), y frecuencia <span
+class="math inline">f</span> en Gigahertz (<span
+class="math inline">\text{GHz}</span>).</p>
+<p><strong>Regla de despeje normativo:</strong> Para que las pérdidas
+por difracción sean despreciables, se exige por norma mantener libre de
+obstáculos al menos el <strong>60% del radio de la primera zona de
+Fresnel</strong> (<span class="math inline">0.6 \cdot F_1</span>).</p>
+  </div>
+</div>
+<p>Si un obstáculo físico (árboles, colinas o construcciones) invade ese
+60% de guarda, la difracción introduce atenuación severa y pérdidas por
+sombra, degradando la potencia de recepción aunque las antenas mantengan
+visión visual directa entre sí.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3:</strong> Verificación de Despeje y
+Altura Mínima de Torres</span>
+  </div>
+  <div class="callout-content">
+<p>Se planifica un radioenlace de <span class="math inline">16 \text{
+km}</span> a una frecuencia de <span class="math inline">f = 5.8 \text{
+GHz}</span>. Justo en el punto medio del trayecto (<span
+class="math inline">d_1 = d_2 = 8 \text{ km}</span>), un grupo de
+árboles sobresale <span class="math inline">12 \text{ metros}</span>
+sobre el nivel plano del suelo. Determinamos el radio de la primera zona
+de Fresnel y la altura mínima que deben tener las torres en los
+extremos.</p>
+<p>Calculamos el radio de la primera zona en el punto medio:</p>
+<p><span class="math display">F_1 = 8.65 \cdot \sqrt{\frac{16 \text{
+km}}{5.8 \text{ GHz}}} \approx 8.65 \cdot \sqrt{2.7586} \approx 8.65
+\cdot 1.6609 \approx 14.37 \text{ m}</span></p>
+<p>Calculamos el margen de despeje obligatorio del 60%:</p>
+<p><span class="math display">r_{\text{despeje}} = 0.60 \cdot F_1 = 0.60
+\cdot (14.37 \text{ m}) \approx 8.62 \text{ m}</span></p>
+<p>Determinamos la altura mínima de las torres de extremo (<span
+class="math inline">h_{\text{torre}}</span>):</p>
+<p><span class="math display">h_{\text{torre}} = h_{\text{obstáculo}} +
+r_{\text{despeje}} = 12 \text{ m} + 8.62 \text{ m} = 20.62 \text{
+m}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Al estar el obstáculo en el centro exacto
+(<span class="math inline">8\text{ km}</span> de cada lado), aplicamos
+la fórmula reducida con la distancia total (<span
+class="math inline">16\text{ km}</span>) y la frecuencia en <span
+class="math inline">\text{GHz}</span> (<span
+class="math inline">5.8</span>). La geometría nos indica que el
+elipsoide mide <span class="math inline">14.37\text{ metros}</span> de
+radio en ese punto.</p>
+<p><strong>Paso 2:</strong> Calculamos el 60% de ese radio (<span
+class="math inline">8.62\text{ metros}</span>) para definir la zona
+libre de interferencias que exige la normativa.</p>
+<p><strong>Paso 3:</strong> La línea recta de vista entre antenas no
+puede pasar rozando las ramas de los árboles (<span
+class="math inline">12\text{ m}</span>), sino que debe volar al menos
+<span class="math inline">8.62\text{ m}</span> por encima de sus copas.
+Por ello sumamos ambas alturas: las torres deben medir al menos <span
+class="math inline">20.62\text{ metros}</span> sobre el plano del
+suelo.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 4:</strong> Comparativa del Radio de
+Fresnel frente al Aumento de Frecuencia</span>
+  </div>
+  <div class="callout-content">
+<p>Evaluamos el radio de la primera zona de Fresnel en el punto medio de
+un enlace de <span class="math inline">10\text{ km}</span> (<span
+class="math inline">d_1 = d_2 = 5\text{ km}</span>) comparando dos
+tecnologías distintas: radio rural en banda ISM de <span
+class="math inline">f = 900\text{ MHz}</span> (<span
+class="math inline">0.9\text{ GHz}</span>) frente a un enlace troncal 5G
+en onda milimétrica de <span class="math inline">f = 28\text{
+GHz}</span>.</p>
+<p>Para la frecuencia baja de <span class="math inline">0.9\text{
+GHz}</span>:</p>
+<p><span class="math display">F_{1,\text{900MHz}} = 8.65 \cdot
+\sqrt{\frac{10 \text{ km}}{0.9 \text{ GHz}}} \approx 8.65 \cdot
+\sqrt{11.111} \approx 8.65 \cdot 3.333 \approx 28.83 \text{
+m}</span></p>
+<p>Para la frecuencia de ondas milimétricas de <span
+class="math inline">28\text{ GHz}</span>:</p>
+<p><span class="math display">F_{1,\text{28GHz}} = 8.65 \cdot
+\sqrt{\frac{10 \text{ km}}{28 \text{ GHz}}} \approx 8.65 \cdot
+\sqrt{0.3571} \approx 8.65 \cdot 0.5976 \approx 5.17 \text{
+m}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Sustituimos los valores en la ecuación
+simplificada para cada caso. Vemos que a <span
+class="math inline">900\text{ MHz}</span> el balón de Fresnel tiene un
+radio de casi <span class="math inline">29\text{ metros}</span>,
+exigiendo torres muy altas o terrenos despejados.</p>
+<p><strong>Paso 2:</strong> A <span class="math inline">28\text{
+GHz}</span>, el elipsoide se comprime a apenas <span
+class="math inline">5.17\text{ metros}</span> de radio. Esto demuestra
+una regla fundamental de planificación de radio: a frecuencias más
+altas, el haz de energía es mucho más estrecho y requiere menos despeje
+vertical con respecto al suelo y a los techos vecinos.</p>
+<h3  id="efecto-doppler-en-comunicaciones-móviles">3.2. Efecto Doppler en
+Comunicaciones Móviles</h3>
+<p>Cuando el emisor o el receptor se desplazan físicamente mientras
+intercambian señales, la frecuencia con la que la onda llega al receptor
+cambia con respecto a la frecuencia con la que fue emitida.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 11:</strong> Desplazamiento
+Doppler Electromagnético</span>
+  </div>
+  <div class="callout-content">
+<p>Para una onda electromagnética que viaja en el medio a la velocidad
+de la luz <span class="math inline">c</span>, el corrimiento de
+frecuencia (<span class="math inline">\Delta f = f_{\text{recibida}} -
+f_{\text{emitida}}</span>) debido a la velocidad axial relativa <span
+class="math inline">v_{\text{rel}}</span> entre ambos extremos se
+aproxima por:</p>
+<p><span class="math display">\Delta f \approx \pm f \cdot \left(
+\frac{v_{\text{rel}}}{c} \right)</span></p>
+<p>Con signo positivo (<span class="math inline">+</span>) al acercarse
+(la frecuencia aparente sube) y signo negativo (<span
+class="math inline">-</span>) al alejarse (la frecuencia aparente
+baja).</p>
+<p>En un <strong>radar activo por eco</strong>, donde la señal realiza
+el viaje de ida y vuelta al rebotar en un objetivo móvil, el corrimiento
+se duplica:</p>
+<p><span class="math display">\Delta f_{\text{radar}} = 2 \cdot f \cdot
+\left( \frac{v_{\text{rel}}}{c} \right)</span></p>
+  </div>
+</div>
+<p>Pensemos en una lancha rápida navegando en un lago con oleaje
+uniforme. Si la lancha acelera de frente en dirección contraria a las
+olas, la proa corta las crestas mucho más rápido de lo normal; el
+conductor siente los golpes rítmicos a un ritmo más acelerado
+(frecuencia más alta). En cambio, si la lancha da la vuelta y navega en
+el mismo sentido en que viajan las olas, las crestas tardan más en
+alcanzarla y los golpes son más lentos y espaciados (frecuencia más
+baja). La lancha percibe un cambio en la frecuencia del oleaje
+simplemente por su movimiento relativo respecto al agua.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 5:</strong> Desplazamiento Doppler en Tren
+de Alta Velocidad (4G frente a 5G)</span>
+  </div>
+  <div class="callout-content">
+<p>Un tren de pasajeros se desplaza a una velocidad constante de <span
+class="math inline">360 \text{ km/h}</span> en dirección frontal directa
+hacia una antena base instalada a la orilla de la vía. Comparamos el
+corrimiento en frecuencia si la transmisión usa una banda 4G de <span
+class="math inline">f = 2.0 \text{ GHz}</span> frente a una banda
+milimétrica 5G de <span class="math inline">f = 26 \text{
+GHz}</span>.</p>
+<p>Convertimos la velocidad del tren al Sistema Internacional:</p>
+<p><span class="math display">v_{\text{rel}} = \frac{360 \text{
+km/h}}{3.6} = 100 \text{ m/s}</span></p>
+<p>Calculamos el corrimiento Doppler en 4G (<span
+class="math inline">2.0 \text{ GHz}</span>):</p>
+<p><span class="math display">\Delta f_{\text{4G}} = 2.0 \times 10^9
+\text{ Hz} \cdot \left( \frac{100 \text{ m/s}}{3 \times 10^8 \text{
+m/s}} \right) \approx 666.67 \text{ Hz}</span></p>
+<p>Calculamos el corrimiento Doppler en 5G (<span class="math inline">26
+\text{ GHz}</span>):</p>
+<p><span class="math display">\Delta f_{\text{5G}} = 26.0 \times 10^9
+\text{ Hz} \cdot \left( \frac{100 \text{ m/s}}{3 \times 10^8 \text{
+m/s}} \right) \approx 8666.67 \text{ Hz} \approx 8.67 \text{
+kHz}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Pasamos los <span
+class="math inline">360\text{ km/h}</span> a <span
+class="math inline">\text{m/s}</span> dividiendo entre <span
+class="math inline">3.6</span>, lo que da exactamente <span
+class="math inline">100\text{ m/s}</span>.</p>
+<p><strong>Paso 2:</strong> Calculamos la relación entre la velocidad
+mecánica y la velocidad de la luz: <span
+class="math inline">\frac{100}{3 \times 10^8} \approx 3.333 \times
+10^{-7}</span>.</p>
+<p><strong>Paso 3:</strong> Multiplicamos esa relación adimensional por
+las frecuencias de emisión. En 4G el corrimiento es de apenas <span
+class="math inline">667\text{ Hz}</span>, lo cual un lazo de seguimiento
+estándar puede manejar fácilmente. En 5G mmWave el corrimiento se
+dispara a <span class="math inline">8.67\text{ kHz}</span> (13 veces
+más); esto obliga a los chips de los teléfonos a incluir algoritmos de
+compensación en tiempo real para no desincronizar los paquetes a alta
+velocidad.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 6:</strong> Cálculo de Velocidad en Radar
+Vial de Tráfico</span>
+  </div>
+  <div class="callout-content">
+<p>Un cinemómetro de control de velocidad emite microondas a una
+frecuencia de <span class="math inline">f = 24.125 \text{ GHz}</span>.
+Al chocar contra un vehículo que se aproxima, el receptor del radar
+registra una frecuencia de eco con un corrimiento positivo de <span
+class="math inline">\Delta f = 2.8 \text{ kHz}</span>. Calculamos la
+velocidad del vehículo en <span
+class="math inline">\text{km/h}</span>.</p>
+<p>Despejamos la velocidad relativa de la fórmula de radar:</p>
+<p><span class="math display">\Delta f = 2 \cdot f \cdot \left(
+\frac{v_{\text{rel}}}{c} \right) \implies v_{\text{rel}} = \frac{\Delta
+f \cdot c}{2 \cdot f}</span></p>
+<p>Sustituimos los parámetros conocidos:</p>
+<p><span class="math display">v_{\text{rel}} = \frac{2800 \text{ Hz}
+\cdot (3 \times 10^8 \text{ m/s})}{2 \cdot (24.125 \times 10^9 \text{
+Hz})} = \frac{8.4 \times 10^{11}}{4.825 \times 10^{10}} \approx 17.41
+\text{ m/s}</span></p>
+<p>Convertimos la velocidad lineal a kilómetros por hora:</p>
+<p><span class="math display">v_{\text{km/h}} = 17.41 \text{ m/s} \cdot
+3.6 \approx 62.67 \text{ km/h}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Al ser un sistema de eco activo, la onda
+sufre el corrimiento dos veces: en el trayecto de ida hacia el
+parachoques y en el trayecto reflejado de vuelta. Por eso aparece el
+factor <span class="math inline">2</span> en el denominador al despejar
+la velocidad.</p>
+<p><strong>Paso 2:</strong> Resolvemos la fracción con las magnitudes en
+el Sistema Internacional para obtener una velocidad lineal de <span
+class="math inline">17.41\text{ m/s}</span>.</p>
+<p><strong>Paso 3:</strong> Multiplicamos por el factor <span
+class="math inline">3.6</span> para expresar el resultado en la unidad
+habitual de tránsito (<span class="math inline">62.67\text{
+km/h}</span>).</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 7:</strong> Variación Doppler en Satélites
+LEO (Starlink)</span>
+  </div>
+  <div class="callout-content">
+<p>Un terminal en tierra recibe una señal portadora en banda Ku (<span
+class="math inline">f = 12 \text{ GHz}</span>) emitida por un satélite
+de órbita baja (LEO) que viaja a una velocidad orbital de <span
+class="math inline">7.6 \text{ km/s}</span> (<span
+class="math inline">7600 \text{ m/s}</span>) a <span
+class="math inline">550\text{ km}</span> de altitud. Calculamos el
+corrimiento Doppler máximo en el horizonte y evaluamos la necesidad de
+corrección.</p>
+<p>Calculamos el corrimiento Doppler en el punto de máxima velocidad
+radial (el horizonte de visibilidad):</p>
+<p><span class="math display">\Delta f_{\text{máx}} = 12 \times 10^9
+\text{ Hz} \cdot \left( \frac{7600 \text{ m/s}}{3 \times 10^8 \text{
+m/s}} \right) = 12 \times 10^9 \cdot (2.5333 \times 10^{-5}) \approx
+304,000 \text{ Hz} = 304 \text{ kHz}</span></p>
+<p>Determinamos la ventana total de desviación frecuencial:</p>
+<p><span class="math display">\Delta f_{\text{barrido}} = 2 \cdot \Delta
+f_{\text{máx}} = 2 \cdot 304 \text{ kHz} = 608 \text{ kHz}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> A diferencia de los satélites
+geoestacionarios (GEO) que se mueven a la par de la rotación de la
+Tierra y tienen velocidad relativa nula (<span
+class="math inline">\Delta f = 0</span>), los satélites LEO vuelan muy
+rápido respecto al suelo. Multiplicamos la frecuencia portadora por el
+cociente de la velocidad orbital y la de la luz.</p>
+<p><strong>Paso 2:</strong> Cuando el satélite asoma por el horizonte
+acercándose, la frecuencia recibida es <span
+class="math inline">304\text{ kHz}</span> superior a la nominal. Cuando
+pasa sobre la estación cae a cero, y al alejarse hacia el horizonte
+opuesto desciende <span class="math inline">304\text{ kHz}</span> por
+debajo. En un lapso de unos 8 minutos, el receptor experimenta una
+excursión frecuencial total de <span class="math inline">608\text{
+kHz}</span>, lo que obliga a recalibrar dinámicamente los osciladores
+locales del módem para sostener el enlace de datos.</p>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Forouzan, B. A.</strong> <em>Data Communications and
+Networking</em>. Recuperado de <a
+href="https://openlibrary.org/books/OL9967451M/Data_Communications_and_Networking_%28McGraw-Hill_Forouzan_Networking_Series%29">openlibrary.org</a></p></li>
+<li><p><strong>Stallings, W.</strong> <em>Data and Computer
+Communications</em>. Recuperado de <a
+href="https://www.google.com/search?q=https://www.pearson.com/en-gb/subject-catalog/p/Stallings-Data-and-Computer-Communications-International-Edition-10th-Edition/P200000005475">pearson.com</a></p></li>
+<li><p><strong>OpenStax.</strong> <em>University Physics Volume 1: Shock
+Waves and Doppler Effect</em>. Recuperado de <a
+href="https://openstax.org/books/university-physics-volume-1/pages/17-8-shock-waves">openstax.org</a></p></li>
+<li><p><strong>3GPP.</strong> <em>TS 38.101: 5G NR; User Equipment (UE)
+Radio Transmission and Reception</em>. Recuperado de <a
+href="https://www.etsi.org/deliver/etsi_ts/138100_138199/13810102/16.21.00_60/ts_13810102v162100p.pdf">etsi.org</a></p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/about.html">Trayectoria</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <script type="module" src="/src/scripts/main.ts"></script>
+  <script type="module" src="/src/scripts/copy-code.ts"></script>
+  <script type="module" src="/src/scripts/article.ts"></script>
+</body>
+</html>

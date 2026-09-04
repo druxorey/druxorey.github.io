@@ -45,7 +45,7 @@ export const notesData: AcademicNote[] = [
     "subject": "Comunicación de datos",
     "order": 3,
     "orderBadge": "#03",
-    "summary": "Contents",
+    "summary": "Las señales electromagnéticas constituyen la base física de la comunicación, permitiendo la transmisión de información mediante variaciones en el dominio del tiempo y la frecuencia. El análisis espectral, fundamentado en la serie de Fourier, facilita la gestión del ancho de banda y la propagación en el espacio, considerando factores críticos como las zonas de Fresnel y el efecto Doppler en sistemas inalámbricos.",
     "tags": [
       "académico"
     ]

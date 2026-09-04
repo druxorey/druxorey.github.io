@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#01 - Fundamentos de Comunicación y Topologías de Red | Druxorey</title>
+  <meta name="description" content="La comunicación de datos permite el intercambio de información digital mediante protocolos normalizados que gestionan la transmisión, el enrutamiento y la integridad de los paquetes. Mediante el uso de conmutación de paquetes, diversas topologías de red y una jerarquía de ISP, los sistemas garantizan la conectividad global, optimizando el rendimiento a través de métricas críticas como latencia, ancho de banda y QoS.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/about.html" class="nav-link">Trayectoria</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/about.html" class="nav-link">Trayectoria</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#la-comunicación-de-datos">1. La Comunicación de Datos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#componentes-del-sistema-de-comunicación-y-modos-de-transmisión">1.1.
+Componentes del Sistema de Comunicación y Modos de Transmisión</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#métricas-de-rendimiento-del-canal">1.2. Métricas de Rendimiento
+del Canal</a></li>
+<li class="toc-item"><a class="toc-link" href="#estructura-jerárquica-del-internet-moderno">2. Estructura
+Jerárquica del Internet Moderno</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#jerarquía-de-los-isp">2.1. Jerarquía de los ISP</a></li>
+<li class="toc-item"><a class="toc-link" href="#circuitos-frente-a-paquetes">3. Circuitos frente a Paquetes</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#conmutación-de-circuitos">3.1. Conmutación de Circuitos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#el-salto-a-la-conmutación-de-paquetes">3.2. El Salto a la
+Conmutación de Paquetes</a></li>
+<li class="toc-item"><a class="toc-link" href="#topologías-físicas-y-análisis-combinatorio">4. Topologías
+Físicas y Análisis Combinatorio</a></li>
+<li class="toc-item"><a class="toc-link" href="#arquitecturas-lógicas-y-redes-definidas-por-software-sdn">5.
+Arquitecturas Lógicas y Redes Definidas por Software (SDN)</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Comunicación de datos</div>
+          <h1 class="article-title">#01 - Fundamentos de Comunicación y Topologías de Red</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota #01</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            <span class="tag">#académico</span>
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>comunicación de datos</strong> permite el intercambio de
+información digital mediante <strong>protocolos</strong> normalizados
+que gestionan la transmisión, el enrutamiento y la integridad de los
+paquetes. Mediante el uso de <strong>conmutación de paquetes</strong>,
+diversas <strong>topologías de red</strong> y una jerarquía
+de <strong>ISP</strong>, los sistemas garantizan la conectividad global,
+optimizando el rendimiento a través de métricas críticas
+como <strong>latencia</strong>, <strong>ancho de
+banda</strong> y <strong>QoS</strong>.</p>
+  </div>
+</div>
+<h2  id="la-comunicación-de-datos">1. La Comunicación de Datos</h2>
+<p>En la vida cotidiana, la comunicación es un proceso fundamental que
+requiere de dos actores principales: un emisor, que tiene la intención
+de transmitir una idea, y un receptor, que debe ser capaz de interpretar
+el mensaje. Para que este intercambio sea exitoso, ambos deben compartir
+un código común (como un idioma) y un canal físico, ya sea el aire que
+transporta la voz o el papel de una carta. Si el emisor habla un idioma
+desconocido para el receptor o si el canal presenta interferencias, la
+comunicación se degrada o se pierde por completo, demostrando que la
+eficacia del mensaje depende tanto de la claridad de la intención como
+de la integridad del medio utilizado.</p>
+<p>La comunicación de datos informática establece un paralelismo,
+trasladando el intercambio de información a un entorno digital donde los
+mensajes se codifican en formato binario (ceros y unos). En este
+contexto, los dispositivos actúan como emisores y receptores que,
+mediante señales físicas que viajan por medios de transmisión,
+intercambian datos de manera coordinada. Así como las personas requieren
+reglas gramaticales para entenderse, los sistemas informáticos modernos
+dependen de protocolos normalizados que gestionan la estructura, la
+sincronización y la integridad de los paquetes, permitiendo que el
+software distribuido y las aplicaciones web operen de forma coherente a
+través de redes globales.</p>
+<h3 
+id="componentes-del-sistema-de-comunicación-y-modos-de-transmisión">1.1.
+Componentes del Sistema de Comunicación y Modos de Transmisión</h3>
+<p>Cualquier sistema de comunicación informática elemental requiere
+cinco componentes fundamentales para operar:</p>
+<ul>
+<li><p><strong>Emisor:</strong> Dispositivo que genera los datos
+originales y los convierte en señales físicas (eléctricas, luminosas o
+de radio) aptas para transmitirse por el canal.</p></li>
+<li><p><strong>Receptor:</strong> Dispositivo de destino que captura la
+señal física del canal, la decodifica y reconstruye los datos
+originales.</p></li>
+<li><p><strong>Mensaje:</strong> La carga útil o «payload» que se desea
+transferir (texto, audio, imágenes o archivos binarios).</p></li>
+<li><p><strong>Medio de transmisión:</strong> El soporte físico por el
+cual viaja la señal. Se divide en medios guiados (cables de cobre de par
+trenzado, cable coaxial, fibra óptica) y no guiados (el aire o el vacío,
+mediante ondas electromagnéticas).</p></li>
+<li><p><strong>Protocolo:</strong> Conjunto de reglas formales que
+establecen cómo debe estructurarse, sincronizarse y controlarse el
+intercambio de información.</p></li>
+</ul>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 1:</strong> Protocolo de
+Comunicación</span>
+  </div>
+  <div class="callout-content">
+<p>Un protocolo <span class="math inline">\mathcal{P} = (\mathcal{S},
+\mathcal{M}, \mathcal{R})</span> es una terna formal donde <span
+class="math inline">\mathcal{S}</span> representa el conjunto finito de
+estados de los dispositivos participantes, <span
+class="math inline">\mathcal{M}</span> es el conjunto de mensajes
+válidos con sintaxis y formato predefinidos, y <span
+class="math inline">\mathcal{R}: \mathcal{S} \times \mathcal{M} \to
+\mathcal{S}</span> es la función de transición que dicta la acción
+determinista que debe ejecutar cada extremo ante la llegada, salida o
+temporización de un mensaje.</p>
+  </div>
+</div>
+<p>Para entender qué es un protocolo imaginemos dos estaciones de tren
+conectadas por una sola vía férrea en un tramo estrecho. Si los
+maquinistas liberan los trenes por su cuenta, terminarán chocando de
+frente. El protocolo es el reglamento de banderas y silbatos: la
+estación <span class="math inline">A</span> solo envía una locomotora
+tras hacer sonar tres silbidos largos y recibir de la estación <span
+class="math inline">B</span> una señal con linterna verde que confirma
+que la vía está despejada. Si la linterna es roja, la locomotora espera
+en el apartadero. La vía es el medio, el carbón transportado es el
+mensaje, y el reglamento de banderas y silbatos es el protocolo.</p>
+<p>La dirección y la simultaneidad con la que viajan las señales por el
+canal determinan la <strong>direccionalidad de la
+transmisión</strong>:</p>
+<ul>
+<li><p><strong>Simplex:</strong> La comunicación ocurre en un único
+sentido estricto. Un extremo solo transmite y el otro solo recibe, sin
+que los roles cambien jamás (ej. la señal de un faro costero hacia los
+barcos o la radiodifusión comercial).</p></li>
+<li><p><strong>Half-Duplex:</strong> La comunicación es bidireccional,
+pero no simultánea. Ambos extremos pueden enviar y recibir, pero deben
+alternarse el uso del canal para no chocar (ej. radiocomunicadores
+portátiles con botón para hablar).</p></li>
+<li><p><strong>Full-Duplex:</strong> La comunicación es bidireccional y
+simultánea. El canal cuenta con vías separadas (por pares de cables
+independientes o frecuencias distintas), permitiendo transmitir y
+recibir datos al mismo tiempo sin colisiones (ej. una conversación
+telefónica convencional).</p></li>
+</ul>
+<h3  id="métricas-de-rendimiento-del-canal">1.2. Métricas de Rendimiento
+del Canal</h3>
+<p>Para evaluar la calidad y la velocidad real con la que opera una red,
+se utilizan las siguientes métricas cuantitativas:</p>
+<ul>
+<li><p><strong>Ancho de Banda Espectral (</strong><span
+class="math inline">B</span><strong>):</strong> Rango de frecuencias que
+el canal físico puede transportar sin distorsión inaceptable, medido en
+hercios (<span class="math inline">\text{Hz}</span>). En términos
+digitales, describe la capacidad máxima teórica del enlace expresada en
+bits por segundo (<span class="math inline">\text{bps}</span>).</p></li>
+<li><p><strong>Throughput (Rendimiento Real):</strong> Cantidad de bits
+que el canal transporta y entrega de forma exitosa en la práctica por
+unidad de tiempo. Siempre cumple que <span
+class="math inline">\text{Throughput} \le \text{Capacidad
+Teórica}</span>, debido a errores, colisiones y sobrecarga de
+control.</p></li>
+<li><p><strong>Goodput:</strong> Medida del caudal neto que corresponde
+exclusivamente a los datos útiles de la aplicación del usuario. Ignora
+las cabeceras de control de los protocolos y los paquetes retransmitidos
+por errores.</p></li>
+<li><p><strong>Calidad de Servicio (QoS):</strong> Estrategias de
+priorización y gestión de colas en los enrutadores para asegurar límites
+máximos tolerables de retardo y jitter en tráficos sensibles (como
+llamadas de voz o transmisiones de video en vivo).</p></li>
+</ul>
+<p>En base a esas méetricas, toda red de comunicación debe satisfacer
+tres criterios operativos esenciales:</p>
+<ul>
+<li><p><strong>Rendimiento (<em>Performance</em>):</strong> Métrica
+combinada de la velocidad de transferencia neta (<em>throughput</em>),
+los tiempos de propagación de los datos (latencia) y la estabilidad
+temporal de arribo (<em>jitter</em>).</p></li>
+<li><p><strong>Fiabilidad y Confiabilidad
+(<em>Reliability</em>):</strong> Frecuencia con la que ocurren fallos en
+los enlaces, tiempo medio de recuperación (<em>Mean Time to Repair</em>,
+MTTR) y robustez intrínseca ante eventos catastróficos o desconexiones
+imprevistas.</p></li>
+<li><p><strong>Seguridad (<em>Security</em>):</strong> Garantía de
+confidencialidad (bloqueo de accesos no autorizados), integridad
+(detección y mitigación de modificaciones no deseadas en tránsito) y
+disponibilidad del enlace.</p></li>
+</ul>
+<p>Para que la red sea funcionalmente admisible bajo estos criterios, se
+evalúan cuatro características operativas:</p>
+<ul>
+<li><p><strong>Entrega (<em>Delivery</em>):</strong> El sistema debe
+canalizar los paquetes exactamente al destino requerido, sin desvíos ni
+fugas a otros nodos.</p></li>
+<li><p><strong>Exactitud (<em>Accuracy</em>):</strong> Los datos
+recibidos deben coincidir bit a bit con los datos emitidos; si el canal
+corrompe la señal, el protocolo debe detectar el error y descartar o
+corregir la trama.</p></li>
+<li><p><strong>Tiempo de entrega (<em>Timeliness</em>):</strong> Arribo
+de los datos dentro del límite temporal exigido por la aplicación
+(especialmente crítico en transmisiones en tiempo real como
+VoIP).</p></li>
+<li><p><strong>Fluctuación de retardo (<em>Jitter</em>):</strong>
+Variación temporal entre los tiempos de llegada de paquetes
+consecutivos. Una fluctuación elevada satura o vacía los búferes de
+recepción, degradando la reconstrucción de la señal. Si dos paquetes
+sufren retardos individuales de <span class="math inline">L_i</span> y
+<span class="math inline">L_{i-1}</span>, el jitter instantáneo es el
+valor absoluto de su diferencia:</p></li>
+</ul>
+<p><span class="math display">J = \vert{}L_i - L_{i-1}\vert{}</span></p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 2:</strong> Ecuación del Retardo
+Total de Enlace (Latencia)</span>
+  </div>
+  <div class="callout-content">
+<p>El retardo total unidireccional (<span class="math inline">L</span>)
+que sufre un paquete de tamaño <span class="math inline">D</span> bits
+al transmitirse por un enlace físico de longitud <span
+class="math inline">d</span> metros y capacidad de transmisión de <span
+class="math inline">R\text{ bps}</span> es:</p>
+<p><span class="math display">L = t_{\text{trans}} + t_{\text{prop}} +
+t_{\text{queue}} + t_{\text{proc}}</span></p>
+<p>donde:</p>
+<p><span class="math display">t_{\text{trans}} = \frac{D}{R}, \qquad
+t_{\text{prop}} = \frac{d}{v}</span></p>
+<p>siendo <span class="math inline">v</span> la velocidad de propagación
+de la señal electromagnética en el medio (<span class="math inline">v
+\approx 2 \times 10^8\text{ m/s}</span> en el cobre y la fibra de
+sílice), <span class="math inline">t_{\text{queue}}</span> el tiempo de
+espera en los búferes de memoria del enrutador, y <span
+class="math inline">t_{\text{proc}}</span> el tiempo que tarda el
+procesador del nodo en leer la cabecera del paquete y verificar
+errores.</p>
+  </div>
+</div>
+<p>Para distinguir claramente el retardo de transmisión (<span
+class="math inline">t_{\text{trans}}</span>) del retardo de propagación
+(<span class="math inline">t_{\text{prop}}</span>), imaginemos una bomba
+de agua conectada a una tubería de <span class="math inline">10\text{
+km}</span> que desemboca en un estanque.</p>
+<p>El <strong>retardo de transmisión</strong> es el tiempo que tarda el
+operador en bombear físicamente 1000 litros de agua por la boca de
+entrada; si la bomba opera a una tasa de <span
+class="math inline">100\text{ litros/minuto}</span>, tardará <span
+class="math inline">10\text{ minutos}</span> en vaciar el contenedor en
+la tubería. El <strong>retardo de propagación</strong> es el tiempo que
+le toma a la primera gota de agua viajar físicamente a lo largo de los
+<span class="math inline">10\text{ km}</span> de tubería hasta asomar
+por el otro extremo. Además de lo anterior, el <strong>retardo de
+procesamiento</strong> (<span
+class="math inline">t_{\text{proc}}</span>) es el tiempo que toma un
+operario intermedio en leer la etiqueta del lote de agua, y el
+<strong>retardo de encolamiento</strong> (<span
+class="math inline">t_{\text{queue}}</span>) es el tiempo que el agua
+pasa almacenada en una cisterna de paso antes de ser impulsada por la
+siguiente bomba.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Retardo de Paquete en un
+Enlace Interurbano de Fibra Óptica</span>
+  </div>
+  <div class="callout-content">
+<p><strong>Enunciado:</strong> Un enlace punto a punto de fibra óptica
+une dos ciudades separadas por <span class="math inline">d = 1200\text{
+km}</span> (<span class="math inline">1.2 \times 10^6\text{ m}</span>)
+con una tasa de transmisión nominal de <span class="math inline">R =
+100\text{ Mbps}</span> (<span class="math inline">10^8\text{
+bps}</span>). La velocidad de la señal lumínica en el núcleo de la fibra
+es <span class="math inline">v = 2 \times 10^8\text{ m/s}</span>. Se
+transmite un paquete de tamaño <span class="math inline">D = 1500\text{
+bytes}</span> (<span class="math inline">12000\text{ bits}</span>). Los
+conmutadores intermedios introducen un retardo de procesamiento
+acumulado de <span class="math inline">t_{\text{proc}} = 35\text{
+}\mu\text{s}</span> y el paquete espera en cola un tiempo <span
+class="math inline">t_{\text{queue}} = 1.2\text{ ms}</span>. Calcule el
+retardo total de entrega <span class="math inline">L</span>.</p>
+<p><strong>Resolución:</strong></p>
+<ol type="1">
+<li>Retardo de transmisión:</li>
+</ol>
+<p><span class="math display">t_{\text{trans}} = \frac{12000\text{
+bits}}{10^8\text{ bps}} = 1.2 \times 10^{-4}\text{ s} = 0.12\text{
+ms}</span></p>
+<ol start="2" type="1">
+<li>Retardo de propagación:</li>
+</ol>
+<p><span class="math display">t_{\text{prop}} = \frac{1.2 \times
+10^6\text{ m}}{2 \times 10^8\text{ m/s}} = 6 \times 10^{-3}\text{ s} =
+6.00\text{ ms}</span></p>
+<ol start="3" type="1">
+<li>Ajuste de términos restantes a milisegundos:</li>
+</ol>
+<p><span class="math display">t_{\text{proc}} = 0.035\text{ ms}, \qquad
+t_{\text{queue}} = 1.20\text{ ms}</span></p>
+<ol start="4" type="1">
+<li>Suma total de los retardos:</li>
+</ol>
+<p><span class="math display">L = 0.12 + 6.00 + 1.20 + 0.035 =
+7.355\text{ ms}</span></p>
+  </div>
+</div>
+<h2  id="estructura-jerárquica-del-internet-moderno">2. Estructura
+Jerárquica del Internet Moderno</h2>
+<p>El alcance físico y la distribución topológica determinan los
+mecanismos de acceso al medio, las tecnologías de conmutación y las
+tasas de error esperadas:</p>
+<ul>
+<li><p><strong>PAN (Personal Area Network):</strong> Alcance limitado al
+espacio personal de un usuario (<span class="math inline">d \le 10\text{
+m}</span>). Utiliza enlaces de corto alcance y bajo consumo eléctrico
+(ej. Bluetooth, Zigbee).</p></li>
+<li><p><strong>LAN (Local Area Network):</strong> Cobertura confinada a
+un edificio, departamento o laboratorio (<span class="math inline">d \le
+1\text{ km}</span>). Alcanza altas tasas de transmisión (<span
+class="math inline">1\text{ a }100\text{ Gbps}</span>), utiliza medios
+privados y presenta tasas de error mínimas (ej. Ethernet,
+Wi-Fi).</p></li>
+<li><p><strong>CAN (Campus Area Network):</strong> Conecta varias LAN
+contiguas dentro de un complejo delimitado como una universidad o base
+industrial (<span class="math inline">1\text{ km} &lt; d \le 5\text{
+km}</span>). Emplea infraestructura propia de alta capacidad sin
+requerir concesiones de telecomunicación pública.</p></li>
+<li><p><strong>MAN (Metropolitan Area Network):</strong> Cobertura que
+abarca una ciudad (<span class="math inline">5\text{ km} &lt; d \le
+50\text{ km}</span>). Suele estar gestionada por consorcios públicos o
+proveedores de telecomunicaciones que enlazan sedes dispersas mediante
+anillos de fibra óptica.</p></li>
+<li><p><strong>WAN (Wide Area Network):</strong> Alcance regional,
+nacional o global (<span class="math inline">d &gt; 50\text{
+km}</span>). Emplea cables submarinos, enlaces terrestres interurbanos y
+satélites. Internet es el ejemplo por excelencia.</p></li>
+<li><p><strong>SAN (Storage Area Network):</strong> Red dedicada de alta
+velocidad que enlaza servidores de cómputo con bancos de discos masivos,
+utilizando protocolos de acceso directo a bloques (ej. Fibre
+Channel).</p></li>
+</ul>
+<h3  id="jerarquía-de-los-isp">2.1. Jerarquía de los ISP</h3>
+<p>Internet no es una red centralizada homogénea, sino un conjunto
+masivo de sistemas autónomos (<em>Autonomous Systems</em>, AS)
+interconectados jerárquicamente a través de Proveedores de Servicios de
+Internet (<em>Internet Service Providers</em>, ISP):</p>
+<ul>
+<li><p><strong>ISP de Acceso (Nivel 3 / Tier 3):</strong> Redes locales
+que comercializan el enlace final a hogares, universidades y pequeñas
+empresas mediante tecnologías como FTTH, cable módem o enlaces
+celulares. Deben pagar tráfico de tránsito a los niveles
+superiores.</p></li>
+<li><p><strong>ISP Regional (Nivel 2 / Tier 2):</strong> Redes con
+presencia metropolitana o nacional que interconectan múltiples ISP
+locales y cursan tráfico entre sí mediante acuerdos de compartición de
+capacidad mutua (<em>peering</em>).</p></li>
+<li><p><strong>ISP troncales (Nivel 1 / Tier 1):</strong> Grandes
+operadores globales con infraestructuras de fibra óptica
+transcontinental y submarina. No pagan a nadie por cursar tráfico;
+intercambian datos libremente entre ellos mediante convenios simétricos
+de <em>settlement-free peering</em>.</p></li>
+<li><p><strong>Puntos de Intercambio de Tráfico (<em>IXP / NAP - Network
+Access Points</em>):</strong> Infraestructuras físicas de conmutación
+centralizada donde distintos ISP y redes de distribución de contenidos
+(<em>Content Delivery Networks</em>, CDN) enlazan sus enrutadores para
+transferir datos de forma directa y económica, evitando saturar los
+enlaces de tránsito troncales.</p></li>
+</ul>
+<h2  id="circuitos-frente-a-paquetes">3. Circuitos frente a Paquetes</h2>
+<p>Para trasladar información entre múltiples nodos, las redes emplean
+dos métodos fundamentales.</p>
+<h3  id="conmutación-de-circuitos">3.1. Conmutación de Circuitos</h3>
+<p>Se reserva un camino físico exclusivo de extremo a extremo antes de
+iniciar el intercambio, ofreciendo un retardo fijo. La capacidad del
+enlace queda bloqueada durante toda la sesión, se transmitan o no datos.
+En las primeras redes basadas en la infraestructura telefónica analógica
+tradicional, la conexión requería establecer un circuito físico dedicado
+de extremo a extremo:</p>
+<ul>
+<li><p><strong>Reserva estática de recursos:</strong> El ancho de banda
+quedaba reservado permanentemente durante toda la sesión, sin importar
+si los terminales intercambiaban datos o permanecían en reposo
+(<em>silencios</em>), desperdiciando hasta un <span
+class="math inline">90\%</span> de la capacidad teórica del
+medio.</p></li>
+<li><p><strong>Cuello de botella de modulación:</strong> El módem
+(<em>Modulador/Demodulador</em>) debía adaptar pulsos de tensión
+continua a tonos audibles sobre hilos de cobre. La velocidad efectiva
+quedaba acotada a bajas tasas de símbolos (medidas en baudios), con alta
+vulnerabilidad al ruido impulsivo y a la atenuación espectral.</p></li>
+</ul>
+<h3  id="el-salto-a-la-conmutación-de-paquetes">3.2. El Salto a la
+Conmutación de Paquetes</h3>
+<p>Formulada conceptualmente por Paul Baran y Donald Davies, la
+conmutación de paquetes eliminó la dependencia del canal dedicado. La
+información se corta en fragmentos independientes llamados «paquetes»,
+cada paquete viaja de forma autónoma compartiendo la capacidad del canal
+con paquetes de otros usuarios. Los enrutadores intermedios reciben los
+fragmentos y los reenvían según la disponibilidad de sus enlaces:</p>
+<ul>
+<li><p><strong>Multiplexación estadística:</strong> Múltiples fuentes
+transmiten simultáneamente por el mismo enlace; los paquetes se forman
+en colas de espera en los conmutadores (<em>switches</em>) o enrutadores
+(<em>routers</em>).</p></li>
+<li><p><strong>Rutas no deterministas:</strong> Dos paquetes continuos
+de una misma transmisión pueden recorrer trayectorias topológicas
+dispares según el estado de congestión de la red, reconstruyéndose el
+orden secuencial en el extremo receptor.</p></li>
+<li><p><strong>Evolución del hardware:</strong> La transición desde los
+<em>mainframes</em> centralizados y monolíticos (dominados
+históricamente por arquitecturas propietarias como IBM SNA) hacia las
+minicomputadoras (notablemente las líneas PDP y VAX de Digital Equipment
+Corporation - DEC) permitió una descentralización masiva mediante redes
+propietarias interoperables como DECnet, sentando las bases operativas
+de ARPANET.</p></li>
+</ul>
+<h2  id="topologías-físicas-y-análisis-combinatorio">4. Topologías
+Físicas y Análisis Combinatorio</h2>
+<p>La topología describe la disposición geométrica de los cables y
+dispositivos de red:</p>
+<ul>
+<li><p><strong>Bus:</strong> Todos los nodos se conectan a un cable
+troncal compartido continuo. Si el cable se corta en cualquier punto,
+toda la red queda inoperativa.</p></li>
+<li><p><strong>Anillo:</strong> Los nodos se enlazan uno tras otro
+formando un círculo cerrado. La información viaja en un único sentido;
+si un nodo o enlace falla, el anillo se interrumpe a menos que exista un
+doble anillo de respaldo.</p></li>
+<li><p><strong>Estrella:</strong> Cada terminal se conecta
+individualmente a un nodo central (como un switch). Si un cable
+individual se rompe, solo se desconecta ese equipo. Sin embargo, el
+dispositivo central representa un punto único de falla.</p></li>
+<li><p><strong>Malla Completa:</strong> Cada equipo tiene una conexión
+directa y dedicada con cada uno de los demás equipos de la red,
+ofreciendo la máxima tolerancia a fallas. Para una red de <span
+class="math inline">n</span> nodos donde cada par de terminales está
+conectado por un enlace bidireccional dedicado, el número total de
+enlaces físicos <span class="math inline">E</span> necesarios
+corresponde a la combinación de <span class="math inline">n</span>
+elementos tomados de 2 en 2:</p></li>
+</ul>
+<p><span class="math display">E = \binom{n}{2} = \frac{n(n -
+1)}{2}</span> Por esta razón, la malla total se reserva para núcleos de
+telecomunicaciones críticos (<em>backbones</em> de centros de datos o
+enrutadores troncales), mientras que en redes de acceso se recurre
+invariablemente a configuraciones en estrella o híbridas (ej. núcleo
+central en estrella enlazando redes locales en bus).</p>
+<h2  id="arquitecturas-lógicas-y-redes-definidas-por-software-sdn">5.
+Arquitecturas Lógicas y Redes Definidas por Software (SDN)</h2>
+<p>La organización lógica describe cómo se distribuyen las tareas y las
+decisiones en el sistema:</p>
+<ul>
+<li><p><strong>Cliente-Servidor:</strong> Modelo jerárquico donde un
+equipo central («Servidor») ofrece recursos y espera peticiones,
+mientras que los equipos periféricos («Clientes») inician el contacto
+para solicitar servicios.</p></li>
+<li><p><strong>Punto a Punto (P2P):</strong> Modelo descentralizado
+donde no existen jerarquías fijas. Cada nodo («peer») actúa
+simultáneamente como cliente y servidor, compartiendo sus propios
+recursos con los demás miembros.</p></li>
+<li><p><strong>Redes Definidas por Software (SDN):</strong> Paradigma
+que separa las dos funciones principales que tradicionalmente se
+ejecutaban dentro de un mismo enrutador:</p>
+<ul>
+<li><p><strong>Plano de Control:</strong> Lógica del sistema que calcula
+las rutas óptimas y dicta las reglas globales de reenvío. En SDN, se
+centraliza en un software maestro.</p></li>
+<li><p><strong>Plano de Datos:</strong> Tarea mecánica de recibir los
+paquetes y enviarlos a toda velocidad por la interfaz de salida que
+dictó el plano de control.</p></li>
+</ul></li>
+<li><p><strong>Servicios de Red Actuales:</strong> Transición de
+servicios alojados en máquinas locales (<em>on-premises</em>) a esquemas
+de computación en la nube elásticos. Las aplicaciones modernas
+desacoplan su lógica interna en microservicios paquetizados en
+contenedores, apoyados en redes de distribución de contenido (CDN) para
+aproximar el <em>edge computing</em>.</p></li>
+</ul>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Baran, P.</strong> <em>On Distributed Communications: I.
+Introduction to Distributed Communications Networks</em>. Recuperado de
+<a
+href="https://www.rand.org/pubs/research_memoranda/RM3420.html">rand.org</a></p></li>
+<li><p><strong>Hawkinson, J. &amp; Bates, T.</strong> <em>RFC 1930:
+Guidelines for Creation, Selection, and Registration of an Autonomous
+System (AS)</em>. Recuperado de <a
+href="https://datatracker.ietf.org/doc/html/rfc1930">datatracker.ietf.org</a></p></li>
+<li><p><strong>Rekhter, Y., Li, T. &amp; Hares, S.</strong> <em>RFC
+4271: A Border Gateway Protocol 4 (BGP-4)</em>. Recuperado de <a
+href="https://datatracker.ietf.org/doc/html/rfc4271">datatracker.ietf.org</a></p></li>
+<li><p><strong>Open Networking Foundation.</strong> <em>Software-Defined
+Networking: The New Norm for Networks</em>. Recuperado de <a
+href="https://opennetworking.org/sdn-resources/whitepapers/software-defined-networking-the-new-norm-for-networks/">opennetworking.org</a></p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/about.html">Trayectoria</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <script type="module" src="/src/scripts/main.ts"></script>
+  <script type="module" src="/src/scripts/copy-code.ts"></script>
+  <script type="module" src="/src/scripts/article.ts"></script>
+</body>
+</html>
