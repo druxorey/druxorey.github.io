@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | Guillermo Galavís (Druxorey)</title>
+  <meta name="description" content="Ponte en contacto con Guillermo Galavís (Druxorey). Consultas sobre Linux, sistemas, redes, colaboraciones o propuestas profesionales.">
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="./images/logo.svg">
+  <script type="module" crossorigin src="./assets/contact-wIaZXmcp.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/main-C862Lgn9.js">
+  <link rel="stylesheet" crossorigin href="./assets/main-DFGYH4cW.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container">
+      <a href="./index.html" class="nav-brand" id="navBrandLink">
+        <img src="./images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="./index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="./projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="./publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="./notes.html" class="nav-link">Apuntes</a></li>
+          <li><a href="./contact.html" class="nav-link active">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="./index.html" class="nav-link">Sobre mí</a>
+      <a href="./projects.html" class="nav-link">Proyectos</a>
+      <a href="./publications.html" class="nav-link">Publicaciones</a>
+      <a href="./notes.html" class="nav-link">Apuntes</a>
+      <a href="./contact.html" class="nav-link active">Contacto</a>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+
+      <header class="page-header">
+        <h1 class="page-title">Contacto</h1>
+      </header>
+
+      <div class="contact-grid">
+
+        <div>
+          <form id="contactForm" class="contact-form">
+            <h2 class="contact-form-title">
+              Enviar un Mensaje Directo
+            </h2>
+
+            <div class="form-group">
+              <label for="contactName" class="form-label">Nombre o Alias</label>
+              <input type="text" id="contactName" name="name" class="form-input" placeholder="Tu nombre" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactEmail" class="form-label">Tu Correo Electrónico</label>
+              <input type="email" id="contactEmail" name="email" class="form-input" placeholder="tu-correo@ejemplo.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactSubject" class="form-label">Asunto</label>
+              <input type="text" id="contactSubject" name="subject" class="form-input" placeholder="Consulta sobre sistemas, proyecto o colaboración" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactMessage" class="form-label">Mensaje</label>
+              <textarea id="contactMessage" name="message" class="form-textarea" rows="5" placeholder="Escribe aquí los detalles de tu consulta..." required></textarea>
+            </div>
+
+            <button type="submit" id="contactSubmitBtn" class="btn btn-primary contact-submit-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Enviar Correo Electrónico
+            </button>
+
+            <div id="formStatus" class="form-status"></div>
+          </form>
+        </div>
+
+        <div class="contact-info-cards">
+
+          <div class="contact-info-card">
+            <div class="contact-info-left">
+              <div class="contact-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="contact-info-title">Correo Principal</h3>
+                <p class="contact-info-val">druxorey@gmail.com</p>
+              </div>
+            </div>
+            <button id="copyEmailBtn" class="btn btn-secondary btn-sm contact-copy-btn" title="Copiar correo al portapapeles">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span>Copiar</span>
+            </button>
+          </div>
+
+          <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer" class="contact-info-card">
+            <div class="contact-info-left">
+              <div class="contact-icon-box pink">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="contact-info-title">GitHub</h3>
+                <p class="contact-info-val">github.com/druxorey</p>
+              </div>
+            </div>
+            <span class="contact-card-arrow">→</span>
+          </a>
+
+          <a href="https://linkedin.com/in/guillermo-galavis" target="_blank" rel="noopener noreferrer" class="contact-info-card">
+            <div class="contact-info-left">
+              <div class="contact-icon-box cyan">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="contact-info-title">LinkedIn</h3>
+                <p class="contact-info-val">linkedin.com/in/guillermo-galavis</p>
+              </div>
+            </div>
+            <span class="contact-card-arrow">→</span>
+          </a>
+
+          <div class="contact-info-card">
+            <div class="contact-info-left">
+              <div class="contact-icon-box green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="contact-info-title">Ubicación Actual</h3>
+                <p class="contact-info-val">Caracas, Venezuela · UCV</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="./index.html">Sobre mí</a>
+        <a href="./projects.html">Proyectos</a>
+        <a href="./publications.html">Publicaciones</a>
+        <a href="./notes.html">Apuntes</a>
+        <a href="./contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prontuario para Publicar y Mantener Paquetes en el AUR | Druxorey</title>
+  <meta name="description" content="Publicar tus propios paquetes en el Arch User Repository (AUR) es la mejor forma de contribuir a la comunidad y mantener tus herramientas siempre al día. Dominar la estructura de un PKGBUILD te permite empaquetar desde binarios cerrados hasta versiones VCS dinámicas. Aprenderás a gestionar tu entorno con SSH, automatizar metadatos y seguir las normativas de empaquetado para asegurar que tu software sea impecable, reproducible y profesional.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="../images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="../assets/main-C862Lgn9.js"></script>
+  <script type="module" crossorigin src="../assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="../assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/main-DFGYH4cW.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="../images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link active">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link active">Publicaciones</a>
+      <a href="/notes.html" class="nav-link">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Article Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/publications.html" class="article-back-link">
+          ← Volver al catálogo de publicaciones
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Article Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#configuración-del-entorno-y-conexión-ssh">1. Configuración del
+Entorno y Conexión SSH</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#generación-de-una-llave-ssh-moderna">1.1. Generación de una
+Llave SSH Moderna</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#vincular-tu-llave-pública-en-el-portal-del-aur">1.2. Vincular tu
+Llave Pública en el Portal del AUR</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#probar-la-autenticación">1.3. Probar la Autenticación</a></li>
+<li class="toc-item"><a class="toc-link" href="#los-tres-sabores-de-paquetes-en-el-aur">2. Los Tres Sabores de
+Paquetes en el AUR</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#diferencias-y-propósito-del-estándar">2.1. Diferencias y
+Propósito del Estándar</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#cómo-determinar-qué-tipo-de-paquete-crear">2.2. ¿Cómo Determinar
+qué Tipo de Paquete Crear?</a></li>
+<li class="toc-item"><a class="toc-link" href="#base-común-del-empaquetado-estructura-y-archivos">3. Base Común
+del Empaquetado: Estructura y Archivos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#clonación-del-repositorio-y-blindaje-con-.gitignore">3.1.
+Clonación del Repositorio y Blindaje con .gitignore</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#variables-y-reglas-de-convivencia">3.2. Variables y Reglas de
+Convivencia</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#la-función-de-instalación-package-y-el-directorio-ficticio">3.3.
+La Función de Instalación (package) y el Directorio
+Ficticio</a></li>
+<li class="toc-item"><a class="toc-link" href="#implementación-del-pkgbuild-según-el-tipo-de-paquete">4.
+Implementación del PKGBUILD según el Tipo de Paquete</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#caso-a-paquete-estándar-desde-código-fuente-estable">4.1. Caso
+A: Paquete Estándar (Desde Código Fuente Estable)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#caso-b-paquete-precompilado--bin">4.2. Caso B: Paquete
+Precompilado (-bin)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#caso-c-paquete-dinámico--git">4.3. Caso C: Paquete Dinámico
+(-git)</a></li>
+<li class="toc-item"><a class="toc-link" href="#flujo-común-de-verificación-metadatos-y-publicación">5. Flujo
+Común de Verificación, Metadatos y Publicación</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#calcular-hashes-automáticamente">5.1. Calcular Hashes
+Automáticamente</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#prueba-de-compilación-e-instalación-local">5.2. Prueba de
+Compilación e Instalación Local</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#generación-obligatoria-del-.srcinfo">5.3. Generación Obligatoria
+del .SRCINFO</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#publicar-en-el-servidor-del-aur">5.4. Publicar en el Servidor
+del AUR</a></li>
+<li class="toc-item"><a class="toc-link" href="#mantenimiento-adopción-y-co-mantenimiento">6. Mantenimiento,
+Adopción y Co-mantenimiento</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#actualización-de-versiones-de-un-paquete-existente">6.1.
+Actualización de Versiones de un Paquete Existente</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#adopción-de-paquetes-huérfanos-orphans">6.2. Adopción de
+Paquetes Huérfanos (Orphans)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#paquetes-abandonados-con-mantenedor-inactivo-regla-de-los-14-días">6.3.
+Paquetes Abandonados con Mantenedor Inactivo (Regla de los 14 Días)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#co-mantenimiento">6.4. Co-mantenimiento</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Article Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Publicación · Investigación</div>
+          <h1 class="article-title">Prontuario para Publicar y Mantener Paquetes en el AUR</h1>
+
+          <div class="article-meta">
+            <time datetime="2026-04-02">2026-04-02</time>
+            <span>·</span>
+            <span>14 min de lectura</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            <span class="tag">#prontuario</span> <span class="tag">#linux</span>
+          </div>
+
+          <!-- Featured Banner Image -->
+          
+          <div class="article-banner-wrapper">
+            <img class="article-banner-img" src="../images/post/publicar-y-mantener-paquetes-en-el-aur.avif" alt="Prontuario para Publicar y Mantener Paquetes en el AUR">
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <p>El <strong>Arch User Repository (AUR)</strong> es, sin duda, la joya
+de la corona de Arch Linux. Gran parte de la magia de esta distribución
+se debe a que casi cualquier programa existente en el mundo Linux ya fue
+empaquetado por alguien de la comunidad y está listo para instalar. Sin
+embargo, llega un momento en el que una herramienta que necesitas no
+está disponible, o el paquete existente quedó abandonado en el
+tiempo.</p>
+<p>Empaquetar para el AUR no es física cuántica: solo necesitas entender
+la estructura declarativa de un archivo <code>PKGBUILD</code> y seguir
+las normativas de empaquetado de Arch. En este prontuario explicaré
+desde la configuración criptográfica de tu entorno con SSH, hasta cómo
+redactar recetas limpias para binarios precompilados (<code>-bin</code>)
+y compilaciones dinámicas desde repositorios Git (<code>-git</code>),
+evitando errores comunes y manteniendo el ecosistema impecable.</p>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">IMPORTANTE</span>
+  </div>
+  <div class="callout-content">
+<p>Para seguir esta guía debes tener instalado en tu sistema el
+metapaquete base de compilación (<code>base-devel</code>) y
+<code>git</code>, además de contar con una cuenta registrada en el
+portal oficial de <a
+href="https://aur.archlinux.org/">aur.archlinux.org</a>.</p>
+  </div>
+</div>
+<h2  id="configuración-del-entorno-y-conexión-ssh">1. Configuración del
+Entorno y Conexión SSH</h2>
+<p>El AUR opera internamente como una gran colección de repositorios Git
+independientes que se gestionan exclusivamente a través del protocolo
+seguro SSH. Para poder pushear cambios, necesitas autenticar tu máquina
+frente a los servidores de Arch.</p>
+<h3  id="generación-de-una-llave-ssh-moderna">1.1. Generación de una
+Llave SSH Moderna</h3>
+<p>Utilizaremos el algoritmo <strong>Ed25519</strong>, que ofrece firmas
+criptográficas mucho más seguras, ligeras y rápidas que el estándar
+clásico RSA:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">&quot;tu_email@ejemplo.com&quot;</span></span></code></pre>
+</div>
+<p>El asistente te preguntará dónde guardar la llave; presiona Enter
+para aceptar la ruta por defecto (<code>~/.ssh/id_ed25519</code>). Si le
+colocas una contraseña (<em>passphrase</em>) (lo cual es muy
+recomendable por seguridad), puedes integrarla al agente SSH de tu
+terminal para no tener que escribirla a cada rato:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Añade esto al final de tu ~/.bashrc o ~/.zshrc</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">&quot;</span><span class="va">$(</span><span class="fu">ssh-agent</span> <span class="at">-s</span><span class="va">)</span><span class="st">&quot;</span> <span class="op">&gt;</span> /dev/null</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span> ~/.ssh/id_ed25519 <span class="dv">2</span><span class="op">&gt;</span> /dev/null</span></code></pre>
+</div>
+<h3  id="vincular-tu-llave-pública-en-el-portal-del-aur">1.2. Vincular tu
+Llave Pública en el Portal del AUR</h3>
+<ol type="1">
+<li><p>Imprime en pantalla y copia tu llave pública:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/id_ed25519.pub</span></code></pre>
+</div></li>
+<li><p>Inicia sesión en <a
+href="https://aur.archlinux.org/">aur.archlinux.org</a> y entra en la
+sección <strong>«Mi cuenta»</strong> (<em>My Account</em>).</p></li>
+<li><p>Pega la clave copiada en el campo <strong>«SSH Public
+Key»</strong> y guarda los cambios.</p></li>
+</ol>
+<h3  id="probar-la-autenticación">1.3. Probar la Autenticación</h3>
+<p>Verifica que el servidor reconozca tu identidad ejecutando:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> aur@aur.archlinux.org</span></code></pre>
+</div>
+<p>Si todo está fino, recibirás un mensaje de bienvenida similar a
+este:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Plaintext" title="Copiar código al portapapeles">Plaintext</button>
+  <pre class="code-pre"><code>Welcome to AUR, druxorey! Interactive shell is disabled.</code></pre>
+</div>
+<h2  id="los-tres-sabores-de-paquetes-en-el-aur">2. Los Tres Sabores de
+Paquetes en el AUR</h2>
+<p>En el Arch User Repository no existe un único molde para empaquetar.
+Para mantener el ecosistema ordenado, la comunidad de Arch Linux definió
+un estándar estricto de nomenclatura según el origen del código y la
+forma en que se distribuye.</p>
+<h3  id="diferencias-y-propósito-del-estándar">2.1. Diferencias y
+Propósito del Estándar</h3>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 9%" />
+<col style="width: 20%" />
+<col style="width: 26%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th><strong>Tipo de paquete</strong></th>
+<th><strong>Sufijo</strong></th>
+<th><strong>Origen del software</strong></th>
+<th><strong>Proceso de instalación</strong></th>
+<th><strong>Caso de uso ideal</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Estándar</strong></td>
+<td><em>Ninguno</em> (<code>paquete</code>)</td>
+<td>Código fuente comprimido de una versión estable (ej.
+<code>v1.2.0.tar.gz</code>).</td>
+<td>Descarga el tarball del release, lo compila en la máquina del
+usuario y lo empaqueta.</td>
+<td>La opción por defecto para proyectos de código abierto con versiones
+estables publicadas.</td>
+</tr>
+<tr>
+<td><strong>Binario</strong></td>
+<td><code>-bin</code> (<code>paquete-bin</code>)</td>
+<td>Ejecutable precompilado por el autor original (o binarios extraídos
+de <code>.deb</code>/<code>.rpm</code>).</td>
+<td>Descarga directamente el binario empaquetado, omite la compilación y
+lo ubica en <code>/usr/bin/</code>.</td>
+<td>Software privativo/cerrado o programas gigantescos que tardarían
+horas en compilar en una laptop modesta (como navegadores o paquetes
+pesados de Rust/Electron).</td>
+</tr>
+<tr>
+<td><strong>VCS / Dinámico</strong></td>
+<td><code>-git</code>, <code>-hg</code>, <code>-svn</code>
+(<code>paquete-git</code>)</td>
+<td>La rama principal del repositorio de control de versiones
+(<code>git clone</code>).</td>
+<td>Clona el repositorio en vivo, autocalcula la versión según el último
+commit y compila el código más reciente.</td>
+<td>Probar funciones en desarrollo (<em>bleeding-edge</em>), parches
+recientes o cuando el autor no publica <em>releases</em> formales.</td>
+</tr>
+</tbody>
+</table>
+<h3  id="cómo-determinar-qué-tipo-de-paquete-crear">2.2. ¿Cómo Determinar
+qué Tipo de Paquete Crear?</h3>
+<p>Antes de crear un repositorio en el AUR, pregúntate lo siguiente para
+elegir el nombre adecuado:</p>
+<ul>
+<li><p><strong>¿El software es de código cerrado o comercial?</strong>
+Entonces debe ser obligatoriamente
+<strong><code>paquete-bin</code></strong>, ya que no existe código
+fuente para compilar.</p></li>
+<li><p><strong>¿Es un programa ligero o mediano de código abierto con
+versiones numeradas (Tags/Releases)?</strong> En ese caso crea el
+paquete estándar <strong><code>paquete</code></strong>. Es el formato
+preferido por las directrices de Arch.</p></li>
+<li><p><strong>¿Es un programa abierto pero compilarlo le exige al
+usuario 32 GB de RAM y dos horas de procesador?</strong> Puedes publicar
+<strong><code>paquete-bin</code></strong> (usando los binarios de los
+releases oficiales) para ahorrarle ese trabajo al usuario, o bien
+mantener ambos: <code>paquete</code> (fuente) y <code>paquete-bin</code>
+(binario).</p></li>
+<li><p><strong>¿Quieres ofrecer la versión más fresca del repositorio de
+desarrollo sin esperar a que saquen versión oficial?</strong> Crea
+<strong><code>paquete-git</code></strong>.</p></li>
+</ul>
+<h2  id="base-común-del-empaquetado-estructura-y-archivos">3. Base Común
+del Empaquetado: Estructura y Archivos</h2>
+<p>Sin importar si estás haciendo un paquete normal, <code>-bin</code> o
+<code>-git</code>, todos comparten la misma base estructural y las
+mismas reglas de convivencia en el sistema.</p>
+<h3  id="clonación-del-repositorio-y-blindaje-con-.gitignore">3.1.
+Clonación del Repositorio y Blindaje con <code>.gitignore</code></h3>
+<p>Cada paquete en el AUR es un repositorio de Git independiente.
+Clónalo según el nombre que hayas definido:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone ssh://aur@aur.archlinux.org/nombre-paquete.git</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> nombre-paquete</span></code></pre>
+</div>
+<div class="callout-box warning">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">ADVERTENCIA: Cuidado con los archivos basura en el
+repositorio</span>
+  </div>
+  <div class="callout-content">
+<p>Los servidores del AUR solo aceptan archivos de texto plano que
+contengan las instrucciones (<code>PKGBUILD</code>,
+<code>.SRCINFO</code>, parches o accesos directos
+<code>.desktop</code>). Subir archivos comprimidos
+(<code>.tar.gz</code>), binarios o carpetas temporales de compilación es
+una falta grave a las normativas de Arch.</p>
+  </div>
+</div>
+<p>Crea de inmediato un archivo <code>.gitignore</code> para no subir
+artefactos por error:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt; &#39;EOF&#39;</span> <span class="op">&gt;</span> .gitignore</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">pkg/</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">src/</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">*.tar.*</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">*.zip</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="st">*.deb</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">*.rpm</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre>
+</div>
+<h3  id="variables-y-reglas-de-convivencia">3.2. Variables y Reglas de
+Convivencia</h3>
+<p>Todo archivo <code>PKGBUILD</code> cuenta con variables estructurales
+que debes declarar al inicio:</p>
+<ul>
+<li><p><strong><code>_pkgname</code></strong>: Variable auxiliar para
+guardar el nombre base del programa y evitar escribirlo repetidas
+veces.</p></li>
+<li><p><strong><code>pkgname</code></strong>: El nombre oficial del
+paquete en el AUR (<code>${_pkgname}</code>,
+<code>${_pkgname}-bin</code> o <code>${_pkgname}-git</code>).</p></li>
+<li><p><strong><code>pkgdesc</code>, <code>url</code>,
+<code>license</code>, <code>arch</code></strong>: Metadatos
+descriptivos, página oficial, licencia legal (ej. <code>MIT</code>,
+<code>GPL-3.0-or-later</code>) y arquitecturas compatibles
+(<code>'x86_64'</code>, <code>'aarch64'</code>).</p></li>
+<li><p><strong><code>provides=("${_pkgname}")</code></strong>: Le avisa
+a pacman que, aunque el paquete se llame <code>nombre-bin</code> o
+<code>nombre-git</code>, provee la herramienta real
+<code>nombre</code>.</p></li>
+<li><p><strong><code>conflicts=("${_pkgname}")</code></strong>: Evita
+que dos variantes del mismo programa se instalen al mismo tiempo y armen
+un arroz con mango en las rutas de tu disco.</p></li>
+</ul>
+<h3  id="la-función-de-instalación-package-y-el-directorio-ficticio">3.3.
+La Función de Instalación (<code>package</code>) y el Directorio
+Ficticio</h3>
+<p>Arch Linux utiliza una técnica llamada <em>fakeroot</em>: durante la
+instalación crea un directorio temporal llamado <code>${pkgdir}</code>
+que simula ser la raíz (<code>/</code>) de tu sistema.</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">package()</span> <span class="kw">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> <span class="st">&quot;</span><span class="va">${srcdir}</span><span class="st">&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Crea las carpetas intermedias y da permisos de ejecución (para binarios)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install</span> <span class="at">-Dm755</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${pkgdir}</span><span class="st">/usr/bin/</span><span class="va">${_pkgname}</span><span class="st">&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Asigna permisos de lectura (para licencias y documentación)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install</span> <span class="at">-Dm644</span> LICENSE <span class="st">&quot;</span><span class="va">${pkgdir}</span><span class="st">/usr/share/licenses/</span><span class="va">${pkgname}</span><span class="st">/LICENSE&quot;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre>
+</div>
+<p>Todo archivo que deposites dentro de <code>${pkgdir}/usr/bin/</code>
+terminará instalado exactamente en <code>/usr/bin/</code> cuando el
+usuario lo instale con <code>pacman</code>.</p>
+<h2  id="implementación-del-pkgbuild-según-el-tipo-de-paquete">4.
+Implementación del <code>PKGBUILD</code> según el Tipo de Paquete</h2>
+<p>Para facilitarte la vida, no necesitas inventar la rueda desde cero
+ni ponerte a adivinar qué variables o banderas de compilación requiere
+cada lenguaje. La propia comunidad de Arch Linux mantiene prototipos y
+guías oficiales de empaquetado (<em>package guidelines</em>) diseñadas
+para asegurar que el software compile de forma limpia, reproducible y
+optimizada para el sistema.</p>
+<p>Si la herramienta que quieres publicar está escrita en un lenguaje o
+entorno particular, puedes consultar y apoyarte directamente en su
+normativa técnica correspondiente en la Arch Wiki:</p>
+<ul>
+<li><strong>Proyectos en Go (Golang):</strong> <a
+href="https://wiki.archlinux.org/title/Go_package_guidelines">Go package
+guidelines</a></li>
+<li><strong>Proyectos en Rust (Cargo):</strong> <a
+href="https://wiki.archlinux.org/title/Rust_package_guidelines">Rust
+package guidelines</a></li>
+<li><strong>Proyectos en Python:</strong> <a
+href="https://wiki.archlinux.org/title/Python_package_guidelines">Python
+package guidelines</a></li>
+<li><strong>Proyectos en C / C++ (CMake o Meson):</strong> <a
+href="https://wiki.archlinux.org/title/CMake_package_guidelines">CMake
+package guidelines</a> y <a
+href="https://wiki.archlinux.org/title/Meson_package_guidelines">Meson
+package guidelines</a></li>
+<li><strong>Proyectos en Node.js / JavaScript:</strong> <a
+href="https://wiki.archlinux.org/title/Node.js_package_guidelines">Node.js
+package guidelines</a></li>
+<li><strong>Paquetes de control de versiones (Git / VCS):</strong> <a
+href="https://wiki.archlinux.org/title/VCS_package_guidelines">VCS
+package guidelines</a></li>
+</ul>
+<p>A continuación, revisaremos las tres plantillas base fundamentales
+para que elijas la que mejor se adapte a tu caso:</p>
+<h3  id="caso-a-paquete-estándar-desde-código-fuente-estable">4.1. Caso
+A: Paquete Estándar (Desde Código Fuente Estable)</h3>
+<p>Descarga el código fuente de un release específico, lo compila de
+forma reproducible y lo empaqueta.</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Maintainer: Tu Nombre &lt;tu_email@ejemplo.com&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="va">_pkgname</span><span class="op">=</span>herramienta</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="va">pkgname</span><span class="op">=</span><span class="va">${_pkgname}</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="va">pkgver</span><span class="op">=</span>1.0.0</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="va">pkgrel</span><span class="op">=</span>1</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="va">pkgdesc</span><span class="op">=</span><span class="st">&quot;Herramienta compilada desde código fuente estable&quot;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="va">arch</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;x86_64&#39;</span> <span class="st">&#39;aarch64&#39;</span><span class="va">)</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span><span class="st">&quot;https://github.com/autor/herramienta&quot;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="va">license</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;MIT&#39;</span><span class="va">)</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="va">depends</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;glibc&#39;</span><span class="va">)</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="va">makedepends</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;make&#39;</span> <span class="st">&#39;gcc&#39;</span><span class="va">)</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="va">provides</span><span class="op">=</span><span class="va">(</span><span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span><span class="va">)</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="va">conflicts</span><span class="op">=</span><span class="va">(</span><span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">-bin&quot;</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">-git&quot;</span><span class="va">)</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="va">source</span><span class="op">=</span><span class="va">(</span><span class="st">&quot;</span><span class="va">${url}</span><span class="st">/archive/refs/tags/v</span><span class="va">${pkgver}</span><span class="st">.tar.gz&quot;</span><span class="va">)</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="va">sha256sums</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;SKIP&#39;</span><span class="va">)</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">build()</span> <span class="kw">{</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">-</span><span class="va">${pkgver}</span><span class="st">&quot;</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">make</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="fu">package()</span> <span class="kw">{</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">-</span><span class="va">${pkgver}</span><span class="st">&quot;</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install</span> <span class="at">-Dm755</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${pkgdir}</span><span class="st">/usr/bin/</span><span class="va">${_pkgname}</span><span class="st">&quot;</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install</span> <span class="at">-Dm644</span> LICENSE <span class="st">&quot;</span><span class="va">${pkgdir}</span><span class="st">/usr/share/licenses/</span><span class="va">${pkgname}</span><span class="st">/LICENSE&quot;</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre>
+</div>
+<h3  id="caso-b-paquete-precompilado--bin">4.2. Caso B: Paquete
+Precompilado (<code>-bin</code>)</h3>
+<p>Descarga directamente el ejecutable ya compilado por los
+desarrolladores desde sus <em>Releases</em>. Observa que <strong>no
+lleva función <code>build()</code></strong>, ya que el binario viene
+listo de fábrica.</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Maintainer: Tu Nombre &lt;tu_email@ejemplo.com&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="va">_pkgname</span><span class="op">=</span>herramienta</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="va">pkgname</span><span class="op">=</span><span class="va">${_pkgname}</span>-bin</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="va">pkgver</span><span class="op">=</span>1.0.0</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="va">pkgrel</span><span class="op">=</span>1</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="va">pkgdesc</span><span class="op">=</span><span class="st">&quot;Herramienta distribuida como binario precompilado&quot;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="va">arch</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;x86_64&#39;</span> <span class="st">&#39;aarch64&#39;</span><span class="va">)</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span><span class="st">&quot;https://github.com/autor/herramienta&quot;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="va">license</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;MIT&#39;</span><span class="va">)</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="va">provides</span><span class="op">=</span><span class="va">(</span><span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span><span class="va">)</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="va">conflicts</span><span class="op">=</span><span class="va">(</span><span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">-git&quot;</span><span class="va">)</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Enlaces de descarga dinámicos según la arquitectura del procesador</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="va">source_x86_64</span><span class="op">=</span><span class="va">(</span><span class="st">&quot;</span><span class="va">${url}</span><span class="st">/releases/download/v</span><span class="va">${pkgver}</span><span class="st">/</span><span class="va">${_pkgname}</span><span class="st">-v</span><span class="va">${pkgver}</span><span class="st">-linux-amd64.tar.gz&quot;</span><span class="va">)</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="va">source_aarch64</span><span class="op">=</span><span class="va">(</span><span class="st">&quot;</span><span class="va">${url}</span><span class="st">/releases/download/v</span><span class="va">${pkgver}</span><span class="st">/</span><span class="va">${_pkgname}</span><span class="st">-v</span><span class="va">${pkgver}</span><span class="st">-linux-arm64.tar.gz&quot;</span><span class="va">)</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="va">sha256sums_x86_64</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;SKIP&#39;</span><span class="va">)</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="va">sha256sums_aarch64</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;SKIP&#39;</span><span class="va">)</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="fu">package()</span> <span class="kw">{</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> <span class="st">&quot;</span><span class="va">${srcdir}</span><span class="st">&quot;</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install</span> <span class="at">-Dm755</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${pkgdir}</span><span class="st">/usr/bin/</span><span class="va">${_pkgname}</span><span class="st">&quot;</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install</span> <span class="at">-Dm644</span> LICENSE <span class="st">&quot;</span><span class="va">${pkgdir}</span><span class="st">/usr/share/licenses/</span><span class="va">${pkgname}</span><span class="st">/LICENSE&quot;</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre>
+</div>
+<h3  id="caso-c-paquete-dinámico--git">4.3. Caso C: Paquete Dinámico
+(<code>-git</code>)</h3>
+<p>Clona el repositorio en vivo. Utiliza una función
+<code>pkgver()</code> que cuenta la cantidad de commits e inyecta la
+versión en tiempo real.</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Maintainer: Tu Nombre &lt;tu_email@ejemplo.com&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="va">_pkgname</span><span class="op">=</span>herramienta</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="va">pkgname</span><span class="op">=</span><span class="va">${_pkgname}</span>-git</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="va">pkgver</span><span class="op">=</span>r142.a1b2c3d</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="va">pkgrel</span><span class="op">=</span>1</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="va">pkgdesc</span><span class="op">=</span><span class="st">&quot;Herramienta compilada desde el último commit de desarrollo&quot;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="va">arch</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;x86_64&#39;</span> <span class="st">&#39;aarch64&#39;</span><span class="va">)</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="va">url</span><span class="op">=</span><span class="st">&quot;https://github.com/autor/herramienta&quot;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="va">license</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;MIT&#39;</span><span class="va">)</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="va">provides</span><span class="op">=</span><span class="va">(</span><span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span><span class="va">)</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="va">conflicts</span><span class="op">=</span><span class="va">(</span><span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">-bin&quot;</span><span class="va">)</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="va">makedepends</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;git&#39;</span> <span class="st">&#39;gcc&#39;</span> <span class="st">&#39;make&#39;</span><span class="va">)</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="va">source</span><span class="op">=</span><span class="va">(</span><span class="st">&quot;git+</span><span class="va">${url}</span><span class="st">.git&quot;</span><span class="va">)</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="va">sha256sums</span><span class="op">=</span><span class="va">(</span><span class="st">&#39;SKIP&#39;</span><span class="va">)</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="fu">pkgver()</span> <span class="kw">{</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Formato estándar: r&lt;número_commits&gt;.&lt;hash_corto&gt;</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">printf</span> <span class="st">&quot;r%s.%s&quot;</span> <span class="st">&quot;</span><span class="va">$(</span><span class="fu">git</span> rev-list <span class="at">--count</span> HEAD<span class="va">)</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$(</span><span class="fu">git</span> rev-parse <span class="at">--short</span><span class="op">=</span>7 HEAD<span class="va">)</span><span class="st">&quot;</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="fu">build()</span> <span class="kw">{</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">make</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="fu">package()</span> <span class="kw">{</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install</span> <span class="at">-Dm755</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${pkgdir}</span><span class="st">/usr/bin/</span><span class="va">${_pkgname}</span><span class="st">&quot;</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install</span> <span class="at">-Dm644</span> LICENSE <span class="st">&quot;</span><span class="va">${pkgdir}</span><span class="st">/usr/share/licenses/</span><span class="va">${pkgname}</span><span class="st">/LICENSE&quot;</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre>
+</div>
+<h4
+id="directivas-de-compilación-comunes-según-el-lenguaje-en-build">Directivas
+de compilación comunes según el lenguaje en <code>build()</code>:</h4>
+<ul>
+<li><p><strong>Proyectos en Go:</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CGO_CPPFLAGS</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${CPPFLAGS}</span><span class="st">&quot;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CGO_CFLAGS</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${CFLAGS}</span><span class="st">&quot;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CGO_CXXFLAGS</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${CXXFLAGS}</span><span class="st">&quot;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CGO_LDFLAGS</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${LDFLAGS}</span><span class="st">&quot;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GOFLAGS</span><span class="op">=</span><span class="st">&quot;-buildmode=pie -trimpath -mod=readonly -modcacherw&quot;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> build <span class="at">-o</span> <span class="st">&quot;</span><span class="va">${_pkgname}</span><span class="st">&quot;</span> .</span></code></pre>
+</div></li>
+<li><p><strong>Proyectos en Rust:</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> build <span class="at">--release</span> <span class="at">--locked</span> <span class="at">--all-features</span> <span class="at">--target-dir</span><span class="op">=</span>target</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># El binario se instala desde: target/release/${_pkgname}</span></span></code></pre>
+</div></li>
+<li><p><strong>Proyectos en C/C++ con CMake:</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="at">-S</span> . <span class="at">-G</span> Ninja <span class="at">-DCMAKE_INSTALL_PREFIX</span><span class="op">=</span>/usr <span class="at">-DCMAKE_BUILD_TYPE</span><span class="op">=</span>Release</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> build</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># En package(): DESTDIR=&quot;${pkgdir}&quot; cmake --install build</span></span></code></pre>
+</div></li>
+</ul>
+<h2  id="flujo-común-de-verificación-metadatos-y-publicación">5. Flujo
+Común de Verificación, Metadatos y Publicación</h2>
+<p>Una vez redactado el <code>PKGBUILD</code>, sigue este procedimiento
+secuencial para dejar el paquete al pelo y subirlo a los servidores.</p>
+<h3  id="calcular-hashes-automáticamente">5.1. Calcular Hashes
+Automáticamente</h3>
+<p>Reemplaza los marcadores temporales <code>SKIP</code> por las firmas
+criptográficas reales calculadas por el sistema:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">updpkgsums</span></span></code></pre>
+</div>
+<p>En los paquetes <code>-git</code>, como el repositorio cambia con
+cada commit, <code>sha256sums</code> permanece como <code>'SKIP'</code>
+y este paso se omite.</p>
+<h3  id="prueba-de-compilación-e-instalación-local">5.2. Prueba de
+Compilación e Instalación Local</h3>
+<p>Prueba que el paquete resuelva dependencias, compile e instale
+limpiamente en tu máquina:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">makepkg</span> <span class="at">-si</span></span></code></pre>
+</div>
+<p>Verifica de inmediato en tu terminal que el comando principal
+funcione y responda:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nombre-herramienta</span> <span class="at">--version</span></span></code></pre>
+</div>
+<h3  id="generación-obligatoria-del-.srcinfo">5.3. Generación Obligatoria
+del <code>.SRCINFO</code></h3>
+<p>La plataforma web del AUR no lee archivos <code>PKGBUILD</code> por
+motivos de rendimiento y seguridad; utiliza exclusivamente el archivo
+estático <code>.SRCINFO</code> para indexar el paquete y mostrar su
+información en el buscador web.</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">makepkg</span> <span class="at">--printsrcinfo</span> <span class="op">&gt;</span> .SRCINFO</span></code></pre>
+</div>
+<div class="callout-box important">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">IMPORTANTE</span>
+  </div>
+  <div class="callout-content">
+<p>Cada vez que modifiques cualquier variable en el
+<code>PKGBUILD</code> (subir versión, cambiar descripción o agregar
+dependencias), debes volver a ejecutar
+<code>makepkg --printsrcinfo &gt; .SRCINFO</code> antes de hacer
+commit.</p>
+  </div>
+</div>
+<h3  id="publicar-en-el-servidor-del-aur">5.4. Publicar en el Servidor
+del AUR</h3>
+<p>Sube los cambios a la plataforma usando Git:</p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add PKGBUILD .SRCINFO .gitignore</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;feat: publicar version 1.0.0&quot;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin master</span></code></pre>
+</div>
+<p>Si todo está en orden, tu paquete aparecerá disponible públicamente
+en la web del AUR en cuestión de segundos.</p>
+<h2  id="mantenimiento-adopción-y-co-mantenimiento">6. Mantenimiento,
+Adopción y Co-mantenimiento</h2>
+<h3  id="actualización-de-versiones-de-un-paquete-existente">6.1.
+Actualización de Versiones de un Paquete Existente</h3>
+<p>Cuando el autor publique una nueva versión:</p>
+<ol type="1">
+<li>Edita el <code>PKGBUILD</code> y actualiza la variable
+<code>pkgver</code> (y reinicia <code>pkgrel=1</code>).</li>
+<li>Ejecuta <code>updpkgsums</code> para actualizar las sumas de
+verificación.</li>
+<li>Compila localmente con <code>makepkg -si</code> para comprobar que
+nada se rompa.</li>
+<li>Regenera los metadatos con
+<code>makepkg --printsrcinfo &gt; .SRCINFO</code>.</li>
+<li>Haz <code>git commit -m "chore: bump version to X.Y.Z"</code> y
+<code>git push origin master</code>.</li>
+</ol>
+<h3  id="adopción-de-paquetes-huérfanos-orphans">6.2. Adopción de
+Paquetes Huérfanos (<em>Orphans</em>)</h3>
+<p>Si encuentras un paquete cuyo mantenedor aparece como
+<strong>«None»</strong>, significa que está libre para que cualquier
+usuario asuma la responsabilidad de mantenerlo:</p>
+<ul>
+<li><p><strong>Vía Web:</strong> Haz clic en <strong>«Adopt
+Package»</strong> en el menú lateral derecho.</p></li>
+<li><p><strong>Vía Terminal (SSH):</strong></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Shell" title="Copiar código al portapapeles">Shell</button>
+  <pre class="code-pre"><code><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> aur@aur.archlinux.org adopt nombre-paquete</span></code></pre>
+</div></li>
+</ul>
+<p>Una vez adoptado, clona el repositorio, coloca tu nombre en el
+encabezado <code># Maintainer:</code>, actualiza el código y sube los
+cambios.</p>
+<h3 
+id="paquetes-abandonados-con-mantenedor-inactivo-regla-de-los-14-días">6.3.
+Paquetes Abandonados con Mantenedor Inactivo (Regla de los 14 Días)</h3>
+<p>Si un paquete lleva meses sin actualizarse o está roto, pero aún
+tiene a un mantenedor asignado, no puedes quitárselo de la nada. Hay un
+protocolo comunitario que debes respetar:</p>
+<ol type="1">
+<li><p><strong>Deja un comentario público</strong> en la página del
+paquete avisando que la versión actual está rota o desactualizada y
+ofrece tu ayuda.</p></li>
+<li><p><strong>Espera un período de cortesía de catorce (14) días
+continuos</strong>.</p></li>
+<li><p>Si tras dos semanas el mantenedor no da señales de vida, entra en
+el menú web del paquete y haz clic en <strong>«Submit Request»</strong>
+&gt; <strong>«Orphan Request»</strong>.</p></li>
+<li><p>Explica con claridad que el paquete está desactualizado, que se
+le notificó formalmente en comentarios y que venció el plazo de 14 días
+sin respuesta.</p></li>
+<li><p>Un Moderador de Confianza (<em>Trusted User</em>) revisará la
+solicitud, pasará el paquete a estado huérfano y podrás adoptarlo
+formalmente.</p></li>
+</ol>
+<h3  id="co-mantenimiento">6.4. Co-mantenimiento</h3>
+<p>Para colaborar con otros desarrolladores sin transferir la propiedad
+del paquete, el mantenedor principal puede agregar colaboradores desde
+el enlace <strong>«Manage Co-Maintainers»</strong> en la web del AUR.
+Los co-mantenedores tienen permisos completos para empujar commits con
+<code>git push</code> y moderar comentarios destacados, pero el dueño
+principal conserva el control sobre la eliminación o transferencia
+definitiva del proyecto.</p>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Arch Wiki.</strong> <em>Arch User Repository (Guía
+general del AUR)</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/Arch_User_Repository">wiki.archlinux.org/title/Arch_User_Repository</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>PKGBUILD (Especificación técnica
+de variables y funciones)</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/PKGBUILD">wiki.archlinux.org/title/PKGBUILD</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>AUR submission guidelines (Reglas
+y políticas de publicación)</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/AUR_submission_guidelines">wiki.archlinux.org/title/AUR_submission_guidelines</a></p></li>
+<li><p><strong>Arch Wiki.</strong> <em>VCS package guidelines (Reglas
+para paquetes dinámicos -git)</em>. Recuperado de <a
+href="https://wiki.archlinux.org/title/VCS_package_guidelines">wiki.archlinux.org/title/VCS_package_guidelines</a></p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>

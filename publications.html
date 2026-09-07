@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Druxorey | Publicaciones & Investigaciones</title>
+  <meta name="description" content="Publicaciones, artículos técnicos, prontuarios e investigaciones sobre Linux, programación de sistemas y computación escritas por Druxorey.">
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="./images/logo.svg">
+  <script type="module" crossorigin src="./assets/publications-CNgge5TC.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/main-C862Lgn9.js">
+  <link rel="modulepreload" crossorigin href="./assets/main-BfJ2_Rrr.js">
+  <link rel="stylesheet" crossorigin href="./assets/main-DFGYH4cW.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container">
+      <a href="./index.html" class="nav-brand" id="navBrandLink">
+        <img src="./images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="./index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="./projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="./publications.html" class="nav-link active">Publicaciones</a></li>
+          <li><a href="./notes.html" class="nav-link">Apuntes</a></li>
+          <li><a href="./contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="./index.html" class="nav-link">Sobre mí</a>
+      <a href="./projects.html" class="nav-link">Proyectos</a>
+      <a href="./publications.html" class="nav-link active">Publicaciones</a>
+      <a href="./notes.html" class="nav-link">Apuntes</a>
+      <a href="./contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+
+      <header class="page-header">
+        <h1 class="page-title">Publicaciones e Investigaciones</h1>
+      </header>
+
+      <section class="blog-search-section">
+        <div class="blog-search-wrap">
+          <input
+            type="text"
+            id="blogSearchInput"
+            class="input-search"
+            placeholder="Buscar por título, contenido o etiqueta (ej. #linux, git, kernel)..."
+            aria-label="Buscar publicaciones"
+          />
+        </div>
+
+        <div class="blog-filters-row">
+          <div id="blogTagsContainer" class="blog-tags-list"></div>
+          <span id="articleCount" class="blog-article-count">
+            Cargando publicaciones...
+          </span>
+        </div>
+      </section>
+
+      <section id="articlesContainer" class="articles-list">
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="./index.html">Sobre mí</a>
+        <a href="./projects.html">Proyectos</a>
+        <a href="./publications.html">Publicaciones</a>
+        <a href="./notes.html">Apuntes</a>
+        <a href="./contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
