@@ -1,5 +1,4 @@
-@import './dracula-palette.css';
-@import './global-variables.css';
+@import './root.css';
 @import './base.css';
 @import './layout.css';
 @import './components.css';
