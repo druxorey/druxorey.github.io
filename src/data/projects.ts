@@ -14,20 +14,6 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
-    "id": "drxpkg",
-    "title": "drxpkg",
-    "description": "A terminal user interface for searching and installing Arch Linux packages",
-    "tags": [
-      "Go"
-    ],
-    "featured": true,
-    "links": {
-      "github": "https://github.com/druxorey/drxpkg",
-      "demo": null
-    },
-    "year": "2026"
-  },
-  {
     "id": "druxorey.github.io",
     "title": "druxorey.github.io",
     "description": "A personal portfolio and blog showcasing my projects and writings",
@@ -37,7 +23,7 @@ export const projectsData: Project[] = [
     "featured": true,
     "links": {
       "github": "https://github.com/druxorey/druxorey.github.io",
-      "demo": "https://druxorey.github.io/"
+      "demo": "https://druxorey.me"
     },
     "year": "2026"
   },
@@ -55,7 +41,40 @@ export const projectsData: Project[] = [
     "featured": true,
     "links": {
       "github": "https://github.com/druxorey/dotfiles",
-      "demo": "https://druxorey.github.io"
+      "demo": "https://druxorey.me"
+    },
+    "year": "2026"
+  },
+  {
+    "id": "dracula-for-stylus",
+    "title": "dracula-for-stylus",
+    "description": "Are you tired of the same boring colors on your websites? Then try Dracula For Stylus",
+    "tags": [
+      "Less",
+      "Custom-css",
+      "Stylus"
+    ],
+    "featured": true,
+    "links": {
+      "github": "https://github.com/druxorey/dracula-for-stylus",
+      "demo": "https://userstyles.world/user/druxorey"
+    },
+    "year": "2026"
+  },
+  {
+    "id": "drxpkg",
+    "title": "drxpkg",
+    "description": "A terminal user interface for searching and installing Arch Linux packages",
+    "tags": [
+      "Go",
+      "Package-manager",
+      "Pacman",
+      "Tui"
+    ],
+    "featured": true,
+    "links": {
+      "github": "https://github.com/druxorey/drxpkg",
+      "demo": null
     },
     "year": "2026"
   },
@@ -78,34 +97,17 @@ export const projectsData: Project[] = [
     "year": "2026"
   },
   {
-    "id": "dracula-for-stylus",
-    "title": "dracula-for-stylus",
-    "description": "Are you tired of the same boring colors on your websites? Then try Dracula For Stylus",
+    "id": "startpage",
+    "title": "startpage",
+    "description": "A minimalist startpage designed for quick access to your favorite websites.",
     "tags": [
-      "Less",
-      "Custom-css",
-      "Stylus"
-    ],
-    "featured": true,
-    "links": {
-      "github": "https://github.com/druxorey/dracula-for-stylus",
-      "demo": "https://userstyles.world/user/druxorey"
-    },
-    "year": "2026"
-  },
-  {
-    "id": "gba-icons",
-    "title": "gba-icons",
-    "description": "A collection of icons for GBA games",
-    "tags": [
-      "Gba",
-      "Icons",
-      "Nintendo-ds"
+      "CSS",
+      "Startpage"
     ],
     "featured": false,
     "links": {
-      "github": "https://github.com/druxorey/gba-icons",
-      "demo": null
+      "github": "https://github.com/druxorey/startpage",
+      "demo": "https://druxorey.github.io/startpage/"
     },
     "year": "2026"
   },
@@ -123,6 +125,22 @@ export const projectsData: Project[] = [
     "featured": false,
     "links": {
       "github": "https://github.com/druxorey/romyr-tweaks",
+      "demo": null
+    },
+    "year": "2026"
+  },
+  {
+    "id": "gba-icons",
+    "title": "gba-icons",
+    "description": "A collection of icons for GBA games",
+    "tags": [
+      "Gba",
+      "Icons",
+      "Nintendo-ds"
+    ],
+    "featured": false,
+    "links": {
+      "github": "https://github.com/druxorey/gba-icons",
       "demo": null
     },
     "year": "2026"
@@ -263,21 +281,6 @@ export const projectsData: Project[] = [
     "year": "2026"
   },
   {
-    "id": "startpage",
-    "title": "startpage",
-    "description": "A minimalist startpage designed for quick access to your favorite websites.",
-    "tags": [
-      "CSS",
-      "Startpage"
-    ],
-    "featured": false,
-    "links": {
-      "github": "https://github.com/druxorey/startpage",
-      "demo": "https://druxorey.github.io/startpage/"
-    },
-    "year": "2026"
-  },
-  {
     "id": "ucv-ayp",
     "title": "ucv-ayp",
     "description": "Respuestas y ejercicios resueltos de las guías de Algoritmos y Programación en C++, organizados por temas.",
@@ -308,36 +311,6 @@ export const projectsData: Project[] = [
     "links": {
       "github": "https://github.com/druxorey/druxorey",
       "demo": "https://druxorey.github.io/"
-    },
-    "year": "2026"
-  },
-  {
-    "id": "colorscheme-test",
-    "title": "colorscheme-test",
-    "description": "A tool to test and preview color schemes and configurations",
-    "tags": [
-      "CSS"
-    ],
-    "featured": false,
-    "links": {
-      "github": "https://github.com/druxorey/colorscheme-test",
-      "demo": "https://druxorey.github.io/colorscheme-test/"
-    },
-    "year": "2026"
-  },
-  {
-    "id": "windots",
-    "title": "windots",
-    "description": "A streamlined collection of my configuration files for Windows",
-    "tags": [
-      "PowerShell",
-      "Dotfiles-windows",
-      "Windows"
-    ],
-    "featured": false,
-    "links": {
-      "github": "https://github.com/druxorey/windots",
-      "demo": null
     },
     "year": "2026"
   }
