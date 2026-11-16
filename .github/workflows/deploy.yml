@@ -3,15 +3,22 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main          # Se ejecuta en cada push a main
-  workflow_dispatch:  # Permite dispararlo manualmente desde la UI de GitHub
+      - main
+  workflow_dispatch:
 
-# Permisos necesarios para escribir en gh-pages
+# Permisos necesarios para GitHub Pages con el método actions/deploy-pages
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+# Solo un deploy a la vez; cancela el anterior si hay uno en curso
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,36 +33,42 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      # 3. Instalar Python 3 (viene preinstalado en ubuntu-latest)
-      - name: Verify Python
-        run: python3 --version
-
-      # 4. Instalar Pandoc (necesario para compilar Markdown → HTML)
+      # 3. Instalar Pandoc (necesario para compilar Markdown → HTML)
       - name: Install Pandoc
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y pandoc
 
-      # 5. Instalar dependencias de Node
+      # 4. Instalar dependencias de Node
       - name: Install Node dependencies
         run: npm ci
 
+      # 5. Configurar GitHub Pages (inyecta la base URL correcta)
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       # 6. Build completo:
-      #    - prebuild.py → fetch GitHub projects + compila blog/markdown/ → blog/
-      #    - tsc → TypeScript type checking
+      #    - prebuild.py → sync GitHub projects + compila markdown → HTML
+      #    - tsc → verificación de tipos TypeScript
       #    - vite build → bundle final en dist/
       - name: Build site
         run: npm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 7. Deploy: publica dist/ en la rama gh-pages
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+      # 7. Subir el artefacto de dist/ para que deploy-pages lo publique
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          # Fuerza que la rama gh-pages esté limpia en cada deploy
-          force_orphan: true
-          # Evita que gh-pages agregue un archivo .nojekyll redundante
-          # (Vite ya genera el output correcto)
-          enable_jekyll: false
-          commit_message: "deploy: ${{ github.sha }}"
+          path: './dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

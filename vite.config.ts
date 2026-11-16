@@ -18,7 +18,7 @@ const dynamicInputs: Record<string, string> = {};
 });
 
 export default defineConfig({
-  base: './',
+  base: '/',
   build: {
     rollupOptions: {
       input: {
