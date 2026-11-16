@@ -159,6 +159,32 @@
 	margin: 0 auto;
 }
 
+/* Inline Article Images / Figures */
+.article-figure {
+	margin: var(--drx-spacing-xl) 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.article-img {
+	max-width: 100%;
+	height: auto;
+	border-radius: var(--drx-border-radius-md);
+	border: var(--drx-border-subtle);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+	display: block;
+}
+
+.article-figcaption {
+	margin-top: var(--drx-spacing-sm);
+	font-size: var(--drx-font-size-xs);
+	color: var(--drx-color-comment);
+	font-family: var(--drx-font-sans);
+	font-style: italic;
+}
+
 /* Share / Actions Bar */
 .article-actions-bar {
 	display: flex;

@@ -9,12 +9,29 @@ export function initializeNotes(): void {
 
 	if (!container) return;
 
-	// Recopilar materias únicas con sus conteos
 	const subjectsMap = new Map<string, number>();
+	const subjectSemesters = new Map<string, number>();
+
 	notesData.forEach((note) => {
 		const existing = subjectsMap.get(note.subject) || 0;
 		subjectsMap.set(note.subject, existing + 1);
+
+		const currentSem = subjectSemesters.get(note.subject) || 0;
+		if (note.semester > currentSem) {
+			subjectSemesters.set(note.subject, note.semester);
+		}
 	});
+
+	const getSortedSubjects = (): string[] => {
+		return Array.from(subjectsMap.keys()).sort((a, b) => {
+			const semA = subjectSemesters.get(a) ?? 0;
+			const semB = subjectSemesters.get(b) ?? 0;
+			if (semB !== semA) {
+				return semB - semA;
+			}
+			return a.localeCompare(b);
+		});
+	};
 
 	let activeSubject = 'all';
 	let searchQuery = '';
@@ -29,7 +46,6 @@ export function initializeNotes(): void {
 		if (!sidebarList) return;
 		sidebarList.innerHTML = '';
 
-		// Botón "Todas las materias"
 		const allItem = document.createElement('li');
 		const allBtn = document.createElement('button');
 		allBtn.className = `notes-sidebar-item ${activeSubject === 'all' ? 'active' : ''}`;
@@ -49,8 +65,7 @@ export function initializeNotes(): void {
 		allItem.appendChild(allBtn);
 		sidebarList.appendChild(allItem);
 
-		// Listado directo de materias (sin agrupación por semestre)
-		const sortedSubjects = Array.from(subjectsMap.keys()).sort((a, b) => a.localeCompare(b));
+		const sortedSubjects = getSortedSubjects();
 		sortedSubjects.forEach((subjName) => {
 			const count = subjectsMap.get(subjName) || 0;
 			const li = document.createElement('li');
@@ -89,24 +104,21 @@ export function initializeNotes(): void {
 		});
 		tagsContainer.appendChild(allBtn);
 
-		Array.from(subjectsMap.keys())
-			.sort()
-			.forEach((subj) => {
-				const tagBtn = document.createElement('button');
-				tagBtn.className = `tag tag-interactive ${activeSubject === subj ? 'active' : ''}`;
-				tagBtn.textContent = subj;
-				tagBtn.setAttribute('type', 'button');
-				tagBtn.addEventListener('click', () => {
-					activeSubject = activeSubject === subj ? 'all' : subj;
-					updateActiveStates();
-					renderNotes();
-				});
-				tagsContainer.appendChild(tagBtn);
+		getSortedSubjects().forEach((subj) => {
+			const tagBtn = document.createElement('button');
+			tagBtn.className = `tag tag-interactive ${activeSubject === subj ? 'active' : ''}`;
+			tagBtn.textContent = subj;
+			tagBtn.setAttribute('type', 'button');
+			tagBtn.addEventListener('click', () => {
+				activeSubject = activeSubject === subj ? 'all' : subj;
+				updateActiveStates();
+				renderNotes();
 			});
+			tagsContainer.appendChild(tagBtn);
+		});
 	}
 
 	function updateActiveStates(): void {
-		// Sincronizar clases activas en sidebar
 		if (sidebarList) {
 			const items = sidebarList.querySelectorAll('.notes-sidebar-item');
 			items.forEach((item) => {
@@ -120,7 +132,6 @@ export function initializeNotes(): void {
 			});
 		}
 
-		// Sincronizar clases activas en tags superiores
 		if (tagsContainer) {
 			const buttons = tagsContainer.querySelectorAll('.tag');
 			buttons.forEach((btn) => {
@@ -141,12 +152,14 @@ export function initializeNotes(): void {
 
 		const filtered = notesData.filter((note) => {
 			const matchesSubject = activeSubject === 'all' || note.subject === activeSubject;
+			const semesterQuery = `s${String(note.semester).padStart(2, '0')}`;
 			const matchesSearch =
 				!normalizedQuery ||
 				note.title.toLowerCase().includes(normalizedQuery) ||
 				note.rawTitle.toLowerCase().includes(normalizedQuery) ||
 				note.summary.toLowerCase().includes(normalizedQuery) ||
 				note.subject.toLowerCase().includes(normalizedQuery) ||
+				semesterQuery.includes(normalizedQuery) ||
 				note.tags.some((t) => t.toLowerCase().includes(normalizedQuery));
 
 			return matchesSubject && matchesSearch;
@@ -182,22 +195,18 @@ export function initializeNotes(): void {
 	}
 
 	function renderNoteCard(note: AcademicNote): string {
-		const tagsHtml = note.tags
+		const semesterCode = `S${String(note.semester).padStart(2, '0')}`;
+		const extraTags = (note.tags || [])
+			.filter((t) => t.toLowerCase() !== 'académico' && t.toLowerCase() !== 'academico')
 			.map((t) => `<span class="tag">#${t}</span>`)
 			.join(' ');
 
 		return `
 			<a href="./notes/${note.slug}" class="card card-interactive note-card-row" aria-label="${note.title}">
 				<div class="note-card-body">
-					<div class="note-card-header">
-						<div class="note-card-badges">
-							<span class="note-badge-order">${note.orderBadge}</span>
-							<span class="note-badge-subject">${note.subject}</span>
-						</div>
-					</div>
-
 					<h2 class="note-card-title">
-						${note.title}
+						<span class="note-badge-order">${note.orderBadge}</span>
+						<span class="note-card-title-text">${note.title}</span>
 					</h2>
 
 					<p class="note-card-summary">
@@ -205,7 +214,9 @@ export function initializeNotes(): void {
 					</p>
 
 					<div class="note-card-tags">
-						${tagsHtml}
+						<span class="note-badge-semester">${semesterCode}</span>
+						<span class="note-badge-subject">${note.subject}</span>
+						${extraTags}
 					</div>
 				</div>
 			</a>

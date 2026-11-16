@@ -4,6 +4,8 @@ export interface AcademicNote {
   rawTitle: string;
   slug: string;
   subject: string;
+  semester: number;
+  unit: number;
   order: number;
   orderBadge: string;
   summary: string;
@@ -12,42 +14,81 @@ export interface AcademicNote {
 
 export const notesData: AcademicNote[] = [
   {
+    "id": "signos-vitales",
+    "title": "Signos Vitales",
+    "rawTitle": "Signos Vitales",
+    "slug": "signos-vitales.html",
+    "subject": "Primeros Auxilios",
+    "semester": 6,
+    "unit": 1,
+    "order": 1,
+    "orderBadge": "1.1",
+    "summary": "Los signos vitales son mediciones fisiológicas objetivas, distintas de los síntomas subjetivos, que evalúan el estado básico del organismo regulado por los sistemas nervioso y endocrino. Abarcan signos primarios (pulso, presión arterial, ventilación y temperatura) y signos secundarios (coloración, llenado capilar, oximetría, respuesta ocular y glicemia) para detectar oportunamente alteraciones críticas y orientar la atención en primeros auxilios.",
+    "tags": []
+  },
+  {
     "id": "fundamentos-de-comunicacion-y-topologias-de-red",
-    "title": "#01 - Fundamentos de Comunicación y Topologías de Red",
+    "title": "Fundamentos de Comunicación y Topologías de Red",
     "rawTitle": "Fundamentos de Comunicación y Topologías de Red",
     "slug": "fundamentos-de-comunicacion-y-topologias-de-red.html",
-    "subject": "Comunicación de datos",
+    "subject": "Comunicacion de Datos",
+    "semester": 5,
+    "unit": 1,
     "order": 1,
-    "orderBadge": "#01",
-    "summary": "La comunicación de datos permite el intercambio de información digital mediante protocolos normalizados que gestionan la transmisión, el enrutamiento y la integridad de los paquetes. Mediante el uso de conmutación de paquetes, diversas topologías de red y una jerarquía de ISP, los sistemas garantizan la conectividad global, optimizando el rendimiento a través de métricas críticas como latencia, ancho de banda y QoS.",
-    "tags": [
-      "académico"
-    ]
+    "orderBadge": "1.1",
+    "summary": "La comunicación de datos constituye el intercambio estructurado de información digital mediante la transformación de bits en señales físicas, regido por protocolos que aseguran la sintaxis, semántica y temporización. Este proceso integra emisor, receptor, mensaje, medio y protocolo, organizándose bajo diversas topologías físicas y arquitecturas lógicas como cliente-servidor o SDN, optimizando la conectividad y gestión eficiente de recursos en redes de distinta cobertura.",
+    "tags": []
   },
   {
-    "id": "modelos-en-capas-y-protocolos-de-red",
-    "title": "#02 - Modelos en Capas y Protocolos de Red",
-    "rawTitle": "Modelos en Capas y Protocolos de Red",
-    "slug": "modelos-en-capas-y-protocolos-de-red.html",
-    "subject": "Comunicación de datos",
+    "id": "modelos-en-capas-y-rendimiento",
+    "title": "Modelos en Capas y Rendimiento",
+    "rawTitle": "Modelos en Capas y Rendimiento",
+    "slug": "modelos-en-capas-y-rendimiento.html",
+    "subject": "Comunicacion de Datos",
+    "semester": 5,
+    "unit": 1,
     "order": 2,
-    "orderBadge": "#02",
-    "summary": "Los modelos en capas estructuran la comunicación de red mediante jerarquías funcionales que facilitan la interoperabilidad y escalabilidad de sistemas heterogéneos. Mientras el modelo OSI actúa como marco conceptual, la pila TCP/IP constituye la arquitectura práctica de Internet, gestionando el encapsulamiento de datos, el direccionamiento IP y los mecanismos de transporte confiable o eficiente, optimizados actualmente mediante protocolos modernos como QUIC.",
-    "tags": [
-      "académico"
-    ]
+    "orderBadge": "1.2",
+    "summary": "La arquitectura en capas organiza la comunicación de datos mediante una abstracción jerárquica que descompone procesos complejos en módulos independientes. A través de modelos como OSI y la pila TCP/IP, se estandariza el encapsulamiento de información, garantizando la interoperabilidad entre sistemas heterogéneos. La eficacia de estas redes se evalúa mediante métricas de rendimiento y QoS, asegurando la entrega, exactitud y oportunidad de los datos transmitidos.",
+    "tags": []
   },
   {
-    "id": "senales-y-analisis-espectral",
-    "title": "#03 - Señales y Análisis Espectral",
-    "rawTitle": "Señales y Análisis Espectral",
-    "slug": "senales-y-analisis-espectral.html",
-    "subject": "Comunicación de datos",
-    "order": 3,
-    "orderBadge": "#03",
-    "summary": "Las señales electromagnéticas constituyen la base física de la comunicación, permitiendo la transmisión de información mediante variaciones en el dominio del tiempo y la frecuencia. El análisis espectral, fundamentado en la serie de Fourier, facilita la gestión del ancho de banda y la propagación en el espacio, considerando factores críticos como las zonas de Fresnel y el efecto Doppler en sistemas inalámbricos.",
-    "tags": [
-      "académico"
-    ]
+    "id": "analisis-espectral-de-las-senales-fisicas",
+    "title": "Análisis Espectral de las Señales Físicas",
+    "rawTitle": "Análisis Espectral de las Señales Físicas",
+    "slug": "analisis-espectral-de-las-senales-fisicas.html",
+    "subject": "Comunicacion de Datos",
+    "semester": 5,
+    "unit": 2,
+    "order": 1,
+    "orderBadge": "2.1",
+    "summary": "Las señales físicas transforman los datos abstractos en perturbaciones electromagnéticas continuas o discretas capaces de viajar a través de un medio de transmisión. Su comportamiento se analiza mediante la dualidad entre el dominio del tiempo y el dominio de la frecuencia, utilizando el análisis espectral para descomponer formas de onda complejas. Asimismo, la calidad de la propagación inalámbrica depende del despeje geométrico en las zonas de Fresnel y de la compensación del efecto Doppler.",
+    "tags": []
+  },
+  {
+    "id": "modulacion-deterioro-y-capacidad-del-canal",
+    "title": "Modulación, Deterioro y Capacidad del Canal",
+    "rawTitle": "Modulación, Deterioro y Capacidad del Canal",
+    "slug": "modulacion-deterioro-y-capacidad-del-canal.html",
+    "subject": "Comunicacion de Datos",
+    "semester": 5,
+    "unit": 2,
+    "order": 2,
+    "orderBadge": "2.2",
+    "summary": "La modulación digital adapta flujos de bits binarios a ondas portadoras analógicas de alta frecuencia para superar los límites físicos de los canales de transmisión. Mediante técnicas como ASK, FSK, PSK y QAM, junto con arquitecturas avanzadas como OFDM, se optimiza la eficiencia espectral frente a factores de deterioro como la atenuación y el ruido térmico, cuyos límites teóricos son gobernados por los teoremas de Nyquist y Shannon-Hartley.",
+    "tags": []
+  },
+  {
+    "id": "principios-del-conteo-y-palomar",
+    "title": "Principios del Conteo y Palomar",
+    "rawTitle": "Principios del Conteo y Palomar",
+    "slug": "principios-del-conteo-y-palomar.html",
+    "subject": "Probabilidad y Estadistica",
+    "semester": 4,
+    "unit": 1,
+    "order": 1,
+    "orderBadge": "1.1",
+    "summary": "Los principios del conteo determinan analíticamente la cardinalidad de un espacio muestral discreto evitando la búsqueda exhaustiva. Mediante las reglas de la suma, del producto y de la división, junto con el principio de inclusión-exclusión y el principio del palomar, estas herramientas fundamentan el modelo clásico de probabilidad, dimensionan espacios de estados y establecen cotas de colisión en sistemas computacionales.",
+    "tags": []
   }
 ];

@@ -2,10 +2,12 @@
 """
 build/build-notes.py — Compiles academic Markdown notes to HTML
 
-Converts .md files located in build/markdown/notes/ into notes/*.html,
-calculating sequential note indices (#01, #02...) ordered by creation date
-within each subject, extracting summaries from [!TLDR] callouts,
-and maintaining the typed catalog src/data/notes.ts.
+Converts .md files located in build/markdown/notes/<subject-dir>/ into notes/*.html,
+extracting subject name from parent directory, omitting status,
+parsing semester, unit, created date, and title from inside the note.
+Calculates chronological hierarchical note indices (1.1, 1.2...) ordered by creation date
+within each unit, extracting summaries from [!TLDR] callouts,
+and maintaining the typed catalog src/data/notes.ts sorted by semester descending.
 
 Usage:
   python3 build/build-notes.py
@@ -15,109 +17,129 @@ import re
 import sys
 import glob
 import json
-from markdown_processor import (
-    parseFrontmatter,
-    deriveSlug,
-    extractTldrSummary,
-    compileMarkdownBody,
-)
+import importlib.util
 
 rootDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+processorPath = os.path.join(rootDir, "build/markdown-processor.py")
+spec = importlib.util.spec_from_file_location("markdown_processor", processorPath)
+markdown_processor = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(markdown_processor)
+sys.modules["markdown_processor"] = markdown_processor
+
+parseFrontmatter = markdown_processor.parseFrontmatter
+slugifyText = markdown_processor.slugifyText
+deriveSlug = markdown_processor.deriveSlug
+extractTldrSummary = markdown_processor.extractTldrSummary
+compileMarkdownBody = markdown_processor.compileMarkdownBody
+syncAttachments = markdown_processor.syncAttachments
+
 templatePath = os.path.join(rootDir, "templates/note-template.html")
 markdownDir = os.path.join(rootDir, "build/markdown/notes")
 outputDir = os.path.join(rootDir, "notes")
 dataNotesPath = os.path.join(rootDir, "src/data/notes.ts")
+imagesOutputDir = os.path.join(rootDir, "public/images/notes")
 
 
-def scanExistingNoteHtml():
-    """Reads notes/*.html and recovers previously compiled notes to preserve in index."""
-    discoveredEntries = {}
-    if not os.path.exists(outputDir):
-        return discoveredEntries
-
-    for htmlFilePath in glob.glob(os.path.join(outputDir, "*.html")):
-        with open(htmlFilePath, "r", encoding="utf-8") as htmlReader:
-            fileContent = htmlReader.read()
-        entrySlug = os.path.splitext(os.path.basename(htmlFilePath))[0]
-
-        titleMatch = re.search(r'class="article-title"[^>]*>(.*?)</h1>', fileContent, re.DOTALL)
-        fullTitle = re.sub(r"<[^>]+>", "", titleMatch.group(1)).strip() if titleMatch else entrySlug
-
-        descriptionMatch = re.search(r'<meta name="description" content="([^"]+)"', fileContent)
-        noteSummary = descriptionMatch.group(1) if descriptionMatch else f"Apuntes sobre {fullTitle}."
-
-        subjectMatch = re.search(r'class="article-kicker"[^>]*>Apuntes\s*·\s*([^·<]+)', fileContent)
-        subjectName = subjectMatch.group(1).strip() if subjectMatch else "General"
-
-        orderMatch = re.search(r'#(\d+)', fullTitle)
-        orderNumber = int(orderMatch.group(1)) if orderMatch else 1
-        orderBadge = f"#{orderNumber:02d}"
-
-        rawTitle = re.sub(r"^#\d+\s*-\s*", "", fullTitle)
-
-        tagsFound = re.findall(r'<span class="tag">#([^<]+)</span>', fileContent)
-        noteTags = tagsFound if tagsFound else ["académico"]
-
-        discoveredEntries[entrySlug] = {
-            "id": entrySlug,
-            "title": fullTitle,
-            "rawTitle": rawTitle,
-            "slug": f"{entrySlug}.html",
-            "subject": subjectName,
-            "order": orderNumber,
-            "orderBadge": orderBadge,
-            "summary": noteSummary,
-            "tags": noteTags,
-        }
-    return discoveredEntries
+def formatSubjectFromDir(dirName):
+    """Formats directory name into capitalized subject title:
+    e.g. 'probabilidad-y-estadistica' -> 'Probabilidad y Estadistica'
+         'comunicacion-de-datos' -> 'Comunicacion de Datos'
+    """
+    words = dirName.replace("-", " ").split()
+    lowercase_connectors = {"y", "de", "del", "la", "las", "el", "los", "en", "a", "al", "o", "e"}
+    formatted_words = []
+    for idx, word in enumerate(words):
+        lower = word.lower()
+        if idx > 0 and lower in lowercase_connectors:
+            formatted_words.append(lower)
+        else:
+            formatted_words.append(word.capitalize())
+    return " ".join(formatted_words)
 
 
 def main():
     os.makedirs(outputDir, exist_ok=True)
+    os.makedirs(imagesOutputDir, exist_ok=True)
+
+    # Synchronize attachments from markdown notes to public/images/notes/
+    syncedCount = syncAttachments(markdownDir, imagesOutputDir)
+    if syncedCount > 0:
+        print(f"\n · Synced {syncedCount} attachment(s) → public/images/notes/")
 
     markdownFiles = glob.glob(os.path.join(markdownDir, "**/*.md"), recursive=True)
     if not markdownFiles:
         markdownFiles = glob.glob(os.path.join(markdownDir, "*.md"))
+    markdownFiles = [f for f in markdownFiles if "attachments" not in f.split(os.sep)]
 
     print(f"\n · Compiling {len(markdownFiles)} academic note(s) Markdown → HTML")
 
     with open(templatePath, "r", encoding="utf-8") as templateReader:
         htmlTemplate = templateReader.read()
 
-    # 1. Parse metadata from all .md files to order by date within each subject
+    # 1. Parse metadata from all .md files
     parsedNotesList = []
     for sourceFilePath in markdownFiles:
         with open(sourceFilePath, "r", encoding="utf-8") as fileReader:
             rawContent = fileReader.read()
 
         metaData, bodyMarkdown = parseFrontmatter(rawContent)
-        noteSlug = deriveSlug(sourceFilePath)
 
-        if not metaData["title"]:
-            titleMatch = re.search(r"^#\s+(.+)$", bodyMarkdown, flags=re.MULTILINE)
-            metaData["title"] = titleMatch.group(1).strip() if titleMatch else noteSlug.replace("-", " ").capitalize()
+        # Subject derived from directory name
+        relDir = os.path.relpath(os.path.dirname(sourceFilePath), markdownDir)
+        folderName = relDir.split(os.sep)[0] if relDir != "." else ""
+        subjectName = formatSubjectFromDir(folderName) if folderName else "General"
 
-        cleanDate = (metaData["created"] or "2026-01-01")[:19]
-        subjectName = metaData.get("subject") or "General"
+        # Note title derived from content inside the file
+        noteTitle = metaData.get("title", "").strip().strip('"').strip("'")
+        if not noteTitle:
+            h1Match = re.search(r'<h1[^>]*>(.*?)</h1>', bodyMarkdown, flags=re.DOTALL | re.IGNORECASE)
+            if h1Match:
+                noteTitle = re.sub(r"<[^>]+>", "", h1Match.group(1)).strip()
+            else:
+                titleMatch = re.search(r"^#\s+(.+)$", bodyMarkdown, flags=re.MULTILINE)
+                if titleMatch:
+                    noteTitle = titleMatch.group(1).strip()
+                else:
+                    noteTitle = os.path.splitext(os.path.basename(sourceFilePath))[0]
+
+        noteSlug = slugifyText(noteTitle) if noteTitle else deriveSlug(sourceFilePath)
+
+        # Semester and unit
+        try:
+            semesterNumber = int(metaData.get("semester", 1))
+        except (ValueError, TypeError):
+            semesterNumber = 1
+
+        try:
+            unitNumber = int(metaData.get("unit", 1))
+        except (ValueError, TypeError):
+            unitNumber = 1
+
+        cleanDate = str(metaData.get("created") or "2026-01-01").strip()[:19]
 
         summaryText = extractTldrSummary(bodyMarkdown)
         if not summaryText:
             paragraphMatch = re.search(r"\n\n([A-Za-z0-9\s.,;:\-_()]{30,})\n", bodyMarkdown)
-            summaryText = paragraphMatch.group(1).strip() if paragraphMatch else f"Apuntes académicos sobre {metaData['title']}."
+            summaryText = paragraphMatch.group(1).strip() if paragraphMatch else f"Apuntes académicos sobre {noteTitle}."
+
+        cleanTags = [t for t in (metaData.get("tags") or []) if t.lower() not in ("académico", "academico")]
 
         parsedNotesList.append({
             "filepath": sourceFilePath,
             "slug": noteSlug,
+            "rawTitle": noteTitle,
             "meta": metaData,
             "bodyMarkdown": bodyMarkdown,
             "subject": subjectName,
+            "semester": semesterNumber,
+            "unit": unitNumber,
             "date": cleanDate,
             "tldrSummary": summaryText,
-            "tags": metaData["tags"] or ["académico"],
+            "tags": cleanTags,
             "author": metaData.get("author", "Guillermo Galavís"),
         })
 
-    # 2. Group notes by subject and sort chronologically
+    # 2. Group notes by subject and unit, then sort chronologically
     notesBySubject = {}
     for noteEntry in parsedNotesList:
         subj = noteEntry["subject"]
@@ -125,67 +147,87 @@ def main():
             notesBySubject[subj] = []
         notesBySubject[subj].append(noteEntry)
 
-    for subj in notesBySubject:
-        notesBySubject[subj].sort(key=lambda item: item["date"])
-
-    # 3. Compile each note injecting sequence index (#01, #02...)
     compiledEntries = {}
+    validSlugs = set()
+
+    # 3. Compile each note injecting unit.sequence index (e.g. 1.1. Title)
     for subj, subjectNotes in notesBySubject.items():
-        for noteIndex, noteEntry in enumerate(subjectNotes, start=1):
-            orderNumber = noteIndex
-            orderBadge = f"#{orderNumber:02d}"
-            formattedTitle = f"{orderBadge} - {noteEntry['meta']['title']}"
+        notesByUnit = {}
+        for noteEntry in subjectNotes:
+            u = noteEntry["unit"]
+            if u not in notesByUnit:
+                notesByUnit[u] = []
+            notesByUnit[u].append(noteEntry)
 
-            compilationResult = compileMarkdownBody(noteEntry["bodyMarkdown"])
-            if compilationResult is None:
-                print(f"  ✗  Error compiling {noteEntry['filepath']}", file=sys.stderr)
-                continue
-            htmlBody, tocHtml = compilationResult
+        for unitNum in sorted(notesByUnit.keys()):
+            unitNotes = notesByUnit[unitNum]
+            unitNotes.sort(key=lambda item: item["date"])
 
-            tagsHtml = " ".join(f'<span class="tag">#{tagItem}</span>' for tagItem in noteEntry["tags"])
+            for noteSeq, noteEntry in enumerate(unitNotes, start=1):
+                orderBadge = f"{unitNum}.{noteSeq}"
+                noteTitle = noteEntry["rawTitle"]
 
-            finalHtml = htmlTemplate
-            replacementMap = [
-                ("$title$", formattedTitle),
-                ("$summary$", noteEntry["tldrSummary"]),
-                ("$order_badge$", f"Nota {orderBadge}"),
-                ("$author$", noteEntry["author"]),
-                ("$subject$", noteEntry["subject"]),
-                ("$tags$", tagsHtml),
-                ("$toc$", tocHtml),
-                ("$body$", htmlBody),
-            ]
-            for placeholderKey, replacementValue in replacementMap:
-                finalHtml = finalHtml.replace(placeholderKey, replacementValue)
+                compilationResult = compileMarkdownBody(noteEntry["bodyMarkdown"], imageBaseRoute="/images/notes/")
+                if compilationResult is None:
+                    print(f"  ✗  Error compiling {noteEntry['filepath']}", file=sys.stderr)
+                    continue
+                htmlBody, tocHtml = compilationResult
 
-            destinationFile = os.path.join(outputDir, f"{noteEntry['slug']}.html")
-            with open(destinationFile, "w", encoding="utf-8") as fileWriter:
-                fileWriter.write(finalHtml)
+                tagsHtml = " ".join(f'<span class="tag">#{tagItem}</span>' for tagItem in noteEntry["tags"])
 
-            print(f"   ✓  notes/{noteEntry['slug']}.html  ({formattedTitle})")
+                finalHtml = htmlTemplate
+                replacementMap = [
+                    ("$title$", noteTitle),
+                    ("$summary$", noteEntry["tldrSummary"]),
+                    ("$order_badge$", f"Nota {orderBadge}"),
+                    ("$author$", noteEntry["author"]),
+                    ("$subject$", noteEntry["subject"]),
+                    ("$tags$", tagsHtml),
+                    ("$toc$", tocHtml),
+                    ("$body$", htmlBody),
+                ]
+                for placeholderKey, replacementValue in replacementMap:
+                    finalHtml = finalHtml.replace(placeholderKey, replacementValue)
 
-            compiledEntries[noteEntry["slug"]] = {
-                "id": noteEntry["slug"],
-                "title": formattedTitle,
-                "rawTitle": noteEntry["meta"]["title"],
-                "slug": f"{noteEntry['slug']}.html",
-                "subject": noteEntry["subject"],
-                "order": orderNumber,
-                "orderBadge": orderBadge,
-                "summary": noteEntry["tldrSummary"],
-                "tags": noteEntry["tags"],
-            }
+                destinationFile = os.path.join(outputDir, f"{noteEntry['slug']}.html")
+                with open(destinationFile, "w", encoding="utf-8") as fileWriter:
+                    fileWriter.write(finalHtml)
 
-    # 4. Merge with existing pre-compiled notes
-    existingCatalog = scanExistingNoteHtml()
-    for existingSlug, existingNote in existingCatalog.items():
-        if existingSlug not in compiledEntries:
-            compiledEntries[existingSlug] = existingNote
+                validSlugs.add(f"{noteEntry['slug']}.html")
+                print(f"   ✓  notes/{noteEntry['slug']}.html  ([{orderBadge}] {noteTitle})")
 
-    # 5. Sort catalog by subject then order
+                compiledEntries[noteEntry["slug"]] = {
+                    "id": noteEntry["slug"],
+                    "title": noteTitle,
+                    "rawTitle": noteTitle,
+                    "slug": f"{noteEntry['slug']}.html",
+                    "subject": noteEntry["subject"],
+                    "semester": noteEntry["semester"],
+                    "unit": unitNum,
+                    "order": noteSeq,
+                    "orderBadge": orderBadge,
+                    "summary": noteEntry["tldrSummary"],
+                    "tags": noteEntry["tags"],
+                }
+
+    # Clean up orphan .html files in outputDir if any
+    for existingFile in glob.glob(os.path.join(outputDir, "*.html")):
+        if os.path.basename(existingFile) not in validSlugs:
+            try:
+                os.remove(existingFile)
+                print(f"   -  Removed orphan: {existingFile}")
+            except OSError:
+                pass
+
+    # 4. Sort catalog by semester descending, then subject, unit, order
     sortedNotesList = sorted(
         compiledEntries.values(),
-        key=lambda item: (item["subject"], item["order"]),
+        key=lambda item: (
+            -item["semester"],
+            item["subject"],
+            item["unit"],
+            item["order"],
+        ),
     )
 
     typeScriptOutput = (
@@ -195,6 +237,8 @@ def main():
         "  rawTitle: string;\n"
         "  slug: string;\n"
         "  subject: string;\n"
+        "  semester: number;\n"
+        "  unit: number;\n"
         "  order: number;\n"
         "  orderBadge: string;\n"
         "  summary: string;\n"

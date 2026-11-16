@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signos Vitales | Druxorey</title>
+  <meta name="description" content="Los signos vitales son mediciones fisiológicas objetivas, distintas de los síntomas subjetivos, que evalúan el estado básico del organismo regulado por los sistemas nervioso y endocrino. Abarcan signos primarios (pulso, presión arterial, ventilación y temperatura) y signos secundarios (coloración, llenado capilar, oximetría, respuesta ocular y glicemia) para detectar oportunamente alteraciones críticas y orientar la atención en primeros auxilios.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#fundamentos-de-la-evaluación-clínica-y-regulación-fisiológica">1.
+Fundamentos de la Evaluación Clínica y Regulación Fisiológica</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#distinción-entre-síntoma-y-signo">1.1. Distinción entre Síntoma
+y Signo</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#concepto-y-regulación-de-los-signos-vitales">1.2. Concepto y
+Regulación de los Signos Vitales</a></li>
+<li class="toc-item"><a class="toc-link" href="#signos-vitales-primarios">2. Signos Vitales Primarios</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#pulso-arterial">2.1. Pulso Arterial</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#presión-arterial">2.2. Presión Arterial</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ventilación-y-frecuencia-respiratoria">2.3. Ventilación y
+Frecuencia Respiratoria</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#temperatura-corporal">2.4. Temperatura Corporal</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#síntesis-comparativa-de-signos-primarios">2.5. Síntesis
+Comparativa de Signos Primarios</a></li>
+<li class="toc-item"><a class="toc-link" href="#signos-vitales-secundarios-y-complementarios">3. Signos Vitales
+Secundarios y Complementarios</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#coloración-de-la-piel-y-mucosas">3.1. Coloración de la Piel y
+Mucosas</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#llenado-capilar">3.2. Llenado Capilar</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#oximetría-de-pulso">3.3. Oximetría de Pulso</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#respuesta-ocular-reflejo-pupilar">3.4. Respuesta Ocular (Reflejo
+Pupilar)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#glicemia-capilar">3.5. Glicemia Capilar</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#síntesis-comparativa-de-signos-secundarios">3.6. Síntesis
+Comparativa de Signos Secundarios</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Primeros Auxilios</div>
+          <h1 class="article-title">Signos Vitales</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota 1.1</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>Los <strong>signos vitales</strong> son mediciones fisiológicas
+objetivas, distintas de los <strong>síntomas</strong> subjetivos, que
+evalúan el estado básico del organismo regulado por los sistemas
+nervioso y endocrino. Abarcan <strong>signos primarios</strong> (pulso,
+presión arterial, ventilación y temperatura) y <strong>signos
+secundarios</strong> (coloración, llenado capilar, oximetría, respuesta
+ocular y glicemia) para detectar oportunamente <strong>alteraciones
+críticas</strong> y orientar la atención en <strong>primeros
+auxilios</strong>.</p>
+  </div>
+</div>
+<p>Cuando una persona sufre una lesión súbita o una descompensación
+médica, su organismo activa mecanismos de defensa internos para
+preservar el flujo de energía hacia el cerebro y el corazón antes de que
+se produzca un colapso irreversible. En esos primeros minutos de
+atención, confiar únicamente en el aspecto superficial de la persona o
+en lo que manifiesta sentir introduce un margen de error peligroso: el
+estrés agudo enmascara lesiones graves, la tolerancia al dolor varía de
+un individuo a otro y una víctima inconsciente pierde por completo la
+capacidad de comunicarse.</p>
+<p>Para intervenir de forma segura sin depender de conjeturas, el
+auxiliador necesita traducir el estado interno del cuerpo en mediciones
+físicas concretas, reproducibles y comparables frente a estándares
+fisiológicos conocidos. La dificultad radica en determinar qué datos
+aportan información objetiva sobre el estado real del paciente y cuáles
+reflejan las funciones mínimas que sostienen la vida en ese preciso
+instante.</p>
+<h2 
+id="fundamentos-de-la-evaluación-clínica-y-regulación-fisiológica">1.
+Fundamentos de la Evaluación Clínica y Regulación Fisiológica</h2>
+<h3  id="distinción-entre-síntoma-y-signo">1.1. Distinción entre Síntoma
+y Signo</h3>
+<p>El enfoque más intuitivo al aproximarse a una persona afectada
+consiste en preguntarle directamente qué siente. Sin embargo, este
+abordaje falla cuando existe alteración de la conciencia, barreras
+idiomáticas, temor o confusión, ya que la percepción personal del
+malestar carece de escala universal y no permite medir la gravedad
+fisiológica real. Para resolver esta limitación, la valoración clínica
+separa de manera estricta la experiencia subjetiva del paciente de los
+hallazgos físicos verificables por un observador.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 1:</strong> Síntoma y Signo Clínico</span>
+  </div>
+  <div class="callout-content">
+<p>Un <strong>síntoma</strong> es toda manifestación subjetiva de una
+alteración orgánica o funcional que únicamente el paciente percibe y
+refiere (como el dolor de cabeza o las náuseas). Un
+<strong>signo</strong> es todo hallazgo objetivo que el evaluador puede
+observar, palpar, medir o detectar mediante exploración física o
+instrumental.</p>
+  </div>
+</div>
+<p>En términos prácticos, <strong>el síntoma</strong> depende por
+completo del relato de la víctima, mientras que <strong>el
+signo</strong> existe con independencia de que el paciente pueda
+expresarlo. Al evaluar a un lesionado, los signos constituyen la base de
+decisión más fiable porque permiten cuantificar cambios reales en la
+circulación, la oxigenación o la temperatura sin verse distorsionados
+por el estado emocional.</p>
+<p>Por ejemplo, un adulto joven puede decir sentir un dolor de cabeza
+intenso y sensación de mareo tras permanecer de pie bajo el sol. Al
+explorarlo, el auxiliador observa palidez facial y registra una
+frecuencia cardíaca de <span class="math inline">112\text{
+lpm}</span>.</p>
+<h3  id="concepto-y-regulación-de-los-signos-vitales">1.2. Concepto y
+Regulación de los Signos Vitales</h3>
+<p>No todos los signos físicos poseen la misma urgencia diagnóstica. Una
+inflamación local en un tobillo es un signo objetivo, pero no compromete
+la supervivencia inmediata. Se requiere aislar un conjunto específico de
+mediciones que reflejen de manera directa el funcionamiento de los
+sistemas encargados de mantener la vida minuto a minuto.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 2:</strong> Signos Vitales</span>
+  </div>
+  <div class="callout-content">
+<p>Los <strong>signos vitales</strong> son los parámetros fisiológicos
+cuantificables que reflejan el estado funcional básico del organismo,
+regulados de forma continua por el sistema nervioso y el sistema
+endocrino para sostener la homeostasis.</p>
+  </div>
+</div>
+<p>Estos indicadores actúan como un tablero de control biológico: el
+sistema nervioso ejecuta ajustes rápidos en cuestión de segundos (por
+ejemplo, acelerando el corazón ante un susto), mientras que el sistema
+endocrino modula respuestas hormonales sostenidas (como la liberación de
+adrenalina o la regulación metabólica). No obstante, sus valores de
+referencia no son constantes rígidas; se ven modificados de forma
+natural por la edad, el nivel de actividad física reciente, el estrés
+emocional y la presencia de enfermedades previas.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Variabilidad fisiológica de
+los valores basales</span>
+  </div>
+  <div class="callout-content">
+<p>Un atleta en reposo absoluto presenta una frecuencia cardíaca de
+<span class="math inline">58\text{ lpm}</span>, mientras que una persona
+que acaba de subir tres pisos por las escaleras registra <span
+class="math inline">108\text{ lpm}</span> sin presentar patología
+alguna.</p>
+<ul>
+<li><p>En el atleta, el entrenamiento cardiovascular crónico aumenta el
+volumen bombeado en cada latido, lo que permite mantener el suministro
+sanguíneo con menor frecuencia sin que ello represente una falla
+cardíaca.</p></li>
+<li><p>En la persona tras el esfuerzo físico, la demanda muscular de
+oxígeno activa el sistema nervioso simpático y eleva transitoriamente el
+ritmo cardíaco, retornando al rango basal tras unos minutos de
+reposo.</p></li>
+</ul>
+  </div>
+</div>
+<h2  id="signos-vitales-primarios">2. Signos Vitales Primarios</h2>
+<p>La supervivencia inmediata del organismo depende de tres condiciones
+físicas elementales: que la sangre sea impulsada con presión suficiente
+a través del árbol vascular, que el aire ingrese y salga de los pulmones
+para renovar los gases sanguíneos y que la temperatura interna
+permanezca dentro de un margen compatible con las reacciones químicas
+celulares. Los cuatro signos primarios cuantifican de forma directa
+estas funciones centrales.</p>
+<h3  id="pulso-arterial">2.1. Pulso Arterial</h3>
+<p>Para confirmar que el corazón bombea sangre sin recurrir a equipos
+hospitalarios complejos, la solución directa consiste en aprovechar la
+elasticidad de los vasos sanguíneos. Cada vez que el ventrículo
+izquierdo se contrae e inyecta sangre hacia la aorta, genera una onda de
+presión que viaja por las paredes arteriales y puede percibirse al tacto
+cuando una arteria transcurre cerca de la superficie.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 3:</strong> Pulso Arterial</span>
+  </div>
+  <div class="callout-content">
+<p>El <strong>pulso arterial</strong> es la onda de presión expansiva
+generada por la contracción cardíaca que se transmite a lo largo del
+sistema arterial y se percibe mediante palpación; su rango normal en
+adultos en reposo oscila entre <span class="math inline">60\text{
+lpm}</span> y <span class="math inline">100\text{ lpm}</span>.</p>
+  </div>
+</div>
+<p>Esta medición aporta doble información fisiológica: por un lado
+indica la <strong>frecuencia cardíaca</strong> (cuántas veces late el
+corazón por minuto) y por otro refleja la <strong>fuerza de contracción
+ventricular</strong> según la intensidad con que la onda golpea los
+dedos. Para cuantificarlo con precisión, se colocan las yemas de los
+dedos índice y medio sobre la arteria elegida y se cuentan los latidos
+durante <span class="math inline">60\text{ s}</span> completos. Resulta
+fundamental evitar el uso del dedo pulgar para palpar, debido a que
+posee una arteria propia con pulso perceptible que puede confundir al
+evaluador y hacerle contar su propio ritmo cardíaco en lugar del ritmo
+del paciente.</p>
+<h4
+id="puntos-anatómicos-de-palpación-y-continuidad-circulatoria">2.1.1.
+Puntos Anatómicos de Palpación y Continuidad Circulatoria</h4>
+<p>Palpar el pulso en una sola ubicación periférica resulta insuficiente
+ante traumatismos o estados de choque. Si una arteria principal sufre
+compresión por una fractura o un coágulo, o si la presión arterial cae
+de forma severa, el pulso desaparecerá en las extremidades aunque el
+corazón continúe latiendo. Por ello se exploran múltiples puntos
+anatómicos para verificar la llegada real de sangre a las distintas
+regiones del cuerpo:</p>
+<figure class="article-figure">
+<img src="/images/notes/PA 1-1 Signos Vitales - Puntos Anatómicos de Palpación del Pulso Arterial.png" alt="Puntos Anatómicos de Palpación del Pulso Arterial" width="700" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+Puntos Anatómicos de Palpación del Pulso Arterial
+</figcaption>
+</figure>
+<ul>
+<li><p><strong>Pulso carotídeo:</strong> ubicado en el cuello, a ambos
+lados de la tráquea; es el punto de mayor relevancia clínica para
+determinar si existe vida y perfusión central en situaciones críticas,
+aunque su palpación exige extrema suavidad y debe realizarse de un solo
+lado a la vez para no comprometer el flujo cerebral ni desencadenar una
+caída refleja de la frecuencia cardíaca.</p></li>
+<li><p><strong>Pulso axilar:</strong> situado en el hueco de la axila,
+útil para valorar la irrigación proximal del miembro superior.</p></li>
+<li><p><strong>Pulso braquial o humeral:</strong> localizado en la cara
+interna del brazo o pliegue del codo; constituye el punto de referencia
+estándar en lactantes y durante la toma de presión arterial.</p></li>
+<li><p><strong>Pulso radial y cubital:</strong> palpados en la cara
+anterior de la muñeca (lado externo del pulgar e interno del meñique,
+respectivamente), siendo el radial el más utilizado en pacientes
+conscientes para verificar circulación distal.</p></li>
+<li><p><strong>Pulso femoral:</strong> ubicado en el pliegue inguinal;
+indica perfusión hacia la pelvis y extremidades inferiores cuando los
+pulsos distales se debilitan.</p></li>
+<li><p><strong>Pulso poplíteo:</strong> situado detrás de la rodilla,
+empleado para evaluar lesiones vasculares de la extremidad
+inferior.</p></li>
+<li><p><strong>Pulso tibial posterior y pulso pedio:</strong>
+localizados detrás del maléolo interno del tobillo y en el dorso del
+pie, respectivamente; confirman que la circulación alcanza la periferia
+más alejada del corazón.</p></li>
+</ul>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Valoración secuencial de
+pulsos en un paciente politraumatizado</span>
+  </div>
+  <div class="callout-content">
+<p>Tras una colisión vehicular, una víctima inconsciente presenta
+ausencia de pulso radial en la muñeca, pero al palpar la arteria
+carótida se detectan <span class="math inline">124\text{ lpm}</span>
+débiles durante <span class="math inline">60\text{ s}</span>.</p>
+<ul>
+<li><p>La ausencia de pulso radial no indica paro cardíaco inmediato;
+señala que la perfusión periférica está severamente comprometida o
+bloqueada localmente.</p></li>
+<li><p>La confirmación del pulso carotídeo demuestra que el corazón aún
+late a una frecuencia elevada (<span class="math inline">124\text{
+lpm}</span>, por encima de los <span class="math inline">100\text{
+lpm}</span> normales) en un intento compensatorio por sostener el riego
+sanguíneo hacia el cerebro.</p></li>
+</ul>
+  </div>
+</div>
+<h3  id="presión-arterial">2.2. Presión Arterial</h3>
+<p>Confirmar la presencia del pulso demuestra que existe flujo
+sanguíneo, pero no cuantifica la tensión mecánica real con la que la
+sangre empuja las paredes vasculares. Si la presión dentro de las
+arterias y venas cae por debajo de un umbral crítico, la sangre no logra
+vencer la gravedad ni penetrar los lechos capilares de órganos vitales;
+por el contrario, una presión excesiva amenaza con romper vasos
+delicados.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 4:</strong> Presión Arterial</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>presión arterial</strong> es la fuerza hidrostática que
+ejerce la sangre circulante contra las paredes internas de las arterias,
+determinada por la fuerza de contracción del corazón y la resistencia
+que ofrecen los vasos sanguíneos; en adultos, los valores normales son
+<span class="math inline">100\text{--}120\text{ mmHg}</span> para la
+presión sistólica y <span class="math inline">60\text{--}80\text{
+mmHg}</span> para la presión diastólica.</p>
+  </div>
+</div>
+<p>Este parámetro se registra siempre mediante dos cifras separadas,
+esto ya que el ciclo cardíaco alterna dos fases mecánicas distintas. La
+<strong>presión sistólica</strong> (el número superior) mide la fuerza
+máxima ejercida cuando el corazón se contrae e impulsa la sangre hacia
+las arterias, mientras que la <strong>presión diastólica</strong> (el
+número inferior) mide la presión residual que mantienen las paredes
+arteriales mientras el corazón se relaja y se llena nuevamente. Para
+medirla de forma no invasiva se emplea un
+<strong>esfigmomanómetro</strong> (tensiómetro) junto con un
+<strong>estetoscopio</strong> colocado sobre la arteria braquial,
+identificando los ruidos arteriales al desinflar el manguito.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3:</strong> Interpretación de registros
+tensionales en adultos</span>
+  </div>
+  <div class="callout-content">
+<p>Durante un control de primeros auxilios se evalúan dos pacientes: el
+Paciente A registra <span class="math inline">114/74\text{ mmHg}</span>
+y el Paciente B registra <span class="math inline">86/54\text{
+mmHg}</span> tras una hemorragia moderada.</p>
+<p>En el Paciente A, la presión sistólica (<span
+class="math inline">114\text{ mmHg}</span>) se ubica dentro del
+intervalo <span class="math inline">100\text{--}120\text{ mmHg}</span> y
+la diastólica (<span class="math inline">74\text{ mmHg}</span>) dentro
+de <span class="math inline">60\text{--}80\text{ mmHg}</span>, indicando
+un equilibrio adecuado entre bombeo cardíaco y resistencia vascular.</p>
+<p>En el Paciente B, ambas cifras descienden por debajo de los límites
+inferiores normales, evidenciando una pérdida de volumen circulante que
+impide sostener la tensión arterial y exige intervención
+prioritaria.</p>
+  </div>
+</div>
+<h3  id="ventilación-y-frecuencia-respiratoria">2.3. Ventilación y
+Frecuencia Respiratoria</h3>
+<p>Un corazón que late con buena presión arterial resulta insuficiente
+para sostener la vida si la sangre que transporta carece de oxígeno
+(<span class="math inline">\text{O}_2</span>) o acumula niveles tóxicos
+de dióxido de carbono (<span class="math inline">\text{CO}_2</span>). Es
+necesario evaluar la eficacia mecánica del aparato respiratorio
+contabilizando cuántas veces por minuto se renueva el aire en los
+pulmones.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 5:</strong> Frecuencia Respiratoria</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>frecuencia respiratoria</strong> (o ventilatoria) es el
+número de ciclos completos de inhalación y exhalación ejecutados en un
+minuto para posibilitar el intercambio gaseoso de <span
+class="math inline">\text{O}_2</span> y <span
+class="math inline">\text{CO}_2</span>; en adultos en reposo, el rango
+normal es de <span class="math inline">12\text{ rpm}</span> a <span
+class="math inline">20\text{ rpm}</span>.</p>
+  </div>
+</div>
+<p>Para cuantificar este signo se observa de forma continua el ascenso y
+descenso del tórax o del abdomen durante un minuto completo (<span
+class="math inline">60\text{ s}</span>). A diferencia de otros signos,
+la ventilación puede alterarse de manera voluntaria o inconsciente
+cuando la persona sabe que la están evaluando; por este motivo, el
+auxiliador suele simular que continúa tomando el pulso radial mientras
+observa discretamente la expansión torácica.</p>
+<h4
+id="diferencia-entre-ventilación-respiración-taquipnea-e-hiperventilación">2.3.1.
+Diferencia entre Ventilación, Respiración, Taquipnea e
+Hiperventilación</h4>
+<p>En el lenguaje cotidiano suelen emplearse como sinónimos términos que
+en fisiología describen fenómenos distintos, lo que puede generar
+confusiones al interpretar un cuadro clínico.</p>
+<p><strong>La «ventilación»</strong> describe exclusivamente el proceso
+físico y mecánico mediante el cual el aire entra y sale de las vías
+aéreas hacia los alvéolos pulmonares. En contraste, <strong>la
+«respiración»</strong> alude al efecto químico y celular: el intercambio
+de gases a través de la membrana alvéolo-capilar y la utilización
+bioquímica del <span class="math inline">\text{O}_2</span> en las
+células para generar energía, liberando <span
+class="math inline">\text{CO}_2</span> como desecho.</p>
+<p>Respirar muchas veces por minuto (superar las <span
+class="math inline">20\text{ rpm}</span>) se denomina
+<strong>«taquipnea»</strong> y hace referencia únicamente a la velocidad
+o frecuencia del ciclo ventilatorio. La
+<strong>«hiperventilación»</strong>, en cambio, se caracteriza
+fundamentalmente por el aumento en la intensidad, amplitud y profundidad
+de cada ventilación (movilizando un volumen excesivo de aire por encima
+de las necesidades metabólicas reales del cuerpo). Aunque suelen
+coexistir, una persona puede respirar muy rápido de forma superficial
+tras una fractura costal por el dolor (taquipnea sin hiperventilación
+efectiva), mientras que otra bajo una crisis de pánico realiza
+inspiraciones profundas e intensas que eliminan demasiado <span
+class="math inline">\text{CO}_2</span> de la sangre (hiperventilación),
+provocando mareos y hormigueo en las extremidades.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 4:</strong> Diferenciación clínica de
+patrones ventilatorios</span>
+  </div>
+  <div class="callout-content">
+<p>Un paciente con crisis de ansiedad presenta <span
+class="math inline">24\text{ rpm}</span> con expansiones torácicas
+amplias y profundas, mientras que otro paciente con contusión costal
+presenta <span class="math inline">26\text{ rpm}</span> con movimientos
+torácicos muy cortos y superficiales.</p>
+<p>En el primer paciente, la combinación de frecuencia elevada y gran
+profundidad respiratoria produce una pérdida excesiva de <span
+class="math inline">\text{CO}_2</span>, configurando un cuadro típico de
+hiperventilación.</p>
+<p>En el segundo paciente, la frecuencia supera las <span
+class="math inline">20\text{ rpm}</span> (taquipnea), pero el dolor
+limita la profundidad de cada inhalación; lejos de hiperventilar, este
+paciente corre riesgo de intercambiar un volumen insuficiente de aire en
+los alvéolos.</p>
+  </div>
+</div>
+<h3  id="temperatura-corporal">2.4. Temperatura Corporal</h3>
+<p>Todas las enzimas del organismo dependen de la energía térmica del
+medio para operar. Si el cuerpo se enfría o se calienta fuera de un
+margen estrecho, el metabolismo celular se ralentiza o las proteínas
+estructurales comienzan a dañarse.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 6:</strong> Temperatura Corporal</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>temperatura corporal</strong> es la medida cuantitativa
+del calor interno del organismo que regula la velocidad del metabolismo
+y la función celular; su rango fisiológico normal se sitúa entre <span
+class="math inline">36.5\text{ }^\circ\text{C}</span> y <span
+class="math inline">37.5\text{ }^\circ\text{C}</span>.</p>
+  </div>
+</div>
+<p>La cuantificación se realiza mediante termómetros aplicados en
+distintos sitios anatómicos según la edad, el estado de conciencia y las
+condiciones del paciente: cavidad oral, pliegue axilar o vía rectal.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
+    <span class="callout-title-text">Cuando un niño alcanza o supera los <span
+class="math inline">38.5\text{ }^\circ\text{C}</span>, la situación
+requiere traslado médico inmediato debido a la inmadurez de su sistema
+termorregulador y al riesgo de sufrir deshidratación acelerada o
+convulsiones febriles.</span>
+  </div>
+  <div class="callout-content">
+
+  </div>
+</div>
+<h3  id="síntesis-comparativa-de-signos-primarios">2.5. Síntesis
+Comparativa de Signos Primarios</h3>
+<p>La siguiente tabla reúne los parámetros centrales, su función
+fisiológica principal, el rango adulto de referencia y el método de
+evaluación en primeros auxilios:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Signo Primario</th>
+<th style="text-align: left;">Función Fisiológica Reflejada</th>
+<th style="text-align: left;">Rango Normal (Adulto)</th>
+<th style="text-align: left;">Método e Instrumento de Medición</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Pulso arterial</td>
+<td style="text-align: left;">Frecuencia y fuerza de contracción
+cardíaca</td>
+<td style="text-align: left;"><span
+class="math inline">60\text{--}100\text{ lpm}</span></td>
+<td style="text-align: left;">Palpación arterial con dedos índice y
+medio (<span class="math inline">60\text{ s}</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Presión arterial</td>
+<td style="text-align: left;">Fuerza de eyección y resistencia
+vascular</td>
+<td style="text-align: left;"><span class="math inline">100\text{--}120
+/ 60\text{--}80\text{ mmHg}</span></td>
+<td style="text-align: left;">Esfigmomanómetro y estetoscopio en arteria
+braquial</td>
+</tr>
+<tr>
+<td style="text-align: left;">Frecuencia respiratoria</td>
+<td style="text-align: left;">Ventilación e intercambio de <span
+class="math inline">\text{O}_2</span> y <span
+class="math inline">\text{CO}_2</span></td>
+<td style="text-align: left;"><span
+class="math inline">12\text{--}20\text{ rpm}</span></td>
+<td style="text-align: left;">Observación discreta torácica o abdominal
+(<span class="math inline">60\text{ s}</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Temperatura corporal</td>
+<td style="text-align: left;">Equilibrio térmico y tasa metabólica</td>
+<td style="text-align: left;"><span
+class="math inline">36.5\text{--}37.5\text{ }^\circ\text{C}</span></td>
+<td style="text-align: left;">Termómetro (oral, axilar o rectal)</td>
+</tr>
+</tbody>
+</table>
+<h2  id="signos-vitales-secundarios-y-complementarios">3. Signos Vitales
+Secundarios y Complementarios</h2>
+<p>Aunque los signos primarios evalúan los sistemas centrales de soporte
+vital, el cuerpo humano posee mecanismos de compensación capaces de
+mantener temporalmente la presión arterial o la frecuencia cardíaca
+cerca de lo normal mientras sacrifica la irrigación de la piel o
+mientras se deterioran silenciosamente la oxigenación sanguínea, el
+sistema nervioso o la disponibilidad de glucosa. Los signos secundarios
+permiten detectar de manera temprana estas alteraciones periféricas,
+neurológicas y metabólicas.</p>
+<h3  id="coloración-de-la-piel-y-mucosas">3.1. Coloración de la Piel y
+Mucosas</h3>
+<p>Cuando disminuye el volumen sanguíneo o falta oxígeno, los vasos
+superficiales se contraen para redirigir el flujo hacia los órganos
+internos, alterando el tono visual de la superficie corporal de manera
+casi inmediata.</p>
+<p>Al inspeccionar al paciente se buscan cuatro alteraciones
+principales:</p>
+<ul>
+<li><p><strong>Palidez</strong>: Tono blanquecino por vasoconstricción
+periférica o falta de irrigación y oxígeno.</p></li>
+<li><p><strong>Cianosis</strong>: Coloración azulada o violácea debida a
+sangre pobre en oxígeno.</p></li>
+<li><p><strong>Rubor</strong>: Enrojecimiento por dilatación vascular
+superficial en golpes de calor o fiebre.</p></li>
+<li><p><strong>Ictericia</strong>: Coloración amarillenta asociada a
+acumulación de pigmentos biliares.</p></li>
+<li><p><strong>Inspección en piel oscura</strong>: Debe realizarse
+directamente en las mucosas, la conjuntiva de los ojos, el interior de
+la nariz y las encías para evitar falsos negativos por la
+melanina.</p></li>
+</ul>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">¿Qué ocurre cuando el paciente presenta piel oscura?</span>
+  </div>
+  <div class="callout-content">
+<p>Ante la presencia de piel oscura en un paciente, la pigmentación
+natural oculta la reducción de hemoglobina oxigenada en los capilares
+dérmicos, por lo que se deben inspeccionar las encías y las conjuntivas
+oculares para detectar una tonalidad azulada que confirme una
+deficiencia severa de oxigenación sanguínea.</p>
+  </div>
+</div>
+<h3  id="llenado-capilar">3.2. Llenado Capilar</h3>
+<p>Para obtener una medida temporal objetiva de qué tan rápido llega la
+sangre a los tejidos más distales, se aplica una prueba dinámica de
+compresión sobre los capilares superficiales.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 7:</strong> Tiempo de Llenado Capilar</span>
+  </div>
+  <div class="callout-content">
+<p>El <strong>llenado capilar</strong> mide el tiempo que tarda la
+sangre en retornar a los lechos capilares periféricos tras haberlos
+vaciado mediante presión externa, reflejando la perfusión tisular
+distal; su valor normal es inferior a <span class="math inline">3\text{
+s}</span>.</p>
+  </div>
+</div>
+<p>La maniobra consiste en presionar firmemente el lecho ungueal de un
+dedo de la mano hasta que la uña adquiera un color blanco al desplazarse
+la sangre hacia afuera; inmediatamente se suelta la presión y se
+contabilizan los segundos que demora en recuperar su coloración rosada
+original. Un retorno rápido confirma que la presión y el flujo llegan
+sin obstáculos hasta la microcirculación distal, mientras que un retraso
+de <span class="math inline">3\text{ s}</span> o más advierte pérdida de
+volumen sanguíneo, frío intenso o choque circulatorio incipiente.</p>
+<h3  id="oximetría-de-pulso">3.3. Oximetría de Pulso</h3>
+<p>Confirmar que la sangre circula con rapidez por los capilares no
+garantiza que los glóbulos rojos transporten suficiente oxígeno; un
+paciente intoxicado o con daño pulmonar severo puede mantener buen
+llenado capilar mientras sus tejidos sufren hipoxia. Además, la cianosis
+visible en mucosas suele aparecer cuando la oxigenación ya ha caído a
+niveles críticos. Para resolver esta brecha se recurre a la medición
+óptica continua.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text">Oximetría de Pulso</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>oximetría de pulso</strong> cuantifica el porcentaje de
+saturación de oxígeno transportado por la hemoglobina arterial (<span
+class="math inline">\text{SpO}_2</span>), indicando la disponibilidad
+real de <span class="math inline">\text{O}_2</span> en la sangre
+circulante; el rango normal se sitúa entre <span
+class="math inline">95\text{ \%}</span> y <span
+class="math inline">100\text{ \%}</span>.</p>
+  </div>
+</div>
+<p>El instrumento utilizado es el <strong>oxímetro de pulso</strong>,
+una pinza portátil que se coloca sobre la yema de un dedo o en el lóbulo
+de la oreja y emplea haces de luz infrarroja para calcular la proporción
+de hemoglobina oxigenada sin necesidad de extraer muestras de sangre.
+Valores por debajo de <span class="math inline">95\text{ \%}</span>
+revelan una oxigenación deficiente y orientan la administración temprana
+de soporte respiratorio.</p>
+<h3  id="respuesta-ocular-reflejo-pupilar">3.4. Respuesta Ocular (Reflejo
+Pupilar)</h3>
+<p>Además de lo anterior, es necesario verificar si el sistema nervioso
+central responde de manera simétrica e íntegra, ya que las lesiones
+craneales, los accidentes cerebrovasculares o las intoxicaciones alteran
+el control neurológico antes de detener las funciones
+cardiorrespiratorias.</p>
+<p>La <strong>respuesta ocular</strong> evalúa el diámetro basal y la
+reactividad contráctil de las pupilas frente a un estímulo luminoso
+directo, reflejando la integridad funcional del sistema nervioso central
+y de los pares craneales involucrados en el arco reflejo visual.</p>
+<p>Para explorarla se proyecta brevemente el haz de una linterna clínica
+desde un costado hacia cada ojo por separado, observando el tamaño
+inicial y la velocidad con que la pupila se contrae ante la luz. En
+condiciones normales, ambas pupilas presentan idéntico tamaño y se
+contraen de forma rápida y simétrica. Las alteraciones clave se
+clasifican en tres estados:</p>
+<figure class="article-figure">
+<img src="/images/notes/PA 1-1 Signos Vitales - Respuesta Ocular.png" alt="Respuesta Ocular" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+Respuesta Ocular
+</figcaption>
+</figure>
+<ul>
+<li><p><strong>Miosis:</strong> Contracción pupilar anormalmente pequeña
+y sostenida, frecuente en ciertas intoxicaciones.</p></li>
+<li><p><strong>Midriasis:</strong> Dilatación excesiva que no se reduce
+ante la luz, asociada a hipoxia severa, daño cerebral grave o consumo de
+estimulantes.</p></li>
+<li><p><strong>Anisocoria:</strong> Desigualdad manifiesta de tamaño
+entre una pupila y la otra, signo de alarma clásico ante aumento de
+presión intracraneal o trauma craneoencefálico.</p></li>
+</ul>
+<h3  id="glicemia-capilar">3.5. Glicemia Capilar</h3>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text">Glicemia Capilar</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>glicemia capilar</strong> cuantifica la concentración de
+glucosa libre en la sangre periférica como indicador directo del
+metabolismo energético; sus valores de referencia habituales en ayuno
+oscilan entre <span class="math inline">70\text{ mg/dL}</span> y <span
+class="math inline">100\text{ mg/dL}</span>, considerando valores de
+<span class="math inline">180\text{ mg/dL}</span> o superiores como
+indicadores de elevación significativa tras la ingesta de alimentos.</p>
+  </div>
+</div>
+<p>Dado que el nivel de glucosa sanguínea fluctúa a lo largo del día en
+función de la última comida, la interpretación exige conocer siempre
+cuándo comió la persona por última vez. Para obtener la lectura en campo
+se utiliza un glucómetro portátil que analiza una pequeña gota de sangre
+obtenida mediante punción lateral en la yema de un dedo con una lanceta
+estéril. Una caída por debajo de <span class="math inline">70\text{
+mg/dL}</span> (hipoglucemia) provoca sudoración fría, temblores,
+confusión o pérdida súbita de conciencia que puede confundirse con una
+lesión cerebral, mientras que cifras sostenidas de <span
+class="math inline">180\text{ mg/dL}</span> o mayores tras las dietas
+señalan descontrol metabólico o hiperglucemia.</p>
+<h3  id="síntesis-comparativa-de-signos-secundarios">3.6. Síntesis
+Comparativa de Signos Secundarios</h3>
+<p>La siguiente tabla resume el propósito fisiológico, los criterios de
+normalidad o hallazgos clave y el procedimiento de exploración de los
+signos secundarios:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Signo Secundario</th>
+<th style="text-align: left;">Parámetro Fisiológico Evaluado</th>
+<th style="text-align: left;">Valores Normales / Criterios Clave</th>
+<th style="text-align: left;">Método de Evaluación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Coloración de piel y mucosas</td>
+<td style="text-align: left;">Oxigenación, perfusión y pigmentos</td>
+<td style="text-align: left;">Tono rosado uniforme en mucosas; alerta
+ante palidez, cianosis, rubor o ictericia</td>
+<td style="text-align: left;">Inspección visual en piel, mucosas, ojos,
+nariz y encías</td>
+</tr>
+<tr>
+<td style="text-align: left;">Llenado capilar</td>
+<td style="text-align: left;">Perfusión microvascular periférica</td>
+<td style="text-align: left;">Retorno del color en menos de <span
+class="math inline">3\text{ s}</span></td>
+<td style="text-align: left;">Compresión del lecho ungueal hasta
+blanqueamiento</td>
+</tr>
+<tr>
+<td style="text-align: left;">Oximetría de pulso</td>
+<td style="text-align: left;">Saturación arterial de oxígeno (<span
+class="math inline">\text{SpO}_2</span>)</td>
+<td style="text-align: left;"><span class="math inline">95\text{
+\%}\text{--}100\text{ \%}</span></td>
+<td style="text-align: left;">Oxímetro de pulso en dedo o lóbulo de la
+oreja</td>
+</tr>
+<tr>
+<td style="text-align: left;">Respuesta ocular</td>
+<td style="text-align: left;">Integridad del sistema nervioso</td>
+<td style="text-align: left;">Pupilas simétricas y reactivas; alerta
+ante miosis, midriasis o anisocoria</td>
+<td style="text-align: left;">Iluminación lateral alternada con
+linterna</td>
+</tr>
+<tr>
+<td style="text-align: left;">Glicemia capilar</td>
+<td style="text-align: left;">Metabolismo energético de glucosa</td>
+<td style="text-align: left;"><span
+class="math inline">70\text{--}100\text{ mg/dL}</span> en ayuno; <span
+class="math inline">180\text{ mg/dL}</span> o más posdieta (alerta)</td>
+<td style="text-align: left;">Glucómetro con punción capilar en
+dedo</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ol type="1">
+<li><strong>World Health Organization (WHO)</strong>. (2013). <em>Pocket
+Book of Hospital Care for Children: Guidelines for the Management of
+Common Illnesses with Limited Resources</em>. World Health Organization.
+<a href="https://www.who.int/publications/i/item/9789241548372">WHO
+Guidelines</a></li>
+<li><strong>American Heart Association (AHA)</strong>. (2020).
+<em>Advanced Cardiovascular Life Support (ACLS) Provider Manual</em>.
+AHA. <a href="https://cpr.heart.org/">AHA Guidelines</a></li>
+<li><strong>National Institutes of Health (NIH)</strong>. (2023).
+<em>StatPearls: Physiology, Vital Signs</em>. StatPearls Publishing. <a
+href="https://www.ncbi.nlm.nih.gov/books/NBK534240/">NCBI
+Bookshelf</a></li>
+<li><strong>Emergency Nurses Association (ENA)</strong>. (2017).
+<em>Emergency Nursing Core Curriculum</em> (7.ª ed.). Elsevier. <a
+href="https://www.ena.org/">ENA Publications</a></li>
+<li><strong>Mayo Clinic</strong>. (2022). <em>Vital Signs: Understand
+Your Body’s Baselines</em>. Mayo Clinic Patient Care and Health
+Information. <a href="https://www.mayoclinic.org/">Mayo Clinic
+Reference</a></li>
+</ol>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <script type="module" src="/src/scripts/main.ts"></script>
+  <script type="module" src="/src/scripts/copy-code.ts"></script>
+  <script type="module" src="/src/scripts/article.ts"></script>
+</body>
+</html>

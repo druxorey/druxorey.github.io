@@ -18,19 +18,27 @@ import re
 import sys
 import glob
 import json
+import importlib.util
 from datetime import datetime
-from markdown_processor import (
-    parseFrontmatter,
-    deriveSlug,
-    estimateReadingTime,
-    compileMarkdownBody,
-)
 
 rootDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+processorPath = os.path.join(rootDir, "build/markdown-processor.py")
+spec = importlib.util.spec_from_file_location("markdown_processor", processorPath)
+markdown_processor = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(markdown_processor)
+sys.modules["markdown_processor"] = markdown_processor
+
+parseFrontmatter = markdown_processor.parseFrontmatter
+deriveSlug = markdown_processor.deriveSlug
+estimateReadingTime = markdown_processor.estimateReadingTime
+compileMarkdownBody = markdown_processor.compileMarkdownBody
+syncAttachments = markdown_processor.syncAttachments
+
 templatePath = os.path.join(rootDir, "templates/publication-template.html")
 markdownDir = os.path.join(rootDir, "build/markdown/publications")
 outputDir = os.path.join(rootDir, "publications")
-imagesDir = os.path.join(rootDir, "public/images/post")
+bannersDir = os.path.join(rootDir, "public/images/banners")
+publicPubImagesDir = os.path.join(rootDir, "public/images/publications")
 dataPublicationsPath = os.path.join(rootDir, "src/data/publications.ts")
 
 
@@ -48,7 +56,7 @@ def convertMarkdownFile(filePath, htmlTemplate):
     cleanDate = (metaData["created"] or datetime.today().strftime("%Y-%m-%d"))[:10]
     metaData["created"] = cleanDate
 
-    compilationResult = compileMarkdownBody(bodyMarkdown)
+    compilationResult = compileMarkdownBody(bodyMarkdown, imageBaseRoute="/images/publications/")
     if compilationResult is None:
         print(f"  ✗  Error converting {filePath}", file=sys.stderr)
         return None
@@ -59,20 +67,18 @@ def convertMarkdownFile(filePath, htmlTemplate):
 
     slugWithoutDate = re.sub(r"^\d{6}-", "", articleSlug)
     bannerFound = None
-    for candidateFile in [
-        f"{articleSlug}.avif",
-        f"{slugWithoutDate}.avif",
-        f"{articleSlug}.webp",
-        f"{slugWithoutDate}.webp",
-    ]:
-        if os.path.exists(os.path.join(imagesDir, candidateFile)):
-            bannerFound = candidateFile
-            break
+    candidateNames = {articleSlug, slugWithoutDate}
+    if os.path.exists(bannersDir):
+        for candidateFile in sorted(os.listdir(bannersDir)):
+            name, ext = os.path.splitext(candidateFile)
+            if name in candidateNames:
+                bannerFound = candidateFile
+                break
 
     bannerHtml = (
         f'\n          <div class="article-banner-wrapper">'
         f'\n            <img class="article-banner-img"'
-        f' src="/images/post/{bannerFound}" alt="{metaData["title"]}">'
+        f' src="/images/banners/{bannerFound}" alt="{metaData["title"]}">'
         f"\n          </div>"
         if bannerFound
         else ""
@@ -110,7 +116,7 @@ def convertMarkdownFile(filePath, htmlTemplate):
         "date": cleanDate,
         "readingTime": readingTime,
         "tags": tagsList,
-        "image": f"/images/post/{bannerFound}" if bannerFound else None,
+        "image": f"/images/banners/{bannerFound}" if bannerFound else None,
     }
 
 
@@ -204,11 +210,21 @@ def updatePublicationsIndex(newlyCompiledArticles):
 
 def main():
     os.makedirs(outputDir, exist_ok=True)
+    os.makedirs(bannersDir, exist_ok=True)
+    os.makedirs(publicPubImagesDir, exist_ok=True)
+
+    # Synchronize attachments from markdown publications to public/images/publications/
+    syncedCount = syncAttachments(markdownDir, publicPubImagesDir)
+    if syncedCount > 0:
+        print(f"\n · Synced {syncedCount} attachment(s) → public/images/publications/")
 
     if len(sys.argv) > 1:
         markdownFiles = sys.argv[1:]
     else:
-        markdownFiles = sorted(glob.glob(os.path.join(markdownDir, "*.md")))
+        markdownFiles = sorted(glob.glob(os.path.join(markdownDir, "*.md"))) + sorted(glob.glob(os.path.join(markdownDir, "**/*.md"), recursive=True))
+        markdownFiles = sorted(list(set(markdownFiles)))
+
+    markdownFiles = [f for f in markdownFiles if "attachments" not in f.split(os.sep)]
 
     if not markdownFiles:
         print(f"   ℹ No .md files found in {markdownDir}/ — preserving existing publications")

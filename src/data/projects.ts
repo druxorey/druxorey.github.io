@@ -14,20 +14,6 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
-    "id": "druxorey.github.io",
-    "title": "druxorey.github.io",
-    "description": "A personal portfolio and blog showcasing my projects and writings",
-    "tags": [
-      "HTML"
-    ],
-    "featured": true,
-    "links": {
-      "github": "https://github.com/druxorey/druxorey.github.io",
-      "demo": "https://druxorey.me"
-    },
-    "year": "2026"
-  },
-  {
     "id": "dotfiles",
     "title": "dotfiles",
     "description": "A minimalist repository of my dotfiles for arch linux and a bootstrap to automate its installation",
@@ -41,6 +27,20 @@ export const projectsData: Project[] = [
     "featured": true,
     "links": {
       "github": "https://github.com/druxorey/dotfiles",
+      "demo": "https://druxorey.me"
+    },
+    "year": "2026"
+  },
+  {
+    "id": "druxorey.github.io",
+    "title": "druxorey.github.io",
+    "description": "A personal portfolio and blog showcasing my projects and writings",
+    "tags": [
+      "HTML"
+    ],
+    "featured": true,
+    "links": {
+      "github": "https://github.com/druxorey/druxorey.github.io",
       "demo": "https://druxorey.me"
     },
     "year": "2026"
@@ -112,6 +112,23 @@ export const projectsData: Project[] = [
     "year": "2026"
   },
   {
+    "id": "wallpapers",
+    "title": "wallpapers",
+    "description": "A curated collection of wallpapers for dracula and alucard desktop setups",
+    "tags": [
+      "Shell",
+      "Alucard-colorscheme",
+      "Dracula-colorscheme",
+      "Wallpapers"
+    ],
+    "featured": false,
+    "links": {
+      "github": "https://github.com/druxorey/wallpapers",
+      "demo": null
+    },
+    "year": "2026"
+  },
+  {
     "id": "romyr-tweaks",
     "title": "romyr-tweaks",
     "description": "My survival texture pack for Minecraft 1.21.11",
@@ -141,23 +158,6 @@ export const projectsData: Project[] = [
     "featured": false,
     "links": {
       "github": "https://github.com/druxorey/gba-icons",
-      "demo": null
-    },
-    "year": "2026"
-  },
-  {
-    "id": "wallpapers",
-    "title": "wallpapers",
-    "description": "A curated collection of wallpapers for dracula and alucard desktop setups",
-    "tags": [
-      "Shell",
-      "Alucard-colorscheme",
-      "Dracula-colorscheme",
-      "Wallpapers"
-    ],
-    "featured": false,
-    "links": {
-      "github": "https://github.com/druxorey/wallpapers",
       "demo": null
     },
     "year": "2026"

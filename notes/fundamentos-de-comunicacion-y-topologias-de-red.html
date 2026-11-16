@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>#01 - Fundamentos de Comunicación y Topologías de Red | Druxorey</title>
-  <meta name="description" content="La comunicación de datos permite el intercambio de información digital mediante protocolos normalizados que gestionan la transmisión, el enrutamiento y la integridad de los paquetes. Mediante el uso de conmutación de paquetes, diversas topologías de red y una jerarquía de ISP, los sistemas garantizan la conectividad global, optimizando el rendimiento a través de métricas críticas como latencia, ancho de banda y QoS.">
+  <title>Fundamentos de Comunicación y Topologías de Red | Druxorey</title>
+  <meta name="description" content="La comunicación de datos constituye el intercambio estructurado de información digital mediante la transformación de bits en señales físicas, regido por protocolos que aseguran la sintaxis, semántica y temporización. Este proceso integra emisor, receptor, mensaje, medio y protocolo, organizándose bajo diversas topologías físicas y arquitecturas lógicas como cliente-servidor o SDN, optimizando la conectividad y gestión eficiente de recursos en redes de distinta cobertura.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
@@ -68,38 +68,42 @@
         <aside class="toc-sidebar" aria-label="Índice de contenido">
           <div class="toc-title">En esta página</div>
           <ul class="toc-list" id="tocList">
-            <li class="toc-item"><a class="toc-link" href="#la-comunicación-de-datos">1. La Comunicación de Datos</a></li>
-<li class="toc-item toc-sub"><a class="toc-link" href="#componentes-del-sistema-de-comunicación-y-modos-de-transmisión">1.1.
-Componentes del Sistema de Comunicación y Modos de Transmisión</a></li>
-<li class="toc-item toc-sub"><a class="toc-link" href="#métricas-de-rendimiento-del-canal">1.2. Métricas de Rendimiento
-del Canal</a></li>
-<li class="toc-item"><a class="toc-link" href="#estructura-jerárquica-del-internet-moderno">2. Estructura
-Jerárquica del Internet Moderno</a></li>
-<li class="toc-item toc-sub"><a class="toc-link" href="#jerarquía-de-los-isp">2.1. Jerarquía de los ISP</a></li>
-<li class="toc-item"><a class="toc-link" href="#circuitos-frente-a-paquetes">3. Circuitos frente a Paquetes</a></li>
-<li class="toc-item toc-sub"><a class="toc-link" href="#conmutación-de-circuitos">3.1. Conmutación de Circuitos</a></li>
-<li class="toc-item toc-sub"><a class="toc-link" href="#el-salto-a-la-conmutación-de-paquetes">3.2. El Salto a la
-Conmutación de Paquetes</a></li>
-<li class="toc-item"><a class="toc-link" href="#topologías-físicas-y-análisis-combinatorio">4. Topologías
+            <li class="toc-item"><a class="toc-link" href="#axiomas-de-la-comunicación-de-datos">1. Axiomas de la
+Comunicación de Datos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#los-cinco-componentes-sistémicos">1.1. Los Cinco Componentes
+Sistémicos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#elementos-formales-de-un-protocolo">1.2. Elementos Formales de
+un Protocolo</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#modos-de-transmisión-según-direccionalidad">1.3. Modos de
+Transmisión según Direccionalidad</a></li>
+<li class="toc-item"><a class="toc-link" href="#clasificación-de-redes-por-cobertura-física">2. Clasificación de
+Redes por Cobertura Física</a></li>
+<li class="toc-item"><a class="toc-link" href="#topologías-físicas-y-análisis-combinatorio">3. Topologías
 Físicas y Análisis Combinatorio</a></li>
-<li class="toc-item"><a class="toc-link" href="#arquitecturas-lógicas-y-redes-definidas-por-software-sdn">5.
-Arquitecturas Lógicas y Redes Definidas por Software (SDN)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#topologías-fundamentales">3.1. Topologías Fundamentales</a></li>
+<li class="toc-item"><a class="toc-link" href="#arquitecturas-de-red-y-paradigmas-de-gestión">4. Arquitecturas
+de Red y Paradigmas de Gestión</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#cliente-servidor">4.1. Cliente-Servidor</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#redes-punto-a-punto-peer-to-peer-o-p2p">4.2. Redes Punto a Punto
+(Peer-to-Peer o P2P)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#redes-definidas-por-software-sdn">4.3. Redes Definidas por
+Software (SDN)</a></li>
           </ul>
         </aside>
 
         <!-- Right Column: Note Main Content -->
         <article class="article-main">
-          <div class="article-kicker">Apuntes · Comunicación de datos</div>
-          <h1 class="article-title">#01 - Fundamentos de Comunicación y Topologías de Red</h1>
+          <div class="article-kicker">Apuntes · Comunicacion de Datos</div>
+          <h1 class="article-title">Fundamentos de Comunicación y Topologías de Red</h1>
 
           <div class="article-meta">
-            <span class="note-meta-badge">Nota #01</span>
+            <span class="note-meta-badge">Nota 1.1</span>
             <span>·</span>
             <span>Por Guillermo Galavís</span>
           </div>
 
           <div class="article-tags-row">
-            <span class="tag">#académico</span>
+            
           </div>
 
           <!-- Rendered Markdown Body -->
@@ -110,440 +114,362 @@ Arquitecturas Lógicas y Redes Definidas por Software (SDN)</a></li>
     <span class="callout-title-text">SÍNTESIS</span>
   </div>
   <div class="callout-content">
-<p>La <strong>comunicación de datos</strong> permite el intercambio de
-información digital mediante <strong>protocolos</strong> normalizados
-que gestionan la transmisión, el enrutamiento y la integridad de los
-paquetes. Mediante el uso de <strong>conmutación de paquetes</strong>,
-diversas <strong>topologías de red</strong> y una jerarquía
-de <strong>ISP</strong>, los sistemas garantizan la conectividad global,
-optimizando el rendimiento a través de métricas críticas
-como <strong>latencia</strong>, <strong>ancho de
-banda</strong> y <strong>QoS</strong>.</p>
+<p>La <strong>comunicación de datos</strong> constituye el intercambio
+estructurado de información digital mediante la transformación de bits
+en señales físicas, regido por <strong>protocolos</strong> que aseguran
+la sintaxis, semántica y temporización. Este proceso integra
+<strong>emisor, receptor, mensaje, medio y protocolo</strong>,
+organizándose bajo diversas <strong>topologías físicas</strong> y
+arquitecturas lógicas como <strong>cliente-servidor</strong> o
+<strong>SDN</strong>, optimizando la conectividad y gestión eficiente de
+recursos en redes de distinta cobertura.</p>
   </div>
 </div>
-<h2  id="la-comunicación-de-datos">1. La Comunicación de Datos</h2>
-<p>En la vida cotidiana, la comunicación es un proceso fundamental que
-requiere de dos actores principales: un emisor, que tiene la intención
-de transmitir una idea, y un receptor, que debe ser capaz de interpretar
-el mensaje. Para que este intercambio sea exitoso, ambos deben compartir
-un código común (como un idioma) y un canal físico, ya sea el aire que
-transporta la voz o el papel de una carta. Si el emisor habla un idioma
-desconocido para el receptor o si el canal presenta interferencias, la
-comunicación se degrada o se pierde por completo, demostrando que la
-eficacia del mensaje depende tanto de la claridad de la intención como
-de la integridad del medio utilizado.</p>
-<p>La comunicación de datos informática establece un paralelismo,
-trasladando el intercambio de información a un entorno digital donde los
-mensajes se codifican en formato binario (ceros y unos). En este
-contexto, los dispositivos actúan como emisores y receptores que,
-mediante señales físicas que viajan por medios de transmisión,
-intercambian datos de manera coordinada. Así como las personas requieren
-reglas gramaticales para entenderse, los sistemas informáticos modernos
-dependen de protocolos normalizados que gestionan la estructura, la
-sincronización y la integridad de los paquetes, permitiendo que el
-software distribuido y las aplicaciones web operen de forma coherente a
-través de redes globales.</p>
-<h3 
-id="componentes-del-sistema-de-comunicación-y-modos-de-transmisión">1.1.
-Componentes del Sistema de Comunicación y Modos de Transmisión</h3>
-<p>Cualquier sistema de comunicación informática elemental requiere
-cinco componentes fundamentales para operar:</p>
+<p>Mover información entre dos puntos distantes no ocurre por arte de
+magia dentro de las computadoras. Cualquier intercambio exige
+transformar datos digitales en energía física; sin embargo, el mundo
+real impone barreras inevitables: la señal pierde fuerza con la
+distancia, el espectro electromagnético es un recurso limitado, la
+infraestructura física exige grandes costos de energía y el ruido
+ambiental distorsiona las señales en tránsito. Resulta imposible
+conectar equipos enviando señales a ciegas sin un acuerdo estricto sobre
+cómo interpretar esa energía. De esta necesidad elemental surge la
+arquitectura fundamental que rige a todo sistema de transmisión.</p>
+<h2  id="axiomas-de-la-comunicación-de-datos">1. Axiomas de la
+Comunicación de Datos</h2>
+<p>La comunicación humana parte de la necesidad de transferir ideas
+entre dos entidades que comparten un canal físico y un código de
+representación acordado. Si dos personas intentan dialogar a través de
+idiomas incompatibles o bajo un nivel de ruido acústico intolerable en
+el aire, el intercambio se degrada o colapsa.</p>
+<p>La comunicación de datos traslada este principio al ámbito digital.
+En este entorno, los mensajes se descomponen en secuencias discretas de
+bits (ceros y unos). Los dispositivos conectados actúan como
+transductores que transforman representaciones numéricas en
+perturbaciones físicas mensurables (pulsos de voltaje en cobre,
+variaciones lumínicas en fibra óptica u ondas electromagnéticas en el
+espacio libre). Para que esta interacción sea comprensible y
+reproducible, los sistemas requieren protocolos estandarizados que
+dicten la organización, validación y sincronización de las tramas de
+información.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 1:</strong> Protocolo de Comunicación</span>
+  </div>
+  <div class="callout-content">
+<p>Un protocolo es un conjunto formal de normas, convenciones y
+especificaciones que gobiernan el intercambio de información entre dos o
+más entidades dentro de un sistema de comunicación. Define las reglas de
+sintaxis (formato y ordenamiento de bits), semántica (significado de los
+patrones binarios) y temporización (sincronización y velocidad de
+transferencia), asegurando una interacción determinista y la gestión
+estructurada de fallos en el canal.</p>
+  </div>
+</div>
+<h3  id="los-cinco-componentes-sistémicos">1.1. Los Cinco Componentes
+Sistémicos</h3>
+<p>Todo sistema elemental de transferencia de datos está constituido por
+cinco elementos indispensables:</p>
 <ul>
-<li><p><strong>Emisor:</strong> Dispositivo que genera los datos
-originales y los convierte en señales físicas (eléctricas, luminosas o
-de radio) aptas para transmitirse por el canal.</p></li>
+<li><p><strong>Emisor:</strong> Dispositivo o nodo de origen que genera
+la información bruta y la acondiciona en forma de señales físicas aptas
+para viajar a través del canal.</p></li>
 <li><p><strong>Receptor:</strong> Dispositivo de destino que captura la
-señal física del canal, la decodifica y reconstruye los datos
-originales.</p></li>
-<li><p><strong>Mensaje:</strong> La carga útil o «payload» que se desea
-transferir (texto, audio, imágenes o archivos binarios).</p></li>
+señal electromagnética u óptica del canal, la decodifica y reconstruye
+el mensaje original.</p></li>
+<li><p><strong>Mensaje (Payload):</strong> La carga útil o información
+neta que se desea transferir entre los extremos (texto, datos numéricos,
+imágenes, audio o bloques binarios ejecutables).</p></li>
 <li><p><strong>Medio de transmisión:</strong> El soporte físico por el
-cual viaja la señal. Se divide en medios guiados (cables de cobre de par
-trenzado, cable coaxial, fibra óptica) y no guiados (el aire o el vacío,
-mediante ondas electromagnéticas).</p></li>
-<li><p><strong>Protocolo:</strong> Conjunto de reglas formales que
-establecen cómo debe estructurarse, sincronizarse y controlarse el
-intercambio de información.</p></li>
-</ul>
-<div class="callout-box note">
-  <div class="callout-title">
-    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
-    <span class="callout-title-text"><strong>Definición Formal 1:</strong> Protocolo de
-Comunicación</span>
-  </div>
-  <div class="callout-content">
-<p>Un protocolo <span class="math inline">\mathcal{P} = (\mathcal{S},
-\mathcal{M}, \mathcal{R})</span> es una terna formal donde <span
-class="math inline">\mathcal{S}</span> representa el conjunto finito de
-estados de los dispositivos participantes, <span
-class="math inline">\mathcal{M}</span> es el conjunto de mensajes
-válidos con sintaxis y formato predefinidos, y <span
-class="math inline">\mathcal{R}: \mathcal{S} \times \mathcal{M} \to
-\mathcal{S}</span> es la función de transición que dicta la acción
-determinista que debe ejecutar cada extremo ante la llegada, salida o
-temporización de un mensaje.</p>
-  </div>
-</div>
-<p>Para entender qué es un protocolo imaginemos dos estaciones de tren
-conectadas por una sola vía férrea en un tramo estrecho. Si los
-maquinistas liberan los trenes por su cuenta, terminarán chocando de
-frente. El protocolo es el reglamento de banderas y silbatos: la
-estación <span class="math inline">A</span> solo envía una locomotora
-tras hacer sonar tres silbidos largos y recibir de la estación <span
-class="math inline">B</span> una señal con linterna verde que confirma
-que la vía está despejada. Si la linterna es roja, la locomotora espera
-en el apartadero. La vía es el medio, el carbón transportado es el
-mensaje, y el reglamento de banderas y silbatos es el protocolo.</p>
-<p>La dirección y la simultaneidad con la que viajan las señales por el
-canal determinan la <strong>direccionalidad de la
-transmisión</strong>:</p>
+cual viaja la energía de la señal desde el emisor hacia el receptor. Se
+divide en dos clases:</p>
 <ul>
-<li><p><strong>Simplex:</strong> La comunicación ocurre en un único
-sentido estricto. Un extremo solo transmite y el otro solo recibe, sin
-que los roles cambien jamás (ej. la señal de un faro costero hacia los
-barcos o la radiodifusión comercial).</p></li>
-<li><p><strong>Half-Duplex:</strong> La comunicación es bidireccional,
-pero no simultánea. Ambos extremos pueden enviar y recibir, pero deben
-alternarse el uso del canal para no chocar (ej. radiocomunicadores
-portátiles con botón para hablar).</p></li>
-<li><p><strong>Full-Duplex:</strong> La comunicación es bidireccional y
-simultánea. El canal cuenta con vías separadas (por pares de cables
-independientes o frecuencias distintas), permitiendo transmitir y
-recibir datos al mismo tiempo sin colisiones (ej. una conversación
-telefónica convencional).</p></li>
+<li><p><strong>Medios guiados:</strong> Confinan las ondas a lo largo de
+un camino material específico (pares trenzados de cobre, cable coaxial y
+cables de fibra óptica).</p></li>
+<li><p><strong>Medios no guiados:</strong> Permiten la propagación de
+ondas electromagnéticas a través del aire, el agua o el vacío sin
+confinamiento físico (radiofrecuencia, microondas y radiación
+infrarroja).</p></li>
+</ul></li>
+<li><p><strong>Protocolo:</strong> Conjunto de reglas algorítmicas
+adoptadas por emisor y receptor que regulan la transferencia. Sin su
+aplicación previa, ambos extremos pueden estar conectados físicamente
+pero ser incapaces de comunicarse.</p></li>
 </ul>
-<h3  id="métricas-de-rendimiento-del-canal">1.2. Métricas de Rendimiento
-del Canal</h3>
-<p>Para evaluar la calidad y la velocidad real con la que opera una red,
-se utilizan las siguientes métricas cuantitativas:</p>
+<h3  id="elementos-formales-de-un-protocolo">1.2. Elementos Formales de
+un Protocolo</h3>
+<p>El diseño riguroso de cualquier protocolo informático se descompone
+en tres componentes estructurales:</p>
 <ul>
-<li><p><strong>Ancho de Banda Espectral (</strong><span
-class="math inline">B</span><strong>):</strong> Rango de frecuencias que
-el canal físico puede transportar sin distorsión inaceptable, medido en
-hercios (<span class="math inline">\text{Hz}</span>). En términos
-digitales, describe la capacidad máxima teórica del enlace expresada en
-bits por segundo (<span class="math inline">\text{bps}</span>).</p></li>
-<li><p><strong>Throughput (Rendimiento Real):</strong> Cantidad de bits
-que el canal transporta y entrega de forma exitosa en la práctica por
-unidad de tiempo. Siempre cumple que <span
-class="math inline">\text{Throughput} \le \text{Capacidad
-Teórica}</span>, debido a errores, colisiones y sobrecarga de
-control.</p></li>
-<li><p><strong>Goodput:</strong> Medida del caudal neto que corresponde
-exclusivamente a los datos útiles de la aplicación del usuario. Ignora
-las cabeceras de control de los protocolos y los paquetes retransmitidos
-por errores.</p></li>
-<li><p><strong>Calidad de Servicio (QoS):</strong> Estrategias de
-priorización y gestión de colas en los enrutadores para asegurar límites
-máximos tolerables de retardo y jitter en tráficos sensibles (como
-llamadas de voz o transmisiones de video en vivo).</p></li>
+<li><p><strong>Sintaxis:</strong> Refiere a la estructura formal y a la
+distribución espacial de los datos dentro del bloque transmitido. Define
+el orden, la longitud en bits y el propósito de cada campo (por ejemplo,
+especificar que los primeros 16 bits representan la dirección del
+emisor, los 16 bits siguientes la del receptor y el remanente el cuerpo
+de datos útiles).</p></li>
+<li><p><strong>Semántica:</strong> Establece el significado
+interpretativo de cada sección de control y los cursos de acción
+asociados. Determina qué acción operativa debe ejecutar el receptor al
+descifrar un patrón concreto (por ejemplo, reconocer si un patrón de
+bits indica una confirmación positiva de recepción, una solicitud de
+retransmisión por suma de comprobación inválida o una petición de cierre
+de enlace).</p></li>
+<li><p><strong>Temporización («Timing» y Secuenciación):</strong> Regula
+la escala temporal del enlace, cubriendo la velocidad de transmisión y
+el ordenamiento secuencial de los intercambios. Resuelve la adaptación
+de velocidades para evitar que un emisor rápido desborde la capacidad de
+absorción de un receptor lento y define los intervalos máximos de espera
+antes de declarar la pérdida de un paquete.</p></li>
 </ul>
-<p>En base a esas méetricas, toda red de comunicación debe satisfacer
-tres criterios operativos esenciales:</p>
+<h3  id="modos-de-transmisión-según-direccionalidad">1.3. Modos de
+Transmisión según Direccionalidad</h3>
+<p>La orientación vectorial del flujo de datos a través del canal
+establece tres modos de operación:</p>
 <ul>
-<li><p><strong>Rendimiento (<em>Performance</em>):</strong> Métrica
-combinada de la velocidad de transferencia neta (<em>throughput</em>),
-los tiempos de propagación de los datos (latencia) y la estabilidad
-temporal de arribo (<em>jitter</em>).</p></li>
-<li><p><strong>Fiabilidad y Confiabilidad
-(<em>Reliability</em>):</strong> Frecuencia con la que ocurren fallos en
-los enlaces, tiempo medio de recuperación (<em>Mean Time to Repair</em>,
-MTTR) y robustez intrínseca ante eventos catastróficos o desconexiones
-imprevistas.</p></li>
-<li><p><strong>Seguridad (<em>Security</em>):</strong> Garantía de
-confidencialidad (bloqueo de accesos no autorizados), integridad
-(detección y mitigación de modificaciones no deseadas en tránsito) y
-disponibilidad del enlace.</p></li>
+<li><strong>Símplex:</strong> Transferencia estrictamente
+unidireccional. La asignación de funciones es estática: un extremo opera
+exclusivamente como transmisor y el otro únicamente como receptor, sin
+que estos roles puedan alternarse.</li>
 </ul>
-<p>Para que la red sea funcionalmente admisible bajo estos criterios, se
-evalúan cuatro características operativas:</p>
-<ul>
-<li><p><strong>Entrega (<em>Delivery</em>):</strong> El sistema debe
-canalizar los paquetes exactamente al destino requerido, sin desvíos ni
-fugas a otros nodos.</p></li>
-<li><p><strong>Exactitud (<em>Accuracy</em>):</strong> Los datos
-recibidos deben coincidir bit a bit con los datos emitidos; si el canal
-corrompe la señal, el protocolo debe detectar el error y descartar o
-corregir la trama.</p></li>
-<li><p><strong>Tiempo de entrega (<em>Timeliness</em>):</strong> Arribo
-de los datos dentro del límite temporal exigido por la aplicación
-(especialmente crítico en transmisiones en tiempo real como
-VoIP).</p></li>
-<li><p><strong>Fluctuación de retardo (<em>Jitter</em>):</strong>
-Variación temporal entre los tiempos de llegada de paquetes
-consecutivos. Una fluctuación elevada satura o vacía los búferes de
-recepción, degradando la reconstrucción de la señal. Si dos paquetes
-sufren retardos individuales de <span class="math inline">L_i</span> y
-<span class="math inline">L_{i-1}</span>, el jitter instantáneo es el
-valor absoluto de su diferencia:</p></li>
-</ul>
-<p><span class="math display">J = \vert{}L_i - L_{i-1}\vert{}</span></p>
-<div class="callout-box note">
-  <div class="callout-title">
-    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
-    <span class="callout-title-text"><strong>Definición Formal 2:</strong> Ecuación del Retardo
-Total de Enlace (Latencia)</span>
-  </div>
-  <div class="callout-content">
-<p>El retardo total unidireccional (<span class="math inline">L</span>)
-que sufre un paquete de tamaño <span class="math inline">D</span> bits
-al transmitirse por un enlace físico de longitud <span
-class="math inline">d</span> metros y capacidad de transmisión de <span
-class="math inline">R\text{ bps}</span> es:</p>
-<p><span class="math display">L = t_{\text{trans}} + t_{\text{prop}} +
-t_{\text{queue}} + t_{\text{proc}}</span></p>
-<p>donde:</p>
-<p><span class="math display">t_{\text{trans}} = \frac{D}{R}, \qquad
-t_{\text{prop}} = \frac{d}{v}</span></p>
-<p>siendo <span class="math inline">v</span> la velocidad de propagación
-de la señal electromagnética en el medio (<span class="math inline">v
-\approx 2 \times 10^8\text{ m/s}</span> en el cobre y la fibra de
-sílice), <span class="math inline">t_{\text{queue}}</span> el tiempo de
-espera en los búferes de memoria del enrutador, y <span
-class="math inline">t_{\text{proc}}</span> el tiempo que tarda el
-procesador del nodo en leer la cabecera del paquete y verificar
-errores.</p>
-  </div>
-</div>
-<p>Para distinguir claramente el retardo de transmisión (<span
-class="math inline">t_{\text{trans}}</span>) del retardo de propagación
-(<span class="math inline">t_{\text{prop}}</span>), imaginemos una bomba
-de agua conectada a una tubería de <span class="math inline">10\text{
-km}</span> que desemboca en un estanque.</p>
-<p>El <strong>retardo de transmisión</strong> es el tiempo que tarda el
-operador en bombear físicamente 1000 litros de agua por la boca de
-entrada; si la bomba opera a una tasa de <span
-class="math inline">100\text{ litros/minuto}</span>, tardará <span
-class="math inline">10\text{ minutos}</span> en vaciar el contenedor en
-la tubería. El <strong>retardo de propagación</strong> es el tiempo que
-le toma a la primera gota de agua viajar físicamente a lo largo de los
-<span class="math inline">10\text{ km}</span> de tubería hasta asomar
-por el otro extremo. Además de lo anterior, el <strong>retardo de
-procesamiento</strong> (<span
-class="math inline">t_{\text{proc}}</span>) es el tiempo que toma un
-operario intermedio en leer la etiqueta del lote de agua, y el
-<strong>retardo de encolamiento</strong> (<span
-class="math inline">t_{\text{queue}}</span>) es el tiempo que el agua
-pasa almacenada en una cisterna de paso antes de ser impulsada por la
-siguiente bomba.</p>
 <div class="callout-box example">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
-    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Retardo de Paquete en un
-Enlace Interurbano de Fibra Óptica</span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Transmisión Símplex</span>
   </div>
   <div class="callout-content">
-<p><strong>Enunciado:</strong> Un enlace punto a punto de fibra óptica
-une dos ciudades separadas por <span class="math inline">d = 1200\text{
-km}</span> (<span class="math inline">1.2 \times 10^6\text{ m}</span>)
-con una tasa de transmisión nominal de <span class="math inline">R =
-100\text{ Mbps}</span> (<span class="math inline">10^8\text{
-bps}</span>). La velocidad de la señal lumínica en el núcleo de la fibra
-es <span class="math inline">v = 2 \times 10^8\text{ m/s}</span>. Se
-transmite un paquete de tamaño <span class="math inline">D = 1500\text{
-bytes}</span> (<span class="math inline">12000\text{ bits}</span>). Los
-conmutadores intermedios introducen un retardo de procesamiento
-acumulado de <span class="math inline">t_{\text{proc}} = 35\text{
-}\mu\text{s}</span> y el paquete espera en cola un tiempo <span
-class="math inline">t_{\text{queue}} = 1.2\text{ ms}</span>. Calcule el
-retardo total de entrega <span class="math inline">L</span>.</p>
-<p><strong>Resolución:</strong></p>
-<ol type="1">
-<li>Retardo de transmisión:</li>
-</ol>
-<p><span class="math display">t_{\text{trans}} = \frac{12000\text{
-bits}}{10^8\text{ bps}} = 1.2 \times 10^{-4}\text{ s} = 0.12\text{
-ms}</span></p>
-<ol start="2" type="1">
-<li>Retardo de propagación:</li>
-</ol>
-<p><span class="math display">t_{\text{prop}} = \frac{1.2 \times
-10^6\text{ m}}{2 \times 10^8\text{ m/s}} = 6 \times 10^{-3}\text{ s} =
-6.00\text{ ms}</span></p>
-<ol start="3" type="1">
-<li>Ajuste de términos restantes a milisegundos:</li>
-</ol>
-<p><span class="math display">t_{\text{proc}} = 0.035\text{ ms}, \qquad
-t_{\text{queue}} = 1.20\text{ ms}</span></p>
-<ol start="4" type="1">
-<li>Suma total de los retardos:</li>
-</ol>
-<p><span class="math display">L = 0.12 + 6.00 + 1.20 + 0.035 =
-7.355\text{ ms}</span></p>
+<p>La señalización luminosa de un faro hacia los barcos en altamar o la
+transferencia de pulsos desde un teclado convencional hacia la placa
+base. Todo el ancho de banda del medio se reserva de forma permanente
+para un único sentido.</p>
   </div>
 </div>
-<h2  id="estructura-jerárquica-del-internet-moderno">2. Estructura
-Jerárquica del Internet Moderno</h2>
-<p>El alcance físico y la distribución topológica determinan los
-mecanismos de acceso al medio, las tecnologías de conmutación y las
-tasas de error esperadas:</p>
 <ul>
-<li><p><strong>PAN (Personal Area Network):</strong> Alcance limitado al
-espacio personal de un usuario (<span class="math inline">d \le 10\text{
-m}</span>). Utiliza enlaces de corto alcance y bajo consumo eléctrico
-(ej. Bluetooth, Zigbee).</p></li>
-<li><p><strong>LAN (Local Area Network):</strong> Cobertura confinada a
-un edificio, departamento o laboratorio (<span class="math inline">d \le
-1\text{ km}</span>). Alcanza altas tasas de transmisión (<span
-class="math inline">1\text{ a }100\text{ Gbps}</span>), utiliza medios
-privados y presenta tasas de error mínimas (ej. Ethernet,
-Wi-Fi).</p></li>
-<li><p><strong>CAN (Campus Area Network):</strong> Conecta varias LAN
-contiguas dentro de un complejo delimitado como una universidad o base
-industrial (<span class="math inline">1\text{ km} &lt; d \le 5\text{
-km}</span>). Emplea infraestructura propia de alta capacidad sin
-requerir concesiones de telecomunicación pública.</p></li>
+<li><strong>Half-Duplex:</strong> Transferencia bidireccional no
+simultánea. Ambos nodos tienen la capacidad de emitir y recibir
+información, pero deben alternar el uso del canal en el dominio
+temporal.</li>
+</ul>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Transmisión Half-Duplex</span>
+  </div>
+  <div class="callout-content">
+<p>Un tramo de vía férrea de un solo carril donde los trenes pueden
+avanzar en ambos sentidos, pero exige que un convoy espere en la
+estación lateral mientras el otro cruza para evitar un choque frontal
+(análogo al uso de radiocomunicadores portátiles con botón de
+alternancia).</p>
+  </div>
+</div>
+<ul>
+<li><strong>Full-Duplex:</strong> Transferencia bidireccional y
+simultánea. Ambos extremos pueden emitir y capturar señales
+concurrentemente sin riesgo de interferencia mutua. Se logra aislando
+dos caminos físicos independientes (como dos hilos de cobre o dos fibras
+ópticas paralelas) o dividiendo el espectro del canal en bandas de
+frecuencia disjuntas.</li>
+</ul>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3: Transmisión Full-Duplex</strong></span>
+  </div>
+  <div class="callout-content">
+<p>Una carretera de dos canales independientes donde los vehículos
+circulan en sentidos opuestos de forma continua y sin interrupciones
+cruzadas.</p>
+  </div>
+</div>
+<h2  id="clasificación-de-redes-por-cobertura-física">2. Clasificación de
+Redes por Cobertura Física</h2>
+<p>El alcance geográfico condiciona de manera directa el retardo de
+propagación electromagnética, las tecnologías de modulación admisibles,
+la tasa de errores esperada y el régimen administrativo de la
+infraestructura.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 2:</strong> Cobertura Física de Red</span>
+  </div>
+  <div class="callout-content">
+<p>Es la delimitación del alcance espacial dentro del cual una
+arquitectura de comunicación mantiene la integridad física de sus
+señales y cotas operativas de latencia, clasificando las redes según la
+distancia métrica (<span class="math inline">d</span>) entre sus nodos
+extremos y la naturaleza de sus medios de transporte.</p>
+  </div>
+</div>
+<p>Las redes se clasifican formalmente según los siguientes rangos de
+cobertura física:</p>
+<ul>
+<li><p><strong>PAN (Personal Area Network):</strong> Cobertura confinada
+al entorno operativo inmediato de una persona, con un límite nominal de
+<span class="math inline">d \le 10\text{ m}</span>. Emplea enlaces
+inalámbricos de muy bajo consumo energético y corto alcance (como
+Bluetooth o Zigbee) para interconectar sensores corporales y
+dispositivos periféricos.</p></li>
+<li><p><strong>LAN (Local Area Network):</strong> Cobertura circunscrita
+a un área arquitectónica delimitada, como una oficina, laboratorio o
+edificio corporativo (<span class="math inline">d \le 1\text{
+km}</span>). Presenta altas tasas de transmisión (de <span
+class="math inline">1\text{ Gbps}</span> a <span
+class="math inline">100\text{ Gbps}</span>), medios de transmisión
+privados y tasas de error extremadamente reducidas (ej. tecnologías
+Ethernet o Wi-Fi).</p></li>
+<li><p><strong>CAN (Campus Area Network):</strong> Interconecta varias
+redes LAN geográficamente adyacentes dentro de un predio delimitado,
+cubriendo un radio de <span class="math inline">1\text{ km} &lt; d \le
+5\text{ km}</span>. Utiliza canalizaciones y cableado de alta capacidad
+de propiedad privada institucional (universidades, bases militares o
+complejos industriales) sin arrendar infraestructura pública de
+telecomunicaciones.</p></li>
 <li><p><strong>MAN (Metropolitan Area Network):</strong> Cobertura que
-abarca una ciudad (<span class="math inline">5\text{ km} &lt; d \le
-50\text{ km}</span>). Suele estar gestionada por consorcios públicos o
-proveedores de telecomunicaciones que enlazan sedes dispersas mediante
-anillos de fibra óptica.</p></li>
-<li><p><strong>WAN (Wide Area Network):</strong> Alcance regional,
-nacional o global (<span class="math inline">d &gt; 50\text{
-km}</span>). Emplea cables submarinos, enlaces terrestres interurbanos y
-satélites. Internet es el ejemplo por excelencia.</p></li>
-<li><p><strong>SAN (Storage Area Network):</strong> Red dedicada de alta
-velocidad que enlaza servidores de cómputo con bancos de discos masivos,
-utilizando protocolos de acceso directo a bloques (ej. Fibre
-Channel).</p></li>
+abarca una ciudad o aglomeración urbana (<span
+class="math inline">5\text{ km} &lt; d \le 50\text{ km}</span>). Suele
+sustentarse sobre anillos metropolitanos de fibra óptica operados por
+empresas de telecomunicaciones para interconectar sedes dispersas de
+entidades bancarias o suministrar acceso corporativo.</p></li>
+<li><p><strong>WAN (Wide Area Network):</strong> Cobertura geográfica
+masiva que cruza fronteras regionales, nacionales o continentales (<span
+class="math inline">d &gt; 50\text{ km}</span>). Depende de
+infraestructuras de transporte público operadas por compañías de
+telecomunicaciones, enlaces satelitales y cables submarinos. Internet es
+el ejemplo canónico de WAN interconectada.</p></li>
+<li><p><strong>SAN (Storage Area Network):</strong> Red de alta
+velocidad concebida específicamente para el transporte de datos masivos
+a nivel de bloques entre servidores de procesamiento y bancos de
+almacenamiento secundario. Opera desacoplada de la red LAN general
+mediante protocolos dedicados (como Fibre Channel o iSCSI), asegurando
+transferencias continuas y latencias mínimas.</p></li>
 </ul>
-<h3  id="jerarquía-de-los-isp">2.1. Jerarquía de los ISP</h3>
-<p>Internet no es una red centralizada homogénea, sino un conjunto
-masivo de sistemas autónomos (<em>Autonomous Systems</em>, AS)
-interconectados jerárquicamente a través de Proveedores de Servicios de
-Internet (<em>Internet Service Providers</em>, ISP):</p>
-<ul>
-<li><p><strong>ISP de Acceso (Nivel 3 / Tier 3):</strong> Redes locales
-que comercializan el enlace final a hogares, universidades y pequeñas
-empresas mediante tecnologías como FTTH, cable módem o enlaces
-celulares. Deben pagar tráfico de tránsito a los niveles
-superiores.</p></li>
-<li><p><strong>ISP Regional (Nivel 2 / Tier 2):</strong> Redes con
-presencia metropolitana o nacional que interconectan múltiples ISP
-locales y cursan tráfico entre sí mediante acuerdos de compartición de
-capacidad mutua (<em>peering</em>).</p></li>
-<li><p><strong>ISP troncales (Nivel 1 / Tier 1):</strong> Grandes
-operadores globales con infraestructuras de fibra óptica
-transcontinental y submarina. No pagan a nadie por cursar tráfico;
-intercambian datos libremente entre ellos mediante convenios simétricos
-de <em>settlement-free peering</em>.</p></li>
-<li><p><strong>Puntos de Intercambio de Tráfico (<em>IXP / NAP - Network
-Access Points</em>):</strong> Infraestructuras físicas de conmutación
-centralizada donde distintos ISP y redes de distribución de contenidos
-(<em>Content Delivery Networks</em>, CDN) enlazan sus enrutadores para
-transferir datos de forma directa y económica, evitando saturar los
-enlaces de tránsito troncales.</p></li>
-</ul>
-<h2  id="circuitos-frente-a-paquetes">3. Circuitos frente a Paquetes</h2>
-<p>Para trasladar información entre múltiples nodos, las redes emplean
-dos métodos fundamentales.</p>
-<h3  id="conmutación-de-circuitos">3.1. Conmutación de Circuitos</h3>
-<p>Se reserva un camino físico exclusivo de extremo a extremo antes de
-iniciar el intercambio, ofreciendo un retardo fijo. La capacidad del
-enlace queda bloqueada durante toda la sesión, se transmitan o no datos.
-En las primeras redes basadas en la infraestructura telefónica analógica
-tradicional, la conexión requería establecer un circuito físico dedicado
-de extremo a extremo:</p>
-<ul>
-<li><p><strong>Reserva estática de recursos:</strong> El ancho de banda
-quedaba reservado permanentemente durante toda la sesión, sin importar
-si los terminales intercambiaban datos o permanecían en reposo
-(<em>silencios</em>), desperdiciando hasta un <span
-class="math inline">90\%</span> de la capacidad teórica del
-medio.</p></li>
-<li><p><strong>Cuello de botella de modulación:</strong> El módem
-(<em>Modulador/Demodulador</em>) debía adaptar pulsos de tensión
-continua a tonos audibles sobre hilos de cobre. La velocidad efectiva
-quedaba acotada a bajas tasas de símbolos (medidas en baudios), con alta
-vulnerabilidad al ruido impulsivo y a la atenuación espectral.</p></li>
-</ul>
-<h3  id="el-salto-a-la-conmutación-de-paquetes">3.2. El Salto a la
-Conmutación de Paquetes</h3>
-<p>Formulada conceptualmente por Paul Baran y Donald Davies, la
-conmutación de paquetes eliminó la dependencia del canal dedicado. La
-información se corta en fragmentos independientes llamados «paquetes»,
-cada paquete viaja de forma autónoma compartiendo la capacidad del canal
-con paquetes de otros usuarios. Los enrutadores intermedios reciben los
-fragmentos y los reenvían según la disponibilidad de sus enlaces:</p>
-<ul>
-<li><p><strong>Multiplexación estadística:</strong> Múltiples fuentes
-transmiten simultáneamente por el mismo enlace; los paquetes se forman
-en colas de espera en los conmutadores (<em>switches</em>) o enrutadores
-(<em>routers</em>).</p></li>
-<li><p><strong>Rutas no deterministas:</strong> Dos paquetes continuos
-de una misma transmisión pueden recorrer trayectorias topológicas
-dispares según el estado de congestión de la red, reconstruyéndose el
-orden secuencial en el extremo receptor.</p></li>
-<li><p><strong>Evolución del hardware:</strong> La transición desde los
-<em>mainframes</em> centralizados y monolíticos (dominados
-históricamente por arquitecturas propietarias como IBM SNA) hacia las
-minicomputadoras (notablemente las líneas PDP y VAX de Digital Equipment
-Corporation - DEC) permitió una descentralización masiva mediante redes
-propietarias interoperables como DECnet, sentando las bases operativas
-de ARPANET.</p></li>
-</ul>
-<h2  id="topologías-físicas-y-análisis-combinatorio">4. Topologías
+<h2  id="topologías-físicas-y-análisis-combinatorio">3. Topologías
 Físicas y Análisis Combinatorio</h2>
-<p>La topología describe la disposición geométrica de los cables y
-dispositivos de red:</p>
+<p>La topología física define la distribución geométrica y el trazado
+del cableado y de los nodos dentro del sistema de interconexión.</p>
+<h3  id="topologías-fundamentales">3.1. Topologías Fundamentales</h3>
+<h4 id="topología-en-bus">3.1.1. Topología en Bus</h4>
+<p>Todos los dispositivos se conectan a un cable troncal compartido
+continuo mediante conectores o derivaciones de derivación pasiva
+(«taps»). Es una topología multipunto. La señal introducida por
+cualquier nodo viaja en ambas direcciones a lo largo del medio físico,
+alcanzando a todos los demás terminales del enlace.</p>
+<p>En cada uno de los dos extremos del cable coaxial troncal es
+obligatorio instalar una resistencia de terminación (típicamente de
+<span class="math inline">50\ \Omega</span>). El terminador absorbe la
+energía de la onda incidente; si faltara, la señal electromagnética
+chocaría con el extremo abierto, rebotando en sentido opuesto en forma
+de eco parásito y corrompiendo las tramas legítimas que circulan por el
+bus. Un corte material en cualquier punto del cable troncal divide el
+bus y altera la impedancia del circuito, lo que deja inoperativa la
+totalidad de la red.</p>
+<h4 id="topología-en-anillo">3.1.2. Topología en Anillo</h4>
+<p>Los nodos se interconectan secuencialmente hasta formar una
+trayectoria física cerrada en circuito. Cada dispositivo dispone
+únicamente de una conexión punto a punto con su vecino previo y con su
+vecino posterior. La información fluye en un sentido predefinido y
+unidireccional a lo largo del lazo. Cada nodo incorpora un repetidor
+activo: cuando recibe una trama destinada a otra estación, regenera la
+forma de onda eléctrica de los bits y la reinyecta hacia el segmento
+siguiente con su potencia nominal original.</p>
+<p>La ruptura de un único segmento de cable o la desconexión imprevista
+de un nodo intermedio interrumpe el lazo de circulación y colapsa la
+conectividad global del sistema, salvo que se añada un anillo redundante
+de contra-rotación.</p>
+<h4 id="topología-en-estrella">3.1.3. Topología en Estrella</h4>
+<p>Cada nodo terminal establece un enlace dedicado punto a punto con un
+conmutador o concentrador central (switch). Los equipos terminales no
+dialogan directamente entre sí a nivel de cable. El conmutador central
+recibe las tramas entrantes, analiza sus direcciones de control y
+reenvía el flujo exclusivamente por el puerto físico donde reside el
+destinatario.</p>
+<p>Si un cable periférico sufre un daño o una máquina se apaga, solo ese
+nodo específico queda desconectado. Sin embargo, el dispositivo central
+representa un <strong>punto único de fallo</strong>: una avería
+eléctrica o de control en el conmutador inutiliza de inmediato toda la
+red.</p>
+<h4 id="topología-en-malla-completa">3.1.4. Topología en Malla
+Completa</h4>
+<p>Cada nodo del sistema cuenta con un enlace físico dedicado, directo e
+independiente con cada uno de los demás nodos que integran la red.
+Ofrece la máxima redundancia estructural e inmunidad ante fallos de
+enlaces. El tráfico circula de forma aislada por líneas privadas,
+eliminando las colisiones y garantizando privacidad física entre pares.
+El volumen total de cables e interfaces requeridos crece drásticamente
+con cada nuevo nodo incorporado.</p>
+<h2  id="arquitecturas-de-red-y-paradigmas-de-gestión">4. Arquitecturas
+de Red y Paradigmas de Gestión</h2>
+<p>La arquitectura lógica describe la distribución de las funciones de
+cómputo, las jerarquías de servicio y la toma de decisiones sobre el
+tráfico entre los nodos.</p>
+<h3  id="cliente-servidor">4.1. Cliente-Servidor</h3>
+<p>Es una arquitectura marcadamente jerárquica y asimétrica basada en la
+centralización de recursos. El <strong>servidor</strong> es un proceso
+que se ejecuta de forma ininterrumpida en una máquina dedicada,
+manteniendo puertos abiertos a la escucha de peticiones entrantes. El
+<strong>cliente</strong> es un proceso de ejecución transitoria que
+inicia activamente el contacto bajo demanda del usuario, solicita un
+recurso, procesa la respuesta devuelta y finaliza su ejecución.</p>
+<p>Dado que todas las solicitudes convergen hacia el mismo punto, la
+máquina servidora o su enlace local de acceso a la red pueden
+convertirse rápidamente en un cuello de botella («bottleneck») y en un
+punto central de fallo operativo.</p>
+<h3  id="redes-punto-a-punto-peer-to-peer-o-p2p">4.2. Redes Punto a Punto
+(Peer-to-Peer o P2P)</h3>
+<p>Es un esquema descentralizado donde no existen servidores exclusivos
+ni dependencias jerárquicas permanentes. Cada nodo (peer) actúa
+simultáneamente como cliente y como servidor. Al mismo tiempo que un
+nodo descarga fragmentos de información desde otros miembros de la red,
+comparte sus propios bloques almacenados y su ancho de banda de subida
+con los demás pares.</p>
+<p>Conforme ingresan nuevos usuarios al enjambre, la capacidad global de
+entrega y almacenamiento del sistema crece de forma proporcional a la
+demanda, diluyendo la carga en lugar de saturar un servidor
+centralizado.</p>
+<h3  id="redes-definidas-por-software-sdn">4.3. Redes Definidas por
+Software (SDN)</h3>
+<p>En la conmutación tradicional, cada enrutador o conmutador físico
+integra de forma monolítica dos responsabilidades distintas: resolver
+las rutas óptimas del sistema y transferir físicamente los paquetes bit
+a bit. El paradigma SDN se trata de una arquitectura de red donde las
+funciones de decisión de encaminamiento (<strong>plano de
+control</strong>) se separan físicamente de la maquinaria de reenvío de
+paquetes (<strong>plano de datos</strong>), centralizando la lógica de
+control en una entidad lógica programable por software y reduciendo los
+dispositivos de conmutación a ejecutores deterministas de instrucciones
+de flujo de la siguiente forma:</p>
 <ul>
-<li><p><strong>Bus:</strong> Todos los nodos se conectan a un cable
-troncal compartido continuo. Si el cable se corta en cualquier punto,
-toda la red queda inoperativa.</p></li>
-<li><p><strong>Anillo:</strong> Los nodos se enlazan uno tras otro
-formando un círculo cerrado. La información viaja en un único sentido;
-si un nodo o enlace falla, el anillo se interrumpe a menos que exista un
-doble anillo de respaldo.</p></li>
-<li><p><strong>Estrella:</strong> Cada terminal se conecta
-individualmente a un nodo central (como un switch). Si un cable
-individual se rompe, solo se desconecta ese equipo. Sin embargo, el
-dispositivo central representa un punto único de falla.</p></li>
-<li><p><strong>Malla Completa:</strong> Cada equipo tiene una conexión
-directa y dedicada con cada uno de los demás equipos de la red,
-ofreciendo la máxima tolerancia a fallas. Para una red de <span
-class="math inline">n</span> nodos donde cada par de terminales está
-conectado por un enlace bidireccional dedicado, el número total de
-enlaces físicos <span class="math inline">E</span> necesarios
-corresponde a la combinación de <span class="math inline">n</span>
-elementos tomados de 2 en 2:</p></li>
+<li><p><strong>Plano de Control (Control Plane):</strong> Representa el
+cerebro lógico del sistema. Se extrae del hardware individual y se
+ejecuta en un controlador centralizado (o clúster distribuido) mediante
+software. Este plano recopila la topología completa de la red, ejecuta
+algoritmos para determinar los caminos óptimos, aplica políticas de
+seguridad y genera las tablas de flujo que rigen el comportamiento del
+tráfico.</p></li>
+<li><p><strong>Plano de Datos (Data Plane o Plano de Reenvío):</strong>
+Representa la estructura de ejecución mecánica que permanece en los
+conmutadores físicos. Su única labor consiste en recibir paquetes por
+una interfaz, consultar las tablas de reglas inyectadas previamente por
+el controlador y despachar los paquetes hacia la interfaz de salida
+correspondiente a velocidad de cable. Emplea hardware de alta velocidad
+basado en circuitos integrados específicos (ASIC) y memorias asociativas
+(TCAM) para resolver las coincidencias en microsegundos.</p></li>
 </ul>
-<p><span class="math display">E = \binom{n}{2} = \frac{n(n -
-1)}{2}</span> Por esta razón, la malla total se reserva para núcleos de
-telecomunicaciones críticos (<em>backbones</em> de centros de datos o
-enrutadores troncales), mientras que en redes de acceso se recurre
-invariablemente a configuraciones en estrella o híbridas (ej. núcleo
-central en estrella enlazando redes locales en bus).</p>
-<h2  id="arquitecturas-lógicas-y-redes-definidas-por-software-sdn">5.
-Arquitecturas Lógicas y Redes Definidas por Software (SDN)</h2>
-<p>La organización lógica describe cómo se distribuyen las tareas y las
-decisiones en el sistema:</p>
-<ul>
-<li><p><strong>Cliente-Servidor:</strong> Modelo jerárquico donde un
-equipo central («Servidor») ofrece recursos y espera peticiones,
-mientras que los equipos periféricos («Clientes») inician el contacto
-para solicitar servicios.</p></li>
-<li><p><strong>Punto a Punto (P2P):</strong> Modelo descentralizado
-donde no existen jerarquías fijas. Cada nodo («peer») actúa
-simultáneamente como cliente y servidor, compartiendo sus propios
-recursos con los demás miembros.</p></li>
-<li><p><strong>Redes Definidas por Software (SDN):</strong> Paradigma
-que separa las dos funciones principales que tradicionalmente se
-ejecutaban dentro de un mismo enrutador:</p>
-<ul>
-<li><p><strong>Plano de Control:</strong> Lógica del sistema que calcula
-las rutas óptimas y dicta las reglas globales de reenvío. En SDN, se
-centraliza en un software maestro.</p></li>
-<li><p><strong>Plano de Datos:</strong> Tarea mecánica de recibir los
-paquetes y enviarlos a toda velocidad por la interfaz de salida que
-dictó el plano de control.</p></li>
-</ul></li>
-<li><p><strong>Servicios de Red Actuales:</strong> Transición de
-servicios alojados en máquinas locales (<em>on-premises</em>) a esquemas
-de computación en la nube elásticos. Las aplicaciones modernas
-desacoplan su lógica interna en microservicios paquetizados en
-contenedores, apoyados en redes de distribución de contenido (CDN) para
-aproximar el <em>edge computing</em>.</p></li>
-</ul>
+<p>Pensemos en la gestión del tráfico aéreo mediante una torre de
+control centralizada. Los aviones (plano de datos) transportan
+físicamente a los pasajeros a alta velocidad y ejecutan de manera
+mecánica las maniobras de propulsión y viraje; sin embargo, los pilotos
+no calculan de forma aislada las trayectorias globales para esquivar a
+los demás vuelos. La torre de control (plano de control) supervisa el
+mapa del espacio aéreo completo, calcula los corredores seguros y emite
+instrucciones coordinadas a cada cabina; los aviones se limitan a seguir
+de inmediato las rutas asignadas.</p>
+<p>Permite a los administradores programar y reconfigurar el
+comportamiento de toda la red global mediante código e interfaces API,
+eliminando la necesidad de configurar manualmente y de forma individual
+cada enrutador de la infraestructura.</p>
 <hr />
 <div class="callout-box resources">
   <div class="callout-title">
@@ -552,20 +478,35 @@ aproximar el <em>edge computing</em>.</p></li>
   </div>
   <div class="callout-content">
 <ul>
-<li><p><strong>Baran, P.</strong> <em>On Distributed Communications: I.
-Introduction to Distributed Communications Networks</em>. Recuperado de
-<a
+<li><p><strong>Balaguz, R.</strong> (2026). <em>Medios de Transmisión y
+Redes Modernas</em>. Comunicación de Datos, Escuela de Computación,
+Facultad de Ciencias, Universidad Central de Venezuela (UCV).</p></li>
+<li><p><strong>Baran, P.</strong> (1964). <em>On Distributed
+Communications: I. Introduction to Distributed Communications
+Networks</em> (RM-3420-PR). RAND Corporation. Recuperado de <a
 href="https://www.rand.org/pubs/research_memoranda/RM3420.html">rand.org</a></p></li>
-<li><p><strong>Hawkinson, J. &amp; Bates, T.</strong> <em>RFC 1930:
-Guidelines for Creation, Selection, and Registration of an Autonomous
-System (AS)</em>. Recuperado de <a
-href="https://datatracker.ietf.org/doc/html/rfc1930">datatracker.ietf.org</a></p></li>
-<li><p><strong>Rekhter, Y., Li, T. &amp; Hares, S.</strong> <em>RFC
-4271: A Border Gateway Protocol 4 (BGP-4)</em>. Recuperado de <a
-href="https://datatracker.ietf.org/doc/html/rfc4271">datatracker.ietf.org</a></p></li>
+<li><p><strong>Forouzan, B. A.</strong> (2022). <em>Data Communications
+and Networking</em> (6th ed.). New York: McGraw-Hill Education.</p></li>
+<li><p><strong>International Organization for Standardization.</strong>
+<em>ISO/IEC 7498-1: Information technology — Open Systems
+Interconnection — Basic Reference Model</em>. Recuperado de <a
+href="https://www.iso.org/standard/20269.html">iso.org</a></p></li>
+<li><p><strong>Internet Engineering Task Force (IETF).</strong> <em>RFC
+Editor &amp; Official Protocol Specifications</em>. Recuperado de <a
+href="https://www.ietf.org">ietf.org</a></p></li>
+<li><p><strong>Institute of Electrical and Electronics Engineers
+(IEEE).</strong> <em>IEEE 802 Local and Metropolitan Area Network
+Standards Committee</em>. Recuperado de <a
+href="https://www.ieee802.org">ieee802.org</a></p></li>
+<li><p><strong>Stallings, W.</strong> (2014). <em>Data and Computer
+Communications</em> (10th ed.). Upper Saddle River, NJ: Pearson
+Education.</p></li>
 <li><p><strong>Open Networking Foundation.</strong> <em>Software-Defined
-Networking: The New Norm for Networks</em>. Recuperado de <a
-href="https://opennetworking.org/sdn-resources/whitepapers/software-defined-networking-the-new-norm-for-networks/">opennetworking.org</a></p></li>
+Networking: The New Norm for Networks</em> [White Paper]. Recuperado de
+<a href="https://opennetworking.org">opennetworking.org</a></p></li>
+<li><p><strong>Tanenbaum, A. S., &amp; Wetherall, D. J.</strong> (2011).
+<em>Computer Networks</em> (5th ed.). Upper Saddle River, NJ: Prentice
+Hall.</p></li>
 </ul>
   </div>
 </div>

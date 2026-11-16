@@ -54,7 +54,7 @@ Article content...
 
 2. Save the `.md` file in `build/markdown/`
 
-3. (Optional) Add a `.avif` or `.webp` cover image in `public/images/post/` using the same slug name (e.g., `my-new-article.avif` or `my-new-article.webp`)
+3. (Optional) Add a cover banner in `public/images/banners/` using the same slug name (e.g., `my-new-article.avif` or `my-new-article.webp`)
 
 ### 3. Local build
 

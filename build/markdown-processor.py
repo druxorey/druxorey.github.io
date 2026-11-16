@@ -1,5 +1,5 @@
 """
-build/markdown_processor.py — Shared Markdown and Pandoc processing engine
+build/markdown-processor.py — Shared Markdown and Pandoc processing engine
 
 Handles frontmatter parsing, Obsidian wikilinks, Dracula-themed callouts,
 KaTeX LaTeX math formulas, code blocks with copy buttons, table of contents (TOC),
@@ -10,6 +10,12 @@ import re
 import sys
 import unicodedata
 import subprocess
+import shutil
+
+IMAGE_EXTENSIONS = {
+    ".png", ".jpg", ".jpeg", ".webp", ".avif", ".svg",
+    ".gif", ".bmp", ".ico", ".tiff", ".tif", ".heic", ".heif", ".jxl", ".apng"
+}
 
 calloutIcons = {
     "TLDR": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>',
@@ -150,6 +156,93 @@ def estimateReadingTime(rawText):
     wordCount = len(re.findall(r"\w+", rawText))
     calculatedMinutes = max(1, round(wordCount / 180))
     return f"{calculatedMinutes} min de lectura"
+
+
+def preprocessImageEmbeds(markdownText, imageBaseRoute="/images/notes/"):
+    """Transforms Obsidian image embeds:
+      ![[filename.ext]]
+      ![[filename.ext|alt description]]
+      ![[filename.ext|600]]
+      ![[filename.ext|alt|600]]
+    into semantic HTML5 <figure> tags.
+    Extracts default caption from 'Note Name - Description.ext' naming convention.
+    Safely skips fenced/inline code blocks.
+    """
+    segmentedParts = re.split(r"(```.*?```|`[^`\n]+`)", markdownText, flags=re.DOTALL)
+    processedSegments = []
+
+    def replaceEmbed(match):
+        rawTarget = match.group(1).strip()
+        modifier = (match.group(2) or "").strip()
+
+        baseName, ext = os.path.splitext(rawTarget)
+        if ext.lower() not in IMAGE_EXTENSIONS and not re.match(r"^\.[a-zA-Z0-9]{2,5}$", ext):
+            return match.group(0)
+
+        # Extract default caption from "Note Name - Small Description" pattern
+        if " - " in baseName:
+            defaultCaption = baseName.split(" - ", 1)[1].strip()
+        else:
+            defaultCaption = baseName.strip()
+
+        widthAttr = ""
+        captionText = defaultCaption
+
+        if modifier:
+            parts = [p.strip() for p in modifier.split("|") if p.strip()]
+            for part in parts:
+                if part.isdigit():
+                    widthAttr = f' width="{part}"'
+                elif re.match(r"^\d+x\d+$", part):
+                    w = part.split("x")[0]
+                    widthAttr = f' width="{w}"'
+                else:
+                    captionText = part
+
+        cleanRoute = imageBaseRoute.rstrip("/")
+        srcUrl = f"{cleanRoute}/{rawTarget}"
+        captionHtml = f'  <figcaption class="article-figcaption">{captionText}</figcaption>\n' if captionText else ""
+
+        return (
+            f'\n\n<figure class="article-figure">\n'
+            f'  <img src="{srcUrl}" alt="{captionText}"{widthAttr} loading="lazy" class="article-img">\n'
+            f'{captionHtml}'
+            f'</figure>\n\n'
+        )
+
+    embedPattern = r'!\[\[([^|\]\n]+?)(?:\s*\|\s*([^\]\n]*))?\]\]'
+
+    for segmentIndex, currentSegment in enumerate(segmentedParts):
+        if segmentIndex % 2 == 1:
+            processedSegments.append(currentSegment)
+        else:
+            updatedSegment = re.sub(embedPattern, replaceEmbed, currentSegment)
+            processedSegments.append(updatedSegment)
+
+    return "".join(processedSegments)
+
+
+def syncAttachments(sourceDir, targetDir):
+    """Scans sourceDir for any folder named 'attachments' (recursively)
+    and copies media files to targetDir if newer or missing.
+    """
+    os.makedirs(targetDir, exist_ok=True)
+    copiedCount = 0
+    if not os.path.exists(sourceDir):
+        return copiedCount
+
+    for root, dirs, files in os.walk(sourceDir):
+        if os.path.basename(root) == "attachments":
+            for filename in files:
+                ext = os.path.splitext(filename)[1].lower()
+                if ext in [".md", ".markdown", ".html"]:
+                    continue
+                srcPath = os.path.join(root, filename)
+                destPath = os.path.join(targetDir, filename)
+                if not os.path.exists(destPath) or os.path.getmtime(srcPath) > os.path.getmtime(destPath):
+                    shutil.copy2(srcPath, destPath)
+                    copiedCount += 1
+    return copiedCount
 
 
 def preprocessWikilinks(markdownText):
@@ -333,9 +426,10 @@ def extractTocAndAddAnchors(renderedHtml):
     return renderedHtml, tocHtml
 
 
-def compileMarkdownBody(bodyMarkdown):
-    """Preprocesses wikilinks, nested emphasis, and callouts, compiling via Pandoc to HTML5 + KaTeX."""
+def compileMarkdownBody(bodyMarkdown, imageBaseRoute="/images/notes/"):
+    """Preprocesses image embeds, wikilinks, nested emphasis, and callouts, compiling via Pandoc to HTML5 + KaTeX."""
     bodyMarkdown = re.sub(r'<h1 id="[^"]*"[^>]*>.*?</h1>', "", bodyMarkdown, flags=re.DOTALL)
+    bodyMarkdown = preprocessImageEmbeds(bodyMarkdown, imageBaseRoute)
     bodyMarkdown = preprocessWikilinks(bodyMarkdown)
     bodyMarkdown = preprocessNestedEmphasis(bodyMarkdown)
     bodyMarkdown = preprocessCalloutNewlines(bodyMarkdown)

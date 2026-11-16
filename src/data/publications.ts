@@ -20,7 +20,7 @@ export const publicationsData: Publication[] = [
     "tags": [
       "investigaciones"
     ],
-    "image": "/images/post/buenas-practicas-de-gestion-de-repositorios.avif"
+    "image": "/images/banners/buenas-practicas-de-gestion-de-repositorios.avif"
   },
   {
     "id": "publicar-y-mantener-paquetes-en-el-aur",
@@ -33,7 +33,7 @@ export const publicationsData: Publication[] = [
       "prontuario",
       "linux"
     ],
-    "image": "/images/post/publicar-y-mantener-paquetes-en-el-aur.avif"
+    "image": "/images/banners/publicar-y-mantener-paquetes-en-el-aur.avif"
   },
   {
     "id": "instalar-un-kernel-customizado-en-una-chromebook",
@@ -46,7 +46,7 @@ export const publicationsData: Publication[] = [
       "prontuario",
       "linux"
     ],
-    "image": "/images/post/instalar-un-kernel-customizado-en-una-chromebook.avif"
+    "image": "/images/banners/instalar-un-kernel-customizado-en-una-chromebook.avif"
   },
   {
     "id": "crear-un-servidor-dedicado-de-minecraft-en-linux",
@@ -60,7 +60,7 @@ export const publicationsData: Publication[] = [
       "linux",
       "juegos"
     ],
-    "image": "/images/post/crear-un-servidor-dedicado-de-minecraft-en-linux.avif"
+    "image": "/images/banners/crear-un-servidor-dedicado-de-minecraft-en-linux.avif"
   },
   {
     "id": "inicializar-tu-entorno-de-arch-linux",
@@ -73,7 +73,7 @@ export const publicationsData: Publication[] = [
       "prontuario",
       "linux"
     ],
-    "image": "/images/post/inicializar-tu-entorno-de-arch-linux.avif"
+    "image": "/images/banners/inicializar-tu-entorno-de-arch-linux.avif"
   },
   {
     "id": "instalar-arch-linux",
@@ -86,6 +86,6 @@ export const publicationsData: Publication[] = [
       "prontuario",
       "linux"
     ],
-    "image": "/images/post/instalar-arch-linux.avif"
+    "image": "/images/banners/instalar-arch-linux.avif"
   }
 ];
