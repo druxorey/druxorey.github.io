@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Principios del Conteo y Palomar | Druxorey</title>
+  <meta name="description" content="Los principios del conteo determinan analíticamente la cardinalidad de un espacio muestral discreto evitando la búsqueda exhaustiva. Mediante las reglas de la suma, del producto y de la división, junto con el principio de inclusión-exclusión y el principio del palomar, estas herramientas fundamentan el modelo clásico de probabilidad, dimensionan espacios de estados y establecen cotas de colisión en sistemas computacionales.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="/assets/main-Dehq_9UD.js"></script>
+  <script type="module" crossorigin src="/assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="/assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-u8MMlYs2.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#el-espacio-muestral-discreto-y-la-medición-combinatoria">1. El
+Espacio Muestral Discreto y la Medición Combinatoria</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#definición-y-cardinalidad-del-espacio-muestral">1.1. Definición
+y Cardinalidad del Espacio Muestral</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#búsqueda-exhaustiva-frente-a-cómputo-combinatorio">1.2. Búsqueda
+Exhaustiva frente a Cómputo Combinatorio</a></li>
+<li class="toc-item"><a class="toc-link" href="#principios-aditivo-y-multiplicativo-de-enumeración">2.
+Principios Aditivo y Multiplicativo de Enumeración</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#regla-de-la-suma-y-particiones-disjuntas">2.1. Regla de la Suma
+y Particiones Disjuntas</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#principio-multiplicativo-y-decisiones-en-cascada">2.2. Principio
+Multiplicativo y Decisiones en Cascada</a></li>
+<li class="toc-item"><a class="toc-link" href="#principio-de-inclusión-exclusión-y-purga-de-redundancias">3.
+Principio de Inclusión-Exclusión y Purga de Redundancias</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#regla-de-la-resta-e-inclusión-exclusión-para-dos-y-tres-conjuntos">3.1.
+Regla de la Resta e Inclusión-Exclusión para Dos y Tres Conjuntos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#generalización-analítica-para-n-conjuntos">3.2. Generalización
+Analítica para n Conjuntos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#regla-de-la-división-y-clases-de-equivalencia">3.3. Regla de la
+División y Clases de Equivalencia</a></li>
+<li class="toc-item"><a class="toc-link" href="#principio-del-palomar-de-dirichlet-y-cotas-de-colisión">4.
+Principio del Palomar de Dirichlet y Cotas de Colisión</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#principio-básico-del-palomar">4.1. Principio Básico del
+Palomar</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#forma-generalizada-con-función-techo-y-umbral-crítico">4.2.
+Forma Generalizada con Función Techo y Umbral Crítico</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Probabilidad y Estadistica</div>
+          <h1 class="article-title">Principios del Conteo y Palomar</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota 1.1</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>Los <strong>principios del conteo</strong> determinan analíticamente
+la <strong>cardinalidad</strong> de un <strong>espacio muestral
+discreto</strong> evitando la búsqueda exhaustiva. Mediante las reglas
+de la <strong>suma</strong>, del <strong>producto</strong> y de la
+<strong>división</strong>, junto con el principio de
+<strong>inclusión-exclusión</strong> y el <strong>principio del
+palomar</strong>, estas herramientas fundamentan el <strong>modelo
+clásico de probabilidad</strong>, dimensionan espacios de estados y
+establecen cotas de colisión en sistemas computacionales.</p>
+  </div>
+</div>
+<p>En el diseño de algoritmos, protocolos de red y sistemas
+criptográficos, conocer de antemano cuántas configuraciones posibles
+admite un sistema resulta indispensable para evaluar su viabilidad
+técnica y calcular probabilidades bajo incertidumbre. Sin embargo,
+listar una por una todas las configuraciones de un sistema real pronto
+se vuelve inviable: a medida que crecen los parámetros de entrada, el
+universo de combinaciones posibles se expande hasta superar la capacidad
+de almacenamiento y procesamiento de cualquier arquitectura física.
+Surge así la necesidad de contar de forma indirecta y estructurada,
+deduciendo el tamaño exacto de un conjunto de resultados mediante leyes
+lógicas y algebraicas en lugar de recorrerlo elemento por elemento.</p>
+<h2  id="el-espacio-muestral-discreto-y-la-medición-combinatoria">1. El
+Espacio Muestral Discreto y la Medición Combinatoria</h2>
+<p>Para evaluar la incertidumbre de un proceso o el costo de explorar
+sus estados, primero es necesario delimitar con rigor matemático el
+universo completo de resultados posibles. Si los límites del sistema son
+ambiguos, cualquier cálculo posterior arrastrará omisiones o
+duplicaciones.</p>
+<h3  id="definición-y-cardinalidad-del-espacio-muestral">1.1. Definición
+y Cardinalidad del Espacio Muestral</h3>
+<p>El enfoque intuitivo para analizar un experimento consiste en anotar
+los resultados observables a medida que ocurren. El obstáculo surge
+cuando no existe garantía de haber contemplado todas las posibilidades
+ni de que los resultados registrados sean mutuamente independientes
+entre sí. Para eliminar esta ambigüedad, la teoría de la probabilidad
+formaliza el concepto de espacio muestral discreto.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 1:</strong> Espacio Muestral
+Discreto y Cardinalidad</span>
+  </div>
+  <div class="callout-content">
+<p>Dado un experimento no determinístico, se define el <strong>espacio
+muestral</strong> <span class="math inline">\Omega</span> como el
+conjunto de todos sus resultados elementales posibles <span
+class="math inline">\omega</span>, formulados de manera que sean
+mutuamente excluyentes y colectivamente exhaustivos. Cuando <span
+class="math inline">\Omega</span> consta de una cantidad finita de
+elementos se denomina <strong>espacio muestral discreto y
+finito</strong>, y su <strong>cardinalidad</strong> se denota por <span
+class="math inline">\vert{}\Omega\vert{} = n</span>.</p>
+<p>Bajo el <strong>modelo clásico de Laplace</strong> (equiprobabilidad
+de resultados elementales, donde <span
+class="math inline">\mathbb{P}(\omega) = 1/\vert{}\Omega\vert{}</span>
+para todo <span class="math inline">\omega \in \Omega</span>), la
+probabilidad de cualquier evento <span class="math inline">E \subseteq
+\Omega</span> queda determinada por la razón de cardinalidades:</p>
+<p><span class="math display">\mathbb{P}(E) =
+\frac{\vert{}E\vert{}}{\vert{}\Omega\vert{}}</span></p>
+  </div>
+</div>
+<p>Es decir, el espacio muestral es el conjunto de todos los resultados
+posibles de un experimento, donde cada elemento representa un desenlace
+único y excluyente. La cardinalidad es simplemente el número total de
+elementos que contiene ese espacio muestral.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Espacio Muestral de dos
+Lanzamientos de Moneda</span>
+  </div>
+  <div class="callout-content">
+<p>Se lanzan dos monedas consecutivas. Determine la cardinalidad del
+espacio muestral <span class="math inline">\Omega</span> y la
+probabilidad equiprobable del evento <span class="math inline">E</span>:
+«obtener al menos una cara (<span class="math inline">C</span>)».</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">\Omega = \{(C,C), (C,S), (S,C), (S,S)\}
+\implies \vert{}\Omega\vert{} = 4</span></p>
+<p><span class="math display">E = \{(C,C), (C,S), (S,C)\} \implies
+\vert{}E\vert{} = 3</span></p>
+<p><span class="math display">\mathbb{P}(E) =
+\frac{\vert{}E\vert{}}{\vert{}\Omega\vert{}} = \frac{3}{4} =
+0{,}75</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Definimos cada resultado elemental <span
+class="math inline">\omega</span> como un par ordenado <span
+class="math inline">(m_1, m_2)</span> que indica el resultado de la
+primera y segunda moneda, asegurando que las combinaciones sean
+mutuamente excluyentes.</p>
+<p><strong>Paso 2:</strong> Contamos la totalidad de pares admisibles
+para obtener <span class="math inline">\vert{}\Omega\vert{} = 4</span> y
+aislamos el subconjunto <span class="math inline">E</span> de aquellos
+que contienen al menos una cara (<span
+class="math inline">\vert{}E\vert{} = 3</span>).</p>
+<p><strong>Paso 3:</strong> Aplicamos la regla de Laplace dividiendo
+<span class="math inline">\vert{}E\vert{}</span> entre <span
+class="math inline">\vert{}\Omega\vert{}</span>, obteniendo una
+probabilidad de <span class="math inline">0{,}75</span>.</p>
+<h3  id="búsqueda-exhaustiva-frente-a-cómputo-combinatorio">1.2. Búsqueda
+Exhaustiva frente a Cómputo Combinatorio</h3>
+<p>Cuando se diseñan sistemas de software que operan sobre espacios
+muestrales de gran escala (como generadores de claves criptográficas,
+analizadores de consultas o simuladores de estados), calcular <span
+class="math inline">\vert{}\Omega\vert{}</span> plantea una disyuntiva
+directa en eficiencia algorítmica:</p>
+<ul>
+<li><p><strong>Búsqueda exhaustiva (fuerza bruta):</strong> Consiste en
+instanciar, almacenar y recorrer explícitamente cada resultado elemental
+<span class="math inline">\omega \in \Omega</span> mediante iteración o
+recursión. Este enfoque exige una complejidad temporal y espacial de
+orden <span class="math inline">O(\vert{}\Omega\vert{})</span>. Cuando
+<span class="math inline">\vert{}\Omega\vert{}</span> crece de forma
+exponencial (como <span class="math inline">2^n</span>) o factorial
+(<span class="math inline">n!</span>), enumerar las instancias agota la
+memoria disponible y bloquea el procesador en tiempos
+impracticables.</p></li>
+<li><p><strong>Cómputo combinatorio analítico:</strong> Consiste en
+descomponer la estructura lógica del problema y calcular <span
+class="math inline">\vert{}\Omega\vert{}</span> mediante fórmulas
+cerradas (sumas, productos, potencias o factoriales) sin materializar
+los elementos en memoria. Este método reduce la evaluación del tamaño
+del espacio a una complejidad temporal <span
+class="math inline">O(1)</span> o <span class="math inline">O(k)</span>
+(donde <span class="math inline">k</span> es el número de etapas o
+conjuntos involucrados), permitiendo validar la tratabilidad de un
+algoritmo antes de asignar recursos de hardware.</p></li>
+</ul>
+<h2  id="principios-aditivo-y-multiplicativo-de-enumeración">2.
+Principios Aditivo y Multiplicativo de Enumeración</h2>
+<p>Para evitar la enumeración exhaustiva de orden <span
+class="math inline">O(\vert{}\Omega\vert{})</span>, la combinatoria
+descompone un problema complejo en subproblemas elementales. La forma en
+que se combinan las cardinalidades de esos subproblemas depende de si
+las decisiones representan alternativas mutuamente excluyentes o etapas
+sucesivas de un mismo proceso.</p>
+<h3  id="regla-de-la-suma-y-particiones-disjuntas">2.1. Regla de la Suma
+y Particiones Disjuntas</h3>
+<p>La premisa más directa de conteo surge cuando una tarea puede
+completarse eligiendo una única opción entre varios grupos de
+alternativas que no tienen elementos en común. Si dos grupos
+compartieran alguna opción, sumar sus tamaños directamente produciría un
+conteo inflado. Por ello, la validez de la adición simple exige que los
+conjuntos formen una partición disjunta.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 1:</strong> Regla de la Suma (Uniones
+Disjuntas)</span>
+  </div>
+  <div class="callout-content">
+<p>Sean <span class="math inline">A_1, A_2, \dots, A_m</span> conjuntos
+finitos mutuamente excluyentes dos a dos, es decir, tales que <span
+class="math inline">A_i \cap A_j = \emptyset</span> para todo <span
+class="math inline">i \neq j</span>. La cardinalidad de su unión global
+es igual a la suma aritmética de sus cardinalidades individuales:</p>
+<p><span class="math display">\left\vert{} \bigcup_{i=1}^m A_i
+\right\vert{} = \sum_{i=1}^m \vert{}A_i\vert{} = \vert{}A_1\vert{} +
+\vert{}A_2\vert{} + \dots + \vert{}A_m\vert{}</span></p>
+  </div>
+</div>
+<p>Si disponemos de varias cajas completamente separadas y debemos
+extraer un único objeto eligiendo primero qué caja abrir, el número
+total de objetos distintos que podemos obtener es simplemente la suma de
+los contenidos de cada caja. Como ningún objeto está duplicado en dos
+cajas a la vez, cada elección conduce a un resultado único sin riesgo de
+repetición.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Selección de Representantes en
+un Comité Académico</span>
+  </div>
+  <div class="callout-content">
+<p>Un departamento universitario debe elegir a un único representante
+para el consejo directivo. El grupo docente cuenta con <span
+class="math inline">37</span> profesores y la carrera tiene <span
+class="math inline">83</span> estudiantes inscritos, asumiendo que
+ninguna persona pertenece simultáneamente a ambos grupos. Determine el
+número total de selecciones posibles.</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">\vert{}A_1 \cup A_2\vert{} =
+\vert{}A_1\vert{} + \vert{}A_2\vert{} = 37 + 83 = 120\text{ candidatos
+posibles}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Identificamos el conjunto <span
+class="math inline">A_1</span> de profesores (<span
+class="math inline">\vert{}A_1\vert{} = 37</span>) y el conjunto <span
+class="math inline">A_2</span> de estudiantes (<span
+class="math inline">\vert{}A_2\vert{} = 83</span>), verificando la
+condición de exclusión mutua <span class="math inline">A_1 \cap A_2 =
+\emptyset</span>.</p>
+<p><strong>Paso 2:</strong> Aplicamos la regla de la suma adicionando
+ambas cardinalidades, lo que arroja <span class="math inline">120</span>
+formas distintas de ocupar la vacante sin solapamientos.</p>
+<h3  id="principio-multiplicativo-y-decisiones-en-cascada">2.2. Principio
+Multiplicativo y Decisiones en Cascada</h3>
+<p>A diferencia de la regla de la suma (donde se escoge una única vía
+entre varias opciones excluyentes), muchos procesos computacionales
+exigen completar una secuencia ordenada de pasos independientes. En este
+escenario, sumar las opciones de cada etapa fallaría porque el resultado
+final no proviene de una sola etapa, sino de la combinación encadenada
+de todas ellas.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 2:</strong> Principio Multiplicativo (Regla
+del Producto)</span>
+  </div>
+  <div class="callout-content">
+<p>Si un procedimiento general se descompone en una secuencia de <span
+class="math inline">k</span> etapas sucesivas, donde la primera etapa
+puede realizarse de <span class="math inline">n_1</span> maneras y, por
+cada una de estas, la segunda etapa puede ejecutarse de <span
+class="math inline">n_2</span> maneras, y así sucesivamente hasta la
+<span class="math inline">k</span>-ésima etapa con <span
+class="math inline">n_k</span> maneras independientes de las elecciones
+previas, entonces el procedimiento completo puede realizarse de:</p>
+<p><span class="math display">\prod_{i=1}^k n_i = n_1 \cdot n_2 \cdots
+n_k \quad \text{formas distintas}</span></p>
+<p>En términos de teoría de conjuntos, la cardinalidad del producto
+cartesiano de <span class="math inline">k</span> conjuntos finitos <span
+class="math inline">A_1, A_2, \dots, A_k</span> equivale al producto de
+sus cardinalidades individuales:</p>
+<p><span class="math display">\vert{}A_1 \times A_2 \times \dots \times
+A_k\vert{} = \prod_{i=1}^k \vert{}A_i\vert{}</span></p>
+  </div>
+</div>
+<p>Esta operación se visualiza de forma natural como un <strong>árbol de
+decisión</strong> que crece desde una raíz inicial. En el primer nivel,
+el árbol se divide en <span class="math inline">n_1</span> ramas; de
+cada una de esas ramas brotan <span class="math inline">n_2</span>
+subramas en el segundo nivel, y el proceso continúa en cascada hasta
+alcanzar el nivel <span class="math inline">k</span>. Contar el total de
+hojas terminales del árbol equivale a multiplicar el factor de
+ramificación de cada nivel.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3:</strong> Cadenas Binarias y
+Cardinalidad del Conjunto Potencia</span>
+  </div>
+  <div class="callout-content">
+<p>Determine cuántas cadenas binarias de longitud exacta <span
+class="math inline">L = 7</span> bits existen en memoria y demuestre
+mediante el mismo principio que un conjunto finito <span
+class="math inline">S</span> posee exactamente <span
+class="math inline">2^{\vert{}S\vert{}}</span> subconjuntos.</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">\vert{}\Omega_{\text{bits}}\vert{} =
+\underbrace{2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2}_{7\text{
+posiciones}} = 2^7 = 128\text{ cadenas}</span></p>
+<p><span class="math display">\vert{}\mathcal{P}(S)\vert{} =
+2^{\vert{}S\vert{}}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Modelamos la cadena de <span
+class="math inline">7</span> bits como una secuencia de <span
+class="math inline">7</span> casillas ordenadas donde cada casilla
+admite exactamente <span class="math inline">2</span> estados (<span
+class="math inline">0</span> o <span class="math inline">1</span>) de
+forma independiente. Multiplicando las opciones de cada posición
+obtenemos <span class="math inline">2^7 = 128</span> cadenas
+posibles.</p>
+<p><strong>Paso 2:</strong> Para cualquier conjunto finito <span
+class="math inline">S</span>, ordenamos sus <span
+class="math inline">\vert{}S\vert{}</span> elementos y asociamos cada
+subconjunto a una cadena binaria de longitud <span
+class="math inline">\vert{}S\vert{}</span>, asignando un <span
+class="math inline">1</span> si el elemento <span
+class="math inline">i</span>-ésimo pertenece al subconjunto y un <span
+class="math inline">0</span> en caso contrario.</p>
+<p><strong>Paso 3:</strong> Como cada elemento tiene <span
+class="math inline">2</span> decisiones binarias independientes
+(incluirse o excluirse), la regla del producto establece que existen
+<span class="math inline">2^{\vert{}S\vert{}}</span> cadenas posibles,
+demostrando que la cardinalidad del conjunto potencia es <span
+class="math inline">\vert{}\mathcal{P}(S)\vert{} =
+2^{\vert{}S\vert{}}</span>.</p>
+<h2  id="principio-de-inclusión-exclusión-y-purga-de-redundancias">3.
+Principio de Inclusión-Exclusión y Purga de Redundancias</h2>
+<p>Las reglas aditiva y multiplicativa operan bajo condiciones ideales:
+conjuntos completamente disjuntos o etapas donde cada secuencia genera
+un resultado único. En la práctica, los conjuntos suelen solaparse y los
+procedimientos secuenciales generan a menudo configuraciones simétricas
+que representan un mismo objeto. Para resolver ambos obstáculos se
+introducen la sustracción de intersecciones y la división por clases de
+equivalencia.</p>
+<h3 
+id="regla-de-la-resta-e-inclusión-exclusión-para-dos-y-tres-conjuntos">3.1.
+Regla de la Resta e Inclusión-Exclusión para Dos y Tres Conjuntos</h3>
+<p>Cuando dos conjuntos <span class="math inline">A</span> y <span
+class="math inline">B</span> comparten elementos (<span
+class="math inline">A \cap B \neq \emptyset</span>), aplicar la regla de
+la suma directa contabiliza dos veces cada elemento de su intersección.
+Para restaurar el conteo exacto es obligatorio sustraer la medida del
+solapamiento. Al extender este razonamiento a tres conjuntos, restar las
+intersecciones dobles elimina por completo la región central compartida
+por los tres, lo que obliga a reincorporarla mediante una suma
+final.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 3:</strong> Principio de Inclusión-Exclusión
+para 2 y 3 Conjuntos</span>
+  </div>
+  <div class="callout-content">
+<p>Para dos conjuntos finitos arbitrarios <span
+class="math inline">A</span> y <span class="math inline">B</span>, la
+cardinalidad de su unión está dada por la <strong>regla de la
+resta</strong>:</p>
+<p><span class="math display">\vert{}A \cup B\vert{} = \vert{}A\vert{} +
+\vert{}B\vert{} - \vert{}A \cap B\vert{}</span></p>
+<p>Para tres conjuntos finitos arbitrarios <span
+class="math inline">A</span>, <span class="math inline">B</span> y <span
+class="math inline">C</span>, la cardinalidad de su unión compensa las
+intersecciones dobles y triples mediante signos alternados:</p>
+<p><span class="math display">\vert{}A \cup B \cup C\vert{} =
+\vert{}A\vert{} + \vert{}B\vert{} + \vert{}C\vert{} - \big(\vert{}A \cap
+B\vert{} + \vert{}A \cap C\vert{} + \vert{}B \cap C\vert{}\big) +
+\vert{}A \cap B \cap C\vert{}</span></p>
+  </div>
+</div>
+<p>La idea central es garantizar que cada elemento se cuente exactamente
+una vez. Al sumar los conjuntos por separado, los elementos repetidos
+quedan contados de más, por lo que debemos restar las intersecciones
+dobles para quitar ese exceso. Sin embargo, en el caso de tres
+conjuntos, los elementos que están en los tres a la vez terminan
+anulándose (se suman tres veces al inicio y se restan tres veces en las
+parejas), haciendo necesario volver a sumarlos al final para recuperar
+su conteo.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 4:</strong> Filtrado de Postulantes con
+Doble Titulación</span>
+  </div>
+  <div class="callout-content">
+<p>Una empresa tecnológica recibe <span class="math inline">350</span>
+postulaciones para un cargo de infraestructura. Del total, <span
+class="math inline">220</span> aspirantes poseen título en Ciencias de
+la Computación, <span class="math inline">147</span> poseen título en
+Administración y <span class="math inline">51</span> cuentan con doble
+titulación en ambas carreras. Determine cuántos aspirantes poseen al
+menos uno de los dos títulos y cuántos no poseen ninguno.</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">\vert{}A \cup B\vert{} = \vert{}A\vert{} +
+\vert{}B\vert{} - \vert{}A \cap B\vert{} = 220 + 147 - 51 = 316\text{
+aspirantes calificados}</span></p>
+<p><span class="math display">\vert{}\Omega \setminus (A \cup B)\vert{}
+= 350 - 316 = 34\text{ aspirantes sin ninguno de los títulos}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Sumamos las cardinalidades brutas de ambos
+grupos (<span class="math inline">220 + 147 = 367</span>), advirtiendo
+que esta cifra excede el total real de postulantes debido al doble
+conteo.</p>
+<p><strong>Paso 2:</strong> Restamos los <span
+class="math inline">51</span> candidatos pertenecientes a la
+intersección <span class="math inline">A \cap B</span> para
+contabilizarlos una sola vez, obteniendo <span
+class="math inline">316</span> postulantes con al menos una
+titulación.</p>
+<p><strong>Paso 3:</strong> Sustraemos este subconjunto del universo
+total de <span class="math inline">350</span> solicitudes para
+determinar que <span class="math inline">34</span> aspirantes carecen de
+ambas titulaciones.</p>
+<h3  id="generalización-analítica-para-n-conjuntos">3.2. Generalización
+Analítica para <span class="math inline">n</span> Conjuntos</h3>
+<p>Al combinar varios conjuntos, el principio de inclusión-exclusión
+corrige el conteo sumando y restando las intersecciones de forma
+alternada.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 4:</strong> Forma General del Principio de
+Inclusión-Exclusión</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">\{A_1, A_2, \dots, A_n\}</span> una
+colección finita de <span class="math inline">n</span> conjuntos
+finitos. La cardinalidad de su unión global se calcula mediante la suma
+alternada de las cardinalidades de todas sus intersecciones
+posibles:</p>
+<p><span class="math display">\left\vert{}\bigcup_{i=1}^n
+A_i\right\vert{} = \sum_{i=1}^n \vert{}A_i\vert{} - \sum_{1 \le i &lt; j
+\le n} \vert{}A_i \cap A_j\vert{} + \sum_{1 \le i &lt; j &lt; k \le n}
+\vert{}A_i \cap A_j \cap A_k\vert{} - \dots + (-1)^{n-1}
+\left\vert{}\bigcap_{i=1}^n A_i\right\vert{}</span></p>
+  </div>
+</div>
+<p>La validez algebraica de esta expresión reside en que cualquier
+elemento <span class="math inline">x</span> que pertenezca exactamente a
+<span class="math inline">m</span> de los <span
+class="math inline">n</span> conjuntos (con <span class="math inline">1
+\le m \le n</span>) aporta un peso neto igual a <span
+class="math inline">1</span> al resultado final. En la primera sumatoria
+(<span class="math inline">\vert{}A_i\vert{}</span>), <span
+class="math inline">x</span> se suma <span
+class="math inline">\binom{m}{1}</span> veces; en las intersecciones
+dobles se resta <span class="math inline">\binom{m}{2}</span> veces; en
+las triples se suma <span class="math inline">\binom{m}{3}</span> veces,
+y así sucesivamente hasta el orden <span class="math inline">m</span>.
+Por el teorema del binomio aplicado a <span class="math inline">(1 -
+1)^m = 0</span>, la contribución total de <span
+class="math inline">x</span> resulta:</p>
+<p><span class="math display">\sum_{r=1}^m (-1)^{r-1} \binom{m}{r} = 1 -
+\sum_{r=0}^m (-1)^r \binom{m}{r} = 1 - (1 - 1)^m = 1</span></p>
+<p>De este modo, ningún elemento de la unión queda omitido ni contado en
+exceso, sin importar cuántos conjuntos se intersecten
+simultáneamente.</p>
+<h3  id="regla-de-la-división-y-clases-de-equivalencia">3.3. Regla de la
+División y Clases de Equivalencia</h3>
+<p>Un segundo obstáculo en el conteo ocurre cuando un procedimiento
+secuencial genera <span class="math inline">n</span> configuraciones
+ordenadas, pero varias de ellas son estructuralmente indistinguibles
+bajo alguna simetría del sistema. Si cada configuración única aparece
+representada exactamente <span class="math inline">d</span> veces en el
+conteo bruto, la regla de la división purga esta redundancia
+uniforme.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 5:</strong> Regla de la División</span>
+  </div>
+  <div class="callout-content">
+<p>Si una tarea puede resolverse mediante un procedimiento que genera
+originalmente <span class="math inline">n</span> resultados posibles, y
+para cada configuración única <span class="math inline">w</span> existen
+exactamente <span class="math inline">d</span> resultados del
+procedimiento que son equivalentes a <span class="math inline">w</span>
+(particionando el espacio en clases de equivalencia de tamaño uniforme
+<span class="math inline">d</span>), entonces el número de
+configuraciones genuinamente distintas es:</p>
+<p><span class="math display">N = \frac{n}{d}</span></p>
+  </div>
+</div>
+<p>Ejemplificando: si contamos todas las huellas dejadas por un grupo de
+personas en la nieve y sabemos con certeza que cada persona dio
+exactamente <span class="math inline">d = 2</span> pasos, dividir el
+total de huellas <span class="math inline">n</span> entre <span
+class="math inline">2</span> revela el número exacto de personas que
+caminaron por allí. En combinatoria, este principio permite colapsar
+rotaciones o simetrías: siempre que cada estado único tenga el mismo
+grado de multiplicidad <span class="math inline">d</span>, basta con
+dividir el conteo lineal bruto entre <span
+class="math inline">d</span>.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 5:</strong> Permutaciones Circulares en
+Topologías en Anillo</span>
+  </div>
+  <div class="callout-content">
+<p>Cuatro nodos de procesamiento (<span class="math inline">A, B, C,
+D</span>) deben interconectarse formando una topología física cerrada en
+anillo, donde dos configuraciones se consideran idénticas si cada nodo
+conserva exactamente los mismos vecinos a izquierda y derecha. Calcule
+cuántas topologías únicas en anillo existen y deduzca la fórmula general
+para <span class="math inline">n</span> elementos.</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">P_{\text{circular}}(4) = \frac{4!}{4} =
+\frac{24}{4} = 6\text{ topologías únicas}</span></p>
+<p><span class="math display">P_{\text{circular}}(n) = \frac{n!}{n} = (n
+- 1)!</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Calculamos primero las ordenaciones lineales
+como si el anillo estuviera abierto en una fila recta de <span
+class="math inline">4</span> posiciones, obteniendo <span
+class="math inline">n = 4! = 24</span> permutaciones brutas.</p>
+<p><strong>Paso 2:</strong> Observamos que rotar todos los nodos un
+lugar en sentido horario mantiene intactos los vecinos adyacentes de
+cada equipo; por tanto, cada anillo único corresponde a <span
+class="math inline">d = 4</span> ordenaciones lineales rotadas (por
+ejemplo, <span class="math inline">ABCD</span>, <span
+class="math inline">DABC</span>, <span class="math inline">CDAB</span> y
+<span class="math inline">BCDA</span>).</p>
+<p><strong>Paso 3:</strong> Aplicamos la regla de la división colapsando
+las <span class="math inline">4</span> rotaciones equivalentes, lo que
+entrega <span class="math inline">24 / 4 = 6</span> anillos distintos y
+generaliza a <span class="math inline">n!/n = (n - 1)!</span> para <span
+class="math inline">n</span> elementos.</p>
+<h2  id="principio-del-palomar-de-dirichlet-y-cotas-de-colisión">4.
+Principio del Palomar de Dirichlet y Cotas de Colisión</h2>
+<p>En múltiples problemas de informática no interesa calcular el tamaño
+total de un espacio de estados, sino demostrar con certeza determinista
+que, al distribuir un conjunto de datos sobre un número limitado de
+contenedores, se producirá inevitablemente una agrupación o
+colisión.</p>
+<h3  id="principio-básico-del-palomar">4.1. Principio Básico del
+Palomar</h3>
+<p>Cuando la cantidad de elementos que se desea almacenar supera la
+cantidad de casillas disponibles, resulta imposible asignar cada
+elemento a una casilla exclusiva. Esta observación elemental,
+formalizada por Peter Gustav Lejeune Dirichlet, constituye un argumento
+de existencia pura que no depende de distribuciones de probabilidad.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 6:</strong> Principio Básico del Palomar
+(Dirichlet)</span>
+  </div>
+  <div class="callout-content">
+<p>Si <span class="math inline">k</span> es un entero positivo y se
+distribuyen <span class="math inline">N</span> objetos dentro de <span
+class="math inline">k</span> recipientes (casillas) cumpliendo que <span
+class="math inline">N \ge k + 1</span>, entonces existe al menos un
+recipiente que contiene dos o más objetos.</p>
+  </div>
+</div>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 6:</strong> Coincidencia Garantizada de
+Calificaciones</span>
+  </div>
+  <div class="callout-content">
+<p>Un examen universitario se evalúa estrictamente con notas enteras en
+la escala de <span class="math inline">0</span> a <span
+class="math inline">100</span> puntos. Determine el número mínimo de
+estudiantes que deben presentar la prueba para garantizar con certeza
+absoluta que al menos dos obtengan la misma calificación.</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">k = 100 - 0 + 1 = 101\text{ calificaciones
+posibles}</span></p>
+<p><span class="math display">N_{\min} = k + 1 = 101 + 1 = 102\text{
+estudiantes}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Contamos el número de «casillas» disponibles
+en la escala de evaluación del <span class="math inline">0</span> al
+<span class="math inline">100</span>, obteniendo <span
+class="math inline">k = 101</span> puntajes enteros distintos.</p>
+<p><strong>Paso 2:</strong> Aplicamos el principio básico del palomar:
+con <span class="math inline">101</span> estudiantes cada uno podría
+obtener una nota distinta, por lo que se requieren <span
+class="math inline">N = 102</span> estudiantes para forzar al menos una
+coincidencia.</p>
+<h3  id="forma-generalizada-con-función-techo-y-umbral-crítico">4.2.
+Forma Generalizada con Función Techo y Umbral Crítico</h3>
+<p>Si el número de objetos <span class="math inline">N</span> multiplica
+varias veces la cantidad de contenedores <span
+class="math inline">k</span>, el principio básico resulta insuficiente
+porque solo garantiza una pareja compartiendo casilla. Para acotar la
+acumulación máxima cuando <span class="math inline">N \gg k</span>, se
+emplea la función techo <span class="math inline">\lceil x
+\rceil</span>, definida como el menor entero mayor o igual a <span
+class="math inline">x</span>.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 7:</strong> Principio Generalizado del
+Palomar</span>
+  </div>
+  <div class="callout-content">
+<p>Si se distribuyen <span class="math inline">N</span> objetos dentro
+de <span class="math inline">k</span> recipientes, entonces existe al
+menos un recipiente que alberga un mínimo de <span
+class="math inline">\lceil N / k \rceil</span> objetos.</p>
+<p>De forma inversa, el número mínimo de objetos <span
+class="math inline">N</span> que debe distribuirse en <span
+class="math inline">k</span> recipientes para garantizar que al menos
+uno contenga un mínimo de <span class="math inline">r</span> objetos
+está dado por:</p>
+<p><span class="math display">N = k(r - 1) + 1</span></p>
+  </div>
+</div>
+<p>La demostración de la cota <span class="math inline">\lceil N/k
+\rceil</span> procede por reducción al absurdo: si ningún recipiente
+contuviera al menos <span class="math inline">\lceil N/k \rceil</span>
+objetos, cada uno de los <span class="math inline">k</span> recipientes
+tendría a lo sumo <span class="math inline">\lceil N/k \rceil - 1</span>
+elementos. Dado que <span class="math inline">\lceil x \rceil &lt; x +
+1</span>, el total máximo de objetos en todo el sistema sería
+estrictamente menor que <span class="math inline">k\big((N/k + 1) -
+1\big) = N</span>, contradiciendo el hecho de que hay <span
+class="math inline">N</span> objetos distribuidos.</p>
+<p>Asimismo, para hallar el umbral mínimo <span
+class="math inline">N</span> que garantiza una carga de <span
+class="math inline">r</span> elementos en alguna casilla, analizamos el
+<strong>peor caso de saturación uniforme</strong>. El sistema evita
+alcanzar la cuota <span class="math inline">r</span> mientras logre
+repartir los objetos de forma equilibrada colocando exactamente <span
+class="math inline">r - 1</span> elementos en cada una de las <span
+class="math inline">k</span> casillas, lo que consume <span
+class="math inline">k(r - 1)</span> objetos. En cuanto se introduce un
+objeto adicional, este rompe el equilibrio y eleva obligatoriamente la
+carga de alguna casilla a <span class="math inline">r</span>, fijando el
+umbral en <span class="math inline">N = k(r - 1) + 1</span>.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 7:</strong> Garantía de Nivel Académico en
+un Curso</span>
+  </div>
+  <div class="callout-content">
+<p>En una asignatura cuya calificación final admite únicamente cinco
+letras posibles (<span class="math inline">A, B, C, D, F</span>),
+determine la matrícula mínima necesaria para asegurar que al menos <span
+class="math inline">6</span> estudiantes reciban exactamente la misma
+letra.</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">N = k(r - 1) + 1 = 5(6 - 1) + 1 = 5 \cdot
+5 + 1 = 26\text{ estudiantes}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Identificamos <span class="math inline">k =
+5</span> categorías de calificación y la cuota de repetición deseada
+<span class="math inline">r = 6</span>.</p>
+<p><strong>Paso 2:</strong> Calculamos el peor escenario sin alcanzar la
+meta, donde cada una de las <span class="math inline">5</span> letras es
+asignada a <span class="math inline">5</span> estudiantes (<span
+class="math inline">5 \times 5 = 25</span> inscritos), y sumamos <span
+class="math inline">1</span> estudiante adicional para garantizar que al
+menos un grupo alcance los <span class="math inline">6</span>
+integrantes.</p>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Meyer, Paul L.</strong> <em>Probabilidad y Aplicaciones
+Estadísticas</em> (Edición revisada). Addison-Wesley Iberoamericana.
+Capítulo 1 («Introducción a la probabilidad», secciones 1.4 y 1.7) y
+Capítulo 2 («Espacios muestrales finitos», secciones 2.1–2.3).</p></li>
+<li><p><strong>Feller, William.</strong> <em>An Introduction to
+Probability Theory and Its Applications</em>, Vol. I (3.ª ed.). John
+Wiley &amp; Sons, Inc., Nueva York, 1968. Capítulos 1, 2 y 3.</p></li>
+<li><p><strong>Riordan, John.</strong> <em>An Introduction to
+Combinatorial Analysis</em>. Dover Publications, Mineola, Nueva York,
+2002.</p></li>
+<li><p><strong>Parzen, Emanuel.</strong> <em>Modern Probability Theory
+and Its Applications</em>. John Wiley &amp; Sons, Inc., Nueva York,
+1960.</p></li>
+<li><p><strong>Lipschutz, Seymour.</strong> <em>Probabilidad</em>.
+McGraw-Hill, México, 1970.</p></li>
+<li><p><strong>Universidad Central de Venezuela (UCV), Facultad de
+Ciencias, Escuela de Computación.</strong> <em>Probabilidad y
+Estadística: Introducción a la Probabilidad (G01) y Práctica Nº 0:
+Repaso de Combinatoria y Probabilidades (A00)</em>. Caracas, Venezuela,
+2023.</p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>

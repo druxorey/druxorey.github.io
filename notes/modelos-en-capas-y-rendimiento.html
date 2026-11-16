@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modelos en Capas y Rendimiento | Druxorey</title>
+  <meta name="description" content="La arquitectura en capas organiza la comunicación de datos mediante una abstracción jerárquica que descompone procesos complejos en módulos independientes. A través de modelos como OSI y la pila TCP/IP, se estandariza el encapsulamiento de información, garantizando la interoperabilidad entre sistemas heterogéneos. La eficacia de estas redes se evalúa mediante métricas de rendimiento y QoS, asegurando la entrega, exactitud y oportunidad de los datos transmitidos.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="/assets/main-Dehq_9UD.js"></script>
+  <script type="module" crossorigin src="/assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="/assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-u8MMlYs2.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#arquitectura-jerárquica">1. Arquitectura Jerárquica</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#el-modelo-de-referencia-osi-7-capas">1.1. El Modelo de
+Referencia OSI (7 Capas)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#obsolescencia-práctica-de-osi-frente-a-la-pila-tcpip">1.2.
+Obsolescencia Práctica de OSI frente a la Pila TCP/IP</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#la-pila-tcpip-híbrida-de-5-capas">1.3. La Pila TCP/IP Híbrida de
+5 Capas</a></li>
+<li class="toc-item"><a class="toc-link" href="#mecánica-de-encapsulamiento-y-desencapsulamiento-de-datos">2.
+Mecánica de Encapsulamiento y Desencapsulamiento de Datos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#encapsulamiento-descendente-y-formato-de-las-unidades-de-datos">2.1.
+Encapsulamiento Descendente y Formato de las Unidades de Datos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#desencapsulamiento-ascendente-y-verificación-de-integridad">2.2.
+Desencapsulamiento Ascendente y Verificación de Integridad</a></li>
+<li class="toc-item"><a class="toc-link" href="#métricas-de-rendimiento-y-criterios-de-eficacia-en-el-canal">3.
+Métricas de Rendimiento y Criterios de Eficacia en el Canal</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ancho-de-banda-espectral-frente-a-tasa-binaria">3.1. Ancho de
+Banda Espectral frente a Tasa Binaria</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#rendimiento-real-frente-a-caudal-útil">3.2. Rendimiento Real
+frente a Caudal Útil</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#los-cuatro-criterios-de-evaluación-del-canal">3.3. Los Cuatro
+Criterios de Evaluación del Canal</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#calidad-de-servicio-qos-y-mecanismos-de-provisión">3.4. Calidad
+de Servicio (QoS) y Mecanismos de Provisión</a></li>
+<li class="toc-item"><a class="toc-link" href="#formulación-del-retardo-y-fluctuación-de-fase">4. Formulación
+del Retardo y Fluctuación de Fase</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ecuación-analítica-del-retardo-total-unidireccional">4.1.
+Ecuación Analítica del Retardo Total Unidireccional</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#modelado-de-la-fluctuación-de-fase-jitter">4.2. Modelado de la
+Fluctuación de Fase («Jitter»)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#resolución-de-problemas-de-rendimiento-y-retardo">4.3.
+Resolución de Problemas de Rendimiento y Retardo</a></li>
+<li class="toc-item"><a class="toc-link" href="#organismos-internacionales-de-normalización">5. Organismos
+Internacionales de Normalización</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ieee-institute-of-electrical-and-electronics-engineers">5.1.
+IEEE (Institute of Electrical and Electronics Engineers)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ietf-internet-engineering-task-force">5.2. IETF (Internet
+Engineering Task Force)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#itu-t-international-telecommunication-union---telecommunication-standardization-sector">5.3.
+ITU-T (International Telecommunication Union - Telecommunication
+Standardization Sector)</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Comunicacion de Datos</div>
+          <h1 class="article-title">Modelos en Capas y Rendimiento</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota 1.2</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>arquitectura en capas</strong> organiza la comunicación de
+datos mediante una <strong>abstracción jerárquica</strong> que
+descompone procesos complejos en módulos independientes. A través de
+modelos como <strong>OSI</strong> y la pila <strong>TCP/IP</strong>, se
+estandariza el <strong>encapsulamiento</strong> de información,
+garantizando la interoperabilidad entre sistemas heterogéneos. La
+eficacia de estas redes se evalúa mediante <strong>métricas de
+rendimiento</strong> y <strong>QoS</strong>, asegurando la entrega,
+exactitud y oportunidad de los datos transmitidos.</p>
+  </div>
+</div>
+<p>Si una aplicación tuviera que preocuparse al mismo tiempo por
+calibrar voltajes en el cobre, corregir interferencias del canal,
+calcular rutas entre miles de cruces intermedios y evitar desbordar la
+memoria del receptor, construir software distribuido sería sencillamente
+imposible. Intentar resolver todas estas responsabilidades dentro de un
+único bloque monolítico genera una rigidez inmanejable, donde modificar
+el tipo de cableado obligaría a reescribir desde cero cada programa de
+usuario.</p>
+<p>El dilema fundamental de la ingeniería de redes consiste en cómo
+descomponer el caos en tareas independientes y aisladas, garantizando
+que cualquier equipo pueda dialogar de forma predecible sin importar su
+tecnología interna.</p>
+<h2  id="arquitectura-jerárquica">1. Arquitectura Jerárquica</h2>
+<p>Para gestionar la enorme complejidad que implica conectar sistemas
+informáticos, dividimos todo el proceso de comunicación en una secuencia
+de capas o módulos independientes. Cada nivel se enfoca exclusivamente
+en resolver una tarea específica del intercambio de datos. Gracias a
+este aislamiento, las capas superiores pueden desligarse por completo de
+los detalles técnicos y de la lógica interna con la que operan los
+niveles inferiores, limitándose a consumir sus servicios mediante una
+interfaz sencilla y bien definida.</p>
+<p>Pensemos en el sistema de producción y envío de una imprenta
+industrial clásica. En este esquema, cada trabajador ejecuta un conjunto
+de reglas estricto dentro de su propia estación sin preocuparse por el
+trabajo de los demás. El empaquetador no necesita entender el idioma en
+que está escrito el texto ni cómo se calibraron los tipos de tinta en la
+imprenta, pues su única función es sellar la caja y entregársela al
+carretero. De la misma forma, si los caminos de tierra se sustituyen por
+rutas marítimas, únicamente cambia la técnica del transportista, sin
+obligar al autor a modificar su caligrafía ni al tipógrafo a cambiar sus
+moldes.</p>
+<h3  id="el-modelo-de-referencia-osi-7-capas">1.1. El Modelo de
+Referencia OSI (7 Capas)</h3>
+<p>A finales de la década de 1970, la Organización Internacional de
+Normalización (ISO) formuló el Modelo de Referencia para la
+Interconexión de Sistemas Abiertos (OSI, ISO/IEC 7498-1) con el objetivo
+de ofrecer un marco conceptual integral e interoperable para fabricantes
+de todo el mundo. El modelo descompone la comunicación en siete capas
+ordenadas:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th><strong>Nivel</strong></th>
+<th><strong>Capa</strong></th>
+<th><strong>Función Principal en el Sistema</strong></th>
+<th><strong>Protocolos / Entidades de Referencia</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>7</strong></td>
+<td><strong>Aplicación</strong></td>
+<td>Suministra interfaz directa y servicios de red a los procesos y
+programas del usuario final.</td>
+<td>HTTP, DNS, SMTP, FTP</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Presentación</strong></td>
+<td>Resuelve diferencias de sintaxis, aplica transformaciones de
+formatos de datos, compresión y cifrado.</td>
+<td>TLS, JPEG, ASCII, UTF-8</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Sesión</strong></td>
+<td>Establece, coordina, gestiona puntos de control («checkpoints») y
+finaliza los diálogos entre aplicaciones.</td>
+<td>RPC, Sockets API, NetBIOS</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Transporte</strong></td>
+<td>Proporciona transferencia de datos confiable o no confiable de
+extremo a extremo, control de flujo y multiplexación por puertos.</td>
+<td>TCP, UDP, SCTP</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Red</strong></td>
+<td>Gestiona el direccionamiento lógico global y selecciona las rutas de
+conmutación óptimas a través de subredes heterogéneas.</td>
+<td>IPv4, IPv6, ICMP, enrutadores</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Enlace de Datos</strong></td>
+<td>Estructura el flujo de bits en tramas, gestiona el acceso al medio
+físico compartido y realiza detección de errores por salto.</td>
+<td>Ethernet (IEEE 802.3), Wi-Fi, switches</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Física</strong></td>
+<td>Transmite la secuencia bruta de bits no estructurados sobre el canal
+mediante magnitudes electromagnéticas, lumínicas o mecánicas.</td>
+<td>Cables coaxiales, pares trenzados, fibra óptica</td>
+</tr>
+</tbody>
+</table>
+<p>Las capas 1, 2 y 3 conforman el <strong>subgrupo de soporte de
+red</strong> (intervienen activamente en los nodos y conmutadores
+intermedios del trayecto). Las capas 5, 6 y 7 constituyen el
+<strong>subgrupo de soporte de usuario</strong> (operan exclusivamente
+en el software de los sistemas terminales). La capa 4 enlaza
+estructuralmente ambos mundos, aislando a las capas superiores de las
+contingencias de transmisión del hardware subyacente.</p>
+<h3  id="obsolescencia-práctica-de-osi-frente-a-la-pila-tcpip">1.2.
+Obsolescencia Práctica de OSI frente a la Pila TCP/IP</h3>
+<p>A pesar de su utilidad teórica como herramienta de diseño pedagógico,
+los protocolos propios desarrollados para el modelo OSI jamás alcanzaron
+despliegue masivo en la infraestructura productiva mundial. El análisis
+académico e industrial atribuye el colapso de OSI frente a TCP/IP a
+cuatro fallos cardinales:</p>
+<ul>
+<li><p><strong>Mal momento:</strong> El comité de la ISO tardó años en
+consensuar los estándares. Para cuando los protocolos OSI quedaron
+ratificados formalmente, la pila TCP/IP ya se encontraba plenamente
+operativa en la red ARPANET, distribuida de forma gratuita en las
+versiones del sistema operativo BSD UNIX y ampliamente amortizada por
+las universidades y laboratorios de investigación. Cambiar a OSI suponía
+un coste prohibitivo sin ventajas prácticas tangibles.</p></li>
+<li><p><strong>Mala tecnología:</strong> La selección de siete niveles
+respondió a acuerdos administrativos y políticos más que a
+requerimientos técnicos. Las capas de Sesión y Presentación resultaron
+prácticamente vacías en la práctica cotidiana, mientras que las capas de
+Red y Enlace de Datos terminaron saturadas de funciones complejas. A su
+vez, ciertas responsabilidades críticas como el control de errores y el
+control de flujo se duplicaban innecesariamente en casi todas las
+capas.</p></li>
+<li><p><strong>Malas implementaciones:</strong> Dada la complejidad
+desmedida de las especificaciones de la ISO, las primeras
+implementaciones de la pila OSI fueron voluminosas, lentas y requerían
+una cantidad desproporcionada de memoria de cómputo. En contraste,
+TCP/IP ofrecía un código optimizado, ligero y robusto.</p></li>
+</ul>
+<h3  id="la-pila-tcpip-híbrida-de-5-capas">1.3. La Pila TCP/IP Híbrida de
+5 Capas</h3>
+<p>El funcionamiento de Internet se estructura en una <strong>pila
+híbrida de 5 capas</strong>, la cual sintetiza las virtudes conceptuales
+de OSI con la arquitectura pragmática de TCP/IP, agrupando los niveles
+de sesión, presentación y aplicación en una única capa superior:</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 17%" />
+<col style="width: 40%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th><strong>Nivel Jerárquico</strong></th>
+<th><strong>PDU (Unidad de Datos)</strong></th>
+<th><strong>Identificador / Direccionamiento</strong></th>
+<th><strong>Dispositivo / Entidad Representativa</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Capa 5: Aplicación</strong></td>
+<td>Datos / Mensaje (<span class="math inline">M</span>)</td>
+<td>Nombre de Dominio / URL / URI</td>
+<td>Navegadores web, demonios de servicio</td>
+</tr>
+<tr>
+<td><strong>Capa 4: Transporte</strong></td>
+<td>Segmento (TCP) / Datagrama (UDP)</td>
+<td>Puerto lógico de <span class="math inline">16\text{ bits}</span>
+(<span class="math inline">0\text{ a }65535</span>)</td>
+<td>Núcleo del sistema operativo, sockets</td>
+</tr>
+<tr>
+<td><strong>Capa 3: Red (Internet)</strong></td>
+<td>Paquete / Datagrama IP</td>
+<td>Dirección lógica IP (<span class="math inline">32\text{ bits}</span>
+en IPv4, <span class="math inline">128\text{ bits}</span> en IPv6)</td>
+<td>Enrutador («Router»), conmutador de capa 3</td>
+</tr>
+<tr>
+<td><strong>Capa 2: Enlace</strong></td>
+<td>Trama (Frame)</td>
+<td>Dirección física MAC de <span class="math inline">48\text{
+bits}</span></td>
+<td>Conmutador («Switch»), tarjeta de interfaz (NIC)</td>
+</tr>
+<tr>
+<td><strong>Capa 1: Física</strong></td>
+<td>Bit</td>
+<td>Sincronismo de señal / Nivel de tensión</td>
+<td>Medios de cobre, transceptores ópticos, repetidores</td>
+</tr>
+</tbody>
+</table>
+<h2  id="mecánica-de-encapsulamiento-y-desencapsulamiento-de-datos">2.
+Mecánica de Encapsulamiento y Desencapsulamiento de Datos</h2>
+<p>La transmisión de información a través de una arquitectura jerárquica
+requiere que cada capa añada su propia información de control para
+coordinar las operaciones con su capa homóloga de destino.</p>
+<h3 
+id="encapsulamiento-descendente-y-formato-de-las-unidades-de-datos">2.1.
+Encapsulamiento Descendente y Formato de las Unidades de Datos</h3>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 1:</strong> Encapsulamiento de
+Protocolo</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">M</span> la Unidad de Datos de Servicio
+(<span class="math inline">\text{SDU}_{n}</span>) entregada por la capa
+superior <span class="math inline">n+1</span> a la capa <span
+class="math inline">n</span>. El encapsulamiento es la operación
+mediante la cual la entidad de capa <span class="math inline">n</span>
+construye su Unidad de Datos de Protocolo (<span
+class="math inline">\text{PDU}_n</span>) anteponiendo una cabecera de
+control <span class="math inline">H_n</span> y, eventualmente,
+adjuntando una cola de control <span class="math inline">T_n</span>:</p>
+<p><span class="math display">\text{PDU}_n = [H_n \mid \text{SDU}_n \mid
+T_n] = [H_n \mid \text{PDU}_{n+1} \mid T_n]</span></p>
+<p>Donde <span class="math inline">\mid</span> denota la concatenación
+binaria de campos, siendo <span class="math inline">T_n =
+\emptyset</span> para todo nivel <span class="math inline">n \neq
+2</span> en las pilas convencionales.</p>
+  </div>
+</div>
+<p>En el envío de una pieza mecánica de precisión mediante cajas de
+seguridad postales el fabricante envuelve la pieza y le pega una
+etiqueta que dice para qué departamento de la fábrica de destino sirve
+(mensaje de aplicación). Luego mete ese conjunto dentro de un maletín,
+con un candado que solo el encargado de mantenimiento de la otra fábrica
+puede abrir (segmento de transporte). A continuación, el maletín se
+introduce dentro de un cajón de madera donde se pinta con pintura blanca
+la ciudad y la calle del destinatario (paquete de red). Por último, ese
+cajón se coloca dentro de un contenedor de carga metálico con un sello
+numerado que certifica que las bisagras no se abrieron en el camino
+(trama de enlace con su cola de verificación). Los marineros del buque
+de carga solo ven y mueven el contenedor metálico por su matrícula
+exterior, desconociendo por completo qué tipo de pieza viaja en el
+centro.</p>
+<p>El flujo descendente en el nodo emisor se descompone operativamente
+de la siguiente forma:</p>
+<ol type="1">
+<li><p><strong>Capa de Aplicación:</strong> El proceso de usuario
+produce un mensaje en bruto <span class="math inline">M</span>
+estructurado según la sintaxis del protocolo aplicativo (ej. una
+solicitud HTTP).</p></li>
+<li><p><strong>Capa de Transporte:</strong> Recibe <span
+class="math inline">M</span>, lo fragmenta si excede el tamaño máximo
+permitido y le antepone la cabecera de transporte <span
+class="math inline">H_t</span>. Esta cabecera incorpora el puerto de
+origen y puerto de destino, números de secuencia y códigos de
+verificación. El resultado es el <strong>segmento</strong>:</p></li>
+</ol>
+<p><span class="math display">S = [H_t \mid M]</span></p>
+<ol start="2" type="1">
+<li><strong>Capa de Red:</strong> Toma el segmento <span
+class="math inline">S</span> en calidad de carga útil («payload») y
+añade la cabecera de red <span class="math inline">H_n</span>, que
+incluye las direcciones IP de origen y destino, el tiempo de vida (<span
+class="math inline">\text{TTL}</span>) y directivas de fragmentación. El
+bloque resultante es el <strong>paquete</strong> o datagrama:</li>
+</ol>
+<p><span class="math display">P = [H_n \mid S] = [H_n \mid H_t \mid
+M]</span></p>
+<ol start="2" type="1">
+<li><strong>Capa de Enlace:</strong> Agrega una cabecera de enlace <span
+class="math inline">H_l</span> con las direcciones físicas MAC del salto
+inmediato y añade al final una cola de control <span
+class="math inline">T_l</span>, conformada por una secuencia de
+verificación de trama (FCS, «Frame Check Sequence») calculada
+típicamente mediante comprobación de redundancia cíclica (<span
+class="math inline">\text{CRC}-32</span>). El bloque resultante es la
+<strong>trama</strong> («frame»):</li>
+</ol>
+<p><span class="math display">F = [H_l \mid P \mid T_l] = [H_l \mid H_n
+\mid H_t \mid M \mid T_l]</span></p>
+<ol start="2" type="1">
+<li><strong>Capa Física:</strong> Toma la secuencia de bits de <span
+class="math inline">F</span> y modula las magnitudes físicas del medio
+(pulsos de tensión en cobre, modulaciones de luz en fibra o fases de
+onda portadora en el aire).</li>
+</ol>
+<h3  id="desencapsulamiento-ascendente-y-verificación-de-integridad">2.2.
+Desencapsulamiento Ascendente y Verificación de Integridad</h3>
+<p>En el nodo receptor se ejecuta el proceso inverso de
+desencapsulamiento ascendente:</p>
+<ol type="1">
+<li><p><strong>Recepción física:</strong> El transceptor digitaliza la
+señal y reconstruye la secuencia discreta de bits.</p></li>
+<li><p><strong>Verificación de capa 2:</strong> La tarjeta de red evalúa
+la cola <span class="math inline">T_l</span> aplicando el polinomio
+generador del <span class="math inline">\text{CRC}</span>. Si detecta
+alteraciones binarias causadas por ruido en el canal, descarta la trama
+en el acto. Si la trama es íntegra, contrasta la dirección MAC de
+destino de la cabecera <span class="math inline">H_l</span> con la suya
+propia; si coincide, retira <span class="math inline">H_l</span> y <span
+class="math inline">T_l</span>, y despacha el paquete <span
+class="math inline">P</span> a la capa de red.</p></li>
+<li><p><strong>Inspección de capa 3:</strong> El sistema operativo
+examina la cabecera <span class="math inline">H_n</span>, decrementa el
+<span class="math inline">\text{TTL}</span>, valida la dirección IP de
+destino, retira <span class="math inline">H_n</span> y pasa el segmento
+<span class="math inline">S</span> al protocolo de transporte
+especificado.</p></li>
+<li><p><strong>Despacho de capa 4:</strong> La capa de transporte
+inspecciona <span class="math inline">H_t</span>, comprueba el checksum
+de extremo a extremo, reordena los segmentos si llegaron permutados y
+lee el número de puerto de destino para entregar la carga útil limpia
+<span class="math inline">M</span> al proceso o socket exacto en la capa
+de aplicación.</p></li>
+</ol>
+<p><strong>Operación en Nodos Intermedios:</strong></p>
+<ul>
+<li><p>Un conmutador de capa 2 (switch) solo desencapsula hasta la
+cabecera de enlace <span class="math inline">H_l</span> para conmutar la
+trama hacia el puerto físico correspondiente, sin alterar <span
+class="math inline">H_n</span> ni <span
+class="math inline">H_t</span>.</p></li>
+<li><p>Un enrutador de capa 3 (router) desencapsula hasta la cabecera de
+red <span class="math inline">H_n</span> para consultar su tabla de
+reenvío; al saltar al siguiente enlace, descarta la cabecera <span
+class="math inline">H_l</span> y la cola <span
+class="math inline">T_l</span> viejas, actualiza el <span
+class="math inline">\text{TTL}</span> en <span
+class="math inline">H_n</span> y genera una nueva cabecera <span
+class="math inline">H_l&#39;</span> y una nueva cola <span
+class="math inline">T_l&#39;</span> adaptadas a la tecnología del nuevo
+medio de enlace.</p></li>
+</ul>
+<h2  id="métricas-de-rendimiento-y-criterios-de-eficacia-en-el-canal">3.
+Métricas de Rendimiento y Criterios de Eficacia en el Canal</h2>
+<h3  id="ancho-de-banda-espectral-frente-a-tasa-binaria">3.1. Ancho de
+Banda Espectral frente a Tasa Binaria</h3>
+<p>Existe confusión por el uso del término «ancho de banda». En ciencias
+de la computación e ingeniería de telecomunicaciones es obligatorio
+distinguir rigurosamente la magnitud analógica de la digital:</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 2:</strong> Ancho de Banda Espectral y
+Capacidad Binaria</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li>El <strong>Ancho de Banda Espectral</strong> (<span
+class="math inline">B</span>), medido en Hertz (<span
+class="math inline">\text{Hz}</span>), es el rango continuo de
+frecuencias que delimita el espectro de una señal o el intervalo
+frecuencial que una línea física puede dejar pasar sin atenuación
+inaceptable:</li>
+</ul>
+<p><span class="math display">B = f_{\text{máx}} -
+f_{\text{mín}}</span></p>
+<ul>
+<li>La <strong>Tasa Binaria o Ancho de Banda Digital</strong> (<span
+class="math inline">R</span>), medida en bits por segundo (<span
+class="math inline">\text{bps}</span>), representa el número de dígitos
+binarios discretos que un canal puede transportar por unidad de
+tiempo.</li>
+</ul>
+<p>La cota teórica entre ambas magnitudes en un canal con ruido
+gaussiano blanco viene fijada por el Teorema de Shannon-Hartley:</p>
+<p><span class="math display">C = B \cdot \log_2\left(1 +
+\text{SNR}\right)</span></p>
+<p>Donde <span class="math inline">\text{SNR} = \frac{S}{N}</span>
+representa la relación señal-ruido en escala lineal.</p>
+  </div>
+</div>
+<p>En un puente vehicular el ancho de banda espectral (<span
+class="math inline">B</span>) equivale al ancho físico del puente medido
+con una cinta métrica (cuántos metros de calzada tiene la
+estructura).</p>
+<p>La tasa binaria (<span class="math inline">R</span>) representa la
+cantidad máxima de toneladas que pueden pasar rodando por minuto sobre
+él. El espacio físico disponible (<span class="math inline">B</span>)
+condiciona directamente el volumen de carga que podemos mover por
+segundo (<span class="math inline">R</span>), pero la velocidad a la que
+circulan los vehículos y la rugosidad de los tablones (el nivel de ruido
+del camino) limitan el flujo neto de mercancía.</p>
+<h3  id="rendimiento-real-frente-a-caudal-útil">3.2. Rendimiento Real
+frente a Caudal Útil</h3>
+<p>La capacidad nominal del hardware establece una cota superior
+teórica, pero las aplicaciones rara vez experimentan esa velocidad de
+transferencia:</p>
+<ul>
+<li><p><strong>Capacidad Nominal (<span
+class="math inline">R</span>):</strong> Máxima velocidad física a la que
+los circuitos pueden inyectar bits en el medio.</p></li>
+<li><p><strong>Rendimiento Real («Throughput», <span
+class="math inline">T</span>):</strong> Tasa efectiva de bits totales
+(incluyendo cabeceras, bits de sincronismo y tramas de control) que
+cruzan exitosamente una sección de la red por unidad de tiempo. Se ve
+degradado por contención en el canal, cuellos de botella y pérdidas de
+paquetes.</p></li>
+<li><p><strong>Caudal Útil («Goodput», <span
+class="math inline">G</span>):</strong> Tasa neta de bits de datos
+útiles de la aplicación (<span class="math inline">M</span>) entregados
+al receptor por segundo, excluyendo todas las cabeceras de protocolo
+(<span class="math inline">H_l, H_n, H_t</span>), las colas (<span
+class="math inline">T_l</span>), los paquetes de control de sesión y los
+bloques retransmitidos debido a pérdidas:</p></li>
+</ul>
+<p><span class="math display">G = \frac{\text{Bits de datos útiles
+recibidos sin error}}{t_{\text{total}}} \le T \le R</span></p>
+<h3  id="los-cuatro-criterios-de-evaluación-del-canal">3.3. Los Cuatro
+Criterios de Evaluación del Canal</h3>
+<p>La eficacia y calidad operativa de un sistema de comunicación de
+datos se fundamenta en cuatro pilares elementales:</p>
+<ol type="1">
+<li><p><strong>Entrega (Delivery):</strong> El sistema debe encaminar y
+entregar la información al destinatario correcto y únicamente a él. Si
+los datos alcanzan un nodo equivocado o se pierden en el trayecto, el
+enlace carece de utilidad funcional.</p></li>
+<li><p><strong>Exactitud (Accuracy):</strong> Los datos recibidos deben
+ser idénticos a los transmitidos. La alteración de bits provocada por
+interferencias que no sea detectada ni corregida en destino invalida la
+información (un error de un solo bit en un registro financiero altera
+por completo su valor).</p></li>
+<li><p><strong>Oportunidad (Timeliness):</strong> La información debe
+entregarse dentro de una ventana de tiempo admisible. En flujos
+interactivos de voz y video en tiempo real, un paquete que llega
+demorado es inservible y se descarta.</p></li>
+<li><p><strong>Fluctuación de Fase (Jitter):</strong> Los paquetes
+pertenecientes a un mismo flujo deben arribar con retardos temporales
+predecibles y uniformes. Una variación desordenada en los tiempos de
+tránsito deteriora la calidad perceptiva de los flujos
+continuos.</p></li>
+</ol>
+<h3  id="calidad-de-servicio-qos-y-mecanismos-de-provisión">3.4. Calidad
+de Servicio (QoS) y Mecanismos de Provisión</h3>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 3:</strong> Calidad de Servicio (QoS)</span>
+  </div>
+  <div class="callout-content">
+<p>La Calidad de Servicio es la capacidad cuantitativa de una red para
+otorgar un trato diferenciado a flujos específicos de tráfico,
+asegurando contractualmente cotas delimitadas de ancho de banda, retardo
+máximo, jitter y tasa de pérdida de paquetes en función de los
+requerimientos de la aplicación.</p>
+  </div>
+</div>
+<p>Para garantizar niveles de servicio, los proveedores formulan
+Acuerdos de Nivel de Servicio (SLA, «Service Level Agreement») con sus
+clientes. A nivel arquitectónico existen dos paradigmas para implantar
+QoS en redes conmutadas:</p>
+<ul>
+<li><p><strong>Servicios Integrados (IntServ - RFC 1633):</strong>
+Enfoque de grano fino basado en reserva de recursos previa flujo por
+flujo mediante protocolos de señalización (como RSVP). Exige que cada
+enrutador intermedio almacene y mantenga tablas de estado por cada
+sesión activa, lo que introduce problemas severos de escalabilidad en el
+núcleo de Internet.</p></li>
+<li><p><strong>Servicios Diferenciados (DiffServ - RFC 2475):</strong>
+Enfoque de grano grueso basado en clases de servicio. Los paquetes se
+marcan en el borde de la red asignando un código en la cabecera IP
+(campo DSCP de 6 bits). Los enrutadores del núcleo no memorizan sesiones
+individuales; se limitan a clasificar el tráfico y aplicar
+comportamientos por salto (PHB, «Per-Hop Behavior») priorizando las
+colas correspondientes.</p></li>
+</ul>
+<h2  id="formulación-del-retardo-y-fluctuación-de-fase">4. Formulación
+del Retardo y Fluctuación de Fase</h2>
+<h3  id="ecuación-analítica-del-retardo-total-unidireccional">4.1.
+Ecuación Analítica del Retardo Total Unidireccional</h3>
+<p>El tiempo total que le toma a una unidad de datos viajar desde el
+nodo emisor hasta ser recibida íntegramente por el nodo de destino no es
+instantáneo. Viene determinado por cuatro factores acumulativos:</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 4:</strong> Retardo Total de Extremo a
+Extremo</span>
+  </div>
+  <div class="callout-content">
+<p>Para un enlace punto a punto, el retardo total unidireccional <span
+class="math inline">L</span> experimentado por un paquete de longitud
+<span class="math inline">D</span> bits es la suma algebraica de cuatro
+componentes disjuntas:</p>
+<p><span class="math display">L = t_{\text{trans}} + t_{\text{prop}} +
+t_{\text{queue}} + t_{\text{proc}} = \frac{D}{R} + \frac{d}{v} +
+t_{\text{queue}} + t_{\text{proc}}</span></p>
+<p>Donde:</p>
+<ul>
+<li><p><span class="math inline">D</span>: Tamaño total del paquete
+transmitido (en bits).</p></li>
+<li><p><span class="math inline">R</span>: Capacidad de transmisión de
+la interfaz de red (en bits por segundo, <span
+class="math inline">\text{bps}</span>).</p></li>
+<li><p><span class="math inline">d</span>: Distancia física del enlace
+entre emisor y receptor (en metros, <span
+class="math inline">\text{m}</span>).</p></li>
+<li><p><span class="math inline">v</span>: Velocidad de propagación de
+la señal en el medio material (en metros por segundo, <span
+class="math inline">\text{m/s}</span>). En par trenzado de cobre <span
+class="math inline">v \approx 2.3 \times 10^8\text{ m/s}</span>, y en
+fibra óptica <span class="math inline">v \approx 2.0 \times 10^8\text{
+m/s}</span> (aproximadamente <span class="math inline">\frac{2}{3}
+c</span>, donde <span class="math inline">c = 3 \times 10^8\text{
+m/s}</span>).</p></li>
+<li><p><span class="math inline">t_{\text{queue}}</span>: Tiempo de
+permanencia del paquete en las colas de memoria del conmutador esperando
+turno de salida (en segundos, <span
+class="math inline">\text{s}</span>).</p></li>
+<li><p><span class="math inline">t_{\text{proc}}</span>: Tiempo
+consumido por el procesador del nodo para verificar cabeceras,
+recalcular códigos de comprobación y determinar la interfaz de reenvío
+(en segundos, <span class="math inline">\text{s}</span>).</p></li>
+</ul>
+  </div>
+</div>
+<p>El retardo de transmisión (<span class="math inline">t_{\text{trans}}
+= \frac{D}{R}</span>) es el tiempo necesario para colocar todos los bits
+que componen un paquete de datos en el medio físico, determinado
+directamente por el tamaño del paquete en bits y la capacidad de
+transferencia del enlace.</p>
+<p>El retardo de propagación (<span class="math inline">t_{\text{prop}}
+= \frac{d}{v}</span>) es el tiempo que tardan las señales físicas en
+recorrer la distancia geográfica entre el emisor y el receptor a través
+del medio de transmisión, dependiendo exclusivamente de dicha distancia
+y de la velocidad de propagación de la onda en el material.</p>
+<p>El retardo de procesamiento (<span
+class="math inline">t_{\text{proc}}</span>) es el tiempo requerido por
+los nodos de red para examinar las cabeceras de los paquetes, verificar
+la integridad de los datos y calcular la ruta o interfaz de salida
+correspondiente.</p>
+<p>El retardo de encolamiento (<span
+class="math inline">t_{\text{queue}}</span>) es el tiempo variable que
+un paquete permanece almacenado en las memorias intermedias o búferes de
+un dispositivo de red mientras espera su turno para ser transmitido,
+debido a la congestión o saturación temporal del canal.</p>
+<h3  id="modelado-de-la-fluctuación-de-fase-jitter">4.2. Modelado de la
+Fluctuación de Fase («Jitter»)</h3>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 5:</strong> Fluctuación de Fase o
+Jitter</span>
+  </div>
+  <div class="callout-content">
+<p>La fluctuación de fase instantánea (<span
+class="math inline">J</span>) se define como la diferencia absoluta
+entre los retardos de extremo a extremo experimentados por dos paquetes
+sucesivos de un mismo flujo:</p>
+<p><span class="math display">J = \vert L_i - L_{i-1} \vert</span></p>
+<p>En protocolos de transporte en tiempo real (RTP, RFC 3550), la
+estimación estadística del retardo relativo acumulado se modela
+evaluando la variación en la separación de llegada frente a la de
+partida:</p>
+<p><span class="math display">D(i) = \left( R_i - R_{i-1} \right) -
+\left( S_i - S_{i-1} \right)</span></p>
+<p>Calculando el jitter medio estimado <span
+class="math inline">J(i)</span> mediante una media móvil exponencial con
+factor de amortiguamiento <span class="math inline">\alpha =
+\frac{1}{16}</span>:</p>
+<p><span class="math display">J(i) = \frac{15}{16} J(i-1) + \frac{1}{16}
+\vert D(i) \vert</span></p>
+<p>Donde <span class="math inline">S_k</span> es la marca temporal de
+transmisión del paquete <span class="math inline">k</span> y <span
+class="math inline">R_k</span> es su marca temporal de recepción en
+destino.</p>
+  </div>
+</div>
+<p>Imaginemos una videollamada en la que dos amigos se turnan para
+hablar enviando frases cortas cada pocos segundos. Si la conexión es
+completamente estable, cada frase llega en el momento exacto y la
+conversación fluye de forma natural y continua (<span
+class="math inline">J = 0</span>).</p>
+<p>Pero si una de las frases se retrasa porque la red se congestionó
+momentáneamente, y la siguiente llega volando porque el canal se
+despejó, ambas frases se amontonarán en la recepción o llegarán de
+golpe. Esa irregularidad y variación constante en el tiempo que tardan
+en llegar los mensajes es el jitter.</p>
+<h3  id="resolución-de-problemas-de-rendimiento-y-retardo">4.3.
+Resolución de Problemas de Rendimiento y Retardo</h3>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Cálculo de Retardo Total y
+Fluctuación Instantánea en Fibra Óptica</span>
+  </div>
+  <div class="callout-content">
+<p><strong>Enunciado:</strong> Dos enrutadores distantes <span
+class="math inline">d = 400\text{ km}</span> se interconectan mediante
+un enlace punto a punto de fibra óptica monomodo donde las ondas
+electromagnéticas se propagan a <span class="math inline">v = 2 \times
+10^8\text{ m/s}</span>. El enlace opera a una tasa de <span
+class="math inline">R = 100\text{ Mbps}</span> (<span
+class="math inline">100 \times 10^6\text{ bps}</span>). El emisor
+transmite consecutivamente dos paquetes idénticos de longitud <span
+class="math inline">D = 1500\text{ bytes}</span> (<span
+class="math inline">12000\text{ bits}</span>).</p>
+<p>Durante la emisión del paquete 1, la red presenta baja carga: su
+tiempo en cola es <span class="math inline">t_{\text{queue}, 1} =
+1.20\text{ ms}</span> y su tiempo de procesamiento es <span
+class="math inline">t_{\text{proc}, 1} = 0.05\text{ ms}</span>.</p>
+<p>Justo después, ocurre una ráfaga de tráfico entrante de otros flujos
+que satura temporalmente el búfer: el paquete 2 experimenta un tiempo en
+cola de <span class="math inline">t_{\text{queue}, 2} = 4.80\text{
+ms}</span>, manteniéndose su tiempo de procesamiento en <span
+class="math inline">t_{\text{proc}, 2} = 0.05\text{ ms}</span>.</p>
+<p>Calcule:</p>
+<ol type="1">
+<li><p>El retardo de transmisión (<span
+class="math inline">t_{\text{trans}}</span>) y de propagación (<span
+class="math inline">t_{\text{prop}}</span>) del canal.</p></li>
+<li><p>El retardo total de cada paquete (<span
+class="math inline">L_1</span> y <span
+class="math inline">L_2</span>).</p></li>
+<li><p>El jitter instantáneo (<span class="math inline">J</span>)
+experimentado entre ambas muestras.</p></li>
+</ol>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Convertimos las dimensiones a unidades
+fundamentales del Sistema Internacional y calculamos las componentes
+deterministas del enlace: multiplicamos los <span
+class="math inline">1500\text{ bytes}</span> por <span
+class="math inline">8</span> para obtener <span
+class="math inline">12000\text{ bits}</span> y dividimos entre la
+capacidad de transmisión del enlace (<span class="math inline">100
+\times 10^6\text{ bps}</span>) para determinar el tiempo de transmisión
+(<span class="math inline">t_{\text{trans}}</span>), que es el tiempo
+que el hardware tarda en modular todos los bits hacia la línea:</p>
+<p><span class="math display">t_{\text{trans}} = \frac{D}{R} =
+\frac{12000\text{ bits}}{100 \times 10^6\text{ bps}} = 0.00012\text{ s}
+= 0.12\text{ ms}</span></p>
+<p><strong>Paso 2:</strong> Calculamos el tiempo de viaje físico de la
+luz a lo largo de los <span class="math inline">400\text{ km}</span>
+(<span class="math inline">400000\text{ m}</span>) dividiendo entre la
+velocidad de la luz en el núcleo de sílice (<span class="math inline">2
+\times 10^8\text{ m/s}</span>), obteniendo el retardo de propagación
+(<span class="math inline">t_{\text{prop}}</span>). Notamos que tanto
+<span class="math inline">t_{\text{trans}}</span> como <span
+class="math inline">t_{\text{prop}}</span> son valores constantes e
+invariantes entre paquetes idénticos en la misma línea:</p>
+<p><span class="math display">t_{\text{prop}} = \frac{d}{v} = \frac{400
+\times 10^3\text{ m}}{2 \times 10^8\text{ m/s}} = 0.002\text{ s} =
+2.00\text{ ms}</span></p>
+<p><strong>Paso 3:</strong> Sumamos las cuatro componentes del retardo
+(<span class="math inline">t_{\text{trans}}</span>, <span
+class="math inline">t_{\text{prop}}</span>, <span
+class="math inline">t_{\text{queue}}</span> y <span
+class="math inline">t_{\text{proc}}</span>) para cada datagrama. Vemos
+que el primer paquete llega a destino a los <span
+class="math inline">3.37\text{ ms}</span>, pero el segundo se retrasa
+hasta los <span class="math inline">6.97\text{ ms}</span> debido
+exclusivamente al encolamiento provocado por la congestión del
+conmutador intermedio:</p>
+<p><span class="math display">L_1 = t_{\text{trans}} + t_{\text{prop}} +
+t_{\text{queue}, 1} + t_{\text{proc}, 1} = 0.12\text{ ms} + 2.00\text{
+ms} + 1.20\text{ ms} + 0.05\text{ ms} = 3.37\text{ ms}</span> <span
+class="math display">L_2 = t_{\text{trans}} + t_{\text{prop}} +
+t_{\text{queue}, 2} + t_{\text{proc}, 2} = 0.12\text{ ms} + 2.00\text{
+ms} + 4.80\text{ ms} + 0.05\text{ ms} = 6.97\text{ ms}</span></p>
+<p><strong>Paso 4:</strong> Evaluamos la diferencia absoluta entre ambas
+latencias para determinar la fluctuación instantánea o <em>jitter</em>
+(<span class="math inline">J</span>). El receptor experimenta una
+variación de llegada de <span class="math inline">3.60\text{ ms}</span>.
+Si este flujo transportara audio en tiempo real sin un búfer de
+compensación (<em>jitter buffer</em>) en la aplicación receptora, la
+reproducción sufriría un salto audible o congelamiento:</p>
+<p><span class="math display">J = \vert L_2 - L_1 \vert = \vert
+6.97\text{ ms} - 3.37\text{ ms} \vert = 3.60\text{ ms}</span></p>
+<h2  id="organismos-internacionales-de-normalización">5. Organismos
+Internacionales de Normalización</h2>
+<p>Para que equipos diseñados por compañías competidoras puedan dialogar
+de forma determinista, las especificaciones de hardware y software deben
+estandarizarse formalmente.</p>
+<h3  id="ieee-institute-of-electrical-and-electronics-engineers">5.1.
+IEEE (Institute of Electrical and Electronics Engineers)</h3>
+<p>El Instituto de Ingenieros Eléctricos y Electrónicos es la mayor
+asociación profesional de ingeniería del mundo. Su labor en
+telecomunicaciones se concentra de forma preponderante en las dos capas
+más bajas de la pila arquitectónica: la Capa Física y la Capa de Enlace
+de Datos.</p>
+<p>En 1980, la entidad constituyó el <strong>Comité de Estandarización
+IEEE 802</strong> para normalizar las redes de área local (LAN) y
+metropolitana (MAN). Para resolver la diversidad de medios de
+comunicación físicos, el IEEE dividió la Capa de Enlace de Datos de OSI
+en dos subcapas funcionales:</p>
+<ul>
+<li><p><strong>Subcapa de Control de Enlace Lógico (LLC, IEEE
+802.2):</strong> Proporciona una interfaz de servicio homogénea e
+independiente hacia la capa de red superior, gestionando control de
+errores y direccionamiento lógico entre procesos.</p></li>
+<li><p><strong>Subcapa de Control de Acceso al Medio (MAC):</strong>
+Gestiona los protocolos de contención y acceso al canal físico
+específico, estructurando las tramas y manipulando las direcciones
+físicas de hardware.</p></li>
+</ul>
+<p>Los grupos de trabajo más influyentes del comité IEEE 802
+comprenden:</p>
+<ul>
+<li><p><strong>IEEE 802.3:</strong> Redes locales por cable bajo la
+tecnología Ethernet (con variantes desde <span
+class="math inline">10\text{ Mbps}</span> hasta <span
+class="math inline">400\text{ Gbps}</span>).</p></li>
+<li><p><strong>IEEE 802.11:</strong> Redes inalámbricas de área local
+(WLAN), conocidas comercialmente como Wi-Fi.</p></li>
+<li><p><strong>IEEE 802.15:</strong> Redes de área personal inalámbricas
+(WPAN), incluyendo estándares para Bluetooth (802.15.1) y Zigbee
+(802.15.4).</p></li>
+</ul>
+<h3  id="ietf-internet-engineering-task-force">5.2. IETF (Internet
+Engineering Task Force)</h3>
+<p>La Fuerza de Tarea de Ingeniería de Internet es el organismo técnico
+abierto responsable del diseño y evolución de los protocolos centrales
+de Internet (concentrado en las capas de red, transporte y aplicación).
+Depende administrativamente de la Internet Society (ISOC) y del Consejo
+de Arquitectura de Internet (IAB).</p>
+<p>La filosofía organizativa del IETF rechaza la burocracia jerárquica
+tradicional, rigiéndose por el principio rector articulado por David
+Clark: <em>«Rechazamos a los reyes, a los presidentes y a las
+votaciones; creemos en el consenso aproximado y en el código que
+funciona»</em> («rough consensus and running code»).</p>
+<p>Las especificaciones técnicas de Internet se publican bajo la
+denominación de <strong>Peticiones de Comentarios</strong> (RFC,
+«Request for Comments»). A diferencia de los borradores, los documentos
+RFC, una vez publicados con su número formal asignado, son inmutables de
+por vida; si un estándar necesita una mejora, se redacta un nuevo RFC
+que declara explícitamente actualizar o dejar obsoleto («obsoletes») al
+documento anterior.</p>
+<p>El ciclo formal de maduración técnica comprende los siguientes
+estadios:</p>
+<ol type="1">
+<li><p><strong>Borrador de Internet («Internet Draft»):</strong>
+Documento de trabajo provisional en constante discusión, sin valor de
+estándar y con una vigencia máxima de 6 meses tras la cual se renueva o
+desaparece.</p></li>
+<li><p><strong>Estándar Propuesto («Proposed Standard»):</strong> Si el
+borrador demuestra madurez y el IESG lo aprueba, se publica como RFC
+formal. Especifica una solución estable y bien resuelta
+técnicamente.</p></li>
+<li><p><strong>Estándar en Borrador («Draft Standard»):</strong> Exige
+demostrar la existencia de al menos dos implementaciones independientes,
+completas e interoperables probadas en entornos productivos durante
+meses.</p></li>
+<li><p><strong>Estándar de Internet («Internet Standard»):</strong>
+Nivel superior de ratificación técnica. Recibe frecuentemente un
+identificador suplementario (STD) y constituye una norma obligatoria de
+la arquitectura de Internet.</p></li>
+</ol>
+<h3 
+id="itu-t-international-telecommunication-union---telecommunication-standardization-sector">5.3.
+ITU-T (International Telecommunication Union - Telecommunication
+Standardization Sector)</h3>
+<p>La Unión Internacional de Telecomunicaciones (UIT) es el organismo
+especializado de las Naciones Unidas en el ámbito de las tecnologías de
+la información y la comunicación. Su sector de normalización, el
+<strong>ITU-T</strong> (denominado formalmente CCITT hasta 1993),
+coordina las normas y tratados internacionales entre gobiernos soberanos
+y corporaciones de telecomunicaciones autorizadas.</p>
+<p>A diferencia del IETF, la ITU-T opera mediante conferencias
+diplomáticas y grupos de estudio formales divididos por áreas temáticas
+(como el Estudio de Grupo 15 para infraestructuras de transporte
+óptico). Sus documentos normativos se denominan
+<strong>Recomendaciones</strong> («Recommendations»). Aunque formalmente
+se definen como sugerencias técnicas, en la práctica son de cumplimiento
+obligatorio para posibilitar el tránsito fronterizo entre operadoras
+nacionales de telecomunicaciones.</p>
+<p>Aportes fundamentales ratificados por ITU-T:</p>
+<ul>
+<li><p><strong>Series V y X:</strong> Estándares históricos de
+modulación para transmisión de datos sobre telefonía conmutada (ej. V.90
+a <span class="math inline">56\text{ kbps}</span>) y redes públicas de
+datos (ej. X.25 y el estándar de certificados criptográficos
+X.509).</p></li>
+<li><p><strong>Series G y H:</strong> Sistemas de transmisión digital,
+jerarquías digitales síncronas (SDH), estándares de fibra óptica y
+algoritmos mundiales de compresión de video digital (tales como H.264 /
+AVC y H.265 / HEVC, desarrollados conjuntamente con ISO/IEC).</p></li>
+<li><p><strong>Series G.992 (ADSL / VDSL):</strong> Estándares mundiales
+que permitieron transformar las líneas tradicionales de pares de cobre
+telefónicas en enlaces de acceso a Internet de alta velocidad.</p></li>
+</ul>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Cerf, V. &amp; Kahn, R.</strong> (1974). <em>A Protocol
+for Packet Network Interconnection</em>. IEEE Transactions on
+Communications, COM-22(5), 637–648.</p></li>
+<li><p><strong>Comer, D. E.</strong> <em>Internetworking with TCP/IP,
+Volume I: Principles, Protocols, and Architecture</em>. 6.ª ed.,
+Prentice Hall.</p></li>
+<li><p><strong>Day, J. D. &amp; Zimmermann, H.</strong> (1983). <em>The
+OSI Reference Model</em>. Proceedings of the IEEE, 71(12),
+1334–1340.</p></li>
+<li><p><strong>Forouzan, B. A.</strong> <em>Data Communications and
+Networking</em>. 5.ª ed., McGraw-Hill.</p></li>
+<li><p><strong>IEEE 802 LAN/MAN Standards Committee.</strong> <em>IEEE
+802 Standards for Local and Metropolitan Area Networks</em>. Disponible
+en <a href="https://www.ieee802.org/">ieee802.org</a>.</p></li>
+<li><p><strong>IETF (Internet Engineering Task Force).</strong>
+<em>Official Internet Protocol Specifications and RFC Database</em>.
+Disponible en <a href="https://www.ietf.org/">ietf.org</a>.</p></li>
+<li><p><strong>ISO (International Organization for
+Standardization).</strong> <em>ISO/IEC 7498-1: Information Technology —
+Open Systems Interconnection — Basic Reference Model</em>. Disponible en
+<a href="https://www.iso.org/standard/20269.html">iso.org</a>.</p></li>
+<li><p><strong>ITU-T (International Telecommunication Union -
+Telecommunication Standardization Sector).</strong> <em>ITU-T
+Recommendations and Standards</em>. Disponible en <a
+href="https://www.itu.int/itu-t/">itu.int</a>.</p></li>
+<li><p><strong>Peterson, L. L. &amp; Davie, B. S.</strong> <em>Computer
+Networks: A Systems Approach</em>. 5.ª ed., Morgan Kaufmann.</p></li>
+<li><p><strong>Stallings, W.</strong> <em>Data and Computer
+Communications</em>. 10.ª ed., Pearson / Prentice Hall.</p></li>
+<li><p><strong>Tanenbaum, A. S. &amp; Wetherall, D.</strong>
+<em>Computer Networks</em>. 5.ª ed., Prentice Hall.</p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>
