@@ -434,7 +434,7 @@ def compileMarkdownBody(bodyMarkdown, imageBaseRoute="/images/notes/"):
     bodyMarkdown = preprocessNestedEmphasis(bodyMarkdown)
     bodyMarkdown = preprocessCalloutNewlines(bodyMarkdown)
 
-    pandocCommand = ["pandoc", "--from=markdown", "--to=html5", "--math-method=katex", "--shift-heading-level-by=1"]
+    pandocCommand = ["pandoc", "--from=markdown", "--to=html5", "--katex", "--shift-heading-level-by=1"]
     pandocProcess = subprocess.Popen(
         pandocCommand,
         stdin=subprocess.PIPE,

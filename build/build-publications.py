@@ -59,7 +59,8 @@ def convertMarkdownFile(filePath, htmlTemplate):
     compilationResult = compileMarkdownBody(bodyMarkdown, imageBaseRoute="/images/publications/")
     if compilationResult is None:
         print(f"  ✗  Error converting {filePath}", file=sys.stderr)
-        return None
+        sys.exit(1)
+
     htmlBody, tocHtml = compilationResult
 
     tagsList = metaData["tags"] or ["Linux", "Sistemas"]

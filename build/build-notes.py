@@ -12,12 +12,12 @@ and maintaining the typed catalog src/data/notes.ts sorted by semester descendin
 Usage:
   python3 build/build-notes.py
 """
+import glob
+import importlib.util
+import json
 import os
 import re
 import sys
-import glob
-import json
-import importlib.util
 
 rootDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 processorPath = os.path.join(rootDir, "build/markdown-processor.py")
@@ -170,7 +170,7 @@ def main():
                 compilationResult = compileMarkdownBody(noteEntry["bodyMarkdown"], imageBaseRoute="/images/notes/")
                 if compilationResult is None:
                     print(f"  ✗  Error compiling {noteEntry['filepath']}", file=sys.stderr)
-                    continue
+                    sys.exit(1)
                 htmlBody, tocHtml = compilationResult
 
                 tagsHtml = " ".join(f'<span class="tag">#{tagItem}</span>' for tagItem in noteEntry["tags"])
