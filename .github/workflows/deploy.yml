@@ -18,41 +18,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout del código fuente
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. Instalar Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      # 3. Instalar dependencias de Node
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y pandoc
+
       - name: Install Node dependencies
         run: npm ci
 
-      # 4. Build completo:
-      #    - fetch-github-projects.py → sync proyectos de GitHub
-      #    - tsc → verificación de tipos TypeScript
-      #    - vite build → bundle final en dist/
       - name: Build site
         run: npm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 5. Verificar contenido de dist/ (debug)
       - name: Verify dist structure
         run: |
           echo "=== dist/ root ==="
           ls dist/
           echo "=== dist/notes/ ==="
-          ls dist/notes/ 2>/dev/null || echo "MISSING: dist/notes/ does not exist"
+          ls dist/notes/
           echo "=== dist/publications/ ==="
-          ls dist/publications/ 2>/dev/null || echo "MISSING: dist/publications/ does not exist"
+          ls dist/publications/
 
-      # 6. Publicar dist/ en la rama gh-pages
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:

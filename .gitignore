@@ -14,4 +14,10 @@ dist/
 .vite/
 *.pyc
 build/__pycache__/
-build/markdown/*
+
+notes/
+publications/
+public/images/notes/
+public/images/publications/
+src/data/notes.ts
+src/data/publications.ts

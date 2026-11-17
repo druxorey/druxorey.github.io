@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "compile": "python3 build/prebuild.py",
-    "build": "python3 build/fetch-github-projects.py && tsc && vite build",
+    "prebuild": "python3 build/prebuild.py",
+    "build": "python3 build/prebuild.py && tsc && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
