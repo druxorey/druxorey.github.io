@@ -195,7 +195,7 @@ ordenadas:</p>
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th><strong>Nivel</strong></th>
 <th><strong>Capa</strong></th>
 <th><strong>Función Principal en el Sistema</strong></th>
@@ -203,49 +203,49 @@ ordenadas:</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>7</strong></td>
 <td><strong>Aplicación</strong></td>
 <td>Suministra interfaz directa y servicios de red a los procesos y
 programas del usuario final.</td>
 <td>HTTP, DNS, SMTP, FTP</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>6</strong></td>
 <td><strong>Presentación</strong></td>
 <td>Resuelve diferencias de sintaxis, aplica transformaciones de
 formatos de datos, compresión y cifrado.</td>
 <td>TLS, JPEG, ASCII, UTF-8</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>5</strong></td>
 <td><strong>Sesión</strong></td>
 <td>Establece, coordina, gestiona puntos de control («checkpoints») y
 finaliza los diálogos entre aplicaciones.</td>
 <td>RPC, Sockets API, NetBIOS</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>4</strong></td>
 <td><strong>Transporte</strong></td>
 <td>Proporciona transferencia de datos confiable o no confiable de
 extremo a extremo, control de flujo y multiplexación por puertos.</td>
 <td>TCP, UDP, SCTP</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>3</strong></td>
 <td><strong>Red</strong></td>
 <td>Gestiona el direccionamiento lógico global y selecciona las rutas de
 conmutación óptimas a través de subredes heterogéneas.</td>
 <td>IPv4, IPv6, ICMP, enrutadores</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>2</strong></td>
 <td><strong>Enlace de Datos</strong></td>
 <td>Estructura el flujo de bits en tramas, gestiona el acceso al medio
 físico compartido y realiza detección de errores por salto.</td>
 <td>Ethernet (IEEE 802.3), Wi-Fi, switches</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>1</strong></td>
 <td><strong>Física</strong></td>
 <td>Transmite la secuencia bruta de bits no estructurados sobre el canal
@@ -304,7 +304,7 @@ de sesión, presentación y aplicación en una única capa superior:</p>
 <col style="width: 28%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th><strong>Nivel Jerárquico</strong></th>
 <th><strong>PDU (Unidad de Datos)</strong></th>
 <th><strong>Identificador / Direccionamiento</strong></th>
@@ -312,34 +312,34 @@ de sesión, presentación y aplicación en una única capa superior:</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>Capa 5: Aplicación</strong></td>
 <td>Datos / Mensaje (<span class="math inline">M</span>)</td>
 <td>Nombre de Dominio / URL / URI</td>
 <td>Navegadores web, demonios de servicio</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Capa 4: Transporte</strong></td>
 <td>Segmento (TCP) / Datagrama (UDP)</td>
 <td>Puerto lógico de <span class="math inline">16\text{ bits}</span>
 (<span class="math inline">0\text{ a }65535</span>)</td>
 <td>Núcleo del sistema operativo, sockets</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>Capa 3: Red (Internet)</strong></td>
 <td>Paquete / Datagrama IP</td>
 <td>Dirección lógica IP (<span class="math inline">32\text{ bits}</span>
 en IPv4, <span class="math inline">128\text{ bits}</span> en IPv6)</td>
 <td>Enrutador («Router»), conmutador de capa 3</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Capa 2: Enlace</strong></td>
 <td>Trama (Frame)</td>
 <td>Dirección física MAC de <span class="math inline">48\text{
 bits}</span></td>
 <td>Conmutador («Switch»), tarjeta de interfaz (NIC)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>Capa 1: Física</strong></td>
 <td>Bit</td>
 <td>Sincronismo de señal / Nivel de tensión</td>
