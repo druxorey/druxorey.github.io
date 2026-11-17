@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Permutaciones, Variaciones y Combinatoria Avanzada | Druxorey</title>
+  <meta name="description" content="La combinatoria avanzada y los modelos de conteo (que abarcan permutaciones, variaciones y combinaciones) constituyen el fundamento matemático indispensable para dimensionar con exactitud el espacio de estados de sistemas discretos y evaluar la tractabilidad computacional. Al considerar simetrías internas, restricciones de inventario y repeticiones, estas herramientas formales permiten resolver problemas complejos de asignación y optimización evitando errores críticos de escala.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="/assets/main-Dehq_9UD.js"></script>
+  <script type="module" crossorigin src="/assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="/assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-u8MMlYs2.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#ordenamientos-secuenciales-sin-repetición-permutaciones-y-variaciones">1.
+Ordenamientos Secuenciales sin Repetición: Permutaciones y
+Variaciones</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#permutaciones-simples-de-un-conjunto-completo">1.1.
+Permutaciones Simples de un Conjunto Completo</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#variaciones-o-r-permutaciones-de-subconjuntos">1.2. Variaciones
+o r-Permutaciones de Subconjuntos</a></li>
+<li class="toc-item"><a class="toc-link" href="#selecciones-sin-orden-y-estructura-de-los-coeficientes-binomiales">2.
+Selecciones sin Orden y Estructura de los Coeficientes Binomiales</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#combinaciones-simples-y-deducción-mediante-la-regla-de-la-división">2.1.
+Combinaciones Simples y Deducción mediante la Regla de la División</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#simetría-combinatoria-e-identidad-de-pascal">2.2. Simetría
+Combinatoria e Identidad de Pascal</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#teorema-del-binomio-de-newton">2.3. Teorema del Binomio de
+Newton</a></li>
+<li class="toc-item"><a class="toc-link" href="#agrupamientos-con-repetición-y-restricciones-de-identidad">3.
+Agrupamientos con Repetición y Restricciones de Identidad</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#variaciones-con-repetición-permitida">3.1. Variaciones con
+Repetición Permitida</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#combinaciones-con-repetición-y-el-método-de-estrellas-y-barras">3.2.
+Combinaciones con Repetición y el Método de Estrellas y Barras</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#permutaciones-con-elementos-indistinguibles-y-fórmula-multinomial">3.3.
+Permutaciones con Elementos Indistinguibles y Fórmula Multinomial</a></li>
+<li class="toc-item"><a class="toc-link" href="#síntesis-taxonómica-y-compromisos-de-ingeniería-computacional">4.
+Síntesis Taxonómica y Compromisos de Ingeniería Computacional</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#cuadro-comparativo-de-modelos-combinatorios">4.1. Cuadro
+Comparativo de Modelos Combinatorios</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#desbordamiento-aritmético-overflow-y-cómputo-iterativo-entrelazado">4.2.
+Desbordamiento Aritmético (‘Overflow’) y Cómputo Iterativo
+Entrelazado</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Probabilidad y Estadistica</div>
+          <h1 class="article-title">Permutaciones, Variaciones y Combinatoria Avanzada</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota 1.1</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>combinatoria avanzada</strong> y los modelos de conteo
+(que abarcan <strong>permutaciones</strong>,
+<strong>variaciones</strong> y <strong>combinaciones</strong>)
+constituyen el fundamento matemático indispensable para dimensionar con
+exactitud el <strong>espacio de estados</strong> de sistemas discretos y
+evaluar la <strong>tractabilidad computacional</strong>. Al considerar
+simetrías internas, restricciones de inventario y repeticiones, estas
+herramientas formales permiten resolver problemas complejos de
+asignación y optimización evitando errores críticos de escala.</p>
+  </div>
+</div>
+<p>Dimensionar con exactitud el espacio de estados <span
+class="math inline">\vert{}\Omega\vert{}</span> de un sistema discreto
+resulta indispensable para calcular probabilidades bajo el modelo de
+Laplace y determinar si un problema es computacionalmente tratable. Sin
+embargo, aplicar el principio multiplicativo de forma directa suele
+conducir a errores graves cuando las configuraciones del sistema poseen
+simetrías internas o restricciones de inventario.</p>
+<p>Para formular el conteo correcto en cualquier arquitectura lógica, es
+necesario responder dos preguntas antes de escribir una ecuación: si
+intercambiar la posición de dos elementos produce un estado observable
+distinto, y si un mismo tipo de elemento puede seleccionarse múltiples
+veces o posee copias idénticas entre sí. Cuando cada unidad disponible
+es única y su posición relativa define el funcionamiento del sistema, el
+problema se reduce a construir secuencias ordenadas sin reemplazo.</p>
+<h2 
+id="ordenamientos-secuenciales-sin-repetición-permutaciones-y-variaciones">1.
+Ordenamientos Secuenciales sin Repetición: Permutaciones y
+Variaciones</h2>
+<p>El punto de partida del conteo estructurado ocurre cuando se dispone
+de un conjunto de <span class="math inline">n</span> elementos distintos
+y se desea formar secuencias ordenadas sin reutilizar ninguno de ellos.
+Dependiendo de si se emplea la totalidad del conjunto o únicamente un
+subconjunto de tamaño <span class="math inline">r</span>, surgen dos
+formulaciones directamente conectadas por el principio
+multiplicativo.</p>
+<h3  id="permutaciones-simples-de-un-conjunto-completo">1.1.
+Permutaciones Simples de un Conjunto Completo</h3>
+<p>Cuando todos los <span class="math inline">n</span> elementos
+disponibles deben participar obligatoriamente en la secuencia y la
+posición de cada uno altera el resultado, el problema consiste en
+determinar de cuántas maneras distintas pueden reordenarse entre sí.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 1:</strong> Permutaciones Simples</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">S</span> un conjunto finito con <span
+class="math inline">n</span> elementos distintos (<span
+class="math inline">n \in \mathbb{N}</span>). El número total de
+arreglos ordenados que incluyen a todos los elementos de <span
+class="math inline">S</span> sin repetición está dado por:</p>
+<p><span class="math display">P_n = n! = n \cdot (n - 1) \cdot (n - 2)
+\cdots 2 \cdot 1</span></p>
+<p>donde por convención algebraica se define <span
+class="math inline">0! = 1</span>.</p>
+  </div>
+</div>
+<p>Imagina que tienes un conjunto de elementos y quieres ordenarlos
+todos en una fila. Para elegir el primer elemento de la secuencia,
+tienes total libertad y puedes escoger cualquiera de los <span
+class="math inline">n</span> elementos disponibles, usando ese elemento
+como un punto de partida o pivote. Una vez que fijas ese primero, para
+la segunda posición ya solo te quedan <span class="math inline">n -
+1</span> elementos disponibles de los cuales elegir. Para la tercera
+posición el número de opciones se reduce a <span class="math inline">n -
+2</span>, y así sucesivamente de forma consecutiva, restando una unidad
+en cada paso hasta que en la última posición queda un único elemento
+posible. Al multiplicar las opciones de cada una de estas etapas
+independientes, el cálculo resultante se reduce a una multiplicación
+decreciente continua, que es exactamente lo que define al factorial.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Planificación de Procesos en
+un Núcleo Mono-hilo</span>
+  </div>
+  <div class="callout-content">
+<p>Un planificador «batch» en un procesador de un solo núcleo recibe
+<span class="math inline">n = 6</span> tareas independientes (<span
+class="math inline">T_1, T_2, T_3, T_4, T_5, T_6</span>) que deben
+ejecutarse secuencialmente hasta completarse sin interrupciones.
+¿Cuántas trazas de ejecución distintas puede generar el planificador?
+<strong>Solución:</strong></p>
+<p><span class="math display">P_6 = 6! = 6 \cdot 5 \cdot 4 \cdot 3 \cdot
+2 \cdot 1 = 720 \text{ trazas de ejecución}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Identificamos que todas las tareas deben
+ejecutarse (<span class="math inline">r = n = 6</span>) y que alterar el
+orden modifica los tiempos de espera y finalización del sistema, por lo
+que el orden es estricto.</p>
+<p><strong>Paso 2:</strong> Aplicamos el principio multiplicativo sobre
+las <span class="math inline">6</span> ranuras temporales de la cola de
+ejecución, reduciendo en una unidad las tareas disponibles tras cada
+asignación hasta obtener <span class="math inline">720</span>
+ordenamientos posibles.</p>
+<h3  id="variaciones-o-r-permutaciones-de-subconjuntos">1.2. Variaciones
+o <span class="math inline">r</span>-Permutaciones de Subconjuntos</h3>
+<p>En muchas arquitecturas de ingeniería, el catálogo de recursos
+disponibles contiene <span class="math inline">n</span> elementos
+distintos, pero el sistema únicamente dispone de <span
+class="math inline">r</span> ranuras o posiciones que llenar, con <span
+class="math inline">0 \le r \le n</span>. En este escenario, los <span
+class="math inline">n - r</span> elementos no seleccionados quedan fuera
+del arreglo final.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 2:</strong> Variaciones (<span
+class="math inline">r</span>-Permutaciones sin Repetición)</span>
+  </div>
+  <div class="callout-content">
+<p>Dados enteros <span class="math inline">n</span> y <span
+class="math inline">r</span> tales que <span class="math inline">0 \le r
+\le n</span>, el número de arreglos ordenados de longitud <span
+class="math inline">r</span> que pueden formarse extrayendo elementos
+sin reposición de un conjunto total de <span
+class="math inline">n</span> objetos distintos (denotado <span
+class="math inline">V_n^r</span> o <span
+class="math inline">P_n^r</span>) es:</p>
+<p><span class="math display">V_n^r = P_n^r = \frac{n!}{(n - r)!} = n
+\cdot (n - 1) \cdot (n - 2) \cdots (n - r + 1)</span></p>
+  </div>
+</div>
+<p>La deducción sigue la misma lógica de llenado de casillas, pero el
+proceso se detiene exactamente al completar la casilla número <span
+class="math inline">r</span>, donde aún quedan <span
+class="math inline">n - (r - 1) = n - r + 1</span> opciones disponibles.
+Para compactar este producto truncado en notación factorial, se
+multiplica y divide simultáneamente por <span class="math inline">(n -
+r)!</span>, completando la cadena descendente hasta <span
+class="math inline">1</span> en el numerador y cancelando los factores
+de los elementos sobrantes en el denominador. Nótese que en parte de la
+literatura del curso esta expresión se escribe como <span
+class="math inline">P_M^N = \frac{M!}{(M - N)!}</span>, donde <span
+class="math inline">M</span> representa el tamaño de la población y
+<span class="math inline">N</span> el tamaño de la muestra ordenada.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Asignación de Roles
+Jerárquicos en un Clúster</span>
+  </div>
+  <div class="callout-content">
+<p>Una arquitectura de alta disponibilidad cuenta con <span
+class="math inline">n = 10</span> servidores físicos idénticos en
+hardware, pero distintos por su dirección IP. Para desplegar un servicio
+replicado se requiere asignar exactamente <span class="math inline">r =
+3</span> servidores a tres roles jerárquicos exclusivos: «Nodo Líder»,
+«Réplica Síncrona 1» y «Réplica Síncrona 2». ¿Cuántas topologías de
+despliegue distintas existen?</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">V_{10}^3 = P_{10}^3 = \frac{10!}{(10 -
+3)!} = \frac{10!}{7!} = 10 \cdot 9 \cdot 8 = 720 \text{ topologías
+posibles}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Reconocemos que la jerarquía de red hace que
+asignar el servidor <span class="math inline">A</span> como Líder y el
+<span class="math inline">B</span> como Réplica 1 sea funcionalmente
+distinto a invertir sus roles, confirmando que el orden importa y no hay
+repetición.</p>
+<p><strong>Paso 2:</strong> Multiplicamos las <span
+class="math inline">10</span> opciones para el Nodo Líder por las <span
+class="math inline">9</span> restantes para la Réplica 1 y las <span
+class="math inline">8</span> disponibles para la Réplica 2, obteniendo
+<span class="math inline">720</span> configuraciones válidas.</p>
+<h2 
+id="selecciones-sin-orden-y-estructura-de-los-coeficientes-binomiales">2.
+Selecciones sin Orden y Estructura de los Coeficientes Binomiales</h2>
+<p>El enfoque de variaciones falla cuando el sistema trata como
+equivalentes a dos arreglos que contienen exactamente los mismos
+elementos en distinto orden. Si un balanceador de carga selecciona tres
+nodos para almacenar fragmentos de un archivo sin asignarles jerarquía,
+elegir los nodos <span class="math inline">\{A, B, C\}</span> produce
+exactamente la misma topología que elegir <span class="math inline">\{C,
+B, A\}</span>. Contar con <span class="math inline">V_n^r</span>
+sobreestima el espacio real porque registra cada subconjunto múltiples
+veces.</p>
+<h3 
+id="combinaciones-simples-y-deducción-mediante-la-regla-de-la-división">2.1.
+Combinaciones Simples y Deducción mediante la Regla de la División</h3>
+<p>Para eliminar la redundancia generada por el orden interno de los
+elementos seleccionados, se recurre a la <strong>regla de la
+división</strong>, que colapsa clases de equivalencia de tamaño
+uniforme.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 3:</strong> Combinaciones Simples
+(Coeficiente Binomial)</span>
+  </div>
+  <div class="callout-content">
+<p>Para enteros <span class="math inline">n</span> y <span
+class="math inline">r</span> con <span class="math inline">0 \le r \le
+n</span>, el número de subconjuntos desordenados de tamaño <span
+class="math inline">r</span> que pueden extraerse de un conjunto de
+<span class="math inline">n</span> elementos distintos está dado por el
+coeficiente binomial:</p>
+<p><span class="math display">C_n^r = \binom{n}{r} = \frac{n!}{r!(n -
+r)!}</span></p>
+  </div>
+</div>
+<p>La deducción formal parte de observar que todo arreglo ordenado de
+<span class="math inline">r</span> elementos (<span
+class="math inline">V_n^r</span>) puede construirse en dos etapas
+secuenciales mediante el principio multiplicativo: primero se elige el
+subconjunto desordenado de <span class="math inline">r</span> elementos
+de <span class="math inline">\binom{n}{r}</span> maneras posibles, y
+luego se ordenan internamente esos <span class="math inline">r</span>
+elementos de <span class="math inline">P_r = r!</span> formas distintas.
+Esto establece la identidad fundamental:</p>
+<p><span class="math display">V_n^r = \binom{n}{r} \cdot r!</span></p>
+<p>Al aplicar la regla de la división —dividiendo el total de
+variaciones ordenadas entre la multiplicidad <span class="math inline">d
+= r!</span> de permutaciones internas equivalentes— se purga el orden y
+emerge la expresión factorial cerrada:</p>
+<p><span class="math display">\binom{n}{r} = \frac{V_n^r}{r!} =
+\frac{\frac{n!}{(n - r)!}}{r!} = \frac{n!}{r!(n - r)!}</span></p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3:</strong> Selección Simétrica de Nodos
+para Balanceo de Carga</span>
+  </div>
+  <div class="callout-content">
+<p>De un grupo de <span class="math inline">n = 10</span> servidores
+disponibles en un centro de datos, un balanceador simétrico debe
+seleccionar un subconjunto de <span class="math inline">r = 3</span>
+nodos para distribuir copias idénticas de una caché de lectura sin
+distinción de jerarquía. Calcule cuántos subconjuntos de servidores
+pueden formarse.</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">C_{10}^3 = \binom{10}{3} =
+\frac{10!}{3!(10 - 3)!} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2 \cdot 1} =
+\frac{720}{6} = 120 \text{ subconjuntos}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Calculamos primero las <span
+class="math inline">V_{10}^3 = 720</span> secuencias ordenadas de tres
+servidores.</p>
+<p><strong>Paso 2:</strong> Como cada trío de servidores puede
+permutarse internamente de <span class="math inline">3! = 6</span>
+maneras que representan el mismo grupo de caché, dividimos <span
+class="math inline">720 / 6</span> para obtener los <span
+class="math inline">120</span> subconjuntos únicos.</p>
+<h3  id="simetría-combinatoria-e-identidad-de-pascal">2.2. Simetría
+Combinatoria e Identidad de Pascal</h3>
+<p>Los coeficientes binomiales <span
+class="math inline">\binom{n}{r}</span> obedecen propiedades
+estructurales que simplifican tanto el análisis algebraico como el
+diseño de algoritmos recursivos y de programación dinámica.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 4:</strong> Propiedades Fundamentales de los
+Coeficientes Binomiales</span>
+  </div>
+  <div class="callout-content">
+<p>Para todo par de enteros <span class="math inline">n, r</span> con
+<span class="math inline">0 \le r \le n</span> (y <span
+class="math inline">1 \le k \le n - 1</span> en la recurrencia), se
+cumplen: 1. <strong>Propiedad de Simetría Combinatoria:</strong></p>
+<p><span class="math display">\binom{n}{r} = \binom{n}{n - r}</span></p>
+<ol type="1">
+<li><strong>Identidad de Pascal:</strong></li>
+</ol>
+<p><span class="math display">\binom{n}{k} = \binom{n - 1}{k} + \binom{n
+- 1}{k - 1}</span></p>
+  </div>
+</div>
+<p>Intuitivamente, la <strong>simetría combinatoria</strong> establece
+que elegir los <span class="math inline">r</span> elementos que entran
+en un subconjunto equivale de manera biyectiva a elegir los <span
+class="math inline">n - r</span> elementos que quedan excluidos de él.
+Por su parte, la <strong>identidad de Pascal</strong> descompone la
+elección de <span class="math inline">k</span> elementos respecto a un
+elemento distinguido (llamémoslo <span class="math inline">a_1</span>):
+todo subconjunto de tamaño <span class="math inline">k</span> o bien
+excluye a <span class="math inline">a_1</span> (obligando a elegir los
+<span class="math inline">k</span> elementos entre los <span
+class="math inline">n - 1</span> restantes), o bien incluye a <span
+class="math inline">a_1</span> (reduciendo la tarea a elegir <span
+class="math inline">k - 1</span> compañeros entre los <span
+class="math inline">n - 1</span> restantes).</p>
+<figure class="article-figure">
+<img src="/images/notes/PROBA 1-2 Permutaciones, Variaciones y Combinatoria Avanzada - Simetria de Coeficientes Binomiales.webp" alt="Simetria de Coeficientes Binomiales" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+Simetria de Coeficientes Binomiales
+</figcaption>
+</figure>
+<h4
+id="demostración-algebraica-y-combinatoria-de-las-identidades">2.2.1.
+Demostración Algebraica y Combinatoria de las Identidades</h4>
+<p>Para validar analíticamente ambas propiedades en pizarra,
+desarrollamos sus definiciones factoriales paso a paso:</p>
+<p><strong>Demostración de la Simetría Combinatoria:</strong> Partimos
+del miembro derecho <span class="math inline">\binom{n}{n - r}</span> y
+aplicamos la definición factorial del Teorema 3:</p>
+<p><span class="math display">\binom{n}{n - r} = \frac{n!}{(n - r)!
+\cdot [n - (n - r)]!}</span></p>
+<p>Simplificamos el corchete en el denominador mediante cancelación
+aditiva (<span class="math inline">n - n + r = r</span>) y aplicamos la
+conmutatividad del producto:</p>
+<p><span class="math display">\binom{n}{n - r} = \frac{n!}{(n - r)!
+\cdot r!} = \frac{n!}{r! \cdot (n - r)!} = \binom{n}{r} \quad
+\blacksquare</span></p>
+<p><strong>Demostración de la Identidad de Pascal:</strong>
+Desarrollamos la suma del miembro derecho <span
+class="math inline">\binom{n - 1}{k} + \binom{n - 1}{k - 1}</span>
+buscando un denominador común igual a <span class="math inline">k!(n -
+k)!</span>:</p>
+<p><span class="math display">\binom{n - 1}{k} + \binom{n - 1}{k - 1} =
+\frac{(n - 1)!}{k!(n - 1 - k)!} + \frac{(n - 1)!}{(k - 1)!(n -
+k)!}</span></p>
+<p>Multiplicamos la primera fracción por <span
+class="math inline">\frac{n - k}{n - k}</span> y la segunda por <span
+class="math inline">\frac{k}{k}</span>, aprovechando las identidades
+<span class="math inline">(n - k) \cdot (n - k - 1)! = (n - k)!</span> y
+<span class="math inline">k \cdot (k - 1)! = k!</span>:</p>
+<p><span class="math display">\binom{n - 1}{k} + \binom{n - 1}{k - 1} =
+\frac{(n - k)(n - 1)!}{k!(n - k)!} + \frac{k(n - 1)!}{k!(n -
+k)!}</span></p>
+<p>Agrupamos bajo el denominador común y factorizamos <span
+class="math inline">(n - 1)!</span> en el numerador:</p>
+<p><span class="math display">\binom{n - 1}{k} + \binom{n - 1}{k - 1} =
+\frac{(n - 1)![(n - k) + k]}{k!(n - k)!} = \frac{(n - 1)! \cdot n}{k!(n
+- k)!} = \frac{n!}{k!(n - k)!} = \binom{n}{k} \quad
+\blacksquare</span></p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 4:</strong> Reducción de Carga
+Computacional por Simetría</span>
+  </div>
+  <div class="callout-content">
+<p>Un sistema de auditoría debe evaluar todas las combinaciones posibles
+de <span class="math inline">r = 47</span> paquetes seleccionados de un
+lote de <span class="math inline">n = 52</span> tramas capturadas.
+Determine el número de combinaciones aprovechando la simetría
+combinatoria.</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">\binom{52}{47} = \binom{52}{52 - 47} =
+\binom{52}{5} = \frac{52 \cdot 51 \cdot 50 \cdot 49 \cdot 48}{5 \cdot 4
+\cdot 3 \cdot 2 \cdot 1} = 2.598.960 \text{ combinaciones}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> En lugar de expandir <span
+class="math inline">47</span> factores en el numerador y denominador,
+aplicamos <span class="math inline">\binom{52}{47} =
+\binom{52}{5}</span> identificando que elegir <span
+class="math inline">47</span> tramas equivale a elegir las <span
+class="math inline">5</span> que se descartan.</p>
+<p><strong>Paso 2:</strong> Reducimos el cálculo a solo <span
+class="math inline">5</span> multiplicaciones y divisiones, obteniendo
+<span class="math inline">2.598.960</span> configuraciones idénticas a
+las manos de póker de cinco cartas.</p>
+<h3  id="teorema-del-binomio-de-newton">2.3. Teorema del Binomio de
+Newton</h3>
+<p>La interpretación combinatoria de <span
+class="math inline">\binom{n}{k}</span> proporciona una demostración
+directa de la expansión algebraica de potencias de un binomio,
+conectando el conteo discreto con el álgebra polinómica y la
+distribución binomial de probabilidad.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 5:</strong> Teorema del Binomio</span>
+  </div>
+  <div class="callout-content">
+<p>Para cualesquiera números reales (o elementos de un anillo
+conmutativo) <span class="math inline">a, b</span> y todo entero no
+negativo <span class="math inline">n \in \mathbb{N}_0</span>, se
+verifica:</p>
+<p><span class="math display">(a + b)^n = \sum_{k=0}^n \binom{n}{k} a^k
+b^{n-k}</span></p>
+  </div>
+</div>
+<p>Al expandir el producto de <span class="math inline">n</span>
+factores idénticos <span class="math inline">(a + b)(a + b)\cdots(a +
+b)</span>, cada término elemental resultante se forma eligiendo
+exactamente una variable (<span class="math inline">a</span> o <span
+class="math inline">b</span>) de cada uno de los <span
+class="math inline">n</span> paréntesis. Para obtener el monomio <span
+class="math inline">a^k b^{n-k}</span>, es necesario seleccionar la
+variable <span class="math inline">a</span> en exactamente <span
+class="math inline">k</span> paréntesis y la variable <span
+class="math inline">b</span> en los <span class="math inline">n -
+k</span> paréntesis restantes. Como la multiplicación es conmutativa, el
+número de veces que aparece el término <span class="math inline">a^k
+b^{n-k}</span> coincide exactamente con el número de formas de elegir
+<span class="math inline">k</span> posiciones entre los <span
+class="math inline">n</span> factores sin importar el orden, es decir,
+<span class="math inline">\binom{n}{k}</span>. Evaluando esta identidad
+en <span class="math inline">a = 1, b = 1</span> se demuestra
+inmediatamente que la cardinalidad del conjunto potencia de un conjunto
+de <span class="math inline">n</span> elementos es <span
+class="math inline">\sum_{k=0}^n \binom{n}{k} = 2^n</span>.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 5:</strong> Conteo de Cadenas Binarias por
+Peso de Hamming</span>
+  </div>
+  <div class="callout-content">
+<p>¿Cuántas cadenas binarias de longitud <span class="math inline">n =
+8</span> bits contienen exactamente <span class="math inline">k =
+3</span> bits en estado lógico <span class="math inline">1</span> (peso
+de Hamming igual a <span class="math inline">3</span>)?</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">\text{Cadenas con } k=3 \text{ unos} =
+\binom{8}{3} = \frac{8 \cdot 7 \cdot 6}{3 \cdot 2 \cdot 1} = 56 \text{
+cadenas}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Asociamos cada posición de la palabra de
+<span class="math inline">8\text{ bits}</span> a un factor del binomio
+<span class="math inline">(x + 1)^8</span>, donde elegir <span
+class="math inline">x</span> equivale a fijar un bit en <span
+class="math inline">1</span> y elegir <span class="math inline">1</span>
+equivale a fijar un bit en <span class="math inline">0</span>.</p>
+<p><strong>Paso 2:</strong> El coeficiente que acompaña a <span
+class="math inline">x^3</span> en la expansión es <span
+class="math inline">\binom{8}{3} = 56</span>, cuantificando las palabras
+de <span class="math inline">8\text{ bits}</span> con exactamente tres
+unos.</p>
+<h2  id="agrupamientos-con-repetición-y-restricciones-de-identidad">3.
+Agrupamientos con Repetición y Restricciones de Identidad</h2>
+<p>Los modelos anteriores asumen dos condiciones ideales: cada elemento
+seleccionado desaparece del catálogo (sin reposición) y todos los
+objetos son distinguibles entre sí. En los sistemas computacionales
+reales ambas hipótesis suelen romperse: los alfabetos de símbolos se
+reutilizan en cada carácter de una cadena, los hilos de ejecución
+idénticos se reparten entre múltiples núcleos y los paquetes de red
+repetidos viajan mezclados en una misma ráfaga.</p>
+<h3  id="variaciones-con-repetición-permitida">3.1. Variaciones con
+Repetición Permitida</h3>
+<p>Cuando se construye una secuencia ordenada de longitud <span
+class="math inline">r</span> tomando símbolos de un alfabeto o catálogo
+de <span class="math inline">n</span> tipos distintos con disponibilidad
+ilimitada, la elección en una posición no restringe las opciones de las
+posiciones siguientes.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 6:</strong> Variaciones con Repetición
+(Permutaciones con Reposición)</span>
+  </div>
+  <div class="callout-content">
+<p>El número de secuencias ordenadas de tamaño <span
+class="math inline">r</span> que pueden formarse a partir de un conjunto
+de <span class="math inline">n</span> elementos distintos cuando se
+permite repetir cada elemento de forma ilimitada es:</p>
+<p><span class="math display">VR_n^r = n^r</span></p>
+  </div>
+</div>
+<p>A diferencia de las variaciones simples, aquí no existe la
+restricción <span class="math inline">r \le n</span>, pues el alfabeto
+nunca se agota. Cada una de las <span class="math inline">r</span>
+casillas de la secuencia admite exactamente <span
+class="math inline">n</span> posibilidades independientes; aplicando la
+regla del producto <span class="math inline">r</span> veces consecutivas
+se obtiene <span class="math inline">n \cdot n \cdots n =
+n^r</span>.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 6:</strong> Espacio de Claves en
+Generación de Contraseñas</span>
+  </div>
+  <div class="callout-content">
+<p>Un sistema de autenticación exige contraseñas de longitud exacta
+<span class="math inline">r = 5</span> caracteres construidas
+exclusivamente sobre un alfabeto reducido de <span class="math inline">n
+= 16</span> símbolos hexadecimales (<span
+class="math inline">\{0\text{--}9, \text{A--F}\}</span>), permitiendo
+repetir símbolos. Determine la cardinalidad del espacio de búsqueda para
+un ataque de fuerza bruta.</p>
+<p><strong>Solución:</strong></p>
+<p><span class="math display">VR_{16}^5 = 16^5 = (2^4)^5 = 2^{20} =
+1.048.576 \text{ contraseñas posibles}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Verificamos que el orden distingue
+contraseñas distintas («A1B2C» <span class="math inline">\neq</span>
+«C2B1A») y que los símbolos pueden repetirse («AAAAA» es válida).</p>
+<p><strong>Paso 2:</strong> Multiplicamos las <span
+class="math inline">16</span> opciones independientes a lo largo de las
+<span class="math inline">5</span> posiciones, obteniendo <span
+class="math inline">2^{20} = 1.048.576</span> claves posibles.</p>
+<h3 
+id="combinaciones-con-repetición-y-el-método-de-estrellas-y-barras">3.2.
+Combinaciones con Repetición y el Método de Estrellas y Barras</h3>
+<p>El escenario más sutil surge cuando el orden de selección no importa,
+pero se permite tomar múltiples copias idénticas de cada una de las
+<span class="math inline">n</span> categorías disponibles hasta acumular
+<span class="math inline">r</span> elementos. No es posible dividir
+<span class="math inline">n^r</span> entre <span
+class="math inline">r!</span> porque las secuencias con elementos
+repetidos tienen distinta multiplicidad de permutaciones que las
+secuencias con elementos todos diferentes.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 7:</strong> Combinaciones con Repetición</span>
+  </div>
+  <div class="callout-content">
+<p>El número de selecciones desordenadas de tamaño <span
+class="math inline">r</span> extraídas de un catálogo de <span
+class="math inline">n</span> categorías distintas con disponibilidad
+ilimitada está dado por:</p>
+<p><span class="math display">CR_n^r = \binom{n + r - 1}{r} = \binom{n +
+r - 1}{n - 1} = \frac{(n + r - 1)!}{r!(n - 1)!}</span></p>
+  </div>
+</div>
+<p>Para comprender esta fórmula sin memorizarla, se utiliza el método
+visual de <strong>«estrellas y barras»</strong> (‘stars and bars’).
+Imaginamos un contenedor dividido en <span class="math inline">n</span>
+compartimientos contiguos, uno por cada categoría disponible. Para
+separar físicamente <span class="math inline">n</span> compartimientos
+en una fila única hacen falta exactamente <span class="math inline">n -
+1</span> tabiques verticales o «barras» (<span
+class="math inline">\vert{}</span>). Por otro lado, los <span
+class="math inline">r</span> elementos seleccionados se representan
+mediante <span class="math inline">r</span> fichas indistinguibles o
+«estrellas» (<span class="math inline">\star</span>) depositadas dentro
+de esos compartimientos.</p>
+<h4 id="deducción-analítica-de-soluciones-enteras-no-negativas">3.2.1.
+Deducción Analítica de Soluciones Enteras No Negativas</h4>
+<p>Cada distribución física de estrellas y barras corresponde de manera
+biyectiva a una solución entera no negativa de la ecuación diofántica
+lineal que contabiliza cuántas unidades <span
+class="math inline">x_i</span> se toman de cada categoría <span
+class="math inline">i \in \{1, 2, \dots, n\}</span>:</p>
+<p><span class="math display">x_1 + x_2 + \dots + x_n = r, \quad
+\text{con } x_i \in \mathbb{Z}_{\ge 0}</span></p>
+<p>Por ejemplo, para <span class="math inline">n = 4</span> categorías y
+<span class="math inline">r = 5</span> elementos, la configuración <span
+class="math inline">\star \star \mid \star \mid \mid \star \star</span>
+codifica la solución <span class="math inline">(x_1, x_2, x_3, x_4) =
+(2, 1, 0, 2)</span>, indicando dos unidades de la primera categoría, una
+de la segunda, ninguna de la tercera y dos de la cuarta.</p>
+<p>Para contar todas las configuraciones válidas, observamos que
+cualquier diagrama consta de una secuencia lineal de exactamente <span
+class="math inline">r</span> estrellas y <span class="math inline">n -
+1</span> barras, sumando un total de <span class="math inline">n + r -
+1</span> posiciones. Una vez que elegimos qué <span
+class="math inline">r</span> posiciones ocuparán las estrellas (o
+equivalentemente, qué <span class="math inline">n - 1</span> posiciones
+ocuparán las barras), el diagrama queda unívocamente determinado. Como
+las estrellas son indistinguibles entre sí y las barras también, el
+número total de soluciones enteras no negativas es:</p>
+<p><span class="math display">N_{\text{sol}} = \binom{n + r - 1}{r} =
+\binom{n + r - 1}{n - 1}</span></p>
+<h4
+id="caso-de-estudio-asignación-de-peticiones-con-cota-mínima-en-réplicas">3.2.2.
+Caso de Estudio: Asignación de Peticiones con Cota Mínima en
+Réplicas</h4>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 7:</strong> Asignación de Recursos
+Compartidos con Mínimo Garantizado</span>
+  </div>
+  <div class="callout-content">
+<p>Demuestre analíticamente de cuántas formas se pueden asignar <span
+class="math inline">15</span> peticiones idénticas de base de datos a
+<span class="math inline">n = 4</span> servidores de réplica disponibles
+si cada servidor debe recibir al menos <span
+class="math inline">2</span> peticiones para evitar subutilización.</p>
+<p><strong>Solución:</strong></p>
+<p>Sea <span class="math inline">x_i</span> el número de peticiones
+asignadas al servidor <span class="math inline">i</span> (<span
+class="math inline">i = 1, 2, 3, 4</span>). El problema equivale a
+hallar el número de soluciones enteras del sistema:</p>
+<p><span class="math display">x_1 + x_2 + x_3 + x_4 = 15, \quad
+\text{sujeto a } x_i \ge 2 \quad \forall i \in \{1, 2, 3, 4\}</span></p>
+<p>Definimos el cambio de variable <span class="math inline">y_i = x_i -
+2</span>, de modo que <span class="math inline">y_i \ge 0</span> para
+todo <span class="math inline">i</span>. Sustituyendo <span
+class="math inline">x_i = y_i + 2</span> en la ecuación de balance:</p>
+<p><span class="math display">(y_1 + 2) + (y_2 + 2) + (y_3 + 2) + (y_4 +
+2) = 15 \implies y_1 + y_2 + y_3 + y_4 = 15 - 8 = 7</span></p>
+<p>Aplicando el modelo de estrellas y barras con <span
+class="math inline">n = 4</span> servidores y <span
+class="math inline">r&#39; = 7</span> peticiones libres restantes:</p>
+<p><span class="math display">N_{\text{sol}} = \binom{4 + 7 - 1}{7} =
+\binom{10}{7} = \binom{10}{3} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2
+\cdot 1} = 120 \text{ formas de asignación}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Como las peticiones son idénticas entre sí y
+los servidores son entidades distinguibles, preasignamos
+deterministamente <span class="math inline">2</span> peticiones a cada
+uno de los <span class="math inline">4</span> servidores, consumiendo
+<span class="math inline">4 \cdot 2 = 8</span> peticiones del inventario
+para satisfacer la restricción <span class="math inline">x_i \ge
+2</span>.</p>
+<p><strong>Paso 2:</strong> Reducimos el problema a distribuir sin
+restricciones (<span class="math inline">y_i \ge 0</span>) las <span
+class="math inline">r&#39; = 7</span> peticiones sobrantes entre los
+<span class="math inline">n = 4</span> servidores, lo que requiere <span
+class="math inline">4 - 1 = 3</span> barras separadoras y <span
+class="math inline">7</span> estrellas, generando <span
+class="math inline">\binom{10}{3} = 120</span> repartos posibles.</p>
+<h3 
+id="permutaciones-con-elementos-indistinguibles-y-fórmula-multinomial">3.3.
+Permutaciones con Elementos Indistinguibles y Fórmula Multinomial</h3>
+<p>Un último caso fundamental aparece cuando se ordena una secuencia
+completa de <span class="math inline">n</span> elementos con inventario
+fijo, pero el conjunto no está formado por <span
+class="math inline">n</span> objetos distintos, sino por <span
+class="math inline">k</span> clases de objetos idénticos entre sí. Si se
+calcula <span class="math inline">n!</span>, el modelo tratará como
+diferentes dos secuencias obtenidas al intercambiar copias idénticas de
+la misma clase.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 8:</strong> Coeficiente Multinomial
+(Permutaciones con Grupos Indistinguibles)</span>
+  </div>
+  <div class="callout-content">
+<p>Dado un conjunto de <span class="math inline">n</span> elementos
+particionado en <span class="math inline">k</span> grupos de objetos
+indistinguibles de tamaños <span class="math inline">n_1, n_2, \dots,
+n_k</span> tales que <span class="math inline">\sum_{i=1}^k n_i =
+n</span>, el número de permutaciones distinguibles de los <span
+class="math inline">n</span> elementos es:</p>
+<p><span class="math display">\binom{n}{n_1, n_2, \dots, n_k} =
+\frac{n!}{n_1! \cdot n_2! \cdots n_k!}</span></p>
+  </div>
+</div>
+<p>La demostración aplica la <strong>regla de la división</strong> de
+forma iterativa. Si etiquetáramos artificialmente a todos los objetos
+con subíndices únicos para hacerlos distinguibles, existirían <span
+class="math inline">n!</span> ordenamientos lineales. Sin embargo, los
+<span class="math inline">n_1</span> clones del primer grupo pueden
+permutar entre sí de <span class="math inline">n_1!</span> maneras sin
+alterar la secuencia observable; por cada una de ellas, los <span
+class="math inline">n_2</span> clones del segundo grupo permutan de
+<span class="math inline">n_2!</span> formas sin efecto visible, y así
+hasta el grupo <span class="math inline">k</span>. Por el principio
+multiplicativo, cada secuencia distinguible aparece repetida exactamente
+<span class="math inline">d = n_1! \cdot n_2! \cdots n_k!</span> veces
+en el conteo bruto, por lo que dividir <span
+class="math inline">n!</span> entre dicho producto entrega el total
+exacto.</p>
+<h4
+id="caso-de-estudio-secuencias-de-tramas-de-control-en-protocolos-de-enlace">3.3.1.
+Caso de Estudio: Secuencias de Tramas de Control en Protocolos de
+Enlace</h4>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 8:</strong> Transmisión de Tramas de
+Control en Protocolos de Enlace</span>
+  </div>
+  <div class="callout-content">
+<p>Un protocolo de enlace envía una ráfaga de <span
+class="math inline">12</span> paquetes de control: <span
+class="math inline">5</span> paquetes ACK, <span
+class="math inline">4</span> paquetes NACK y <span
+class="math inline">3</span> paquetes SYN, todos idénticos entre sí
+según su tipo. Calcule el número total de secuencias distinguibles que
+pueden recibirse en el nodo destino.</p>
+<p><strong>Solución:</strong></p>
+<p>Verificamos que la suma de subgrupos iguala el total de paquetes:
+<span class="math inline">n = 5 + 4 + 3 = 12</span>. Aplicando la
+fórmula multinomial:</p>
+<p><span class="math display">\binom{12}{5, 4, 3} = \frac{12!}{5! \cdot
+4! \cdot 3!} = \frac{479.001.600}{120 \cdot 24 \cdot 6} =
+\frac{479.001.600}{17.280} = 27.720 \text{ secuencias
+distinguibles}</span></p>
+  </div>
+</div>
+<p><strong>Paso 1:</strong> Identificamos que el orden de llegada de los
+comandos altera el estado de la máquina de protocolo, pero intercambiar
+dos tramas ACK entre sí no produce un mensaje nuevo.</p>
+<p><strong>Paso 2:</strong> Dividimos las <span
+class="math inline">12!</span> permutaciones brutas entre las simetrías
+internas de cada tipo de trama (<span class="math inline">5! \cdot 4!
+\cdot 3! = 17.280</span>), reduciendo el espacio de estados efectivos a
+<span class="math inline">27.720</span> secuencias posibles.</p>
+<h2 
+id="síntesis-taxonómica-y-compromisos-de-ingeniería-computacional">4.
+Síntesis Taxonómica y Compromisos de Ingeniería Computacional</h2>
+<p>Elegir el modelo combinatorio correcto exige cruzar las dos variables
+de decisión del problema (orden y repetición) y trasladar la fórmula
+resultante a una implementación numérica segura en hardware.</p>
+<h3  id="cuadro-comparativo-de-modelos-combinatorios">4.1. Cuadro
+Comparativo de Modelos Combinatorios</h3>
+<p>La siguiente tabla consolida las seis estructuras de enumeración
+desarrolladas junto con su dominio directo en ingeniería de
+sistemas:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Tipo de Arreglo</strong></th>
+<th><strong>¿Importa el Orden?</strong></th>
+<th><strong>¿Permite Repetición?</strong></th>
+<th><strong>Modelo Matemático Formal</strong></th>
+<th><strong>Dominio de Aplicación</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Permutaciones Simples</strong></td>
+<td>Sí</td>
+<td>No</td>
+<td><span class="math inline">P_n = n!</span></td>
+<td>Orden de ejecución en planificador de CPU mono-hilo.</td>
+</tr>
+<tr class="even">
+<td><strong>Variaciones (<span
+class="math inline">r</span>-Permutaciones)</strong></td>
+<td>Sí</td>
+<td>No</td>
+<td><span class="math inline">V_n^r = \frac{n!}{(n-r)!}</span></td>
+<td>Asignación de roles jerárquicos (Líder, Réplica 1, Réplica 2).</td>
+</tr>
+<tr class="odd">
+<td><strong>Combinaciones Simples</strong></td>
+<td>No</td>
+<td>No</td>
+<td><span class="math inline">C_n^r = \binom{n}{r} =
+\frac{n!}{r!(n-r)!}</span></td>
+<td>Selección de nodos de un clúster para balanceo simétrico.</td>
+</tr>
+<tr class="even">
+<td><strong>Variaciones con Repetición</strong></td>
+<td>Sí</td>
+<td>Sí</td>
+<td><span class="math inline">VR_n^r = n^r</span></td>
+<td>Generación de cadenas binarias o contraseñas de tamaño <span
+class="math inline">r</span>.</td>
+</tr>
+<tr class="odd">
+<td><strong>Combinaciones con Repetición</strong></td>
+<td>No</td>
+<td>Sí</td>
+<td><span class="math inline">CR_n^r = \binom{n+r-1}{r}</span></td>
+<td>Distribución de <span class="math inline">r</span> hilos idénticos
+entre <span class="math inline">n</span> núcleos de cómputo.</td>
+</tr>
+<tr class="even">
+<td><strong>Permutación Multinomial</strong></td>
+<td>Sí</td>
+<td>No (stock fijo)</td>
+<td><span class="math inline">\frac{n!}{n_1! n_2! \dots
+n_k!}</span></td>
+<td>Secuencias de tramas de red con tipos de paquetes repetidos.</td>
+</tr>
+</tbody>
+</table>
+<h3 
+id="desbordamiento-aritmético-overflow-y-cómputo-iterativo-entrelazado">4.2.
+Desbordamiento Aritmético (‘Overflow’) y Cómputo Iterativo
+Entrelazado</h3>
+<p>Trasladar directamente la expresión cerrada <span
+class="math inline">\binom{n}{r} = \frac{n!}{r!(n-r)!}</span> a código
+de bajo nivel constituye un error crítico de ingeniería numérica. En
+arquitecturas de <span class="math inline">64\text{ bits}</span>, el
+máximo entero sin signo representable (<code>uint64_t</code>) es <span
+class="math inline">2^{64} - 1 = 18.446.744.073.709.551.615 \approx 1,84
+\times 10^{19}</span>. Mientras que <span class="math inline">20!
+\approx 2,43 \times 10^{18}</span> cabe en un registro de <span
+class="math inline">64\text{ bits}</span>, el siguiente término <span
+class="math inline">21! \approx 5,11 \times 10^{19}</span> supera ese
+límite y provoca un desbordamiento aritmético (‘overflow’), incluso
+cuando el resultado final <span class="math inline">\binom{21}{2} =
+210</span> es diminuto.</p>
+<p>Para evitar la saturación prematura de los registros del procesador y
+reducir el tiempo de ejecución, se aplican dos optimizaciones
+simultáneas:</p>
+<ol type="1">
+<li><p><strong>Reducción por Simetría:</strong> Antes de iniciar el
+bucle, se evalúa si <span class="math inline">r &gt; n - r</span>; en
+caso afirmativo, se reemplaza <span class="math inline">r \leftarrow n -
+r</span> invocando <span class="math inline">\binom{n}{r} =
+\binom{n}{n-r}</span>, lo que acota el número de iteraciones a <span
+class="math inline">\lfloor n/2 \rfloor</span>.</p></li>
+<li><p><strong>Multiplicación y División Entrelazadas:</strong> En lugar
+de acumular todo el numerador antes de dividir, se reescribe el
+coeficiente binomial como un producto incremental de fracciones
+exactas:</p></li>
+</ol>
+<p><span class="math display">\binom{n}{r} = \prod_{i=1}^r \frac{n - i +
+1}{i}</span></p>
+<p>En cada paso <span class="math inline">i</span>, el acumulador
+parcial corresponde exactamente a <span
+class="math inline">\binom{n}{i}</span>, un número entero garantizado
+por la teoría combinatoria; por ello, multiplicar primero por <span
+class="math inline">(n - i + 1)</span> y dividir inmediatamente entre
+<span class="math inline">i</span> mantiene el resultado intermedio en
+la mínima magnitud posible en cada ciclo.</p>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Meyer, Paul L.</strong> <em>Probabilidad y Aplicaciones
+Estadísticas</em> (Edición revisada). Addison-Wesley Iberoamericana.
+Capítulo 1 («Introducción a la probabilidad») y Capítulo 2 («Espacios
+muestrales finitos», secciones «Métodos de enumeración», «Combinaciones»
+y «Permutaciones»).</p></li>
+<li><p><strong>Feller, William.</strong> <em>An Introduction to
+Probability Theory and Its Applications</em>, Vol. I (3.ª ed.). John
+Wiley &amp; Sons, Inc., Nueva York, 1968. Capítulo 2 («Elements of
+Combinatorial Analysis»).</p></li>
+<li><p><strong>Riordan, John.</strong> <em>An Introduction to
+Combinatorial Analysis</em>. Dover Publications, Mineola, Nueva York,
+2002.</p></li>
+<li><p><strong>Parzen, Emanuel.</strong> <em>Modern Probability Theory
+and Its Applications</em>. John Wiley &amp; Sons, Inc., Nueva York,
+1960.</p></li>
+<li><p><strong>Lipschutz, Seymour.</strong> <em>Probabilidad</em>.
+McGraw-Hill, México, 1970.</p></li>
+<li><p><strong>Universidad Central de Venezuela (UCV), Facultad de
+Ciencias, Escuela de Computación.</strong> <em>Probabilidad y
+Estadística: Introducción a la Probabilidad (G01) y Práctica Nº 0:
+Repaso de Combinatoria y Probabilidades (A00)</em>. Caracas, Venezuela,
+2023.</p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>
