@@ -15,8 +15,8 @@ dist/
 *.pyc
 build/__pycache__/
 
-notes/
-publications/
+/notes/
+/publications/
 public/images/notes/
 public/images/publications/
 src/data/notes.ts

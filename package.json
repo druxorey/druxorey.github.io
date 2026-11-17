@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "python3 build/prebuild.py",
+    "compile": "python3 build/prebuild.py",
     "build": "python3 build/prebuild.py && tsc && vite build",
     "preview": "vite preview"
   },

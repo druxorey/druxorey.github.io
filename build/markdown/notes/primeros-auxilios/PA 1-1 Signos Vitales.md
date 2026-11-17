@@ -63,7 +63,7 @@ Esta medición aporta doble información fisiológica: por un lado indica la **f
 
 Palpar el pulso en una sola ubicación periférica resulta insuficiente ante traumatismos o estados de choque. Si una arteria principal sufre compresión por una fractura o un coágulo, o si la presión arterial cae de forma severa, el pulso desaparecerá en las extremidades aunque el corazón continúe latiendo. Por ello se exploran múltiples puntos anatómicos para verificar la llegada real de sangre a las distintas regiones del cuerpo:
 
-![[PA 1-1 Signos Vitales - Puntos Anatómicos de Palpación del Pulso Arterial.png|700]]
+![[PA 1-1 Signos Vitales - Puntos Anatómicos de Palpación del Pulso Arterial.webp]]
 
 - **Pulso carotídeo:** ubicado en el cuello, a ambos lados de la tráquea; es el punto de mayor relevancia clínica para determinar si existe vida y perfusión central en situaciones críticas, aunque su palpación exige extrema suavidad y debe realizarse de un solo lado a la vez para no comprometer el flujo cerebral ni desencadenar una caída refleja de la frecuencia cardíaca.
 
@@ -197,7 +197,7 @@ La **respuesta ocular** evalúa el diámetro basal y la reactividad contráctil 
 
 Para explorarla se proyecta brevemente el haz de una linterna clínica desde un costado hacia cada ojo por separado, observando el tamaño inicial y la velocidad con que la pupila se contrae ante la luz. En condiciones normales, ambas pupilas presentan idéntico tamaño y se contraen de forma rápida y simétrica. Las alteraciones clave se clasifican en tres estados: 
 
-![[PA 1-1 Signos Vitales - Respuesta Ocular.png]]
+![[PA 1-1 Signos Vitales - Respuesta Ocular.webp]]
 
 - **Miosis:** Contracción pupilar anormalmente pequeña y sostenida, frecuente en ciertas intoxicaciones.
 
