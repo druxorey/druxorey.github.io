@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluación del Lesionado | Druxorey</title>
+  <meta name="description" content="La evaluación del lesionado es un proceso sistemático y jerárquico diseñado para la atención prehospitalaria, fundamentado en la cinemática del trauma y el protocolo XABCDE. Su propósito es garantizar la seguridad de la escena, neutralizar con rapidez las amenazas letales inmediatas como las hemorragias exanguinantes y la obstrucción de la vía aérea, y estabilizar integralmente a la víctima para una segura transferencia al SEM.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="/assets/main-Dehq_9UD.js"></script>
+  <script type="module" crossorigin src="/assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="/assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-u8MMlYs2.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#evaluación-de-la-escena">1. Evaluación de la Escena</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#valoración-inicial-de-la-escena-y-autoprotección">1.1.
+Valoración Inicial de la Escena y Autoprotección</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#cinemática-del-trauma-y-mecanismos-de-lesión">1.2. Cinemática
+del Trauma y Mecanismos de Lesión</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#activación-temprana-del-sistema-de-emergencias-médicas-sem">1.3.
+Activación Temprana del Sistema de Emergencias Médicas (SEM)</a></li>
+<li class="toc-item"><a class="toc-link" href="#valoración-primaria-el-protocolo-xabcde">2. Valoración Primaria:
+El Protocolo XABCDE</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#fase-x-control-de-hemorragia-exanguinante">2.1. Fase X: Control
+de Hemorragia Exanguinante</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#fase-a-vía-aérea-permeable-y-control-cervical">2.2. Fase A: Vía
+Aérea Permeable y Control Cervical</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#fase-b-buena-ventilación-y-oxigenación">2.3. Fase B: Buena
+Ventilación y Oxigenación</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#fase-c-circulación-y-control-de-hemorragias-menores">2.4. Fase
+C: Circulación y Control de Hemorragias Menores</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#fase-d-déficit-neurológico">2.5. Fase D: Déficit
+Neurológico</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#fase-e-exposición-y-prevención-de-hipotermia">2.6. Fase E:
+Exposición y Prevención de Hipotermia</a></li>
+<li class="toc-item"><a class="toc-link" href="#valoración-secundaria-transferencia-al-sem">3. Valoración
+Secundaria: Transferencia al SEM</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#examen-céfalo-caudal-y-registro-de-signos-vitales-basales">3.1.
+Examen Céfalo-Caudal y Registro de Signos Vitales Basales</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#anamnesis-estructurada-mediante-la-herramienta-sample-amplia">3.2.
+Anamnesis Estructurada mediante la Herramienta SAMPLE / AMPLIA</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#reevaluación-cíclica-y-transferencia-al-sistema-de-emergencias-médicas">3.3.
+Reevaluación Cíclica y Transferencia al Sistema de Emergencias
+Médicas</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Primeros Auxilios</div>
+          <h1 class="article-title">Evaluación del Lesionado</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota 1.2</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>evaluación del lesionado</strong> es un proceso
+sistemático y jerárquico diseñado para la atención prehospitalaria,
+fundamentado en la <strong>cinemática del trauma</strong> y el protocolo
+<strong>XABCDE</strong>. Su propósito es garantizar la <strong>seguridad
+de la escena</strong>, neutralizar con rapidez las amenazas letales
+inmediatas como las hemorragias exanguinantes y la obstrucción de la vía
+aérea, y estabilizar integralmente a la víctima para una segura
+<strong>transferencia al SEM</strong>.</p>
+  </div>
+</div>
+<p>Cuando ocurre un accidente vehicular, una caída laboral o un
+traumatismo súbito en la vía pública, los primeros minutos son vitales.
+Si una persona sin método se precipita a socorrer a una víctima guiada
+únicamente por el impulso, corre el riesgo de ingresar a un entorno
+peligroso y convertirse en un segundo lesionado, o de invertir tiempo
+valioso en heridas superficiales mientras un sangrado masivo o una
+obstrucción respiratoria conducen a un colapso irreversible.</p>
+<p>Para intervenir con eficacia sin agravar el estado de la víctima ni
+comprometer la propia integridad, el primer respondiente necesita
+transformar la incertidumbre del escenario en una secuencia lógica de
+decisiones.</p>
+<h2  id="evaluación-de-la-escena">1. Evaluación de la Escena</h2>
+<p>La atención prehospitalaria comienza a distancia, antes de tocar al
+lesionado, mediante una fase macro orientada a comprender el contexto
+global del incidente y neutralizar los peligros ambientales.</p>
+<h3  id="valoración-inicial-de-la-escena-y-autoprotección">1.1.
+Valoración Inicial de la Escena y Autoprotección</h3>
+<p>El enfoque intuitivo ante una persona tendida en el suelo consiste en
+correr directamente hacia ella para verificar si responde. Este abordaje
+falla en el mundo real porque los accidentes suelen dejar riesgos
+activos (como tráfico vehicular sin detener, fuego, derrames de
+combustible, estructuras inestables o exposición a fluidos biológicos)
+capaces de incapacitar al auxiliador en segundos. Para evitar ampliar el
+número de víctimas, la intervención arranca con una inspección
+panorámica del entorno.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 1:</strong> Evaluación Inicial de la
+Escena</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>evaluación inicial de la escena</strong> es la inspección
+global, rápida y sistemática del lugar del incidente antes de ingresar,
+destinada a identificar peligros potenciales, dimensionar la situación y
+establecer barreras de protección para el auxiliador y su equipo.</p>
+  </div>
+</div>
+<p>En la práctica, esta valoración se articula sobre tres ejes
+operativos que responden a preguntas concretas del entorno:</p>
+<ul>
+<li><p><strong>Escena (¿Dónde?):</strong> Consiste en examinar la
+geografía del lugar antes de entrar para detectar amenazas físicas,
+químicas, eléctricas o vehiculares.</p></li>
+<li><p><strong>Situación (¿Qué?):</strong> Busca reconstruir qué
+ocurrió, cómo y por qué pasó, cuándo sucedió, cuántos objetos están
+involucrados y cuántos lesionados existen en total.</p></li>
+<li><p><strong>Seguridad (Riesgos):</strong> Evalúa si el área es segura
+para el equipo de respuesta, exigiendo delimitar un perímetro de
+seguridad (por ejemplo, mediante acordonamiento) y colocar el
+<strong>Equipo de Protección Personal (EPP)</strong>, como guantes de
+examen, antes del contacto con sangre o secreciones.</p></li>
+</ul>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Discriminación de seguridad en
+dos escenarios viales</span>
+  </div>
+  <div class="callout-content">
+<p>Considérense dos incidentes de tránsito en la vía pública: en el
+Escenario A, un motociclista yace en el pavimento junto a un automóvil
+detenido mientras varios peatones observan alrededor; en el Escenario B,
+el compartimiento del motor de un sedán arde en llamas con humo
+denso.</p>
+<ul>
+<li><p>En el Escenario A, la escena es abordable tras controlar el flujo
+vehicular circundante, apartar a los curiosos para asegurar espacio de
+trabajo y colocarse guantes de protección.</p></li>
+<li><p>En el Escenario B, el fuego activo implica riesgo inmediato de
+explosión, quemaduras graves e inhalación de gases tóxicos; la escena es
+insegura y el primer respondiente tiene prohibido ingresar hasta que el
+personal especializado extinga el incendio.</p></li>
+</ul>
+  </div>
+</div>
+<h3  id="cinemática-del-trauma-y-mecanismos-de-lesión">1.2. Cinemática
+del Trauma y Mecanismos de Lesión</h3>
+<p>Asegurado el perímetro, observar únicamente las heridas visibles del
+paciente resulta insuficiente para estimar su gravedad. Una víctima
+puede presentar apenas unos pocos raspones mientras sufre hemorragias
+internas severas. La cinemática del trauma resuelve este problema
+aplicando principios físicos básicos al análisis del entorno.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 2:</strong> Cinemática del Trauma</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>cinemática del trauma</strong> es el análisis del
+mecanismo de lesión fundamentado en la conservación y transferencia de
+energía cinética hacia el organismo, que permite predecir patrones de
+daño interno oculto antes de explorar físicamente al paciente.</p>
+  </div>
+</div>
+<p>Por conservación de la energía, la energía cinética de un cuerpo o
+vehículo en movimiento no desaparece al detenerse bruscamente, sino que
+se transforma en trabajo mecánico que deforma estructuras metálicas y
+desgarra tejidos biológicos. Por ello, hallar deformidades pronunciadas
+en vehículos o en el entorno constituye un indicador de alta sospecha de
+daño interno grave e inestabilidad hemodinámica. En una colisión
+vehicular frontal, esta transferencia ocurre en tres impactos
+sucesivos:</p>
+<ol type="1">
+<li><p><strong>Primer impacto (vehículo contra obstáculo):</strong> El
+automóvil choca contra un muro u otro vehículo y absorbe la deformación
+inicial.</p></li>
+<li><p><strong>Segundo impacto (cuerpo contra estructura
+interna):</strong> Por inercia, el ocupante continúa desplazándose hasta
+golpear contra el volante, el tablero o el parabrisas.</p></li>
+<li><p><strong>Tercer impacto (órganos contra esqueleto):</strong> Al
+detenerse la pared torácica o el cráneo, las vísceras internas continúan
+su trayectoria y se comprimen o desgarran contra la caja torácica, la
+columna o la bóveda craneal.</p></li>
+</ol>
+<h3  id="activación-temprana-del-sistema-de-emergencias-médicas-sem">1.3.
+Activación Temprana del Sistema de Emergencias Médicas (SEM)</h3>
+<p>Identificar un mecanismo de lesión severo o una víctima inconsciente
+demuestra que los primeros auxilios básicos, aunque indispensables para
+ganar tiempo, no sustituyen la atención médica avanzada ni quirúrgica.
+Postergar la llamada de auxilio hasta completar revisiones prolongadas
+reduce las probabilidades de supervivencia.</p>
+<p>Para activar eficazmente el Sistema de Emergencias Médicas (SEM) se
+ejecuta una secuencia de tres pasos inmediatos:</p>
+<ol type="1">
+<li><p><strong>Evaluar:</strong> Verificar rápidamente si la víctima no
+responde, no respira o presenta una respiración agónica anormal (jadeo o
+boqueo).</p></li>
+<li><p><strong>Activar y Pedir:</strong> Contactar al sistema local de
+respuesta de emergencias y solicitar simultáneamente un Desfibrilador
+Externo Automático (DEA) si está disponible en el recinto.</p></li>
+<li><p><strong>Actuar:</strong> Iniciar de inmediato el protocolo de
+asistencia primaria sobre el lesionado.</p></li>
+</ol>
+<p>Durante la llamada, la precisión de los datos suministrados sobre la
+ubicación exacta, el número de víctimas y el mecanismo observado resulta
+determinante para que el despachador envíe los recursos adecuados.</p>
+<h2  id="valoración-primaria-el-protocolo-xabcde">2. Valoración Primaria:
+El Protocolo XABCDE</h2>
+<p>Una vez controlada la escena y activado el SEM, la atención entra en
+la fase micro o valoración primaria. Si el auxiliador examinara al
+paciente sin orden (por ejemplo, revisando primero una fractura en el
+tobillo o limpiando raspaduras en la cara), una hemorragia arterial o
+una obstrucción respiratoria causaría la muerte antes de completar la
+inspección. Para impedir este error, la valoración primaria opera como
+un embudo jerárquico denominado protocolo XABCDE, que detecta y corrige
+las amenazas inmediatas según el tiempo en que pueden matar al
+paciente.</p>
+<figure class="article-figure">
+<img src="/images/notes/PA 1-2 Evaluación del Lesionado El Embudo XABCDE.webp" alt="PA 1-2 Evaluación del Lesionado El Embudo XABCDE" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+PA 1-2 Evaluación del Lesionado El Embudo XABCDE
+</figcaption>
+</figure>
+<h3  id="fase-x-control-de-hemorragia-exanguinante">2.1. Fase X: Control
+de Hemorragia Exanguinante</h3>
+<p>El organismo depende de un volumen sanguíneo mínimo para transportar
+oxígeno y sostener la presión de <a href="#perfusion">perfusión</a>.
+Cuando se rompe un vaso sanguíneo importante, la pérdida de volumen
+ocurre con tal velocidad que ninguna maniobra ventilatoria posterior
+resulta útil si el sistema circulatorio queda vacío.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 3:</strong> Hemorragia Exanguinante</span>
+  </div>
+  <div class="callout-content">
+<p>Una <strong>hemorragia exanguinante</strong> es todo sangrado externo
+masivo y abundante capaz de provocar el vaciamiento del volumen
+sanguíneo circulante y la muerte por choque hipovolémico (pérdida severa
+de sangre o fluidos corporales) en pocos minutos; su detección y control
+constituyen la primera acción obligatoria del protocolo antes de avanzar
+hacia la vía aérea.</p>
+  </div>
+</div>
+<p>El fundamento fisiológico de esta prioridad se resume en dos premisas
+operativas: un paciente grave puede desangrarse en aproximadamente <span
+class="math inline">5\text{ min}</span>), y rige la regla de oro de que
+<em>«sin sangre no hay vida y no podemos comprimir un corazón
+vacío»</em>. Ante un sangrado excesivo en extremidades o regiones
+comprimibles, la única prioridad consiste en detenerlo de inmediato
+mediante presión directa firme sobre la herida o la colocación de un
+torniquete. Solo una vez controlado el sangrado exanguinante es válido
+avanzar al siguiente eslabón del algoritmo.</p>
+<h3  id="fase-a-vía-aérea-permeable-y-control-cervical">2.2. Fase A: Vía
+Aérea Permeable y Control Cervical</h3>
+<p>Controlada la hemorragia exanguinante, el siguiente cuello de botella
+fisiológico es el ingreso de aire hacia los pulmones. En una persona
+inconsciente, la pérdida del tono muscular provoca que la lengua caiga
+hacia atrás y bloquee la faringe, o que secreciones y cuerpos extraños
+obstruyan el paso del aire. Sin embargo, inclinar la cabeza hacia atrás
+de forma indiscriminada en un paciente traumatizado puede desplazar
+vértebras cervicales fracturadas y seccionar la médula espinal.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 4:</strong> Permeabilidad de la Vía Aérea
+y Control Cervical</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>fase A</strong> consiste en garantizar que el conducto
+respiratorio superior permanezca libre de obstrucciones mecánicas o
+secreciones mientras se restringe el movimiento de la columna cervical
+ante toda sospecha de trauma.</p>
+  </div>
+</div>
+<p>Para ejecutar esta fase de forma segura, el protocolo exige
+distinguir el contexto clínico de la víctima antes de movilizar su
+cabeza:</p>
+<figure class="article-figure">
+<img src="/images/notes/PA 1-2 Evaluación del Lesionado Comparación de las Maniobras de Apertura de la Vía Aérea.webp" alt="PA 1-2 Evaluación del Lesionado Comparación de las Maniobras de Apertura de la Vía Aérea" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+PA 1-2 Evaluación del Lesionado Comparación de las Maniobras de Apertura
+de la Vía Aérea
+</figcaption>
+</figure>
+<ul>
+<li><p><strong>Paciente médico (sin trauma):</strong> Cuando el colapso
+responde a una causa clínica no traumática (como un desmayo o paro
+cardiorrespiratorio sin caída de altura), se aplica la <strong>maniobra
+frente-mentón</strong>, inclinando suavemente la cabeza hacia atrás y
+elevando el mentón para despejar la vía aérea.</p></li>
+<li><p><strong>Paciente de trauma («Alerta Roja»):</strong> Cuando
+existe mecanismo traumático, se asume daño cervical hasta demostrar lo
+contrario. Un auxiliador sujeta manualmente la cabeza y el cuello en
+posición neutra alineada, ejecuta la <strong>maniobra de tracción
+mandibular</strong> (desplazando la mandíbula hacia adelante sin
+hiperextender el cuello) y, como paso siguiente, coloca un
+<strong>collarín cervical</strong> si dispone del equipo y el
+entrenamiento adecuados.</p></li>
+</ul>
+<figure class="article-figure">
+<img src="/images/notes/PA 1-2 Evaluación del Lesionado Inmovilización y Control Cervical Manual.webp" alt="PA 1-2 Evaluación del Lesionado Inmovilización y Control Cervical Manual" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+PA 1-2 Evaluación del Lesionado Inmovilización y Control Cervical Manual
+</figcaption>
+</figure>
+<p>La siguiente tabla sintetiza los criterios operativos de apertura de
+la vía aérea según el tipo de paciente:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Criterio Clínico</th>
+<th>Paciente Médico (Sin Trauma)</th>
+<th>Paciente de Trauma (Alerta Roja)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Supuesto cervical</strong></td>
+<td>Columna cervical íntegra</td>
+<td>Se asume lesión cervical oculta</td>
+</tr>
+<tr>
+<td><strong>Maniobra de apertura</strong></td>
+<td>Maniobra <strong>frente-mentón</strong></td>
+<td>Maniobra de <strong>tracción mandibular</strong></td>
+</tr>
+<tr>
+<td><strong>Acción mecánica</strong></td>
+<td>Inclinación de la cabeza y elevación del mentón</td>
+<td>Restricción del movimiento de cabeza y cuello manteniendo
+alineación</td>
+</tr>
+<tr>
+<td><strong>Inmovilización adicional</strong></td>
+<td>No requiere collarín cervical</td>
+<td>Colocación de <strong>collarín cervical</strong> (con equipo y
+entrenamiento)</td>
+</tr>
+</tbody>
+</table>
+<h3  id="fase-b-buena-ventilación-y-oxigenación">2.3. Fase B: Buena
+Ventilación y Oxigenación</h3>
+<p>Asegurar que la vía aérea esté abierta no garantiza que el tórax
+expanda ni que los pulmones intercambien gases de manera efectiva. Una
+contusión pulmonar, fracturas costales o la depresión del centro
+respiratorio pueden impedir una ventilación suficiente.</p>
+<p>En la fase B, el auxiliador evalúa rápidamente la mecánica
+respiratoria mediante la técnica VOS (Ver, Oír, Sentir): observa el
+ascenso y descenso simétrico del tórax, escucha el flujo de aire al
+exhalar y siente el aliento en su mejilla. Durante esta valoración se
+analiza:</p>
+<ul>
+<li><strong>La frecuencia</strong>: Evalúa si la respiración es
+excesivamente rápida o lenta.</li>
+<li><strong>La profundidad:</strong> Determina si las inspiraciones son
+superficiales o expansivas.</li>
+<li><strong>La presencia de disnea</strong>: Identifica la dificultad o
+esfuerzo evidente para respirar, así como los signos de obstrucción
+asfíctica.</li>
+</ul>
+<p>Cuando el equipo está disponible y existe compromiso ventilatorio, se
+administra oxígeno suplementario mediante una mascarilla de no
+recirculación.</p>
+<h3  id="fase-c-circulación-y-control-de-hemorragias-menores">2.4. Fase
+C: Circulación y Control de Hemorragias Menores</h3>
+<p>Una vez verificados el control de sangrados masivos, la vía aérea y
+la ventilación, la fase C evalúa la eficacia del sistema cardiovascular
+para <a href="#perfusion">perfundir</a> los tejidos y atiende aquellas
+pérdidas de sangre que no resultaron exanguinantes en la fase
+inicial.</p>
+<p>En este paso se palpa el pulso, se mide el tiempo de llenado capilar,
+se percibe la temperatura de la piel y se buscan signos de hipoperfusión
+periférica, como la cianosis distal en los dedos. Simultáneamente, se
+identifican y controlan las hemorragias menores diferenciando el vaso
+lesionado por las características físicas del flujo sanguíneo:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tipo de Hemorragia</th>
+<th>Color de la Sangre</th>
+<th>Patrón de Salida</th>
+<th>Riesgo Hemodinámico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Arterial</strong></td>
+<td>Rojo brillante</td>
+<td>A chorros rítmicos coincidentes con el pulso</td>
+<td>Alto riesgo hemodinámico</td>
+</tr>
+<tr>
+<td><strong>Venosa</strong></td>
+<td>Rojo oscuro</td>
+<td>Flujo continuo y uniforme</td>
+<td>Moderado a alto según calibre del vaso</td>
+</tr>
+<tr>
+<td><strong>Capilar</strong></td>
+<td>Roja</td>
+<td>Pequeñas gotas («en sábana»)</td>
+<td>Bajo riesgo hemodinámico</td>
+</tr>
+</tbody>
+</table>
+<h3  id="fase-d-déficit-neurológico">2.5. Fase D: Déficit
+Neurológico</h3>
+<p>La falta de oxígeno o la caída de la presión de <a
+href="#perfusion">perfusión</a> cerebral alteran rápidamente el estado
+de conciencia. Para cuantificar el compromiso neurológico se utiliza una
+evaluación estandarizada de respuesta.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición 5:</strong> Escala Simplificada de
+Respuesta Neurológica (AVDI)</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>escala AVDI</strong> es un instrumento rápido de
+valoración neurológica primaria que clasifica el nivel de conciencia del
+paciente en cuatro categorías decrecientes según el estímulo necesario
+para obtener una respuesta: <strong>A</strong> (Alerta),
+<strong>V</strong> (Verbal), <strong>D</strong> (Dolor) e
+<strong>I</strong> (Inconsciente).</p>
+  </div>
+</div>
+<p>El auxiliador aplica estos estímulos de forma progresiva hasta
+observar reacción:</p>
+<ul>
+<li><p><strong>A — Alerta:</strong> El paciente tiene los ojos abiertos,
+interactúa espontáneamente y responde con coherencia al
+entorno.</p></li>
+<li><p><strong>V — Verbal:</strong> Permanece con los ojos cerrados,
+pero emite sonidos o ejecuta movimientos al hablarle en voz
+alta.</p></li>
+<li><p><strong>D — Dolor:</strong> No reacciona a la voz, pero responde
+ante un estímulo doloroso controlado.</p></li>
+<li><p><strong>I — Inconsciente:</strong> No presenta ninguna respuesta
+motora ni ocular frente a estímulos verbales o dolorosos.</p></li>
+</ul>
+<h3  id="fase-e-exposición-y-prevención-de-hipotermia">2.6. Fase E:
+Exposición y Prevención de Hipotermia</h3>
+<p>La ropa gruesa, los uniformes laborales o las chaquetas ocultan
+heridas penetrantes, fracturas expuestas o puntos de sangrado que pasan
+inadvertidos en una inspección superficial. No obstante, desvestir al
+lesionado lo expone a la temperatura ambiental y acelera la pérdida de
+calor corporal.</p>
+<p>Por esta razón, la <strong>fase E</strong> ejecuta dos acciones
+inseparables:</p>
+<ol type="1">
+<li><p><strong>Exponer:</strong> Retirar o cortar las prendas necesarias
+para inspeccionar directamente la superficie corporal en busca de
+lesiones ocultas (laceraciones, abrasiones profundas o
+hematomas).</p></li>
+<li><p><strong>Cubrir:</strong> Proteger de inmediato al paciente con
+mantas térmicas o cobertores para evitar la pérdida de calor. La
+hipotermia no es un problema menor en trauma: el descenso de la
+temperatura interna inhibe las enzimas de la coagulación, agravando el
+desangramiento y potencia el metabolismo anaeróbico celular, acelerando
+el deterioro.</p></li>
+</ol>
+<h2  id="valoración-secundaria-transferencia-al-sem">3. Valoración
+Secundaria: Transferencia al SEM</h2>
+<p>Neutralizadas las amenazas inmediatas en el embudo XABCDE, el
+paciente aún no está fuera de peligro. Lesiones no letales a corto plazo
+pueden complicarse, y el estado fisiológico de un politraumatizado puede
+descompensarse en cuestión de minutos. Para cerrar el ciclo de atención
+se ejecutan las fases meso y de resolución.</p>
+<h3  id="examen-céfalo-caudal-y-registro-de-signos-vitales-basales">3.1.
+Examen Céfalo-Caudal y Registro de Signos Vitales Basales</h3>
+<p>En la fase meso o valoración secundaria, el auxiliador realiza un
+examen céfalo-caudal: una revisión física minuciosa, ordenada y
+detallada de cabeza a pies (o de pies a cabeza) en busca de lesiones que
+no amenazan la vida de manera inmediata pero requieren inmovilización o
+tratamiento.</p>
+<p>Durante esta exploración sistemática se buscan:</p>
+<ul>
+<li><p><strong>Deformidades y fracturas:</strong> Asimetrías anatómicas
+evidentes, como deformidades en la articulación del hombro o
+angulaciones y edema marcado en el tobillo.</p></li>
+<li><p><strong>Heridas abiertas o contusiones:</strong> Laceraciones,
+abrasiones y equimosis extensas en el tronco o las
+extremidades.</p></li>
+<li><p><strong>Dolor a la palpación:</strong> Puntos de sensibilidad
+localizada, como la compresión suave sobre ambas crestas ilíacas para
+descartar inestabilidad pélvica.</p></li>
+</ul>
+<p>Si el paciente permanece estable tras superar el XABCDE, este
+constituye el momento idóneo para medir y registrar sus signos <a
+href="#valores-basales">vitales basales</a> (pulso, presión arterial,
+frecuencia respiratoria, temperatura, llenado capilar y respuesta
+pupilar) como referencia comparativa.</p>
+<h3 
+id="anamnesis-estructurada-mediante-la-herramienta-sample-amplia">3.2.
+Anamnesis Estructurada mediante la Herramienta SAMPLE / AMPLIA</h3>
+<p>Cuando la víctima está consciente, se recopila un historial clínico
+dirigido utilizando la regla mnemotécnica <strong>SAMPLE /
+AMPLIA</strong>:</p>
+<ul>
+<li><p><strong>S / A — Síntomas y Alergias:</strong> Qué molestias
+percibe el paciente y si padece alergias conocidas a medicamentos,
+alimentos o agentes ambientales.</p></li>
+<li><p><strong>M — Medicación:</strong> Qué fármacos consume
+regularmente (por ejemplo, anticoagulantes, antihipertensivos o
+insulina).</p></li>
+<li><p><strong>P — Pasado médico / Patologías:</strong> Antecedentes
+personales de enfermedades crónicas, cirugías previas o condiciones de
+salud relevantes.</p></li>
+<li><p><strong>L — Libaciones / Última comida:</strong> Hora exacta en
+que ingirió alimentos sólidos o líquidos por última vez.</p></li>
+<li><p><strong>A / E — Ambiente / Eventos previos:</strong> Qué
+actividad realizaba o qué ocurrió instantes antes del
+incidente.</p></li>
+</ul>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+    <span class="callout-title-text">¿Por qué es crítico registrar la hora de la última comida
+o bebida (L) en un accidentado?</span>
+  </div>
+  <div class="callout-content">
+<p>Conocer cuándo comió o bebió por última vez el paciente resulta
+indispensable para el equipo médico y quirúrgico receptor: un estómago
+lleno incrementa el riesgo de vómito y broncoaspiración pulmonar si el
+paciente pierde el reflejo nauseoso o requiere intubación y anestesia
+general de urgencia en el quirófano.</p>
+  </div>
+</div>
+<h3 
+id="reevaluación-cíclica-y-transferencia-al-sistema-de-emergencias-médicas">3.3.
+Reevaluación Cíclica y Transferencia al Sistema de Emergencias
+Médicas</h3>
+<p>El trauma grave es un proceso fisiopatológico dinámico en el que una
+hemorragia aparentemente controlada puede reactivarse o un paciente
+inicialmente alerta puede entrar en choque. Por ello, la valoración
+nunca se da por concluida: se debe reiniciar el ciclo completo del
+embudo XABCDE cada <span class="math inline">5\text{ min}</span>,
+aprovechando cada ronda para confirmar que los torniquetes y vendajes
+colocados en las fases «X» y «C» mantienen su efectividad y detectar
+cualquier deterioro precoz.</p>
+<p>Finalmente, en la fase de resolución, el primer respondiente realiza
+la transferencia al Sistema de Emergencias Médicas (SEM) entregando a la
+tripulación prehospitalaria un reporte estructurado y conciso basado en
+cuatro puntos:</p>
+<ol type="1">
+<li><p><strong>Mecanismo de lesión:</strong> Hallazgos de la evaluación
+de la escena y cinemática del trauma.</p></li>
+<li><p><strong>Hallazgos críticos neutralizados:</strong> Amenazas
+detectadas e intervenciones ejecutadas en cada letra del protocolo
+XABCDE.</p></li>
+<li><p><strong>Historial del paciente:</strong> Datos recopilados
+mediante la entrevista SAMPLE / AMPLIA.</p></li>
+<li><p><strong>Evolución:</strong> Cambios clínicos observados durante
+los ciclos de reevaluación cada <span class="math inline">5\text{
+min}</span>.</p></li>
+</ol>
+<p>Como primer eslabón de la cadena de supervivencia, la precisión de
+esta evaluación inicial y de su entrega condiciona directamente el éxito
+del manejo médico posterior.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Fase de Evaluación</th>
+<th>Nivel Operativo</th>
+<th>Objetivo Principal</th>
+<th>Herramientas y Acciones Clave</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fase 1: Evaluación de la Escena</strong></td>
+<td>Macro</td>
+<td>Garantizar seguridad y predecir daño interno</td>
+<td>Escena, Situación, Seguridad, EPP, cinemática y activación del
+SEM</td>
+</tr>
+<tr>
+<td><strong>Fase 2: Valoración Primaria</strong></td>
+<td>Micro</td>
+<td>Neutralizar amenazas vitales inmediatas</td>
+<td>Embudo <strong>XABCDE</strong> (hemorragia masiva, vía
+aérea/cervical, ventilación, circulación, AVDI,
+exposición/hipotermia)</td>
+</tr>
+<tr>
+<td><strong>Fase 3: Valoración Secundaria</strong></td>
+<td>Meso</td>
+<td>Detectar lesiones no letales y recopilar antecedentes</td>
+<td>Examen céfalo-caudal, signos vitales basales, historial
+<strong>SAMPLE/AMPLIA</strong> y reevaluación cada <span
+class="math inline">5\text{ min}</span></td>
+</tr>
+<tr>
+<td><strong>Fase 4: Transferencia al SEM</strong></td>
+<td>Resolución</td>
+<td>Garantizar continuidad asistencial prehospitalaria</td>
+<td>Entrega estructurada: mecanismo, intervenciones XABCDE, SAMPLE y
+evolución</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ol type="1">
+<li><p><strong>Chaparro, J. (C.B 814)</strong>. <em>Evaluación del
+Lesionado: Protocolo XABCDE para Primeros Auxilios</em>. Cuerpo de
+Bomberos Voluntarios Universitarios — Universidad Central de Venezuela
+(UCV), Cuartel Central Sgto. 1.º (F) Abog. Gabriel Hernández,
+Caracas.</p></li>
+<li><p><strong>National Association of Emergency Medical Technicians
+(NAEMT)</strong>. (2023). <em>PHTLS: Prehospital Trauma Life
+Support</em> (10.ª ed.). Jones &amp; Bartlett Learning.</p></li>
+</ol>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>
