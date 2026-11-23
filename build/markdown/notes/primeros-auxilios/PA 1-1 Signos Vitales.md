@@ -26,7 +26,7 @@ El enfoque más intuitivo al aproximarse a una persona afectada consiste en preg
 > [!QUOTE] **Definición 1:**  Síntoma y Signo Clínico
 > Un **síntoma** es toda manifestación subjetiva de una alteración orgánica o funcional que únicamente el paciente percibe y refiere (como el dolor de cabeza o las náuseas). Un **signo** es todo hallazgo objetivo que el evaluador puede observar, palpar, medir o detectar mediante exploración física o instrumental.
 
-En términos prácticos, **el síntoma** depende por completo del relato de la víctima, mientras que **el signo** existe con independencia de que el paciente pueda expresarlo. Al evaluar a un lesionado, los signos constituyen la base de decisión más fiable porque permiten cuantificar cambios reales en la circulación, la oxigenación o la temperatura sin verse distorsionados por el estado emocional.
+En términos prácticos, el síntoma depende por completo del relato de la víctima, mientras que el signo existe con independencia de que el paciente pueda expresarlo. Al evaluar a un lesionado, los signos constituyen la base de decisión más fiable porque permiten cuantificar cambios reales en la circulación, la oxigenación o la temperatura sin verse distorsionados por el estado emocional.
 
 Por ejemplo, un adulto joven puede decir sentir un dolor de cabeza intenso y sensación de mareo tras permanecer de pie bajo el sol. Al explorarlo, el auxiliador observa palidez facial y registra una frecuencia cardíaca de $112\text{ lpm}$.
 
@@ -35,49 +35,49 @@ Por ejemplo, un adulto joven puede decir sentir un dolor de cabeza intenso y sen
 No todos los signos físicos poseen la misma urgencia diagnóstica. Una inflamación local en un tobillo es un signo objetivo, pero no compromete la supervivencia inmediata. Se requiere aislar un conjunto específico de mediciones que reflejen de manera directa el funcionamiento de los sistemas encargados de mantener la vida minuto a minuto.
 
 > [!QUOTE] **Definición 2:** Signos Vitales
-> Los **signos vitales** son los parámetros fisiológicos cuantificables que reflejan el estado funcional básico del organismo, regulados de forma continua por el sistema nervioso y el sistema endocrino para sostener la homeostasis.
+> Los **signos vitales** son los parámetros fisiológicos cuantificables que reflejan el estado funcional básico del organismo, regulados de forma continua por el sistema nervioso y el [[PA 0-1 Glosario de Términos#Sistema Endocrino|sistema endocrino]] para sostener la [[PA 0-1 Glosario de Términos#Homeostasis|homeostasis]].
 
-Estos indicadores actúan como un tablero de control biológico: el sistema nervioso ejecuta ajustes rápidos en cuestión de segundos (por ejemplo, acelerando el corazón ante un susto), mientras que el sistema endocrino modula respuestas hormonales sostenidas (como la liberación de adrenalina o la regulación metabólica). No obstante, sus valores de referencia no son constantes rígidas; se ven modificados de forma natural por la edad, el nivel de actividad física reciente, el estrés emocional y la presencia de enfermedades previas.
+Estos indicadores actúan como un tablero de control biológico: el sistema nervioso ejecuta ajustes rápidos en cuestión de segundos (por ejemplo, acelerando el corazón ante un susto), mientras que el [[PA 0-1 Glosario de Términos#Sistema Endocrino|sistema endocrino]] modula respuestas hormonales sostenidas (como la liberación de adrenalina o la regulación metabólica). No obstante, sus valores de referencia no son constantes rígidas; se ven modificados de forma natural por la edad, el nivel de actividad física reciente, el estrés emocional y la presencia de enfermedades previas.
 
-> [!EXAMPLE] **Ejemplo 1:** Variabilidad fisiológica de los valores basales
-> Un atleta en reposo absoluto presenta una frecuencia cardíaca de $58\text{ lpm}$, mientras que una persona que acaba de subir tres pisos por las escaleras registra $108\text{ lpm}$ sin presentar patología alguna.
+> [!EXAMPLE] **Ejemplo 1:** Variabilidad fisiológica de los [[PA 0-1 Glosario de Términos#Valores Basales|valores basales]]
+> Un atleta en reposo absoluto presenta una frecuencia cardíaca de $58\text{ lpm}$, mientras que una persona que acaba de subir tres pisos por las escaleras registra $108\text{ lpm}$ sin presentar [[PA 0-1 Glosario de Términos#Patología|patología]] alguna.
 > 
 > - En el atleta, el entrenamiento cardiovascular crónico aumenta el volumen bombeado en cada latido, lo que permite mantener el suministro sanguíneo con menor frecuencia sin que ello represente una falla cardíaca.
 > 
-> - En la persona tras el esfuerzo físico, la demanda muscular de oxígeno activa el sistema nervioso simpático y eleva transitoriamente el ritmo cardíaco, retornando al rango basal tras unos minutos de reposo.
+> - En la persona tras el esfuerzo físico, la demanda muscular de oxígeno activa el [[PA 0-1 Glosario de Términos#Sistema Nervioso Simpático|sistema nervioso simpático]] y eleva transitoriamente el ritmo cardíaco, retornando al rango [[PA 0-1 Glosario de Términos#Valores Basales|basal]] tras unos minutos de reposo.
 
 # 2. Signos Vitales Primarios
 
-La supervivencia inmediata del organismo depende de tres condiciones físicas elementales: que la sangre sea impulsada con presión suficiente a través del árbol vascular, que el aire ingrese y salga de los pulmones para renovar los gases sanguíneos y que la temperatura interna permanezca dentro de un margen compatible con las reacciones químicas celulares. Los cuatro signos primarios cuantifican de forma directa estas funciones centrales.
+La supervivencia inmediata del organismo depende de tres condiciones físicas elementales: que la sangre sea impulsada con presión suficiente a través del cuerpo, que el aire ingrese y salga de los pulmones para renovar los gases sanguíneos y que la temperatura interna permanezca dentro de un margen compatible con las reacciones químicas celulares. Los cuatro signos primarios cuantifican de forma directa estas funciones centrales.
 
 ## 2.1. Pulso Arterial
 
-Para confirmar que el corazón bombea sangre sin recurrir a equipos hospitalarios complejos, la solución directa consiste en aprovechar la elasticidad de los vasos sanguíneos. Cada vez que el ventrículo izquierdo se contrae e inyecta sangre hacia la aorta, genera una onda de presión que viaja por las paredes arteriales y puede percibirse al tacto cuando una arteria transcurre cerca de la superficie.
+Para confirmar que el corazón bombea sangre la solución directa consiste en aprovechar la elasticidad de los vasos sanguíneos. Cada vez que el ventrículo izquierdo se contrae e inyecta sangre hacia la aorta, genera una onda de presión que viaja por las paredes arteriales y puede percibirse al tacto cuando una arteria transcurre cerca de la superficie.
 
 > [!QUOTE] **Definición 3:** Pulso Arterial
 > El **pulso arterial** es la onda de presión expansiva generada por la contracción cardíaca que se transmite a lo largo del sistema arterial y se percibe mediante palpación; su rango normal en adultos en reposo oscila entre $60\text{ lpm}$ y $100\text{ lpm}$.
 
-Esta medición aporta doble información fisiológica: por un lado indica la **frecuencia cardíaca** (cuántas veces late el corazón por minuto) y por otro refleja la **fuerza de contracción ventricular** según la intensidad con que la onda golpea los dedos. Para cuantificarlo con precisión, se colocan las yemas de los dedos índice y medio sobre la arteria elegida y se cuentan los latidos durante $60\text{ s}$ completos. Resulta fundamental evitar el uso del dedo pulgar para palpar, debido a que posee una arteria propia con pulso perceptible que puede confundir al evaluador y hacerle contar su propio ritmo cardíaco en lugar del ritmo del paciente.
+Esta medición aporta doble información fisiológica: por un lado indica la frecuencia cardíaca (cuántas veces late el corazón por minuto) y por otro refleja la fuerza de contracción ventricular según la intensidad con que la onda golpea los dedos. Para cuantificarlo con precisión, se colocan las yemas de los dedos índice y medio sobre la arteria elegida y se cuentan los latidos durante $60\text{ s}$ completos. Resulta fundamental evitar el uso del dedo pulgar para palpar, debido a que posee una arteria propia con pulso perceptible que puede confundir al evaluador y hacerle contar su propio ritmo cardíaco en lugar del ritmo del paciente.
 
 ### 2.1.1. Puntos Anatómicos de Palpación y Continuidad Circulatoria
 
-Palpar el pulso en una sola ubicación periférica resulta insuficiente ante traumatismos o estados de choque. Si una arteria principal sufre compresión por una fractura o un coágulo, o si la presión arterial cae de forma severa, el pulso desaparecerá en las extremidades aunque el corazón continúe latiendo. Por ello se exploran múltiples puntos anatómicos para verificar la llegada real de sangre a las distintas regiones del cuerpo:
+Palpar el pulso en una sola ubicación resulta insuficiente ante traumatismos o estados de choque. Si una arteria principal sufre compresión por una fractura o un coágulo, o si la presión arterial cae de forma severa, el pulso desaparecerá en las extremidades aunque el corazón continúe latiendo. Por ello se exploran múltiples puntos anatómicos para verificar la llegada real de sangre a las distintas regiones del cuerpo:
 
 ![[PA 1-1 Signos Vitales - Puntos Anatómicos de Palpación del Pulso Arterial.webp]]
 
-- **Pulso carotídeo:** ubicado en el cuello, a ambos lados de la tráquea; es el punto de mayor relevancia clínica para determinar si existe vida y perfusión central en situaciones críticas, aunque su palpación exige extrema suavidad y debe realizarse de un solo lado a la vez para no comprometer el flujo cerebral ni desencadenar una caída refleja de la frecuencia cardíaca.
+- **Pulso carotídeo:** Ubicado en el cuello, a ambos lados de la tráquea; es el punto de mayor relevancia clínica para determinar si existe vida y perfusión central en situaciones críticas, aunque su palpación exige extrema suavidad y debe realizarse de un solo lado a la vez para no comprometer el flujo cerebral ni desencadenar una caída refleja de la frecuencia cardíaca.
 
-- **Pulso axilar:** situado en el hueco de la axila, útil para valorar la irrigación proximal del miembro superior.
+- **Pulso axilar:** Situado en el hueco de la axila, útil para valorar la irrigación proximal del miembro superior.
 
-- **Pulso braquial o humeral:** localizado en la cara interna del brazo o pliegue del codo; constituye el punto de referencia estándar en lactantes y durante la toma de presión arterial.
+- **Pulso braquial o humeral:** Localizado en la cara interna del brazo o pliegue del codo; constituye el punto de referencia estándar en lactantes y durante la toma de presión arterial.
 
-- **Pulso radial y cubital:** palpados en la cara anterior de la muñeca (lado externo del pulgar e interno del meñique, respectivamente), siendo el radial el más utilizado en pacientes conscientes para verificar circulación distal.
+- **Pulso radial y cubital:** Palpados en la cara anterior de la muñeca (lado externo del pulgar e interno del meñique, respectivamente), siendo el radial el más utilizado en pacientes conscientes para verificar circulación distal.
 
-- **Pulso femoral:** ubicado en el pliegue inguinal; indica perfusión hacia la pelvis y extremidades inferiores cuando los pulsos distales se debilitan.
+- **Pulso femoral:** Ubicado en el pliegue inguinal; indica perfusión hacia la pelvis y extremidades inferiores cuando los pulsos distales se debilitan.
 
-- **Pulso poplíteo:** situado detrás de la rodilla, empleado para evaluar lesiones vasculares de la extremidad inferior.
+- **Pulso poplíteo:** Situado detrás de la rodilla, empleado para evaluar lesiones vasculares de la extremidad inferior.
 
-- **Pulso tibial posterior y pulso pedio:** localizados detrás del maléolo interno del tobillo y en el dorso del pie, respectivamente; confirman que la circulación alcanza la periferia más alejada del corazón.
+- **Pulso tibial posterior y pulso pedio:** Localizados detrás del maléolo interno del tobillo y en el dorso del pie, respectivamente; confirman que la circulación alcanza la periferia más alejada del corazón.
 
 > [!EXAMPLE] **Ejemplo 2:** Valoración secuencial de pulsos en un paciente politraumatizado
 > Tras una colisión vehicular, una víctima inconsciente presenta ausencia de pulso radial en la muñeca, pero al palpar la arteria carótida se detectan $124\text{ lpm}$ débiles durante $60\text{ s}$.
@@ -88,12 +88,18 @@ Palpar el pulso en una sola ubicación periférica resulta insuficiente ante tra
 
 ## 2.2. Presión Arterial
 
-Confirmar la presencia del pulso demuestra que existe flujo sanguíneo, pero no cuantifica la tensión mecánica real con la que la sangre empuja las paredes vasculares. Si la presión dentro de las arterias y venas cae por debajo de un umbral crítico, la sangre no logra vencer la gravedad ni penetrar los lechos capilares de órganos vitales; por el contrario, una presión excesiva amenaza con romper vasos delicados.
+Confirmar la presencia del pulso demuestra que existe flujo sanguíneo, pero no cuantifica la tensión mecánica real con la que la sangre empuja las paredes vasculares. Si la presión dentro de las arterias y venas cae por debajo de un umbral crítico, la sangre no logra vencer la gravedad ni penetrar los [[PA 0-1 Glosario de Términos#Lecho Capilar|lechos capilares]] de órganos vitales; por el contrario, una presión excesiva amenaza con romper vasos delicados.
 
 > [!QUOTE] **Definición 4:** Presión Arterial
-> La **presión arterial** es la fuerza hidrostática que ejerce la sangre circulante contra las paredes internas de las arterias, determinada por la fuerza de contracción del corazón y la resistencia que ofrecen los vasos sanguíneos; en adultos, los valores normales son $100\text{--}120\text{ mmHg}$ para la presión sistólica y $60\text{--}80\text{ mmHg}$ para la presión diastólica.
+> La **presión arterial** es la [[PA 0-1 Glosario de Términos#Fuerza Hidrostática|fuerza hidrostática]] que ejerce la sangre circulante contra las paredes internas de las arterias, determinada por la fuerza de contracción del corazón y la resistencia que ofrecen los vasos sanguíneos; en adultos, los valores normales son $100\text{--}120\text{ mmHg}$ para la presión sistólica y $60\text{--}80\text{ mmHg}$ para la presión diastólica.
 
-Este parámetro se registra siempre mediante dos cifras separadas, esto ya que el ciclo cardíaco alterna dos fases mecánicas distintas. La **presión sistólica** (el número superior) mide la fuerza máxima ejercida cuando el corazón se contrae e impulsa la sangre hacia las arterias, mientras que la **presión diastólica** (el número inferior) mide la presión residual que mantienen las paredes arteriales mientras el corazón se relaja y se llena nuevamente. Para medirla de forma no invasiva se emplea un **esfigmomanómetro** (tensiómetro) junto con un **estetoscopio** colocado sobre la arteria braquial, identificando los ruidos arteriales al desinflar el manguito.
+Este parámetro se registra siempre mediante dos cifras separadas, esto ya que el ciclo cardíaco alterna dos fases mecánicas distintas:
+
+- **La Presión Sistólica:** Es el número superior que mide la fuerza máxima ejercida cuando el corazón se contrae e impulsa la sangre hacia las arterias.
+
+- **La Presión Diastólica:** Es el número inferior que mide la presión residual que mantienen las paredes arteriales mientras el corazón se relaja y se llena nuevamente. 
+
+Para medirlas de forma no invasiva se emplea un esfigmomanómetro (tensiómetro) junto con un estetoscopio colocado sobre la [[PA 0-1 Glosario de Términos#Arteria Braquial|arteria braquial]], identificando los ruidos arteriales al desinflar el manguito.
 
 > [!EXAMPLE] **Ejemplo 3:** Interpretación de registros tensionales en adultos
 > Durante un control de primeros auxilios se evalúan dos pacientes: el Paciente A registra $114/74\text{ mmHg}$ y el Paciente B registra $86/54\text{ mmHg}$ tras una hemorragia moderada.
@@ -178,7 +184,7 @@ Para obtener una medida temporal objetiva de qué tan rápido llega la sangre a 
 > [!QUOTE] **Definición 7:** Tiempo de Llenado Capilar
 > El **llenado capilar** mide el tiempo que tarda la sangre en retornar a los lechos capilares periféricos tras haberlos vaciado mediante presión externa, reflejando la perfusión tisular distal; su valor normal es inferior a $3\text{ s}$.
 
-La maniobra consiste en presionar firmemente el lecho ungueal de un dedo de la mano hasta que la uña adquiera un color blanco al desplazarse la sangre hacia afuera; inmediatamente se suelta la presión y se contabilizan los segundos que demora en recuperar su coloración rosada original. Un retorno rápido confirma que la presión y el flujo llegan sin obstáculos hasta la microcirculación distal, mientras que un retraso de $3\text{ s}$ o más advierte pérdida de volumen sanguíneo, frío intenso o choque circulatorio incipiente.
+La maniobra consiste en presionar firmemente la uña de un dedo de la mano hasta que la uña adquiera un color blanco al desplazarse la sangre hacia afuera; inmediatamente se suelta la presión y se contabilizan los segundos que demora en recuperar su coloración rosada original. Un retorno rápido confirma que la presión y el flujo llegan sin obstáculos hasta la microcirculación distal, mientras que un retraso de $3\text{ s}$ o más advierte pérdida de volumen sanguíneo, frío intenso o choque circulatorio incipiente.
 
 ## 3.3. Oximetría de Pulso
 
