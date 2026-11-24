@@ -210,21 +210,33 @@ un Núcleo Mono-hilo</span>
 <span class="math inline">n = 6</span> tareas independientes (<span
 class="math inline">T_1, T_2, T_3, T_4, T_5, T_6</span>) que deben
 ejecutarse secuencialmente hasta completarse sin interrupciones.
-¿Cuántas trazas de ejecución distintas puede generar el planificador?
-<strong>Solución:</strong></p>
-<p><span class="math display">P_6 = 6! = 6 \cdot 5 \cdot 4 \cdot 3 \cdot
-2 \cdot 1 = 720 \text{ trazas de ejecución}</span></p>
+¿Cuántas trazas de ejecución distintas puede generar el
+planificador?</p>
   </div>
 </div>
-<p><strong>Paso 1:</strong> Identificamos que todas las tareas deben
-ejecutarse (<span class="math inline">r = n = 6</span>) y que alterar el
-orden modifica los tiempos de espera y finalización del sistema, por lo
-que el orden es estricto.</p>
-<p><strong>Paso 2:</strong> Aplicamos el principio multiplicativo sobre
-las <span class="math inline">6</span> ranuras temporales de la cola de
-ejecución, reduciendo en una unidad las tareas disponibles tras cada
-asignación hasta obtener <span class="math inline">720</span>
-ordenamientos posibles.</p>
+<p>En este ejercicio analizamos un sistema de procesamiento secuencial
+donde la totalidad de las tareas disponibles debe entrar en la cola de
+ejecución sin omisiones ni duplicados. Lo que se busca es determinar la
+cantidad exacta de trazas de ejecución posibles aplicando el modelo de
+permutaciones simples, dado que cualquier reordenamiento modifica los
+tiempos de espera y finalización del sistema.</p>
+<ol type="1">
+<li>Identificamos que todas las <span class="math inline">n = 6</span>
+tareas participan obligatoriamente en la secuencia (<span
+class="math inline">r = n = 6</span>), que no se permite repetir una
+misma tarea y que el orden de ejecución altera el comportamiento del
+sistema, por lo que corresponde aplicar permutaciones simples (<span
+class="math inline">P_n = n!</span>).</li>
+</ol>
+<p><span class="math display">n = 6, \qquad P_n = n!</span></p>
+<ol start="2" type="1">
+<li>Aplicamos el principio multiplicativo sobre las <span
+class="math inline">6</span> ranuras temporales de la cola de ejecución,
+reduciendo en una unidad el número de tareas disponibles tras cada
+asignación hasta completar la última posición.</li>
+</ol>
+<p><span class="math display">P_6 = 6! = 6 \cdot 5 \cdot 4 \cdot 3 \cdot
+2 \cdot 1 = 720 \text{ trazas de ejecución}</span></p>
 <h3  id="variaciones-o-r-permutaciones-de-subconjuntos">1.2. Variaciones
 o <span class="math inline">r</span>-Permutaciones de Subconjuntos</h3>
 <p>En muchas arquitecturas de ingeniería, el catálogo de recursos
@@ -280,22 +292,40 @@ replicado se requiere asignar exactamente <span class="math inline">r =
 3</span> servidores a tres roles jerárquicos exclusivos: «Nodo Líder»,
 «Réplica Síncrona 1» y «Réplica Síncrona 2». ¿Cuántas topologías de
 despliegue distintas existen?</p>
-<p><strong>Solución:</strong></p>
-<p><span class="math display">V_{10}^3 = P_{10}^3 = \frac{10!}{(10 -
-3)!} = \frac{10!}{7!} = 10 \cdot 9 \cdot 8 = 720 \text{ topologías
-posibles}</span></p>
   </div>
 </div>
-<p><strong>Paso 1:</strong> Reconocemos que la jerarquía de red hace que
-asignar el servidor <span class="math inline">A</span> como Líder y el
-<span class="math inline">B</span> como Réplica 1 sea funcionalmente
-distinto a invertir sus roles, confirmando que el orden importa y no hay
-repetición.</p>
-<p><strong>Paso 2:</strong> Multiplicamos las <span
+<p>A diferencia del caso anterior, aquí el catálogo de recursos supera
+la cantidad de puestos disponibles, por lo que una parte de los
+servidores quedará fuera de la selección final. La finalidad del
+ejercicio es contabilizar el número de topologías válidas mediante
+variaciones sin repetición, reflejando que la jerarquía de red distingue
+qué servidor ocupa cada rol específico.</p>
+<ol type="1">
+<li>Reconocemos que los <span class="math inline">n = 10</span>
+servidores son distinguibles por su IP, que solo se asignan <span
+class="math inline">r = 3</span> roles sin reutilizar un mismo servidor
+y que intercambiar los servidores asignados a «Nodo Líder» y «Réplica
+Síncrona 1» produce una topología funcionalmente distinta, lo cual
+corresponde a una variación sin repetición (<span
+class="math inline">V_n^r</span>).</li>
+</ol>
+<p><span class="math display">n = 10, \quad r = 3, \qquad V_n^r = P_n^r
+= \frac{n!}{(n - r)!}</span></p>
+<ol start="2" type="1">
+<li>Sustituimos los parámetros en la fórmula factorial y cancelamos los
+factores correspondientes a los <span class="math inline">n - r =
+7</span> servidores no seleccionados.</li>
+</ol>
+<p><span class="math display">V_{10}^3 = P_{10}^3 = \frac{10!}{(10 -
+3)!} = \frac{10!}{7!} = 10 \cdot 9 \cdot 8</span></p>
+<ol start="3" type="1">
+<li>Efectuamos el producto truncado equivalente a multiplicar las <span
 class="math inline">10</span> opciones para el Nodo Líder por las <span
 class="math inline">9</span> restantes para la Réplica 1 y las <span
-class="math inline">8</span> disponibles para la Réplica 2, obteniendo
-<span class="math inline">720</span> configuraciones válidas.</p>
+class="math inline">8</span> disponibles para la Réplica 2.</li>
+</ol>
+<p><span class="math display">V_{10}^3 = 720 \text{ topologías
+posibles}</span></p>
 <h2 
 id="selecciones-sin-orden-y-estructura-de-los-coeficientes-binomiales">2.
 Selecciones sin Orden y Estructura de los Coeficientes Binomiales</h2>
@@ -312,9 +342,8 @@ veces.</p>
 id="combinaciones-simples-y-deducción-mediante-la-regla-de-la-división">2.1.
 Combinaciones Simples y Deducción mediante la Regla de la División</h3>
 <p>Para eliminar la redundancia generada por el orden interno de los
-elementos seleccionados, se recurre a la <strong>regla de la
-división</strong>, que colapsa clases de equivalencia de tamaño
-uniforme.</p>
+elementos seleccionados, se recurre a la regla de la división, que
+colapsa clases de equivalencia de tamaño uniforme.</p>
 <div class="callout-box note">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
@@ -342,9 +371,9 @@ luego se ordenan internamente esos <span class="math inline">r</span>
 elementos de <span class="math inline">P_r = r!</span> formas distintas.
 Esto establece la identidad fundamental:</p>
 <p><span class="math display">V_n^r = \binom{n}{r} \cdot r!</span></p>
-<p>Al aplicar la regla de la división —dividiendo el total de
+<p>Al aplicar la regla de la división (dividiendo el total de
 variaciones ordenadas entre la multiplicidad <span class="math inline">d
-= r!</span> de permutaciones internas equivalentes— se purga el orden y
+= r!</span> de permutaciones internas equivalentes) se purga el orden y
 emerge la expresión factorial cerrada:</p>
 <p><span class="math display">\binom{n}{r} = \frac{V_n^r}{r!} =
 \frac{\frac{n!}{(n - r)!}}{r!} = \frac{n!}{r!(n - r)!}</span></p>
@@ -361,20 +390,39 @@ seleccionar un subconjunto de <span class="math inline">r = 3</span>
 nodos para distribuir copias idénticas de una caché de lectura sin
 distinción de jerarquía. Calcule cuántos subconjuntos de servidores
 pueden formarse.</p>
-<p><strong>Solución:</strong></p>
-<p><span class="math display">C_{10}^3 = \binom{10}{3} =
-\frac{10!}{3!(10 - 3)!} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2 \cdot 1} =
-\frac{720}{6} = 120 \text{ subconjuntos}</span></p>
   </div>
 </div>
-<p><strong>Paso 1:</strong> Calculamos primero las <span
-class="math inline">V_{10}^3 = 720</span> secuencias ordenadas de tres
-servidores.</p>
-<p><strong>Paso 2:</strong> Como cada trío de servidores puede
-permutarse internamente de <span class="math inline">3! = 6</span>
-maneras que representan el mismo grupo de caché, dividimos <span
-class="math inline">720 / 6</span> para obtener los <span
-class="math inline">120</span> subconjuntos únicos.</p>
+<p>En este problema se parte del mismo catálogo de servidores que en el
+ejemplo anterior, pero se elimina por completo la jerarquía entre los
+nodos escogidos. Se busca demostrar cómo la regla de la división purga
+el orden interno mediante combinaciones simples, evitando sobreestimar
+el espacio de configuraciones reales al tratar como equivalentes todos
+los arreglos que contienen los mismos servidores.</p>
+<ol type="1">
+<li>Determinamos primero el número de secuencias ordenadas de <span
+class="math inline">r = 3</span> servidores extraídos de un total de
+<span class="math inline">n = 10</span> nodos distintos mediante
+variaciones sin repetición.</li>
+</ol>
+<p><span class="math display">V_{10}^3 = \frac{10!}{(10 - 3)!} = 10
+\cdot 9 \cdot 8 = 720</span></p>
+<ol start="2" type="1">
+<li>Identificamos que cada subconjunto de <span
+class="math inline">3</span> nodos puede permutarse internamente de
+<span class="math inline">P_3 = 3!</span> maneras que representan
+exactamente el mismo grupo de caché en el balanceador simétrico.</li>
+</ol>
+<p><span class="math display">d = 3! = 3 \cdot 2 \cdot 1 = 6</span></p>
+<ol start="3" type="1">
+<li>Aplicamos la regla de la división (coeficiente binomial <span
+class="math inline">C_{10}^3</span>) dividiendo las variaciones
+ordenadas entre la multiplicidad interna <span
+class="math inline">3!</span> para obtener la cantidad de subconjuntos
+únicos.</li>
+</ol>
+<p><span class="math display">C_{10}^3 = \binom{10}{3} =
+\frac{10!}{3!(10 - 3)!} = \frac{720}{6} = 120 \text{
+subconjuntos}</span></p>
 <h3  id="simetría-combinatoria-e-identidad-de-pascal">2.2. Simetría
 Combinatoria e Identidad de Pascal</h3>
 <p>Los coeficientes binomiales <span
@@ -400,16 +448,16 @@ cumplen: 1. <strong>Propiedad de Simetría Combinatoria:</strong></p>
 - 1}{k - 1}</span></p>
   </div>
 </div>
-<p>Intuitivamente, la <strong>simetría combinatoria</strong> establece
-que elegir los <span class="math inline">r</span> elementos que entran
-en un subconjunto equivale de manera biyectiva a elegir los <span
+<p>Intuitivamente, la simetría combinatoria establece que elegir los
+<span class="math inline">r</span> elementos que entran en un
+subconjunto equivale de manera biyectiva a elegir los <span
 class="math inline">n - r</span> elementos que quedan excluidos de él.
-Por su parte, la <strong>identidad de Pascal</strong> descompone la
-elección de <span class="math inline">k</span> elementos respecto a un
-elemento distinguido (llamémoslo <span class="math inline">a_1</span>):
-todo subconjunto de tamaño <span class="math inline">k</span> o bien
-excluye a <span class="math inline">a_1</span> (obligando a elegir los
-<span class="math inline">k</span> elementos entre los <span
+Por su parte, la identidad de Pascal descompone la elección de <span
+class="math inline">k</span> elementos respecto a un elemento
+distinguido (llamémoslo <span class="math inline">a_1</span>): todo
+subconjunto de tamaño <span class="math inline">k</span> o bien excluye
+a <span class="math inline">a_1</span> (obligando a elegir los <span
+class="math inline">k</span> elementos entre los <span
 class="math inline">n - 1</span> restantes), o bien incluye a <span
 class="math inline">a_1</span> (reduciendo la tarea a elegir <span
 class="math inline">k - 1</span> compañeros entre los <span
@@ -470,22 +518,39 @@ de <span class="math inline">r = 47</span> paquetes seleccionados de un
 lote de <span class="math inline">n = 52</span> tramas capturadas.
 Determine el número de combinaciones aprovechando la simetría
 combinatoria.</p>
-<p><strong>Solución:</strong></p>
-<p><span class="math display">\binom{52}{47} = \binom{52}{52 - 47} =
-\binom{52}{5} = \frac{52 \cdot 51 \cdot 50 \cdot 49 \cdot 48}{5 \cdot 4
-\cdot 3 \cdot 2 \cdot 1} = 2.598.960 \text{ combinaciones}</span></p>
   </div>
 </div>
-<p><strong>Paso 1:</strong> En lugar de expandir <span
-class="math inline">47</span> factores en el numerador y denominador,
-aplicamos <span class="math inline">\binom{52}{47} =
-\binom{52}{5}</span> identificando que elegir <span
-class="math inline">47</span> tramas equivale a elegir las <span
-class="math inline">5</span> que se descartan.</p>
-<p><strong>Paso 2:</strong> Reducimos el cálculo a solo <span
-class="math inline">5</span> multiplicaciones y divisiones, obteniendo
-<span class="math inline">2.598.960</span> configuraciones idénticas a
-las manos de póker de cinco cartas.</p>
+<p>Calcular directamente un coeficiente binomial con parámetros grandes
+puede implicar expandir decenas de factores en el numerador y en el
+denominador. La finalidad de este ejercicio es aprovechar la propiedad
+de simetría combinatoria para transformar la selección de un subconjunto
+grande en la elección equivalente de los elementos descartados,
+minimizando así la carga de cálculo.</p>
+<ol type="1">
+<li>Planteamos el conteo sin orden de <span class="math inline">r =
+47</span> tramas elegidas de un lote de <span class="math inline">n =
+52</span> mediante el coeficiente binomial <span
+class="math inline">\binom{52}{47}</span> y aplicamos la propiedad de
+simetría combinatoria <span class="math inline">\binom{n}{r} =
+\binom{n}{n - r}</span>, observando que elegir <span
+class="math inline">47</span> tramas equivale de forma biyectiva a
+elegir las <span class="math inline">5</span> que se excluyen.</li>
+</ol>
+<p><span class="math display">\binom{52}{47} = \binom{52}{52 - 47} =
+\binom{52}{5}</span></p>
+<ol start="2" type="1">
+<li>Desarrollamos la expresión simplificada utilizando únicamente <span
+class="math inline">5</span> factores decrecientes en el numerador y
+<span class="math inline">5!</span> en el denominador.</li>
+</ol>
+<p><span class="math display">\binom{52}{5} = \frac{52 \cdot 51 \cdot 50
+\cdot 49 \cdot 48}{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}</span></p>
+<ol start="3" type="1">
+<li>Evaluamos el cociente resultante para obtener el número exacto de
+combinaciones posibles en el sistema de auditoría.</li>
+</ol>
+<p><span class="math display">\binom{52}{47} = 2.598.960 \text{
+combinaciones}</span></p>
 <h3  id="teorema-del-binomio-de-newton">2.3. Teorema del Binomio de
 Newton</h3>
 <p>La interpretación combinatoria de <span
@@ -538,23 +603,40 @@ Peso de Hamming</span>
 8</span> bits contienen exactamente <span class="math inline">k =
 3</span> bits en estado lógico <span class="math inline">1</span> (peso
 de Hamming igual a <span class="math inline">3</span>)?</p>
-<p><strong>Solución:</strong></p>
-<p><span class="math display">\text{Cadenas con } k=3 \text{ unos} =
-\binom{8}{3} = \frac{8 \cdot 7 \cdot 6}{3 \cdot 2 \cdot 1} = 56 \text{
-cadenas}</span></p>
   </div>
 </div>
-<p><strong>Paso 1:</strong> Asociamos cada posición de la palabra de
-<span class="math inline">8\text{ bits}</span> a un factor del binomio
-<span class="math inline">(x + 1)^8</span>, donde elegir <span
-class="math inline">x</span> equivale a fijar un bit en <span
-class="math inline">1</span> y elegir <span class="math inline">1</span>
-equivale a fijar un bit en <span class="math inline">0</span>.</p>
-<p><strong>Paso 2:</strong> El coeficiente que acompaña a <span
-class="math inline">x^3</span> en la expansión es <span
-class="math inline">\binom{8}{3} = 56</span>, cuantificando las palabras
-de <span class="math inline">8\text{ bits}</span> con exactamente tres
-unos.</p>
+<p>Este ejercicio conecta el conteo combinatorio con la representación
+polinómica del Teorema del Binomio de Newton en un contexto de
+codificación digital. Se busca determinar cuántas palabras de <span
+class="math inline">8\text{ bits}</span> tienen un peso de Hamming
+específico interpretando cada bit de la cadena como la elección de una
+variable en la expansión de un binomio.</p>
+<ol type="1">
+<li>Asociamos cada una de las <span class="math inline">n = 8</span>
+posiciones de la palabra binaria a un factor del binomio <span
+class="math inline">(x + 1)^8</span>, donde seleccionar <span
+class="math inline">x</span> representa fijar un bit en estado <span
+class="math inline">1</span> y seleccionar <span
+class="math inline">1</span> representa fijar un bit en estado <span
+class="math inline">0</span>.</li>
+</ol>
+<p><span class="math display">(x + 1)^8 = \sum_{k=0}^8 \binom{8}{k} x^k
+\cdot 1^{8 - k}</span></p>
+<ol start="2" type="1">
+<li>Identificamos que el número de cadenas con exactamente <span
+class="math inline">k = 3</span> bits en estado <span
+class="math inline">1</span> corresponde al coeficiente binomial que
+acompaña al término <span class="math inline">x^3</span> en dicha
+expansión.</li>
+</ol>
+<p><span class="math display">\text{Cadenas con } k = 3 \text{ unos} =
+\binom{8}{3}</span></p>
+<ol start="3" type="1">
+<li>Desarrollamos el coeficiente binomial y efectuamos la simplificación
+aritmética para obtener el total de cadenas binarias válidas.</li>
+</ol>
+<p><span class="math display">\binom{8}{3} = \frac{8 \cdot 7 \cdot 6}{3
+\cdot 2 \cdot 1} = 56 \text{ cadenas}</span></p>
 <h2  id="agrupamientos-con-repetición-y-restricciones-de-identidad">3.
 Agrupamientos con Repetición y Restricciones de Identidad</h2>
 <p>Los modelos anteriores asumen dos condiciones ideales: cada elemento
@@ -607,18 +689,32 @@ exclusivamente sobre un alfabeto reducido de <span class="math inline">n
 class="math inline">\{0\text{--}9, \text{A--F}\}</span>), permitiendo
 repetir símbolos. Determine la cardinalidad del espacio de búsqueda para
 un ataque de fuerza bruta.</p>
-<p><strong>Solución:</strong></p>
-<p><span class="math display">VR_{16}^5 = 16^5 = (2^4)^5 = 2^{20} =
-1.048.576 \text{ contraseñas posibles}</span></p>
   </div>
 </div>
-<p><strong>Paso 1:</strong> Verificamos que el orden distingue
-contraseñas distintas («A1B2C» <span class="math inline">\neq</span>
-«C2B1A») y que los símbolos pueden repetirse («AAAAA» es válida).</p>
-<p><strong>Paso 2:</strong> Multiplicamos las <span
-class="math inline">16</span> opciones independientes a lo largo de las
-<span class="math inline">5</span> posiciones, obteniendo <span
-class="math inline">2^{20} = 1.048.576</span> claves posibles.</p>
+<p>En seguridad informática, dimensionar el tamaño del espacio de claves
+es fundamental para evaluar la resistencia de un esquema de
+autenticación frente a búsquedas exhaustivas. La finalidad de este
+ejercicio es calcular el número total de contraseñas válidas
+considerando que la posición de cada carácter importa y que el alfabeto
+no se agota al reutilizar símbolos.</p>
+<ol type="1">
+<li>Verificamos que el orden distingue contraseñas diferentes (por
+ejemplo, «A1B2C» <span class="math inline">\neq</span> «C2B1A») y que se
+permite repetir un mismo símbolo en múltiples posiciones («AAAAA» es
+válida), lo que corresponde a variaciones con repetición (<span
+class="math inline">VR_n^r = n^r</span>).</li>
+</ol>
+<p><span class="math display">n = 16, \quad r = 5, \qquad VR_n^r =
+n^r</span></p>
+<ol start="2" type="1">
+<li>Aplicamos el principio multiplicativo asignando <span
+class="math inline">16</span> opciones independientes a cada una de las
+<span class="math inline">5</span> posiciones y expresamos el resultado
+en base <span class="math inline">2</span> para evaluar su magnitud
+binaria exacta.</li>
+</ol>
+<p><span class="math display">VR_{16}^5 = 16^5 = (2^4)^5 = 2^{20} =
+1.048.576 \text{ contraseñas posibles}</span></p>
 <h3 
 id="combinaciones-con-repetición-y-el-método-de-estrellas-y-barras">3.2.
 Combinaciones con Repetición y el Método de Estrellas y Barras</h3>
@@ -683,10 +779,6 @@ las estrellas son indistinguibles entre sí y las barras también, el
 número total de soluciones enteras no negativas es:</p>
 <p><span class="math display">N_{\text{sol}} = \binom{n + r - 1}{r} =
 \binom{n + r - 1}{n - 1}</span></p>
-<h4
-id="caso-de-estudio-asignación-de-peticiones-con-cota-mínima-en-réplicas">3.2.2.
-Caso de Estudio: Asignación de Peticiones con Cota Mínima en
-Réplicas</h4>
 <div class="callout-box example">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
@@ -699,41 +791,46 @@ class="math inline">15</span> peticiones idénticas de base de datos a
 <span class="math inline">n = 4</span> servidores de réplica disponibles
 si cada servidor debe recibir al menos <span
 class="math inline">2</span> peticiones para evitar subutilización.</p>
-<p><strong>Solución:</strong></p>
-<p>Sea <span class="math inline">x_i</span> el número de peticiones
-asignadas al servidor <span class="math inline">i</span> (<span
-class="math inline">i = 1, 2, 3, 4</span>). El problema equivale a
-hallar el número de soluciones enteras del sistema:</p>
+  </div>
+</div>
+<p>En este caso de estudio modelamos un problema de reparto de carga
+donde los elementos distribuidos son indistinguibles entre sí, pero los
+destinos son identificables y están sujetos a una cota inferior de
+asignación. Se busca hallar el número total de repartos válidos
+reduciendo la restricción mínima mediante un cambio de variable para
+aplicar el método de estrellas y barras (combinaciones con
+repetición).</p>
+<ol type="1">
+<li>Definimos <span class="math inline">x_i</span> como el número de
+peticiones asignadas al servidor <span class="math inline">i</span>
+(<span class="math inline">i = 1, 2, 3, 4</span>) y formulamos el
+problema como el conteo de soluciones enteras de una ecuación diofántica
+sujeta a la restricción de mínimo garantizado.</li>
+</ol>
 <p><span class="math display">x_1 + x_2 + x_3 + x_4 = 15, \quad
 \text{sujeto a } x_i \ge 2 \quad \forall i \in \{1, 2, 3, 4\}</span></p>
-<p>Definimos el cambio de variable <span class="math inline">y_i = x_i -
-2</span>, de modo que <span class="math inline">y_i \ge 0</span> para
-todo <span class="math inline">i</span>. Sustituyendo <span
-class="math inline">x_i = y_i + 2</span> en la ecuación de balance:</p>
+<ol start="2" type="1">
+<li>Preasignamos deterministamente <span class="math inline">2</span>
+peticiones a cada uno de los <span class="math inline">4</span>
+servidores (consumiendo <span class="math inline">4 \cdot 2 = 8</span>
+peticiones del inventario) mediante el cambio de variable <span
+class="math inline">y_i = x_i - 2</span>, de manera que las nuevas
+incógnitas sean enteras no negativas (<span class="math inline">y_i \ge
+0</span>).</li>
+</ol>
 <p><span class="math display">(y_1 + 2) + (y_2 + 2) + (y_3 + 2) + (y_4 +
 2) = 15 \implies y_1 + y_2 + y_3 + y_4 = 15 - 8 = 7</span></p>
-<p>Aplicando el modelo de estrellas y barras con <span
-class="math inline">n = 4</span> servidores y <span
-class="math inline">r&#39; = 7</span> peticiones libres restantes:</p>
+<ol start="3" type="1">
+<li>Aplicamos el modelo de estrellas y barras para distribuir sin
+restricciones las <span class="math inline">r&#39; = 7</span> peticiones
+libres restantes entre los <span class="math inline">n = 4</span>
+servidores (lo cual requiere <span class="math inline">4 - 1 = 3</span>
+barras separadoras y <span class="math inline">7</span> estrellas) y
+simplificamos usando simetría combinatoria.</li>
+</ol>
 <p><span class="math display">N_{\text{sol}} = \binom{4 + 7 - 1}{7} =
 \binom{10}{7} = \binom{10}{3} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2
 \cdot 1} = 120 \text{ formas de asignación}</span></p>
-  </div>
-</div>
-<p><strong>Paso 1:</strong> Como las peticiones son idénticas entre sí y
-los servidores son entidades distinguibles, preasignamos
-deterministamente <span class="math inline">2</span> peticiones a cada
-uno de los <span class="math inline">4</span> servidores, consumiendo
-<span class="math inline">4 \cdot 2 = 8</span> peticiones del inventario
-para satisfacer la restricción <span class="math inline">x_i \ge
-2</span>.</p>
-<p><strong>Paso 2:</strong> Reducimos el problema a distribuir sin
-restricciones (<span class="math inline">y_i \ge 0</span>) las <span
-class="math inline">r&#39; = 7</span> peticiones sobrantes entre los
-<span class="math inline">n = 4</span> servidores, lo que requiere <span
-class="math inline">4 - 1 = 3</span> barras separadoras y <span
-class="math inline">7</span> estrellas, generando <span
-class="math inline">\binom{10}{3} = 120</span> repartos posibles.</p>
 <h3 
 id="permutaciones-con-elementos-indistinguibles-y-fórmula-multinomial">3.3.
 Permutaciones con Elementos Indistinguibles y Fórmula Multinomial</h3>
@@ -777,10 +874,6 @@ multiplicativo, cada secuencia distinguible aparece repetida exactamente
 en el conteo bruto, por lo que dividir <span
 class="math inline">n!</span> entre dicho producto entrega el total
 exacto.</p>
-<h4
-id="caso-de-estudio-secuencias-de-tramas-de-control-en-protocolos-de-enlace">3.3.1.
-Caso de Estudio: Secuencias de Tramas de Control en Protocolos de
-Enlace</h4>
 <div class="callout-box example">
   <div class="callout-title">
     <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
@@ -795,24 +888,40 @@ class="math inline">4</span> paquetes NACK y <span
 class="math inline">3</span> paquetes SYN, todos idénticos entre sí
 según su tipo. Calcule el número total de secuencias distinguibles que
 pueden recibirse en el nodo destino.</p>
-<p><strong>Solución:</strong></p>
-<p>Verificamos que la suma de subgrupos iguala el total de paquetes:
-<span class="math inline">n = 5 + 4 + 3 = 12</span>. Aplicando la
-fórmula multinomial:</p>
-<p><span class="math display">\binom{12}{5, 4, 3} = \frac{12!}{5! \cdot
-4! \cdot 3!} = \frac{479.001.600}{120 \cdot 24 \cdot 6} =
-\frac{479.001.600}{17.280} = 27.720 \text{ secuencias
-distinguibles}</span></p>
   </div>
 </div>
-<p><strong>Paso 1:</strong> Identificamos que el orden de llegada de los
-comandos altera el estado de la máquina de protocolo, pero intercambiar
-dos tramas ACK entre sí no produce un mensaje nuevo.</p>
-<p><strong>Paso 2:</strong> Dividimos las <span
-class="math inline">12!</span> permutaciones brutas entre las simetrías
-internas de cada tipo de trama (<span class="math inline">5! \cdot 4!
-\cdot 3! = 17.280</span>), reduciendo el espacio de estados efectivos a
-<span class="math inline">27.720</span> secuencias posibles.</p>
+<p>Al analizar ráfagas de tráfico en protocolos de red, el orden de
+llegada de los comandos altera el estado del receptor, pero intercambiar
+dos paquetes del mismo tipo produce exactamente la misma secuencia
+observable. La finalidad de este ejercicio es cuantificar con exactitud
+el espacio de secuencias distinguibles aplicando la fórmula multinomial
+para descontar las permutaciones internas de cada clase de paquetes
+idénticos.</p>
+<ol type="1">
+<li>Identificamos los tamaños de los <span class="math inline">k =
+3</span> grupos de tramas indistinguibles (<span class="math inline">n_1
+= 5</span> ACK, <span class="math inline">n_2 = 4</span> NACK y <span
+class="math inline">n_3 = 3</span> SYN) y verificamos que su suma
+coincide con la longitud total de la ráfaga.</li>
+</ol>
+<p><span class="math display">n = n_1 + n_2 + n_3 = 5 + 4 + 3 =
+12</span></p>
+<ol start="2" type="1">
+<li>Planteamos el coeficiente multinomial dividiendo las <span
+class="math inline">12!</span> permutaciones brutas entre el producto de
+las simetrías internas (<span class="math inline">n_1! \cdot n_2! \cdot
+n_3!</span>) de los paquetes idénticos de cada tipo.</li>
+</ol>
+<p><span class="math display">\binom{12}{5, 4, 3} = \frac{12!}{5! \cdot
+4! \cdot 3!}</span></p>
+<ol start="3" type="1">
+<li>Evaluamos los factoriales y efectuamos la división para determinar
+el número exacto de secuencias de control distinguibles en el nodo
+destino.</li>
+</ol>
+<p><span class="math display">\binom{12}{5, 4, 3} =
+\frac{479.001.600}{120 \cdot 24 \cdot 6} = \frac{479.001.600}{17.280} =
+27.720 \text{ secuencias distinguibles}</span></p>
 <h2 
 id="síntesis-taxonómica-y-compromisos-de-ingeniería-computacional">4.
 Síntesis Taxonómica y Compromisos de Ingeniería Computacional</h2>
@@ -941,14 +1050,11 @@ la mínima magnitud posible en cada ciclo.</p>
   <div class="callout-content">
 <ul>
 <li><p><strong>Meyer, Paul L.</strong> <em>Probabilidad y Aplicaciones
-Estadísticas</em> (Edición revisada). Addison-Wesley Iberoamericana.
-Capítulo 1 («Introducción a la probabilidad») y Capítulo 2 («Espacios
-muestrales finitos», secciones «Métodos de enumeración», «Combinaciones»
-y «Permutaciones»).</p></li>
+Estadísticas</em> (Edición revisada). Addison-Wesley
+Iberoamericana.</p></li>
 <li><p><strong>Feller, William.</strong> <em>An Introduction to
 Probability Theory and Its Applications</em>, Vol. I (3.ª ed.). John
-Wiley &amp; Sons, Inc., Nueva York, 1968. Capítulo 2 («Elements of
-Combinatorial Analysis»).</p></li>
+Wiley &amp; Sons, Inc., Nueva York, 1968. Capítulos 1, 2 y 3.</p></li>
 <li><p><strong>Riordan, John.</strong> <em>An Introduction to
 Combinatorial Analysis</em>. Dover Publications, Mineola, Nueva York,
 2002.</p></li>
@@ -959,9 +1065,7 @@ and Its Applications</em>. John Wiley &amp; Sons, Inc., Nueva York,
 McGraw-Hill, México, 1970.</p></li>
 <li><p><strong>Universidad Central de Venezuela (UCV), Facultad de
 Ciencias, Escuela de Computación.</strong> <em>Probabilidad y
-Estadística: Introducción a la Probabilidad (G01) y Práctica Nº 0:
-Repaso de Combinatoria y Probabilidades (A00)</em>. Caracas, Venezuela,
-2023.</p></li>
+Estadística</em>. Caracas, Venezuela, 2023.</p></li>
 </ul>
   </div>
 </div>

@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espacios de Probabilidad y los Axiomas de Kolmogorov | Druxorey</title>
+  <meta name="description" content="Un espacio de probabilidad constituye el marco matemático riguroso que formaliza la cuantificación de la incertidumbre en fenómenos estocásticos, integrando un espacio muestral de resultados posibles, una 𝜎-álgebra de eventos medibles y una medida de probabilidad regida por los axiomas de Kolmogorov. Esta estructura garantiza la coherencia lógica en el cálculo métrico de eventos tanto en dominios discretos como en sistemas continuos complejos.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="/assets/main-Dehq_9UD.js"></script>
+  <script type="module" crossorigin src="/assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="/assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-u8MMlYs2.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#fundamentos-estocásticos-y-estructura-del-espacio-de-probabilidad">1.
+Fundamentos Estocásticos y Estructura del Espacio de Probabilidad</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#regularidad-estadística-y-posibilidad-frente-a-certidumbre-métrica">1.1.
+Regularidad Estadística y Posibilidad frente a Certidumbre Métrica</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#el-espacio-muestral-los-eventos-y-la-función-probabilística">1.2. El
+Espacio Muestral, los Eventos y la Función Probabilística</a></li>
+<li class="toc-item"><a class="toc-link" href="#axiomática-de-la-función-probabilística-y-corolarios-derivados">2.
+Axiomática de la Función Probabilística y Corolarios Derivados</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#los-tres-axiomas-fundamentales">2.1. Los Tres Axiomas
+Fundamentales</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#propiedades-universales-como-corolarios-de-los-axiomas">2.2.
+Propiedades Universales como Corolarios de los Axiomas</a></li>
+<li class="toc-item"><a class="toc-link" href="#enfoques-metodológicos-de-asignación-probabilística">3. Enfoques
+Metodológicos de Asignación Probabilística</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#modelo-clásico-de-laplace-equiprobabilidad">3.1. Modelo Clásico
+de Laplace (Equiprobabilidad)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#enfoque-frecuentista-límite-de-frecuencias-relativas">3.2.
+Enfoque Frecuentista (Límite de Frecuencias Relativas)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#enfoque-geométrico-medidas-continuas">3.3. Enfoque Geométrico
+(Medidas Continuas)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#enfoque-subjetivo-grados-de-creencia-racionales">3.4. Enfoque
+Subjetivo (Grados de Creencia Racionales)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#síntesis-comparativa-de-los-enfoques-de-asignación">3.5.
+Síntesis Comparativa de los Enfoques de Asignación</a></li>
+<li class="toc-item"><a class="toc-link" href="#ejercicios-prácticos-resueltos">5. Ejercicios Prácticos
+Resueltos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#concurrencia-temporal-en-sincronización-de-tareas">5.1.
+Concurrencia Temporal en Sincronización de Tareas</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#generación-de-manos-en-juegos-de-azar-computarizados">5.2.
+Generación de Manos en Juegos de Azar Computarizados</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Probabilidad y Estadistica</div>
+          <h1 class="article-title">Espacios de Probabilidad y los Axiomas de Kolmogorov</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota 2.1</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>Un <strong>espacio de probabilidad</strong> constituye el marco
+matemático riguroso que formaliza la cuantificación de la incertidumbre
+en fenómenos <strong>estocásticos</strong>, integrando
+un <strong>espacio muestral</strong> de resultados posibles,
+una <strong>𝜎-álgebra</strong> de eventos medibles y una <strong>medida
+de probabilidad</strong> regida por los <strong>axiomas de
+Kolmogorov</strong>. Esta estructura garantiza la coherencia lógica en
+el cálculo métrico de eventos tanto en dominios discretos como en
+sistemas continuos complejos.</p>
+  </div>
+</div>
+<p>En la vida cotidiana numerosas variables operativas escapan al
+control exacto de sus condiciones iniciales. Cuando un sistema exhibe
+este comportamiento fluctuante, intentar predecir una ejecución aislada
+mediante ecuaciones rígidas resulta inviable; sin embargo, al observar
+el fenómeno de manera colectiva, emergen patrones estables que permiten
+acotar riesgos y garantizar niveles de servicio.</p>
+<p>Para transformar esa observación en una herramienta de cálculo
+exacta, resulta indispensable separar dos niveles de análisis que suelen
+confundirse en el lenguaje cotidiano: identificar qué desenlaces son
+lógicamente concebibles dentro de un sistema y medir qué tan factible es
+cada uno de ellos. Construir este puente exige dotar a los conjuntos de
+resultados de una estructura métrica libre de contradicciones tanto en
+dominios finitos como en intervalos continuos.</p>
+<h2 
+id="fundamentos-estocásticos-y-estructura-del-espacio-de-probabilidad">1.
+Fundamentos Estocásticos y Estructura del Espacio de Probabilidad</h2>
+<p>El punto de partida del análisis de la incertidumbre consiste en
+caracterizar la naturaleza del mecanismo que genera los datos. Cuando al
+fijar las entradas y el estado inicial de un procedimiento se obtiene
+siempre una salida idéntica e inequívoca (como ocurre al evaluar una
+función pura sin efectos secundarios), el fenómeno recibe el nombre de
+<strong>determinista</strong>. Por el contrario, cuando las condiciones
+experimentales no determinan un desenlace único, sino únicamente el
+patrón estadístico con el que emergen los distintos resultados
+observables, nos encontramos ante un experimento
+<strong>estocástico</strong> o <strong>no determinista</strong>.</p>
+<h3 
+id="regularidad-estadística-y-posibilidad-frente-a-certidumbre-métrica">1.1.
+Regularidad Estadística y Posibilidad frente a Certidumbre Métrica</h3>
+<p>Para que un fenómeno sujeto a variabilidad pueda estudiarse
+rigurosamente mediante modelos probabilísticos, debe reunir tres
+propiedades estructurales:</p>
+<ul>
+<li><p><strong>Repetibilidad:</strong> El procedimiento puede ejecutarse
+reiteradamente sin alterar sus condiciones esenciales de
+partida.</p></li>
+<li><p><strong>Incertidumbre del resultado particular:</strong> Resulta
+imposible anticipar con certeza qué salida arrojará una ejecución
+aislada, aunque sí es posible delimitar el catálogo completo de
+desenlaces admisibles.</p></li>
+<li><p><strong>Regularidad estadística:</strong> A medida que el
+experimento se repite un número creciente de veces (<span
+class="math inline">N \to \infty</span>), las frecuencias relativas de
+los resultados individuales dejan de oscilar de manera errática y se
+estabilizan en torno a proporciones matemáticas constantes.</p></li>
+</ul>
+<p>Esta separación entre el catálogo de desenlaces y su peso numérico
+obliga a distinguir dos categorías conceptuales: la <strong>posibilidad
+cualitativa</strong> y la <strong>certidumbre métrica</strong>
+(probabilidad). La posibilidad es una propiedad binaria de pertenencia a
+conjuntos: un resultado elemental <span
+class="math inline">\omega</span> es «posible» si forma parte del
+universo de resultados concebibles del experimento, y es «imposible» si
+corresponde al conjunto vacío <span
+class="math inline">\emptyset</span>. La probabilidad, en cambio, es una
+función métrica que opera sobre eventos posibles para asignarles una
+valoración numérica de ocurrencia en el intervalo <span
+class="math inline">[0, 1]</span>.</p>
+<p>En consecuencia, todo evento imposible es necesariamente improbable
+(<span class="math inline">\mathbb{P}(\emptyset) = 0</span>), pero un
+evento puede ser perfectamente posible desde el punto de vista lógico y
+tener probabilidad nula. Al medir el instante continuo <span
+class="math inline">T \in [0, 24]\text{ h}</span> en que una persona
+llega a su puesto de trabajo, que el incidente ocurra exactamente a las
+<span class="math inline">T = 8.0000\text{ h}</span> es posible por
+pertenecer al intervalo temporal real, pero al existir infinitos
+instantes no numerables en un día, su medida puntual es <span
+class="math inline">\mathbb{P}(T = 8) = 0</span>.</p>
+<h3 
+id="el-espacio-muestral-los-eventos-y-la-función-probabilística">1.2. El
+Espacio Muestral, los Eventos y la Función Probabilística</h3>
+<p>Instintivamente, para estudiar un experimento no determinístico
+podríamos pensar en anotar los posibles resultados, sin embargo no
+existe garantía de haber contemplado todas las posibilidades ni de
+evitar ambigüedades sobre qué estamos midiendo exactamente. Para
+resolver este problema, se formalizan tres elementos básicos:</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 1:</strong> Espacio Muestral
+(<span class="math inline">\Omega</span>) y Evento (<span
+class="math inline">E</span>)</span>
+  </div>
+  <div class="callout-content">
+<p>Dado un experimento no determinístico, el <strong>espacio
+muestral</strong> <span class="math inline">\Omega</span> (denotado como
+<span class="math inline">S</span> en parte de la literatura) es el
+conjunto de todos sus resultados elementales posibles <span
+class="math inline">\omega</span>, formulados de manera mutuamente
+excluyente y colectivamente exhaustiva.</p>
+<p>Un <strong>evento</strong> (o suceso) <span
+class="math inline">E</span> es cualquier subconjunto del espacio
+muestral (<span class="math inline">E \subseteq \Omega</span>). En
+particular, el propio <span class="math inline">\Omega</span> es el
+<em>evento seguro</em> y el conjunto vacío <span
+class="math inline">\emptyset</span> es el <em>evento
+imposible</em>.</p>
+  </div>
+</div>
+<p>En palabras sencillas, el espacio muestral funciona como un
+archivador cerrado donde cada carpeta representa un único resultado
+indivisible del experimento: al ejecutar el ensayo una vez, se extrae
+exactamente una carpeta y ninguna otra. Un evento <span
+class="math inline">E</span> es simplemente una agrupación de carpetas
+que comparten una característica de interés (por ejemplo, «que salga un
+número par» al lanzar un dado). Según la cantidad y naturaleza de los
+elementos que contiene, el espacio muestral <span
+class="math inline">\Omega</span> se clasifica en tres tipos:</p>
+<ol type="1">
+<li><p><strong>Discreto finito:</strong> Posee un número acotado de
+resultados posibles (<span class="math inline">\lvert \Omega \rvert = n
+&lt; \infty</span>), como las <span class="math inline">6</span> caras
+de un dado (<span class="math inline">\Omega = \{1, 2, 3, 4, 5,
+6\}</span>) o las <span class="math inline">16</span> secuencias al
+lanzar una moneda cuatro veces.</p></li>
+<li><p><strong>Discreto infinito numerable:</strong> Sus elementos
+pueden ponerse en correspondencia uno a uno con los números naturales
+<span class="math inline">\mathbb{N}</span>, como contar cuántos
+artículos se inspeccionan hasta encontrar el primero
+defectuoso.</p></li>
+<li><p><strong>Continuo (infinito no numerable):</strong> Sus resultados
+abarcan intervalos completos de números reales <span
+class="math inline">\mathbb{R}</span> o regiones geométricas, como el
+tiempo total <span class="math inline">t \ge 0</span> que funciona una
+bombilla antes de quemarse (<span class="math inline">\Omega = \{t \mid
+t \ge 0\}</span>).</p></li>
+</ol>
+<p>Una vez delimitados <span class="math inline">\Omega</span> y los
+eventos <span class="math inline">E \subseteq \Omega</span>, surge la
+necesidad de asignar a cada evento un número que mida qué tan factible
+es su ocurrencia. El dominio natural para evaluar cualquier combinación
+lógica de resultados es el conjunto potencia <span
+class="math inline">\text{Partes}(\Omega)</span>, que reúne a todos los
+subconjuntos posibles de <span class="math inline">\Omega</span>. Cuando
+<span class="math inline">\Omega</span> es discreto y finito con <span
+class="math inline">n</span> elementos, <span
+class="math inline">\text{Partes}(\Omega)</span> contiene exactamente
+<span class="math inline">2^n</span> eventos. (En teoría avanzada de la
+medida, cuando <span class="math inline">\Omega</span> es continuo no
+numerable se restringe el dominio a una familia cerrada de subconjuntos
+admisibles llamada <span class="math inline">\sigma</span>-álgebra para
+evitar paradojas geométricas con conjuntos sin longitud o área
+definidas; en las aplicaciones habituales del curso trabajamos
+directamente sobre <span
+class="math inline">\text{Partes}(\Omega)</span>).</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 2:</strong> Función Probabilística
+(<span class="math inline">P</span>)</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>función probabilística</strong> es una aplicación
+matemática <span class="math inline">P: \text{Partes}(\Omega) \to [0,
+1]</span> que asigna a cada evento <span class="math inline">E \subseteq
+\Omega</span> un número real que indica el grado de incertidumbre sobre
+su ocurrencia:</p>
+<ul>
+<li><p><span class="math inline">P(E) = 0</span> indica que es
+<em>improbable</em> que ocurra <span
+class="math inline">E</span>.</p></li>
+<li><p><span class="math inline">P(E) = 1</span> indica que <span
+class="math inline">E</span> ocurre con <em>total certeza</em>.</p></li>
+</ul>
+  </div>
+</div>
+<p>De manera intuitiva, la función probabilística <span
+class="math inline">P</span> actúa como una balanza calibrada entre
+<span class="math inline">0</span> y <span class="math inline">1</span>
+que pesa cada subconjunto de <span
+class="math inline">\text{Partes}(\Omega)</span>. Es fundamental no
+confundir <em>improbable</em> (<span class="math inline">P(E) =
+0</span>) con <em>imposible</em> (<span class="math inline">E =
+\emptyset</span>): todo evento imposible es necesariamente improbable,
+pero un evento improbable puede ser lógicamente posible. Como ilustra la
+nota de clase, que un meteorito aterrice justo a nuestro lado mientras
+leemos este apunte es un evento <em>improbable</em> (<span
+class="math inline">P(E) \approx 0</span>), pero no <em>imposible</em>
+(<span class="math inline">E \neq \emptyset</span>).</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Espacio Muestral y Eventos en
+el Lanzamiento de Tres Monedas</span>
+  </div>
+  <div class="callout-content">
+<p>Se lanza una moneda regular tres veces consecutivas y se registra la
+secuencia de caras (<span class="math inline">C</span>) y sellos (<span
+class="math inline">S</span>) obtenida. Describa el espacio muestral
+<span class="math inline">\Omega</span>, el tamaño de <span
+class="math inline">\text{Partes}(\Omega)</span> y los elementos del
+evento <span class="math inline">E</span>: «salen más caras que
+sellos».</p>
+  </div>
+</div>
+<p>Para resolver este ejercicio primero analizamos la estructura del
+experimento estocástico: al lanzar una moneda cuatro veces consecutivas,
+se busca determinar la probabilidad de un evento específico mediante la
+construcción formal del espacio muestral y la identificación de sus
+subconjuntos favorables.</p>
+<ol type="1">
+<li>Construimos cada resultado elemental <span
+class="math inline">\omega</span> como una palabra de cuatro letras
+perteneciente a <span class="math inline">\{C, S\}^4</span>,
+garantizando que las <span class="math inline">16</span> secuencias sean
+mutuamente excluyentes y cubran todos los desenlaces posibles del
+experimento.</li>
+</ol>
+<p><span class="math display">\Omega = {CCC, CCS, CSC, SCC, CSS, SCS,
+SSC, SSS}</span></p>
+<ol start="2" type="1">
+<li>Observamos que, al ser <span class="math inline">\Omega</span> un
+espacio discreto finito de <span class="math inline">16</span>
+elementos, el dominio <span
+class="math inline">\text{Partes}(\Omega)</span> contiene <span
+class="math inline">2^{16} = 65\,536</span> subconjuntos medibles
+distintos.</li>
+</ol>
+<p><span class="math display">\lvert \Omega \rvert = 2^3 = 8 \implies
+\lvert \text{Partes}(\Omega) \rvert = 2^8 = 256</span></p>
+<ol start="3" type="1">
+<li>Aislamos dentro de <span class="math inline">\Omega</span> las
+secuencias que contienen al menos <span class="math inline">3</span>
+caras (<span class="math inline">4</span> caras o <span
+class="math inline">3</span> caras y <span class="math inline">1</span>
+sello), delimitando exactamente los <span class="math inline">5</span>
+resultados favorables que conforman el evento <span
+class="math inline">E \subseteq \Omega</span>.</li>
+</ol>
+<p><span class="math display">E = {CCC, CCS, CSC, SCC} \implies \lvert E
+\rvert = 4</span></p>
+<h2 
+id="axiomática-de-la-función-probabilística-y-corolarios-derivados">2.
+Axiomática de la Función Probabilística y Corolarios Derivados</h2>
+<p>Definida la función probabilística <span class="math inline">P:
+\text{Partes}(\Omega) \to [0, 1]</span>, hace falta establecer las
+reglas mínimas que garantizan que cualquier asignación de probabilidades
+sea coherente y libre de contradicciones internas. Esta fundamentación
+axiomática, introducida por Andréi Kolmogórov, permite construir todo el
+cálculo de probabilidades a partir de tres postulados básicos.</p>
+<h3  id="los-tres-axiomas-fundamentales">2.1. Los Tres Axiomas
+Fundamentales</h3>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 3:</strong> Axiomas de la Función
+Probabilística</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">\Omega</span> un espacio muestral. Una
+función <span class="math inline">P: \text{Partes}(\Omega) \to [0,
+1]</span> es una <strong>función probabilística</strong> legítima si y
+solo si satisface los siguientes tres axiomas:</p>
+<ol type="1">
+<li><p><strong>Acotación en el intervalo unitario:</strong> <span
+class="math inline">\forall E \subseteq \Omega : 0 \le P(E) \le
+1</span>.</p></li>
+<li><p><strong>Probabilidad de los eventos extremos:</strong> <span
+class="math inline">P(\emptyset) = 0 \land P(\Omega) =
+1</span>.</p></li>
+<li><p><strong>Aditividad para eventos mutuamente excluyentes:</strong>
+<span class="math inline">\forall E, F \subseteq \Omega : \text{Si } E
+\cap F = \emptyset \text{ entonces } P(E \cup F) = P(E) +
+P(F)</span>.</p></li>
+</ol>
+  </div>
+</div>
+<p>Eestos tres axiomas establecen que la probabilidad se comporta
+exactamente como una masa física total de <span
+class="math inline">1u</span> repartida sobre el espacio muestral:</p>
+<ul>
+<li><p>El <strong>Axioma 1</strong> impide asignar pesos negativos o
+superiores al total disponible (<span class="math inline">0 \le P(E) \le
+1</span>).</p></li>
+<li><p>El <strong>Axioma 2</strong> fija las referencias absolutas: la
+ausencia de resultados pesa <span class="math inline">0u</span> (<span
+class="math inline">P(\emptyset) = 0</span>) y la totalidad del universo
+pesa exactamente <span class="math inline">1u</span> (<span
+class="math inline">P(\Omega) = 1</span>).</p></li>
+<li><p>El <strong>Axioma 3</strong> indica que, si dos regiones <span
+class="math inline">E</span> y <span class="math inline">F</span> no se
+solapan en absoluto (<span class="math inline">E \cap F =
+\emptyset</span>), el peso de reunir ambas equivale simplemente a sumar
+sus pesos por separado. (En teoría avanzada de espacios continuos
+infinitos, Kolmogórov extiende este tercer axioma a una sucesión
+infinita numerable de eventos disjuntos dos a dos, mientras que en
+nuestro desarrollo partimos de la aditividad finita para dos
+eventos).</p></li>
+</ul>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Asignación Axiomática en un
+Espacio Muestral Finito</span>
+  </div>
+  <div class="callout-content">
+<p>Suponga que solo tres resultados elementales son posibles en un
+experimento: <span class="math inline">\Omega = \{a_1, a_2,
+a_3\}</span>. Además, se sabe que la ocurrencia de <span
+class="math inline">a_1</span> es dos veces más probable que la de <span
+class="math inline">a_2</span>, la cual, a su vez, es dos veces más
+probable que la de <span class="math inline">a_3</span>. Determine la
+probabilidad de cada resultado elemental <span class="math inline">p_1 =
+P(\{a_1\})</span>, <span class="math inline">p_2 = P(\{a_2\})</span> y
+<span class="math inline">p_3 = P(\{a_3\})</span>.</p>
+  </div>
+</div>
+<p>Para resolver este ejercicio partimos de un espacio muestral discreto
+y finito cuyos resultados no son equiprobables, sino que guardan una
+relación de proporcionalidad entre sí. Lo que se busca es asignar una
+medida de probabilidad numérica a cada desenlace individual garantizando
+la consistencia lógica con los axiomas de Kolmogórov.</p>
+<p>Para lograrlo, debemos traducir las condiciones de peso relativo en
+ecuaciones algebraicas y combinarlas con la restricción de que la masa
+probabilística total del espacio muestral debe ser exactamente igual a
+la unidad.</p>
+<ol type="1">
+<li>Identificamos que los eventos elementales <span
+class="math inline">\{a_1\}</span>, <span
+class="math inline">\{a_2\}</span> y <span
+class="math inline">\{a_3\}</span> son mutuamente excluyentes dos a dos
+y su unión conforma todo el espacio muestral <span
+class="math inline">\Omega</span>, además de expresar las relaciones de
+proporcionalidad del enunciado en términos de <span
+class="math inline">p_3</span>.</li>
+</ol>
+<p><span class="math display">\Omega = \{a_1\} \cup \{a_2\} \cup
+\{a_3\}, \qquad p_1 = 2p_2, \quad p_2 = 2p_3 \implies p_1 =
+4p_3</span></p>
+<ol start="2" type="1">
+<li>Aplicamos el Axioma 3 de forma reiterada para descomponer <span
+class="math inline">P(\Omega)</span> como la suma de las probabilidades
+elementales e igualamos esa suma a <span class="math inline">1</span>
+según el Axioma 2, sustituyendo cada término en función de <span
+class="math inline">p_3</span>.</li>
+</ol>
+<p><span class="math display">P(\Omega) = p_1 + p_2 + p_3 = 1 \implies
+4p_3 + 2p_3 + p_3 = 1 \implies 7p_3 = 1</span></p>
+<ol start="3" type="1">
+<li>Despejamos <span class="math inline">p_3</span>, calculamos <span
+class="math inline">p_2</span> y <span class="math inline">p_1</span> a
+partir de las proporciones dadas y verificamos que los tres valores
+cumplen el Axioma 1 al ubicarse estrictamente dentro del intervalo <span
+class="math inline">[0, 1]</span>.</li>
+</ol>
+<p><span class="math display">p_3 = \frac{1}{7}, \qquad p_2 =
+\frac{2}{7}, \qquad p_1 = \frac{4}{7}</span></p>
+<h3  id="propiedades-universales-como-corolarios-de-los-axiomas">2.2.
+Propiedades Universales como Corolarios de los Axiomas</h3>
+<p>La potencia del enfoque axiomático radica en que las demás reglas del
+cálculo de probabilidades no requieren ser postuladas ni verificadas
+experimentalmente: se demuestran como <strong>corolarios</strong>
+lógicos utilizando exclusivamente los tres axiomas anteriores y los
+corolarios ya demostrados.</p>
+<h4 id="probabilidad-del-evento-complementario">2.2.1. Probabilidad del
+Evento Complementario</h4>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Corolario 1:</strong> Regla del Complemento</span>
+  </div>
+  <div class="callout-content">
+<p>Para todo evento <span class="math inline">E \subseteq \Omega</span>,
+la probabilidad de su evento complementario <span
+class="math inline">E^c = \Omega \setminus E</span> satisface:</p>
+<p><span class="math display">P(E^c) = 1 - P(E)</span></p>
+  </div>
+</div>
+<p>Por definición de complemento en teoría de conjuntos, un evento <span
+class="math inline">E</span> y su complemento <span
+class="math inline">E^c</span> no comparten ningún elemento (<span
+class="math inline">E \cap E^c = \emptyset</span>) y su unión
+reconstruye el espacio muestral completo (<span class="math inline">E
+\cup E^c = \Omega</span>). Al ser mutuamente excluyentes, aplicamos el
+<strong>Axioma 3</strong>:</p>
+<p><span class="math display">P(E \cup E^c) = P(E) + P(E^c)</span></p>
+<p>Sustituyendo <span class="math inline">E \cup E^c = \Omega</span> y
+aplicando el <strong>Axioma 2</strong> (<span
+class="math inline">P(\Omega) = 1</span>):</p>
+<p><span class="math display">1 = P(E) + P(E^c)</span></p>
+<p>Despejando <span class="math inline">P(E^c)</span> obtenemos
+directamente <span class="math inline">P(E^c) = 1 - P(E)</span>. En la
+práctica, este corolario resulta sumamente útil cuando resulta más
+sencillo calcular la probabilidad de que <em>no</em> ocurra un suceso
+(por ejemplo, «ningún artículo sale defectuoso») que contar todas las
+combinaciones en las que ocurre al menos una vez.</p>
+<h4 id="aditividad-finita-para-n-eventos-mutuamente-excluyentes">2.2.2.
+Aditividad Finita para <span class="math inline">n</span> Eventos
+Mutuamente Excluyentes</h4>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Corolario 2:</strong> Aditividad Finita
+Generalizada</span>
+  </div>
+  <div class="callout-content">
+<p>Si <span class="math inline">E_1, E_2, \dots, E_n \subseteq
+\Omega</span> son <span class="math inline">n</span> eventos mutuamente
+excluyentes dos a dos (<span class="math inline">E_i \cap E_j =
+\emptyset</span> para todo <span class="math inline">i \neq j</span>),
+entonces:</p>
+<p><span class="math display">P\left(\bigcup_{i=1}^n E_i\right) =
+\sum_{i=1}^n P(E_i)</span></p>
+  </div>
+</div>
+<p>Procedemos por inducción matemática sobre el número de eventos <span
+class="math inline">n</span>:</p>
+<ul>
+<li><p><strong>Caso base (<span class="math inline">n =
+2</span>):</strong> Para dos eventos disjuntos <span
+class="math inline">E_1</span> y <span class="math inline">E_2</span>,
+la igualdad <span class="math inline">P(E_1 \cup E_2) = P(E_1) +
+P(E_2)</span> es cierta directamente por el <strong>Axioma
+3</strong>.</p></li>
+<li><p><strong>Hipótesis inductiva:</strong> Supongamos que la propiedad
+se cumple para cualquier colección de <span class="math inline">n -
+1</span> eventos mutuamente excluyentes dos a dos:</p></li>
+</ul>
+<p><span class="math display">P\left(\bigcup_{i=1}^{n-1} E_i\right) =
+\sum_{i=1}^{n-1} P(E_i)</span></p>
+<ul>
+<li><strong>Paso inductivo:</strong> Definimos el evento compuesto <span
+class="math inline">A = \bigcup_{i=1}^{n-1} E_i</span>. Por la ley
+distributiva de la intersección sobre la unión y dado que <span
+class="math inline">E_i \cap E_n = \emptyset</span> para todo <span
+class="math inline">i \le n - 1</span>, verificamos que <span
+class="math inline">A</span> y <span class="math inline">E_n</span> son
+mutuamente excluyentes:</li>
+</ul>
+<p><span class="math display">A \cap E_n = \left(\bigcup_{i=1}^{n-1}
+E_i\right) \cap E_n = \bigcup_{i=1}^{n-1} (E_i \cap E_n) =
+\bigcup_{i=1}^{n-1} \emptyset = \emptyset</span></p>
+<div class="code-block-wrapper">
+  <button class="copy-code-btn" type="button" data-lang="Code" title="Copiar código al portapapeles">Code</button>
+  <pre class="code-pre"><code>Aplicando el **Axioma 3** a los eventos disjuntos $A$ y $E_n$, y luego la hipótesis inductiva sobre $P(A)$:</code></pre>
+</div>
+<p><span class="math display">P\left(\bigcup_{i=1}^n E_i\right) = P(A
+\cup E_n) = P(A) + P(E_n) = \sum_{i=1}^{n-1} P(E_i) + P(E_n) =
+\sum_{i=1}^n P(E_i)</span></p>
+<h4 id="monotonía-por-inclusión-de-conjuntos">2.2.3. Monotonía por
+Inclusión de Conjuntos</h4>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Corolario 3:</strong> Propiedad de Monotonía</span>
+  </div>
+  <div class="callout-content">
+<p>Sean <span class="math inline">E, F \subseteq \Omega</span> dos
+eventos tales que <span class="math inline">E</span> está contenido en
+<span class="math inline">F</span> (<span class="math inline">E
+\subseteq F</span>). Entonces:</p>
+<p><span class="math display">P(E) \le P(F)</span></p>
+  </div>
+</div>
+<p>Dado que <span class="math inline">E \subseteq F</span>, podemos
+descomponer el conjunto mayor <span class="math inline">F</span> en la
+unión de dos subconjuntos mutuamente excluyentes: la parte que coincide
+con <span class="math inline">E</span> y los elementos de <span
+class="math inline">F</span> que no pertenecen a <span
+class="math inline">E</span> (<span class="math inline">F \cap
+E^c</span>):</p>
+<p><span class="math display">F = E \cup (F \cap E^c), \quad \text{con }
+E \cap (F \cap E^c) = \emptyset</span></p>
+<p>Al ser eventos disjuntos, aplicamos el <strong>Axioma 3</strong>:</p>
+<p><span class="math display">P(F) = P(E) + P(F \cap E^c)</span></p>
+<p>Por el <strong>Axioma 1</strong>, sabemos que la probabilidad de
+cualquier evento es mayor o igual que cero, por lo que <span
+class="math inline">P(F \cap E^c) \ge 0</span>. Al sumar una cantidad no
+negativa a <span class="math inline">P(E)</span>, resulta <span
+class="math inline">P(F) \ge P(E)</span>, es decir, <span
+class="math inline">P(E) \le P(F)</span>. Intuitivamente, si la
+ocurrencia de <span class="math inline">E</span> obliga a que ocurra
+<span class="math inline">F</span>, entonces <span
+class="math inline">F</span> debe ser al menos tan probable como <span
+class="math inline">E</span>.</p>
+<h4 id="ley-aditiva-general-para-dos-eventos">2.2.4. Ley Aditiva General
+para Dos Eventos</h4>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Corolario 4:</strong> Probabilidad de la Unión de
+Dos Eventos Cualesquiera</span>
+  </div>
+  <div class="callout-content">
+<p>Para cualesquiera dos eventos <span class="math inline">E, F
+\subseteq \Omega</span> (no necesariamente mutuamente excluyentes), la
+probabilidad de que ocurra al menos uno de ellos es:</p>
+<p><span class="math display">P(E \cup F) = P(E) + P(F) - P(E \cap
+F)</span></p>
+  </div>
+</div>
+<p>Para utilizar el Axioma 3, descomponemos la unión <span
+class="math inline">E \cup F</span> en dos regiones sin solapamiento:
+todo el evento <span class="math inline">E</span> junto con la porción
+de <span class="math inline">F</span> que queda fuera de <span
+class="math inline">E</span> (<span class="math inline">F \cap
+E^c</span>):</p>
+<p><span class="math display">E \cup F = E \cup (F \cap E^c), \quad
+\text{con } E \cap (F \cap E^c) = \emptyset</span></p>
+<p>Aplicando el <strong>Axioma 3</strong>:</p>
+<p><span class="math display">P(E \cup F) = P(E) + P(F \cap
+E^c)</span></p>
+<p>Por otro lado, el propio evento <span class="math inline">F</span>
+puede partirse en dos subconjuntos mutuamente excluyentes: su
+intersección con <span class="math inline">E</span> y su diferencia con
+<span class="math inline">E</span>:</p>
+<p><span class="math display">F = (E \cap F) \cup (F \cap E^c), \quad
+\text{con } (E \cap F) \cap (F \cap E^c) = \emptyset</span></p>
+<p>Aplicando nuevamente el <strong>Axioma 3</strong>, tenemos <span
+class="math inline">P(F) = P(E \cap F) + P(F \cap E^c)</span>, de donde
+despejamos <span class="math inline">P(F \cap E^c) = P(F) - P(E \cap
+F)</span>. Sustituyendo esta expresión en la primera igualdad
+obtenemos:</p>
+<p><span class="math display">P(E \cup F) = P(E) + P(F) - P(E \cap
+F)</span></p>
+<p>Intuitivamente, al sumar <span class="math inline">P(E) +
+P(F)</span>, los resultados comunes en <span class="math inline">E \cap
+F</span> se contabilizan dos veces; restar <span class="math inline">P(E
+\cap F)</span> elimina esa duplicidad. Cuando <span
+class="math inline">E</span> y <span class="math inline">F</span> son
+disjuntos, <span class="math inline">P(E \cap F) = P(\emptyset) =
+0</span> por el <strong>Axioma 2</strong> y se recupera el
+<strong>Axioma 3</strong>.</p>
+<h4
+id="generalización-para-n-eventos-principio-de-inclusión-exclusión">2.2.5.
+Generalización para <span class="math inline">N</span> Eventos
+(Principio de Inclusión-Exclusión)</h4>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Corolario 5:</strong> Ley Aditiva Generalizada para
+<span class="math inline">N</span> Eventos</span>
+  </div>
+  <div class="callout-content">
+<p>Para una colección finita de <span class="math inline">N</span>
+eventos cualesquiera <span class="math inline">E_1, E_2, \dots, E_N
+\subseteq \Omega</span>, la probabilidad de su unión está dada por:</p>
+<p><span class="math display">P\left(\bigcup_{i=1}^N E_i\right) =
+\sum_{i=1}^N P(E_i) - \sum_{i &lt; j} P(E_i \cap E_j) + \sum_{i &lt; j
+&lt; k} P(E_i \cap E_j \cap E_k) - \dots + (-1)^{N-1}
+P\left(\bigcap_{i=1}^N E_i\right)</span></p>
+  </div>
+</div>
+<p>Se establece por inducción matemática apoyándose en el
+<strong>Corolario 4</strong>. Para <span class="math inline">N =
+3</span> eventos (<span class="math inline">E_1, E_2, E_3</span>),
+agrupamos asociativamente <span class="math inline">E_1 \cup E_2 \cup
+E_3 = (E_1 \cup E_2) \cup E_3</span> y aplicamos el <strong>Corolario
+4</strong> dos veces consecutivas junto con la propiedad distributiva
+<span class="math inline">(E_1 \cup E_2) \cap E_3 = (E_1 \cap E_3) \cup
+(E_2 \cap E_3)</span>:</p>
+<p><span class="math display">P(E_1 \cup E_2 \cup E_3) = P(E_1 \cup E_2)
++ P(E_3) - P((E_1 \cap E_3) \cup (E_2 \cap E_3))</span></p>
+<p><span class="math display">= P(E_1) + P(E_2) - P(E_1 \cap E_2) +
+P(E_3) - \big[P(E_1 \cap E_3) + P(E_2 \cap E_3) - P(E_1 \cap E_2 \cap
+E_3)\big]</span></p>
+<p><span class="math display">= P(E_1) + P(E_2) + P(E_3) - P(E_1 \cap
+E_2) - P(E_1 \cap E_3) - P(E_2 \cap E_3) + P(E_1 \cap E_2 \cap
+E_3)</span></p>
+<p>La extensión a <span class="math inline">N</span> eventos conserva la
+misma alternancia de signos al sumar intersecciones simples, restar las
+dobles, sumar las triples y continuar sucesivamente hasta la
+intersección de los <span class="math inline">N</span> conjuntos.</p>
+<h4 id="desigualdad-de-boole-subaditividad-finita">2.2.6. Desigualdad de
+Boole (Subaditividad Finita)</h4>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Corolario 6:</strong> Desigualdad de Boole</span>
+  </div>
+  <div class="callout-content">
+<p>Para cualesquiera <span class="math inline">n</span> eventos <span
+class="math inline">E_1, E_2, \dots, E_n \subseteq \Omega</span>, la
+probabilidad de su unión nunca supera la suma de sus probabilidades
+individuales:</p>
+<p><span class="math display">P\left(\bigcup_{i=1}^n E_i\right) \le
+\sum_{i=1}^n P(E_i)</span></p>
+  </div>
+</div>
+<p><strong>Demostración:</strong> Procedemos por inducción matemática
+sobre <span class="math inline">n</span> utilizando únicamente el
+<strong>Corolario 4</strong> y el <strong>Axioma 1</strong>:</p>
+<ul>
+<li><strong>Caso base (<span class="math inline">n = 2</span>):</strong>
+Por el <strong>Corolario 4</strong>, sabemos que <span
+class="math inline">P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1 \cap
+E_2)</span>. Dado que el <strong>Axioma 1</strong> garantiza que <span
+class="math inline">P(E_1 \cap E_2) \ge 0</span>, al restar una cantidad
+no negativa se obtiene:</li>
+</ul>
+<p><span class="math display">P(E_1 \cup E_2) \le P(E_1) +
+P(E_2)</span></p>
+<ul>
+<li><strong>Hipótesis inductiva:</strong> Supongamos que la desigualdad
+es válida para <span class="math inline">n - 1</span> eventos
+cualesquiera:</li>
+</ul>
+<p><span class="math display">P\left(\bigcup_{i=1}^{n-1} E_i\right) \le
+\sum_{i=1}^{n-1} P(E_i)</span></p>
+<ul>
+<li><strong>Paso inductivo:</strong> Sea <span class="math inline">A =
+\bigcup_{i=1}^{n-1} E_i</span>. Aplicando el caso base (<span
+class="math inline">n = 2</span>) a los eventos <span
+class="math inline">A</span> y <span class="math inline">E_n</span>, y
+sustituyendo luego la hipótesis inductiva:</li>
+</ul>
+<p><span class="math display">P\left(\bigcup_{i=1}^n E_i\right) = P(A
+\cup E_n) \le P(A) + P(E_n) \le \sum_{i=1}^{n-1} P(E_i) + P(E_n) =
+\sum_{i=1}^n P(E_i)</span></p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3:</strong> Cálculo mediante Corolarios de
+Complemento y Unión</span>
+  </div>
+  <div class="callout-content">
+<p>Sean <span class="math inline">A</span>, <span
+class="math inline">B</span> y <span class="math inline">C</span> tres
+eventos asociados a un experimento tales que <span
+class="math inline">P(A) = P(B) = P(C) = \frac{1}{4}</span>, <span
+class="math inline">P(A \cap B) = P(C \cap B) = 0</span> y <span
+class="math inline">P(A \cap C) = \frac{1}{8}</span>. Calcule la
+probabilidad de que ocurra al menos uno de los eventos <span
+class="math inline">A</span>, <span class="math inline">B</span> o <span
+class="math inline">C</span>, y la probabilidad de que no ocurra ninguno
+de ellos.</p>
+  </div>
+</div>
+<p>En este ejercicio no se conoce la estructura interna de los
+resultados elementales de <span class="math inline">\Omega</span>, sino
+únicamente las probabilidades de tres eventos y sus intersecciones por
+pares. La finalidad es demostrar cómo pueden calcularse probabilidades
+de sucesos compuestos (la ocurrencia de al menos un evento y su negación
+conjunta) utilizando exclusivamente los corolarios deducidos de la
+axiomática.</p>
+<ol type="1">
+<li>Formulamos el evento «ocurre al menos uno de los tres eventos» como
+la unión <span class="math inline">A \cup B \cup C</span> y aplicamos el
+Corolario 5 (principio de inclusión-exclusión para <span
+class="math inline">3</span> eventos).</li>
+</ol>
+<p><span class="math display">P(A \cup B \cup C) = P(A) + P(B) + P(C) -
+P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)</span></p>
+<ol start="2" type="1">
+<li>Determinamos el valor de la intersección triple <span
+class="math inline">P(A \cap B \cap C)</span> observando que dicho
+conjunto está contenido en <span class="math inline">A \cap B</span>,
+cuya probabilidad es cero; por el Corolario 3 (monotonía) y el Axioma 1,
+su probabilidad queda acotada a cero.</li>
+</ol>
+<p><span class="math display">(A \cap B \cap C) \subseteq (A \cap B)
+\implies 0 \le P(A \cap B \cap C) \le P(A \cap B) = 0 \implies P(A \cap
+B \cap C) = 0</span></p>
+<ol start="3" type="1">
+<li>Sustituimos las probabilidades individuales y las intersecciones
+conocidas en la expresión de inclusión-exclusión, obteniendo un valor
+menor o igual que la cota <span class="math inline">\frac{3}{4}</span>
+garantizada por la Desigualdad de Boole (Corolario 6).</li>
+</ol>
+<p><span class="math display">P(A \cup B \cup C) = \frac{1}{4} +
+\frac{1}{4} + \frac{1}{4} - 0 - \frac{1}{8} - 0 + 0 = \frac{3}{4} -
+\frac{1}{8} = \frac{5}{8} = 0.625</span></p>
+<ol start="4" type="1">
+<li>Aplicamos el Corolario 1 (regla del complemento) sobre el evento
+unión para calcular la probabilidad de que no ocurra ninguno de los
+eventos <span class="math inline">A</span>, <span
+class="math inline">B</span> o <span class="math inline">C</span>.</li>
+</ol>
+<p><span class="math display">P\big((A \cup B \cup C)^c\big) = 1 - P(A
+\cup B \cup C) = 1 - \frac{5}{8} = \frac{3}{8} = 0.375</span></p>
+<h2  id="enfoques-metodológicos-de-asignación-probabilística">3. Enfoques
+Metodológicos de Asignación Probabilística</h2>
+<p>Para determinar los valores de <span class="math inline">P(E)</span>
+es necesario saber cómo asignar un valor numérico concreto a cada
+resultado de un problema real; existen cuatro enfoques metodológicos
+distintos, cuya elección depende de la simetría física, repetibilidad y
+naturaleza continua o discreta del espacio muestral.</p>
+<h3  id="modelo-clásico-de-laplace-equiprobabilidad">3.1. Modelo Clásico
+de Laplace (Equiprobabilidad)</h3>
+<p>Cuando el espacio muestral <span class="math inline">\Omega</span> es
+discreto y finito y las condiciones físicas del experimento garantizan
+simetría absoluta entre todos los resultados elementales (ningún
+resultado tiene ventaja sobre otro), la probabilidad se calcula mediante
+conteo directo.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 4:</strong> Probabilidad Clásica
+de Laplace</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">\Omega</span> un espacio muestral
+discreto y finito cuyos resultados elementales <span
+class="math inline">\omega \in \Omega</span> son igualmente probables,
+es decir, <span class="math inline">\forall \omega \in \Omega :
+P(\omega) = \frac{1}{\lVert \Omega \rVert}</span>. Para cualquier evento
+<span class="math inline">E \subseteq \Omega</span>, su probabilidad se
+define como el cociente entre el número de casos favorables y el número
+de casos totales:</p>
+<p><span class="math display">P(E) = \frac{\lVert E \rVert}{\lVert
+\Omega \rVert}</span></p>
+  </div>
+</div>
+<p>El modelo de Laplace reparte la unidad de probabilidad en porciones
+idénticas entre todos los resultados posibles, reduciendo el problema a
+contar cuántas opciones cumplen la condición buscada y dividirlas entre
+el total de opciones del universo.</p>
+<p>Su falla estructural radica en dos restricciones estrictas: es
+inaplicable cuando <span class="math inline">\Omega</span> es infinito
+(dividir entre infinito anula cualquier evento finito) y produce
+resultados erróneos si existe asimetría física, como suponer que es
+igual de probable no recibir llamadas en una central telefónica entre la
+1:00 a. m. y las 2:00 a. m. que entre las 5:00 p. m. y las 6:00
+p. m.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 4:</strong> Extracción en una Urna y
+Lanzamiento de Dados</span>
+  </div>
+  <div class="callout-content">
+<p>Calcule la probabilidad clásica de los siguientes dos experimentos
+aleatorios bajo condiciones de simetría física:</p>
+<ol type="1">
+<li><strong>Esferas en una urna:</strong> Una urna contiene <span
+class="math inline">4</span> esferas azules y <span
+class="math inline">5</span> rojas, y se extrae una esfera al azar.
+Determine la probabilidad de extraer una esfera azul (<span
+class="math inline">E_{\text{azul}}</span>).</li>
+<li><strong>Suma de dos dados regulares:</strong> Se lanzan dos dados
+equilibrados de seis caras y se registran sus resultados. Determine la
+probabilidad de que la suma de las caras sea <span
+class="math inline">7</span> (<span class="math inline">E</span>).</li>
+</ol>
+  </div>
+</div>
+<p>Este ejercicio ilustra la aplicación directa del modelo clásico de
+Laplace en dos experimentos discretos y finitos donde la simetría física
+de los objetos garantiza que ningún resultado tiene ventaja sobre otro.
+Se busca determinar la probabilidad de cada evento favorable reduciendo
+el problema a un conteo exacto de casos.</p>
+<ol type="1">
+<li>Verificamos la simetría física de ambos experimentos (esferas
+indistinguibles al tacto y dados no cargados) para legitimar el supuesto
+de equiprobabilidad <span class="math inline">\forall \omega \in \Omega
+: P(\omega) = 1/\lVert \Omega \rVert</span> y establecer la regla de
+Laplace.</li>
+</ol>
+<p><span class="math display">P(A) = \frac{\lVert A \rVert}{\lVert
+\Omega \rVert}</span></p>
+<ol start="2" type="1">
+<li>Para el experimento de la urna, contabilizamos el total de esferas
+disponibles como el tamaño del espacio muestral y el número de esferas
+azules como los casos favorables, obteniendo el cociente de
+probabilidad.</li>
+</ol>
+<p><span class="math display">\lVert \Omega \rVert = 4 + 5 = 9, \quad
+\lVert E_{\text{azul}} \rVert = 4 \implies P(E_{\text{azul}}) =
+\frac{4}{9}</span></p>
+<ol start="3" type="1">
+<li>Para el lanzamiento de los dos dados equilibrados, determinamos la
+cardinalidad del espacio muestral formado por pares ordenados <span
+class="math inline">(d_1, d_2)</span> e identificamos todas las
+combinaciones cuya suma es igual a <span
+class="math inline">7</span>.</li>
+</ol>
+<p><span class="math display">\lVert \Omega \rVert = 6 \times 6 = 36,
+\qquad E = \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\} \implies \lVert
+E \rVert = 6</span></p>
+<ol start="4" type="1">
+<li>Dividimos la cardinalidad del evento favorable entre el total de
+resultados equiprobables para obtener la probabilidad exacta de sumar
+<span class="math inline">7</span>.</li>
+</ol>
+<p><span class="math display">P(E) = \frac{\lVert E \rVert}{\lVert
+\Omega \rVert} = \frac{6}{36} = \frac{1}{6}</span></p>
+<h3  id="enfoque-frecuentista-límite-de-frecuencias-relativas">3.2.
+Enfoque Frecuentista (Límite de Frecuencias Relativas)</h3>
+<p>Cuando el fenómeno carece de simetría ideal (por ejemplo, al evaluar
+una moneda deformada o la proporción de bombillas que duran más de <span
+class="math inline">100\text{ horas}</span>), no es posible deducir la
+probabilidad a priori; se recurre a la repetición experimental.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 5:</strong> Probabilidad
+Frecuentista (Empírica)</span>
+  </div>
+  <div class="callout-content">
+<p>Si un experimento no determinístico se repite <span
+class="math inline">N</span> veces de manera independiente bajo las
+mismas condiciones y un evento <span class="math inline">E \subseteq
+\Omega</span> ocurre en <span class="math inline">n_E</span> ocasiones,
+su probabilidad se define como el límite de la frecuencia relativa
+cuando el número de repeticiones tiende a infinito:</p>
+<p><span class="math display">P(E) = \lim_{N \to \infty}
+\frac{n_E}{N}</span></p>
+  </div>
+</div>
+<p>De manera intuitiva, este enfoque aprovecha la regularidad
+estadística: aunque en pocos lanzamientos de una moneda las caras y los
+sellos parezcan alternarse de forma caprichosa, tras repetir el
+lanzamiento miles de veces la proporción <span class="math inline">n_E /
+N</span> se estabiliza en torno a un valor constante.</p>
+<figure class="article-figure">
+<img src="/images/notes/PROBA 2-1 Espacios de Probabilidad y los Axiomas de Kolmogorov - Convergencia Frecuentista de una Moneda.webp" alt="Convergencia Frecuentista de una Moneda" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+Convergencia Frecuentista de una Moneda
+</figcaption>
+</figure>
+<p>La limitación estructural del enfoque frecuentista reside en su
+requisito de repetibilidad bajo condiciones idénticas: resulta inválido
+para eventos únicos, históricos o irrepetibles, como determinar la
+probabilidad de que una nueva empresa tenga éxito en su primer año de
+operaciones.</p>
+<h3  id="enfoque-geométrico-medidas-continuas">3.3. Enfoque Geométrico
+(Medidas Continuas)</h3>
+<p>Cuando el espacio muestral <span class="math inline">\Omega</span> es
+continuo e infinito no numerable (un segmento de tiempo, una región
+plana o un volumen), el conteo de elementos de Laplace falla porque
+<span class="math inline">\lvert \Omega \rvert = \infty</span> y la
+probabilidad de cualquier punto aislado es cero. El enfoque geométrico
+reemplaza la cardinalidad discreta por medidas continuas de Lebesgue
+(longitud, área o volumen).</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 6:</strong> Probabilidad
+Geométrica</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">\Omega \subset \mathbb{R}^n</span> una
+región medible con medida finita y estrictamente positiva (<span
+class="math inline">0 &lt; \text{Medida}(\Omega) &lt; \infty</span>), y
+sea <span class="math inline">E \subseteq \Omega</span> una subregión
+medible. Si un punto aleatorio se distribuye de forma uniforme sobre
+<span class="math inline">\Omega</span>, la probabilidad de que
+pertenezca a <span class="math inline">E</span> es el cociente entre
+ambas medidas:</p>
+<p><span class="math display">P(E) =
+\frac{\text{Medida}(E)}{\text{Medida}(\Omega)}</span></p>
+  </div>
+</div>
+<p>Equivale a lanzar un dardo completamente al azar sobre un blanco
+plano: la probabilidad de acertar dentro de una figura dibujada en su
+interior depende únicamente de la fracción de área que ocupa esa figura
+respecto al área total del blanco. Su limitación es que asume densidad
+uniforme en toda la región; si unas zonas son más probables que otras,
+el cociente geométrico simple deja de ser válido y requiere integrar una
+función de densidad no constante.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 5:</strong> Probabilidad Geométrica en un
+Intervalo Temporal</span>
+  </div>
+  <div class="callout-content">
+<p>Se sabe que un corte en el suministro eléctrico ocurrirá de manera
+totalmente uniforme entre las 12:00 y las 13:00 horas (un intervalo
+continuo de <span class="math inline">60\text{ minutos}</span>). Calcule
+la probabilidad de que el corte ocurra durante los primeros <span
+class="math inline">15\text{ minutos}</span> de esa hora (evento <span
+class="math inline">E</span>).</p>
+  </div>
+</div>
+<p>Al estudiar un fenómeno cuyo resultado se mide sobre el tiempo
+continuo, el espacio muestral contiene infinitos instantes no
+numerables, lo cual vuelve inaplicable el conteo de casos de Laplace. La
+finalidad de este ejercicio es calcular la probabilidad de un suceso
+temporal utilizando el enfoque geométrico, sustituyendo la cardinalidad
+discreta por la medida continua de longitud bajo densidad uniforme.</p>
+<ol type="1">
+<li>Identificamos el espacio muestral continuo <span
+class="math inline">\Omega</span> como el intervalo temporal de <span
+class="math inline">60</span> minutos y determinamos su medida
+unidimensional (longitud).</li>
+</ol>
+<p><span class="math display">\Omega = [0, 60]\text{ min} \implies
+\text{Longitud}(\Omega) = 60\text{ min}</span></p>
+<ol start="2" type="1">
+<li>Delimitamos el subintervalo correspondiente al evento favorable
+<span class="math inline">E</span> (los primeros <span
+class="math inline">15</span> minutos de la hora) y calculamos su
+longitud.</li>
+</ol>
+<p><span class="math display">E = [0, 15]\text{ min} \implies
+\text{Longitud}(E) = 15\text{ min}</span></p>
+<ol start="3" type="1">
+<li>Aplicamos la definición de probabilidad geométrica dividiendo la
+longitud del subintervalo favorable entre la longitud total del espacio
+muestral.</li>
+</ol>
+<p><span class="math display">P(E) =
+\frac{\text{Longitud}(E)}{\text{Longitud}(\Omega)} = \frac{15\text{
+min}}{60\text{ min}} = \frac{1}{4} = 0.25</span></p>
+<h3  id="enfoque-subjetivo-grados-de-creencia-racionales">3.4. Enfoque
+Subjetivo (Grados de Creencia Racionales)</h3>
+<p>Ante escenarios irrepetibles la probabilidad subjetiva (o personal)
+cuantifica el grado de convicción o creencia racional de un observador
+respecto a una proposición con base en la evidencia disponible.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 7:</strong> Probabilidad
+Subjetiva</span>
+  </div>
+  <div class="callout-content">
+<p>Dado un evento único o proposición <span
+class="math inline">E</span>, la <strong>probabilidad subjetiva</strong>
+<span class="math inline">P(E)</span> mide el grado de creencia racional
+de un observador informado sobre la ocurrencia de <span
+class="math inline">E</span>. Para que dicha asignación sea
+matemáticamente válida, debe ser internamente coherente y satisfacer los
+tres axiomas de la función probabilística.</p>
+  </div>
+</div>
+<p>Este enfoque traduce el juicio experto a una proporción entre <span
+class="math inline">0</span> y <span class="math inline">1</span> que
+respeta las leyes axiomáticas (por ejemplo, si un analista asigna <span
+class="math inline">P(E) = 0.80</span> a un suceso, queda obligado por
+el Corolario 1 a asignar <span class="math inline">P(E^c) = 0.20</span>
+a su negación). Su limitación inherente es la dependencia del sesgo y de
+la información previa de cada observador.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 6:</strong> Inversores «Toros» y «Osos» en
+el Mercado Bursátil</span>
+  </div>
+  <div class="callout-content">
+<p>Ante la publicación del reporte trimestral de una empresa tecnológica
+(un evento único e irrepetible), dos inversores racionales analizan la
+misma información pública para estimar la probabilidad del evento <span
+class="math inline">E</span>: «el precio de la acción sube al día
+siguiente». El inversor optimista (<strong>«toro»</strong>), ponderando
+la cartera de patentes, asigna <span class="math inline">P(E) =
+0.85</span>; mientras que el inversor pesimista
+(<strong>«oso»</strong>), ponderando el riesgo macroeconómico, asigna
+<span class="math inline">P(E) = 0.20</span>. Determine el enfoque
+metodológico adecuado y verifique la coherencia matemática de ambas
+asignaciones calculando la probabilidad del evento complementario <span
+class="math inline">E^c</span> para cada inversor.</p>
+  </div>
+</div>
+<p>Este ejercicio aborda un escenario único e irrepetible donde no es
+posible realizar ensayos experimentales bajo condiciones idénticas ni
+establecer simetrías físicas o geométricas. Se busca justificar el uso
+del enfoque subjetivo de probabilidad y comprobar que, incluso cuando
+dos observadores discrepan en sus criterios, sus estimaciones siguen
+siendo matemáticamente válidas si respetan los axiomas de la función
+probabilística y sus corolarios.</p>
+<ol type="1">
+<li>Descartamos los enfoques clásico y frecuentista debido a la
+irrepetibilidad del evento bursátil y adoptamos el enfoque subjetivo
+para formalizar las creencias racionales de cada inversor sobre el
+suceso <span class="math inline">E</span>.</li>
+</ol>
+<p><span class="math display">E = \{\text{el precio de la acción sube al
+día siguiente}\}, \qquad P_{\text{toro}}(E) = 0.85, \quad
+P_{\text{oso}}(E) = 0.20</span></p>
+<ol start="2" type="1">
+<li>Verificamos que la asignación del inversor optimista cumple el
+Axioma 1 al pertenecer al intervalo <span class="math inline">[0,
+1]</span> y aplicamos el Corolario 1 (regla del complemento) para
+obtener la probabilidad que debe asignar a que la acción no suba (<span
+class="math inline">E^c</span>).</li>
+</ol>
+<p><span class="math display">0 \le 0.85 \le 1, \qquad
+P_{\text{toro}}(E^c) = 1 - P_{\text{toro}}(E) = 1 - 0.85 =
+0.15</span></p>
+<ol start="3" type="1">
+<li>Repetimos la verificación del Axioma 1 y aplicamos el Corolario 1
+para el inversor pesimista, confirmando que su postura también mantiene
+plena coherencia axiomática.</li>
+</ol>
+<p><span class="math display">0 \le 0.20 \le 1, \qquad
+P_{\text{oso}}(E^c) = 1 - P_{\text{oso}}(E) = 1 - 0.20 = 0.80</span></p>
+<h3  id="síntesis-comparativa-de-los-enfoques-de-asignación">3.5.
+Síntesis Comparativa de los Enfoques de Asignación</h3>
+<p>La siguiente tabla resume las condiciones de validez, fórmulas de
+cálculo y limitaciones de los cuatro enfoques metodológicos:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th><strong>Enfoque Probabilístico</strong></th>
+<th><strong>Requisito del Espacio Muestral</strong></th>
+<th><strong>Mecanismo de Asignación</strong></th>
+<th><strong>Limitación / Falla Estructural</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Clásico (Laplace)</strong></td>
+<td>Discreto, finito y equiprobable</td>
+<td><span class="math inline">\mathbb{P}(A) = \frac{\lVert A
+\rVert}{\lVert \Omega \rVert}</span></td>
+<td>Inaplicable a dominios infinitos o procesos con asimetría
+física.</td>
+</tr>
+<tr>
+<td><strong>Frecuentista</strong></td>
+<td>Repetible bajo condiciones idénticas</td>
+<td><span class="math inline">\lim_{N \to \infty}
+\frac{n_A}{N}</span></td>
+<td>Inválido para eventos únicos, irrepetibles o históricos.</td>
+</tr>
+<tr>
+<td><strong>Geométrico</strong></td>
+<td>Continuo, no numerable, uniforme</td>
+<td><span
+class="math inline">\frac{\text{Medida}(A)}{\text{Medida}(\Omega)}</span></td>
+<td>Asume densidad uniforme; requiere integración si no hay
+simetría.</td>
+</tr>
+<tr>
+<td><strong>Subjetivo</strong></td>
+<td>Cualquier naturaleza (único o repetible)</td>
+<td>Juicio experto calibrado</td>
+<td>Dependencia del sesgo cognoscitivo del observador.</td>
+</tr>
+</tbody>
+</table>
+<h2  id="ejercicios-prácticos-resueltos">5. Ejercicios Prácticos
+Resueltos</h2>
+<h3  id="concurrencia-temporal-en-sincronización-de-tareas">5.1.
+Concurrencia Temporal en Sincronización de Tareas</h3>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 7:</strong> Probabilidad Geométrica de
+Colisión de Acceso</span>
+  </div>
+  <div class="callout-content">
+<p>Dos procesos independientes intentan acceder a un recurso compartido
+entre las 0:00 y las 1:00 h. Cada proceso retiene el recurso exactamente
+<span class="math inline">15\text{ minutos}</span>. Calcule mediante
+probabilidad geométrica la probabilidad de que ocurra una colisión de
+acceso.</p>
+  </div>
+</div>
+<p>En este caso de estudio modelamos un problema de concurrencia
+temporal en sistemas computacionales donde dos tareas llegan en
+instantes continuos e independientes dentro de una ventana de una hora.
+Lo que se busca es representar los pares de tiempos de llegada como
+puntos uniformes en una región plana bidimensional y calcular la
+probabilidad exacta de solapamiento.</p>
+<p>Para simplificar el cálculo de áreas y evitar particionar la región
+central en polígonos irregulares, combinaremos la probabilidad
+geométrica de Lebesgue con el corolario del evento complementario.</p>
+<ol type="1">
+<li>Representamos los instantes de llegada (en minutos a partir de las
+0:00 h) del primer y segundo proceso como variables continuas <span
+class="math inline">X, Y \in [0, 60]</span>, construyendo el espacio
+muestral bidimensional <span class="math inline">\Omega</span> y
+calculando su área total.</li>
+</ol>
+<p><span class="math display">\Omega = [0, 60] \times [0, 60], \qquad
+\text{Área}(\Omega) = 60 \times 60 = 3600\text{ min}^2</span></p>
+<ol start="2" type="1">
+<li>Traducimos el solapamiento temporal a una relación algebraica: dado
+que cada proceso retiene el recurso durante <span
+class="math inline">15\text{ min}</span>, los intervalos <span
+class="math inline">[X, X + 15]</span> e <span class="math inline">[Y, Y
++ 15]</span> colisionan (evento <span class="math inline">C</span>) si y
+solo si la diferencia absoluta entre sus instantes de inicio es menor o
+igual a <span class="math inline">15\text{ min}</span>.</li>
+</ol>
+<p><span class="math display">C = \{(x, y) \in \Omega \mid \lvert x - y
+\rvert \le 15\}</span></p>
+<ol start="3" type="1">
+<li>Identificamos el evento complementario <span
+class="math inline">C^c</span> (ejecución sin conflicto), formado
+geométricamente por dos triángulos rectángulos congruentes en las
+esquinas exteriores del cuadrado cuyos catetos miden <span
+class="math inline">60 - 15 = 45\text{ min}</span>, y calculamos su área
+combinada.</li>
+</ol>
+<p><span class="math display">C^c = \{(x, y) \in \Omega \mid \lvert x -
+y \rvert &gt; 15\} \implies \text{Área}(C^c) = 2 \cdot \left(\frac{45
+\times 45}{2}\right) = 45^2 = 2025\text{ min}^2</span></p>
+<ol start="4" type="1">
+<li>Aplicamos el Corolario 1 (regla del complemento) junto con la
+definición de probabilidad geométrica para hallar la probabilidad exacta
+de colisión.</li>
+</ol>
+<p><span class="math display">P(C) = 1 - P(C^c) = 1 -
+\frac{\text{Área}(C^c)}{\text{Área}(\Omega)} = 1 - \frac{2025}{3600} =
+\frac{1575}{3600} = \frac{7}{16} = 0.4375 \quad (43.75\%)</span></p>
+<h3  id="generación-de-manos-en-juegos-de-azar-computarizados">5.2.
+Generación de Manos en Juegos de Azar Computarizados</h3>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 8:</strong> Probabilidad Clásica de un
+«Full House» en Póker</span>
+  </div>
+  <div class="callout-content">
+<p>Calcule la probabilidad clásica de obtener exactamente un «Full
+House» (tres cartas de un mismo valor y dos cartas de otro valor
+distinto) al repartir al azar una mano de <span
+class="math inline">5</span> cartas de una baraja estándar de <span
+class="math inline">52</span> naipes.</p>
+  </div>
+</div>
+<p>En este ejercicio aplicamos el modelo clásico de Laplace combinado
+con técnicas de conteo combinatorio en una baraja estándar (<span
+class="math inline">13</span> denominaciones con <span
+class="math inline">4</span> palos cada una). Dado que al repartir una
+mano de <span class="math inline">5</span> cartas el orden de entrega no
+altera la jugada resultante y todas las combinaciones son igualmente
+probables, se busca cuantificar con exactitud el número total de manos
+posibles y las configuraciones favorables que conforman un «Full
+House».</p>
+<ol type="1">
+<li>Calculamos el tamaño del espacio muestral equiprobable <span
+class="math inline">\Omega</span> mediante combinaciones simples sin
+repetición de <span class="math inline">5</span> cartas elegidas entre
+las <span class="math inline">52</span> disponibles en la baraja.</li>
+</ol>
+<p><span class="math display">\lvert \Omega \rvert = C_{52, 5} =
+\binom{52}{5} = \frac{52!}{5! \cdot 47!} = \frac{52 \times 51 \times 50
+\times 49 \times 48}{120} = 2\,598\,960</span></p>
+<ol start="2" type="1">
+<li>Descomponemos la construcción de una mano favorable (evento <span
+class="math inline">E</span>) en cuatro etapas mediante el Principio de
+Multiplicación: seleccionamos de forma distinguible el valor del trío
+entre las <span class="math inline">13</span> denominaciones y <span
+class="math inline">3</span> de sus <span class="math inline">4</span>
+palos, y luego escogemos un valor distinto para el par entre las <span
+class="math inline">12</span> denominaciones restantes junto con <span
+class="math inline">2</span> de sus <span class="math inline">4</span>
+palos.</li>
+</ol>
+<p><span class="math display">\binom{13}{1} = 13, \qquad \binom{4}{3} =
+4, \qquad \binom{12}{1} = 12, \qquad \binom{4}{2} = 6</span></p>
+<ol start="3" type="1">
+<li>Multiplicamos el número de opciones de cada etapa para obtener la
+cardinalidad exacta del evento favorable <span
+class="math inline">E</span>.</li>
+</ol>
+<p><span class="math display">\lvert E \rvert = \binom{13}{1}
+\binom{4}{3} \binom{12}{1} \binom{4}{2} = 13 \times 4 \times 12 \times 6
+= 3\,744</span></p>
+<ol start="4" type="1">
+<li>Aplicamos el modelo clásico de Laplace dividiendo los casos
+favorables entre el total del espacio muestral, concluyendo que en
+promedio aparece un «Full House» aproximadamente una vez cada <span
+class="math inline">694</span> manos repartidas (<span
+class="math inline">4165 / 6 \approx 694.17</span>).</li>
+</ol>
+<p><span class="math display">P(E) = \frac{\lvert E \rvert}{\lvert
+\Omega \rvert} = \frac{3\,744}{2\,598\,960} = \frac{6}{4\,165} \approx
+0.00144058 \quad (0.1441\%)</span></p>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Meyer, Paul L.</strong> <em>Probabilidad y Aplicaciones
+Estadísticas</em> (Edición revisada). Addison-Wesley
+Iberoamericana.</p></li>
+<li><p><strong>Feller, William.</strong> <em>An Introduction to
+Probability Theory and Its Applications</em>, Vol. I (3.ª ed.). John
+Wiley &amp; Sons, Inc., Nueva York, 1968. Capítulos 1, 2 y 3.</p></li>
+<li><p><strong>Riordan, John.</strong> <em>An Introduction to
+Combinatorial Analysis</em>. Dover Publications, Mineola, Nueva York,
+2002.</p></li>
+<li><p><strong>Parzen, Emanuel.</strong> <em>Modern Probability Theory
+and Its Applications</em>. John Wiley &amp; Sons, Inc., Nueva York,
+1960.</p></li>
+<li><p><strong>Lipschutz, Seymour.</strong> <em>Probabilidad</em>.
+McGraw-Hill, México, 1970.</p></li>
+<li><p><strong>Universidad Central de Venezuela (UCV), Facultad de
+Ciencias, Escuela de Computación.</strong> <em>Probabilidad y
+Estadística</em>. Caracas, Venezuela, 2023.</p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>
