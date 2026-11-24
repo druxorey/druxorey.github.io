@@ -24,7 +24,7 @@ Para evaluar la incertidumbre de un proceso o el costo de explorar sus estados, 
 El enfoque intuitivo para analizar un experimento consiste en anotar los resultados observables a medida que ocurren. El obstáculo surge cuando no existe garantía de haber contemplado todas las posibilidades ni de que los resultados registrados sean mutuamente independientes entre sí. Para eliminar esta ambigüedad, la teoría de la probabilidad formaliza el concepto de espacio muestral discreto.
 
 > [!QUOTE] **Definición Formal 1:** Espacio Muestral Discreto y Cardinalidad
-> Dado un experimento no determinístico, se define el **espacio muestral** $\Omega$ como el conjunto de todos sus resultados elementales posibles $\omega$, formulados de manera que sean mutuamente excluyentes y colectivamente exhaustivos. Cuando $\Omega$ consta de una cantidad finita de elementos se denomina **espacio muestral discreto y finito**, y su **cardinalidad** se denota por $\vert{}\Omega\vert{} = n$.
+> Dado un experimento no determinístico, se define el **espacio muestral** $\Omega$ como el conjunto de todos sus resultados elementales posibles $\omega$, formulados de manera que sean mutuamente excluyentes y colectivamente exhaustivos.
 > 
 > Bajo el **modelo clásico de Laplace** (equiprobabilidad de resultados elementales, donde $\mathbb{P}(\omega) = 1/\vert{}\Omega\vert{}$ para todo $\omega \in \Omega$), la probabilidad de cualquier evento $E \subseteq \Omega$ queda determinada por la razón de cardinalidades:
 > 
@@ -33,21 +33,24 @@ El enfoque intuitivo para analizar un experimento consiste en anotar los resulta
 Es decir, el espacio muestral es el conjunto de todos los resultados posibles de un experimento, donde cada elemento representa un desenlace único y excluyente. La cardinalidad es simplemente el número total de elementos que contiene ese espacio muestral.
 
 > [!EXAMPLE] **Ejemplo 1:** Espacio Muestral de dos Lanzamientos de Moneda
+> 
 > Se lanzan dos monedas consecutivas. Determine la cardinalidad del espacio muestral $\Omega$ y la probabilidad equiprobable del evento $E$: «obtener al menos una cara ($C$)».
-> 
-> **Solución:**
-> 
-> $$\Omega = \{(C,C), (C,S), (S,C), (S,S)\} \implies \vert{}\Omega\vert{} = 4$$
-> 
-> $$E = \{(C,C), (C,S), (S,C)\} \implies \vert{}E\vert{} = 3$$
-> 
-> $$\mathbb{P}(E) = \frac{\vert{}E\vert{}}{\vert{}\Omega\vert{}} = \frac{3}{4} = 0{,}75$$
 
-**Paso 1:** Definimos cada resultado elemental $\omega$ como un par ordenado $(m_1, m_2)$ que indica el resultado de la primera y segunda moneda, asegurando que las combinaciones sean mutuamente excluyentes.
+En este ejercicio analizamos un experimento aleatorio discreto y finito compuesto por el lanzamiento secuencial de dos monedas equilibradas. Lo que se busca es formalizar el conjunto de todos los desenlaces posibles de manera que sean mutuamente excluyentes y colectivamente exhaustivos, evitando omisiones o ambigüedades al registrar los resultados.
 
-**Paso 2:** Contamos la totalidad de pares admisibles para obtener $\vert{}\Omega\vert{} = 4$ y aislamos el subconjunto $E$ de aquellos que contienen al menos una cara ($\vert{}E\vert{} = 3$).
+A partir de esa delimitación del espacio muestral, se pide cuantificar su tamaño total y aislar los casos favorables al evento de obtener al menos una cara, para finalmente calcular su probabilidad aplicando la razón de cardinalidades del modelo clásico de Laplace.
 
-**Paso 3:** Aplicamos la regla de Laplace dividiendo $\vert{}E\vert{}$ entre $\vert{}\Omega\vert{}$, obteniendo una probabilidad de $0{,}75$.
+1. Definimos cada resultado elemental $\omega$ como un par ordenado $(m_1, m_2)$ que indica el resultado de la primera y la segunda moneda (cara $C$ o sello $S$), listamos el espacio muestral completo y contamos el total de combinaciones admisibles.
+
+$$\Omega = \{(C,C), (C,S), (S,C), (S,S)\} \implies \lvert \Omega \rvert = 4$$
+
+2. Aislamos el subconjunto $E \subseteq \Omega$ conformado por todos los resultados elementales que contienen al menos una cara ($C$) y determinamos su cardinalidad.
+
+$$E = \{(C,C), (C,S), (S,C)\} \implies \lvert E \rvert = 3$$
+
+3. Aplicamos la regla de Laplace dividiendo la cardinalidad del evento favorable $\lvert E \rvert$ entre la cardinalidad del espacio muestral $\lvert \Omega \rvert$, obteniendo la probabilidad exacta.
+
+$$\mathbb{P}(E) = \frac{\lvert E \rvert}{\lvert \Omega \rvert} = \frac{3}{4} = 0{,}75$$
 
 ## 1.2. Búsqueda Exhaustiva frente a Cómputo Combinatorio
 
@@ -73,15 +76,18 @@ La premisa más directa de conteo surge cuando una tarea puede completarse eligi
 Si disponemos de varias cajas completamente separadas y debemos extraer un único objeto eligiendo primero qué caja abrir, el número total de objetos distintos que podemos obtener es simplemente la suma de los contenidos de cada caja. Como ningún objeto está duplicado en dos cajas a la vez, cada elección conduce a un resultado único sin riesgo de repetición.
 
 > [!EXAMPLE] **Ejemplo 2:** Selección de Representantes en un Comité Académico
+> 
 > Un departamento universitario debe elegir a un único representante para el consejo directivo. El grupo docente cuenta con $37$ profesores y la carrera tiene $83$ estudiantes inscritos, asumiendo que ninguna persona pertenece simultáneamente a ambos grupos. Determine el número total de selecciones posibles.
-> 
-> **Solución:**
-> 
-> $$\vert{}A_1 \cup A_2\vert{} = \vert{}A_1\vert{} + \vert{}A_2\vert{} = 37 + 83 = 120\text{ candidatos posibles}$$
 
-**Paso 1:** Identificamos el conjunto $A_1$ de profesores ($\vert{}A_1\vert{} = 37$) y el conjunto $A_2$ de estudiantes ($\vert{}A_2\vert{} = 83$), verificando la condición de exclusión mutua $A_1 \cap A_2 = \emptyset$.
+Este ejercicio plantea una tarea de selección simple en la que debe escogerse a una sola persona eligiendo entre dos colectivos académicos distintos. La finalidad es aplicar la regla de la suma sobre conjuntos finitos, verificando previamente la condición de disjunción para asegurar que ningún candidato sea contabilizado dos veces.
 
-**Paso 2:** Aplicamos la regla de la suma adicionando ambas cardinalidades, lo que arroja $120$ formas distintas de ocupar la vacante sin solapamientos.
+1. Identificamos el conjunto $A_1$ de profesores y el conjunto $A_2$ de estudiantes con sus respectivas cardinalidades, y verificamos la hipótesis de exclusión mutua que garantiza que forman una partición disjunta.
+
+$$\lvert A_1 \rvert = 37, \qquad \lvert A_2 \rvert = 83, \qquad A_1 \cap A_2 = \emptyset$$
+
+2. Aplicamos la regla de la suma para uniones disjuntas adicionando ambas cardinalidades, lo que entrega el número total de formas distintas de ocupar la vacante sin solapamientos.
+
+$$\lvert A_1 \cup A_2 \rvert = \lvert A_1 \rvert + \lvert A_2 \rvert = 37 + 83 = 120\text{ candidatos posibles}$$
 
 ## 2.2. Principio Multiplicativo y Decisiones en Cascada
 
@@ -99,19 +105,24 @@ A diferencia de la regla de la suma (donde se escoge una única vía entre varia
 Esta operación se visualiza de forma natural como un **árbol de decisión** que crece desde una raíz inicial. En el primer nivel, el árbol se divide en $n_1$ ramas; de cada una de esas ramas brotan $n_2$ subramas en el segundo nivel, y el proceso continúa en cascada hasta alcanzar el nivel $k$. Contar el total de hojas terminales del árbol equivale a multiplicar el factor de ramificación de cada nivel.
 
 > [!EXAMPLE] **Ejemplo 3:** Cadenas Binarias y Cardinalidad del Conjunto Potencia
-> Determine cuántas cadenas binarias de longitud exacta $L = 7$ bits existen en memoria y demuestre mediante el mismo principio que un conjunto finito $S$ posee exactamente $2^{\vert{}S\vert{}}$ subconjuntos.
 > 
-> **Solución:**
-> 
-> $$\vert{}\Omega_{\text{bits}}\vert{} = \underbrace{2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2}_{7\text{ posiciones}} = 2^7 = 128\text{ cadenas}$$
-> 
-> $$\vert{}\mathcal{P}(S)\vert{} = 2^{\vert{}S\vert{}}$$
+> Determine cuántas cadenas binarias de longitud exacta $L = 7$ bits existen en memoria y demuestre mediante el mismo principio que un conjunto finito $S$ posee exactamente $2^{\lvert S \rvert}$ subconjuntos.
 
-**Paso 1:** Modelamos la cadena de $7$ bits como una secuencia de $7$ casillas ordenadas donde cada casilla admite exactamente $2$ estados ($0$ o $1$) de forma independiente. Multiplicando las opciones de cada posición obtenemos $2^7 = 128$ cadenas posibles.
+En este ejercicio se emplea el principio multiplicativo para resolver dos problemas estructuralmente equivalentes: primero, cuantificar el universo de palabras binarias de un tamaño fijo en memoria; y segundo, generalizar ese mismo razonamiento hacia la teoría de conjuntos para demostrar la fórmula de la cardinalidad del conjunto potencia.
 
-**Paso 2:** Para cualquier conjunto finito $S$, ordenamos sus $\vert{}S\vert{}$ elementos y asociamos cada subconjunto a una cadena binaria de longitud $\vert{}S\vert{}$, asignando un $1$ si el elemento $i$-ésimo pertenece al subconjunto y un $0$ en caso contrario.
+Lo que se busca es modelar tanto los bits de una cadena como la pertenencia de los elementos a un subconjunto mediante una cascada de decisiones binarias independientes, evitando cualquier intento de enumeración exhaustiva.
 
-**Paso 3:** Como cada elemento tiene $2$ decisiones binarias independientes (incluirse o excluirse), la regla del producto establece que existen $2^{\vert{}S\vert{}}$ cadenas posibles, demostrando que la cardinalidad del conjunto potencia es $\vert{}\mathcal{P}(S)\vert{} = 2^{\vert{}S\vert{}}$.
+1. Modelamos la cadena de $L = 7$ bits como una secuencia de $7$ casillas ordenadas donde cada posición admite exactamente $2$ estados independientes ($0$ o $1$), y multiplicamos las opciones mediante la regla del producto.
+
+$$\lvert \Omega_{\text{bits}} \rvert = \underbrace{2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2}_{7\text{ posiciones}} = 2^7 = 128\text{ cadenas}$$
+
+2. Para cualquier conjunto finito $S$, ordenamos arbitrariamente sus $\lvert S \rvert$ elementos y establecemos una correspondencia biyectiva entre cada subconjunto $A \subseteq S$ y una cadena binaria de longitud $\lvert S \rvert$, asignando $b_i = 1$ si el $i$-ésimo elemento pertenece a $A$ y $b_i = 0$ en caso contrario.
+
+$$A \subseteq S \longleftrightarrow (b_1, b_2, \dots, b_{\lvert S \rvert}) \in \{0, 1\}^{\lvert S \rvert}$$
+
+3. Observamos que cada elemento del conjunto $S$ conlleva $2$ decisiones binarias independientes (incluirse o excluirse del subconjunto), por lo que el principio multiplicativo establece que el número total de subconjuntos posibles es $2^{\lvert S \rvert}$.
+
+$$\lvert \mathcal{P}(S) \rvert = \underbrace{2 \cdot 2 \cdots 2}_{\lvert S \rvert\text{ factores}} = 2^{\lvert S \rvert}$$
 
 # 3. Principio de Inclusión-Exclusión y Purga de Redundancias
 
@@ -138,19 +149,24 @@ Cuando dos conjuntos $A$ y $B$ comparten elementos ($A \cap B \neq \emptyset$), 
 La idea central es garantizar que cada elemento se cuente exactamente una vez. Al sumar los conjuntos por separado, los elementos repetidos quedan contados de más, por lo que debemos restar las intersecciones dobles para quitar ese exceso. Sin embargo, en el caso de tres conjuntos, los elementos que están en los tres a la vez terminan anulándose (se suman tres veces al inicio y se restan tres veces en las parejas), haciendo necesario volver a sumarlos al final para recuperar su conteo.
 
 > [!EXAMPLE] **Ejemplo 4:** Filtrado de Postulantes con Doble Titulación
+> 
 > Una empresa tecnológica recibe $350$ postulaciones para un cargo de infraestructura. Del total, $220$ aspirantes poseen título en Ciencias de la Computación, $147$ poseen título en Administración y $51$ cuentan con doble titulación en ambas carreras. Determine cuántos aspirantes poseen al menos uno de los dos títulos y cuántos no poseen ninguno.
-> 
-> **Solución:**
-> 
-> $$\vert{}A \cup B\vert{} = \vert{}A\vert{} + \vert{}B\vert{} - \vert{}A \cap B\vert{} = 220 + 147 - 51 = 316\text{ aspirantes calificados}$$
-> 
-> $$\vert{}\Omega \setminus (A \cup B)\vert{} = 350 - 316 = 34\text{ aspirantes sin ninguno de los títulos}$$
 
-**Paso 1:** Sumamos las cardinalidades brutas de ambos grupos ($220 + 147 = 367$), advirtiendo que esta cifra excede el total real de postulantes debido al doble conteo.
+En este caso práctico de filtrado de registros, los dos conjuntos de cualificaciones académicas no son disjuntos porque existen candidatos con doble titulación. Si se sumaran directamente las cantidades de ambos perfiles, el conteo sobreestimaría el número real de personas calificadas.
 
-**Paso 2:** Restamos los $51$ candidatos pertenecientes a la intersección $A \cap B$ para contabilizarlos una sola vez, obteniendo $316$ postulantes con al menos una titulación.
+La finalidad del ejercicio es corregir este doble conteo aplicando el principio de inclusión-exclusión para dos conjuntos (regla de la resta) y, a partir de esa unión exacta, determinar mediante el complemento respecto al universo total de solicitudes cuántos aspirantes carecen de ambos títulos.
 
-**Paso 3:** Sustraemos este subconjunto del universo total de $350$ solicitudes para determinar que $34$ aspirantes carecen de ambas titulaciones.
+1. Identificamos el universo $\Omega$ de postulantes, los conjuntos $A$ (Ciencias de la Computación) y $B$ (Administración), y su intersección $A \cap B$, advirtiendo que la suma directa $\lvert A \rvert + \lvert B \rvert = 367$ excede el tamaño real de la muestra por el solapamiento.
+
+$$\lvert \Omega \rvert = 350, \qquad \lvert A \rvert = 220, \qquad \lvert B \rvert = 147, \qquad \lvert A \cap B \rvert = 51$$
+
+2. Aplicamos el principio de inclusión-exclusión para dos conjuntos restando una vez la intersección $\lvert A \cap B \rvert$, de modo que los aspirantes con doble titulación queden contabilizados una sola vez en el total de candidatos calificados.
+
+$$\lvert A \cup B \rvert = \lvert A \rvert + \lvert B \rvert - \lvert A \cap B \rvert = 220 + 147 - 51 = 316\text{ aspirantes calificados}$$
+
+3. Sustraemos la cardinalidad de la unión $\lvert A \cup B \rvert$ del universo total $\lvert \Omega \rvert$ para obtener el número de aspirantes que no poseen ninguno de los dos títulos.
+
+$$\lvert \Omega \setminus (A \cup B) \rvert = 350 - 316 = 34\text{ aspirantes sin ninguno de los títulos}$$
 
 ## 3.2. Generalización Analítica para $n$ Conjuntos
 
@@ -185,23 +201,22 @@ Un segundo obstáculo en el conteo ocurre cuando un procedimiento secuencial gen
 Ejemplificando: si contamos todas las huellas dejadas por un grupo de personas en la nieve y sabemos con certeza que cada persona dio exactamente $d = 2$ pasos, dividir el total de huellas $n$ entre $2$ revela el número exacto de personas que caminaron por allí. En combinatoria, este principio permite colapsar rotaciones o simetrías: siempre que cada estado único tenga el mismo grado de multiplicidad $d$, basta con dividir el conteo lineal bruto entre $d$.
 
 > [!EXAMPLE] **Ejemplo 5:** Permutaciones Circulares en Topologías en Anillo
+> 
 > Cuatro nodos de procesamiento ($A, B, C, D$) deben interconectarse formando una topología física cerrada en anillo, donde dos configuraciones se consideran idénticas si cada nodo conserva exactamente los mismos vecinos a izquierda y derecha. Calcule cuántas topologías únicas en anillo existen y deduzca la fórmula general para $n$ elementos.
-> 
-> 
-> **Solución:**
-> 
-> $$P_{\text{circular}}(4) = \frac{4!}{4} = \frac{24}{4} = 6\text{ topologías únicas}$$
-> 
-> 
-> $$P_{\text{circular}}(n) = \frac{n!}{n} = (n - 1)!$$
-> 
-> 
 
-**Paso 1:** Calculamos primero las ordenaciones lineales como si el anillo estuviera abierto en una fila recta de $4$ posiciones, obteniendo $n = 4! = 24$ permutaciones brutas.
+Cuando los elementos se disponen sobre una estructura circular cerrada en lugar de una fila recta, distintas ordenaciones lineales pueden representar exactamente la misma configuración física al rotar la posición inicial. Este ejercicio busca purgar esa simetría rotacional mediante la regla de la división, colapsando las clases de equivalencia de tamaño uniforme para hallar el conteo exacto de anillos distinguibles y generalizar la expresión resultante para $n$ nodos.
 
-**Paso 2:** Observamos que rotar todos los nodos un lugar en sentido horario mantiene intactos los vecinos adyacentes de cada equipo; por tanto, cada anillo único corresponde a $d = 4$ ordenaciones lineales rotadas (por ejemplo, $ABCD$, $DABC$, $CDAB$ y $BCDA$).
+1. Calculamos primero las ordenaciones lineales como si el anillo estuviera abierto en una fila recta de $4$ posiciones, obteniendo el conteo bruto mediante el factorial de $4$.
 
-**Paso 3:** Aplicamos la regla de la división colapsando las $4$ rotaciones equivalentes, lo que entrega $24 / 4 = 6$ anillos distintos y generaliza a $n!/n = (n - 1)!$ para $n$ elementos.
+$$n_{\text{lineal}} = 4! = 4 \cdot 3 \cdot 2 \cdot 1 = 24\text{ ordenaciones lineales}$$
+
+2. Identificamos que rotar todos los nodos un lugar en sentido horario mantiene intactos los vecinos adyacentes a izquierda y derecha de cada equipo; por consiguiente, cada topología en anillo única queda representada por una clase de equivalencia de tamaño uniforme $d = 4$ (por ejemplo, $ABCD$, $DABC$, $CDAB$ y $BCDA$).
+
+$$d = 4\text{ rotaciones equivalentes por cada anillo}$$
+
+3. Aplicamos la regla de la división dividiendo el total de permutaciones lineales entre la multiplicidad $d = 4$ para los $4$ nodos, y extendemos el mismo cociente al caso general de $n$ elementos con $d = n$ rotaciones equivalentes.
+
+$$P_{\text{circular}}(4) = \frac{4!}{4} = \frac{24}{4} = 6\text{ topologías únicas}, \qquad P_{\text{circular}}(n) = \frac{n!}{n} = (n - 1)!$$
 
 # 4. Principio del Palomar de Dirichlet y Cotas de Colisión
 
@@ -217,17 +232,18 @@ Cuando la cantidad de elementos que se desea almacenar supera la cantidad de cas
 > 
 
 > [!EXAMPLE] **Ejemplo 6:** Coincidencia Garantizada de Calificaciones
+> 
 > Un examen universitario se evalúa estrictamente con notas enteras en la escala de $0$ a $100$ puntos. Determine el número mínimo de estudiantes que deben presentar la prueba para garantizar con certeza absoluta que al menos dos obtengan la misma calificación.
-> 
-> **Solución:**
-> 
-> $$k = 100 - 0 + 1 = 101\text{ calificaciones posibles}$$
-> 
-> $$N_{\min} = k + 1 = 101 + 1 = 102\text{ estudiantes}$$
 
-**Paso 1:** Contamos el número de «casillas» disponibles en la escala de evaluación del $0$ al $100$, obteniendo $k = 101$ puntajes enteros distintos.
+En este ejercicio no se busca contar configuraciones ni estimar probabilidades, sino establecer una garantía determinista de colisión sobre un conjunto acotado de resultados posibles. La finalidad es aplicar el principio básico del palomar identificando las calificaciones enteras disponibles como recipientes y a los estudiantes evaluados como los objetos que se distribuyen en ellos.
 
-**Paso 2:** Aplicamos el principio básico del palomar: con $101$ estudiantes cada uno podría obtener una nota distinta, por lo que se requieren $N = 102$ estudiantes para forzar al menos una coincidencia.
+1. Contamos la cantidad total de «casillas» disponibles en la escala de evaluación entera del $0$ al $100$ inclusive, determinando el número de recipientes $k$.
+
+$$k = 100 - 0 + 1 = 101\text{ calificaciones posibles}$$
+
+2. Aplicamos el principio básico del palomar ($N_{\min} = k + 1$): en el peor caso, hasta $101$ estudiantes podrían obtener notas todas distintas entre sí, por lo que basta añadir un estudiante adicional para forzar inevitablemente al menos una coincidencia.
+
+$$N_{\min} = k + 1 = 101 + 1 = 102\text{ estudiantes}$$
 
 ## 4.2. Forma Generalizada con Función Techo y Umbral Crítico
 
@@ -250,23 +266,23 @@ La demostración de la cota $\lceil N/k \rceil$ procede por reducción al absurd
 Asimismo, para hallar el umbral mínimo $N$ que garantiza una carga de $r$ elementos en alguna casilla, analizamos el **peor caso de saturación uniforme**. El sistema evita alcanzar la cuota $r$ mientras logre repartir los objetos de forma equilibrada colocando exactamente $r - 1$ elementos en cada una de las $k$ casillas, lo que consume $k(r - 1)$ objetos. En cuanto se introduce un objeto adicional, este rompe el equilibrio y eleva obligatoriamente la carga de alguna casilla a $r$, fijando el umbral en $N = k(r - 1) + 1$.
 
 > [!EXAMPLE] **Ejemplo 7:** Garantía de Nivel Académico en un Curso
+> 
 > En una asignatura cuya calificación final admite únicamente cinco letras posibles ($A, B, C, D, F$), determine la matrícula mínima necesaria para asegurar que al menos $6$ estudiantes reciban exactamente la misma letra.
-> 
-> 
-> **Solución:**
-> 
-> $$N = k(r - 1) + 1 = 5(6 - 1) + 1 = 5 \cdot 5 + 1 = 26\text{ estudiantes}$$
-> 
-> 
 
-**Paso 1:** Identificamos $k = 5$ categorías de calificación y la cuota de repetición deseada $r = 6$.
+A diferencia del problema anterior donde bastaba garantizar una pareja compartiendo casilla, aquí se exige asegurar una acumulación mínima de $6$ estudiantes bajo una misma categoría de nota. Lo que se busca es determinar el umbral crítico de matrícula mediante la forma inversa del principio generalizado del palomar, analizando el peor escenario de saturación uniforme antes de que alguna letra alcance la cuota requerida.
 
-**Paso 2:** Calculamos el peor escenario sin alcanzar la meta, donde cada una de las $5$ letras es asignada a $5$ estudiantes ($5 \times 5 = 25$ inscritos), y sumamos $1$ estudiante adicional para garantizar que al menos un grupo alcance los $6$ integrantes.
+1. Identificamos el número de categorías de calificación disponibles ($k = 5$ letras) y la cuota mínima de repetición exigida en al menos una categoría ($r = 6$ estudiantes).
+
+$$k = 5, \qquad r = 6$$
+
+2. Calculamos el peor caso de saturación uniforme en el que cada una de las $5$ letras recibe exactamente $r - 1 = 5$ estudiantes sin alcanzar la meta, y sumamos $1$ estudiante adicional para garantizar de forma determinista que al menos un grupo alcance los $6$ integrantes.
+
+$$N = k(r - 1) + 1 = 5(6 - 1) + 1 = 5 \cdot 5 + 1 = 26\text{ estudiantes}$$
 
 ---
 
 > [!RESOURCES] REFERENCIAS
-> - **Meyer, Paul L.** *Probabilidad y Aplicaciones Estadísticas* (Edición revisada). Addison-Wesley Iberoamericana. Capítulo 1 («Introducción a la probabilidad», secciones 1.4 y 1.7) y Capítulo 2 («Espacios muestrales finitos», secciones 2.1–2.3).
+> - **Meyer, Paul L.** *Probabilidad y Aplicaciones Estadísticas* (Edición revisada). Addison-Wesley Iberoamericana.
 > 
 > - **Feller, William.** *An Introduction to Probability Theory and Its Applications*, Vol. I (3.ª ed.). John Wiley & Sons, Inc., Nueva York, 1968. Capítulos 1, 2 y 3.
 > 
@@ -276,4 +292,4 @@ Asimismo, para hallar el umbral mínimo $N$ que garantiza una carga de $r$ eleme
 > 
 > - **Lipschutz, Seymour.** *Probabilidad*. McGraw-Hill, México, 1970.
 > 
-> - **Universidad Central de Venezuela (UCV), Facultad de Ciencias, Escuela de Computación.** *Probabilidad y Estadística: Introducción a la Probabilidad (G01) y Práctica Nº 0: Repaso de Combinatoria y Probabilidades (A00)*. Caracas, Venezuela, 2023.
+> - **Universidad Central de Venezuela (UCV), Facultad de Ciencias, Escuela de Computación.** *Probabilidad y Estadística*. Caracas, Venezuela, 2023.

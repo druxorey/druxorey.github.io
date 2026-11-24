@@ -76,7 +76,7 @@ Durante la llamada, la precisión de los datos suministrados sobre la ubicación
 
 Una vez controlada la escena y activado el SEM, la atención entra en la fase micro o valoración primaria. Si el auxiliador examinara al paciente sin orden (por ejemplo, revisando primero una fractura en el tobillo o limpiando raspaduras en la cara), una hemorragia arterial o una obstrucción respiratoria causaría la muerte antes de completar la inspección. Para impedir este error, la valoración primaria opera como un embudo jerárquico denominado protocolo XABCDE, que detecta y corrige las amenazas inmediatas según el tiempo en que pueden matar al paciente.
 
-![[PA 1-2 Evaluación del Lesionado El Embudo XABCDE.webp]]
+![[PA 1-2 Evaluación del Lesionado - El Embudo XABCDE.webp]]
 
 ## 2.1. Fase X: Control de Hemorragia Exanguinante
 
@@ -96,13 +96,13 @@ Controlada la hemorragia exanguinante, el siguiente cuello de botella fisiológi
 
 Para ejecutar esta fase de forma segura, el protocolo exige distinguir el contexto clínico de la víctima antes de movilizar su cabeza:
 
-![[PA 1-2 Evaluación del Lesionado Comparación de las Maniobras de Apertura de la Vía Aérea.webp]]
+![[PA 1-2 Evaluación del Lesionado - Comparación de las Maniobras de Apertura de la Vía Aérea.webp]]
 
 - **Paciente médico (sin trauma):** Cuando el colapso responde a una causa clínica no traumática (como un desmayo o paro cardiorrespiratorio sin caída de altura), se aplica la **maniobra frente-mentón**, inclinando suavemente la cabeza hacia atrás y elevando el mentón para despejar la vía aérea.
 
 - **Paciente de trauma («Alerta Roja»):** Cuando existe mecanismo traumático, se asume daño cervical hasta demostrar lo contrario. Un auxiliador sujeta manualmente la cabeza y el cuello en posición neutra alineada, ejecuta la **maniobra de tracción mandibular** (desplazando la mandíbula hacia adelante sin hiperextender el cuello) y, como paso siguiente, coloca un **collarín cervical** si dispone del equipo y el entrenamiento adecuados.
 
-![[PA 1-2 Evaluación del Lesionado Inmovilización y Control Cervical Manual.webp]]
+![[PA 1-2 Evaluación del Lesionado - Inmovilización y Control Cervical Manual.webp]]
 
 La siguiente tabla sintetiza los criterios operativos de apertura de la vía aérea según el tipo de paciente:
 

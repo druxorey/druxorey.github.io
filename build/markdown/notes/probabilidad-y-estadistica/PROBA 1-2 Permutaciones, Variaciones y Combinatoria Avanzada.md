@@ -1,5 +1,5 @@
 ---
-created: 2026-02-24 20:34
+created: 2026-02-24T20:34:00
 title: Permutaciones, Variaciones y Combinatoria Avanzada
 semester: 4
 subject:
@@ -35,14 +35,18 @@ Cuando todos los $n$ elementos disponibles deben participar obligatoriamente en 
 Imagina que tienes un conjunto de elementos y quieres ordenarlos todos en una fila. Para elegir el primer elemento de la secuencia, tienes total libertad y puedes escoger cualquiera de los $n$ elementos disponibles, usando ese elemento como un punto de partida o pivote. Una vez que fijas ese primero, para la segunda posición ya solo te quedan $n - 1$ elementos disponibles de los cuales elegir. Para la tercera posición el número de opciones se reduce a $n - 2$, y así sucesivamente de forma consecutiva, restando una unidad en cada paso hasta que en la última posición queda un único elemento posible. Al multiplicar las opciones de cada una de estas etapas independientes, el cálculo resultante se reduce a una multiplicación decreciente continua, que es exactamente lo que define al factorial.
 
 > [!EXAMPLE] **Ejemplo 1:** Planificación de Procesos en un Núcleo Mono-hilo
-> Un planificador «batch» en un procesador de un solo núcleo recibe $n = 6$ tareas independientes ($T_1, T_2, T_3, T_4, T_5, T_6$) que deben ejecutarse secuencialmente hasta completarse sin interrupciones. ¿Cuántas trazas de ejecución distintas puede generar el planificador?
-> **Solución:**
 > 
-> $$P_6 = 6! = 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 720 \text{ trazas de ejecución}$$
+> Un planificador «batch» en un procesador de un solo núcleo recibe $n = 6$ tareas independientes ($T_1, T_2, T_3, T_4, T_5, T_6$) que deben ejecutarse secuencialmente hasta completarse sin interrupciones. ¿Cuántas trazas de ejecución distintas puede generar el planificador?
 
-**Paso 1:** Identificamos que todas las tareas deben ejecutarse ($r = n = 6$) y que alterar el orden modifica los tiempos de espera y finalización del sistema, por lo que el orden es estricto.
+En este ejercicio analizamos un sistema de procesamiento secuencial donde la totalidad de las tareas disponibles debe entrar en la cola de ejecución sin omisiones ni duplicados. Lo que se busca es determinar la cantidad exacta de trazas de ejecución posibles aplicando el modelo de permutaciones simples, dado que cualquier reordenamiento modifica los tiempos de espera y finalización del sistema.
 
-**Paso 2:** Aplicamos el principio multiplicativo sobre las $6$ ranuras temporales de la cola de ejecución, reduciendo en una unidad las tareas disponibles tras cada asignación hasta obtener $720$ ordenamientos posibles.
+1. Identificamos que todas las $n = 6$ tareas participan obligatoriamente en la secuencia ($r = n = 6$), que no se permite repetir una misma tarea y que el orden de ejecución altera el comportamiento del sistema, por lo que corresponde aplicar permutaciones simples ($P_n = n!$).
+
+$$n = 6, \qquad P_n = n!$$
+
+2. Aplicamos el principio multiplicativo sobre las $6$ ranuras temporales de la cola de ejecución, reduciendo en una unidad el número de tareas disponibles tras cada asignación hasta completar la última posición.
+
+$$P_6 = 6! = 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 720 \text{ trazas de ejecución}$$
 
 ## 1.2. Variaciones o $r$-Permutaciones de Subconjuntos
 
@@ -56,15 +60,22 @@ En muchas arquitecturas de ingeniería, el catálogo de recursos disponibles con
 La deducción sigue la misma lógica de llenado de casillas, pero el proceso se detiene exactamente al completar la casilla número $r$, donde aún quedan $n - (r - 1) = n - r + 1$ opciones disponibles. Para compactar este producto truncado en notación factorial, se multiplica y divide simultáneamente por $(n - r)!$, completando la cadena descendente hasta $1$ en el numerador y cancelando los factores de los elementos sobrantes en el denominador. Nótese que en parte de la literatura del curso esta expresión se escribe como $P_M^N = \frac{M!}{(M - N)!}$, donde $M$ representa el tamaño de la población y $N$ el tamaño de la muestra ordenada.
 
 > [!EXAMPLE] **Ejemplo 2:** Asignación de Roles Jerárquicos en un Clúster
+> 
 > Una arquitectura de alta disponibilidad cuenta con $n = 10$ servidores físicos idénticos en hardware, pero distintos por su dirección IP. Para desplegar un servicio replicado se requiere asignar exactamente $r = 3$ servidores a tres roles jerárquicos exclusivos: «Nodo Líder», «Réplica Síncrona 1» y «Réplica Síncrona 2». ¿Cuántas topologías de despliegue distintas existen?
-> 
-> **Solución:**
-> 
-> $$V_{10}^3 = P_{10}^3 = \frac{10!}{(10 - 3)!} = \frac{10!}{7!} = 10 \cdot 9 \cdot 8 = 720 \text{ topologías posibles}$$
 
-**Paso 1:** Reconocemos que la jerarquía de red hace que asignar el servidor $A$ como Líder y el $B$ como Réplica 1 sea funcionalmente distinto a invertir sus roles, confirmando que el orden importa y no hay repetición.
+A diferencia del caso anterior, aquí el catálogo de recursos supera la cantidad de puestos disponibles, por lo que una parte de los servidores quedará fuera de la selección final. La finalidad del ejercicio es contabilizar el número de topologías válidas mediante variaciones sin repetición, reflejando que la jerarquía de red distingue qué servidor ocupa cada rol específico.
 
-**Paso 2:** Multiplicamos las $10$ opciones para el Nodo Líder por las $9$ restantes para la Réplica 1 y las $8$ disponibles para la Réplica 2, obteniendo $720$ configuraciones válidas.
+1. Reconocemos que los $n = 10$ servidores son distinguibles por su IP, que solo se asignan $r = 3$ roles sin reutilizar un mismo servidor y que intercambiar los servidores asignados a «Nodo Líder» y «Réplica Síncrona 1» produce una topología funcionalmente distinta, lo cual corresponde a una variación sin repetición ($V_n^r$).
+
+$$n = 10, \quad r = 3, \qquad V_n^r = P_n^r = \frac{n!}{(n - r)!}$$
+
+2. Sustituimos los parámetros en la fórmula factorial y cancelamos los factores correspondientes a los $n - r = 7$ servidores no seleccionados.
+
+$$V_{10}^3 = P_{10}^3 = \frac{10!}{(10 - 3)!} = \frac{10!}{7!} = 10 \cdot 9 \cdot 8$$
+
+3. Efectuamos el producto truncado equivalente a multiplicar las $10$ opciones para el Nodo Líder por las $9$ restantes para la Réplica 1 y las $8$ disponibles para la Réplica 2.
+
+$$V_{10}^3 = 720 \text{ topologías posibles}$$
 
 # 2. Selecciones sin Orden y Estructura de los Coeficientes Binomiales
 
@@ -72,7 +83,7 @@ El enfoque de variaciones falla cuando el sistema trata como equivalentes a dos 
 
 ## 2.1. Combinaciones Simples y Deducción mediante la Regla de la División
 
-Para eliminar la redundancia generada por el orden interno de los elementos seleccionados, se recurre a la **regla de la división**, que colapsa clases de equivalencia de tamaño uniforme.
+Para eliminar la redundancia generada por el orden interno de los elementos seleccionados, se recurre a la regla de la división, que colapsa clases de equivalencia de tamaño uniforme.
 
 > [!QUOTE] **Teorema 3:** Combinaciones Simples (Coeficiente Binomial)
 > Para enteros $n$ y $r$ con $0 \le r \le n$, el número de subconjuntos desordenados de tamaño $r$ que pueden extraerse de un conjunto de $n$ elementos distintos está dado por el coeficiente binomial:
@@ -83,20 +94,27 @@ La deducción formal parte de observar que todo arreglo ordenado de $r$ elemento
 
 $$V_n^r = \binom{n}{r} \cdot r!$$
 
-Al aplicar la regla de la división —dividiendo el total de variaciones ordenadas entre la multiplicidad $d = r!$ de permutaciones internas equivalentes— se purga el orden y emerge la expresión factorial cerrada:
+Al aplicar la regla de la división (dividiendo el total de variaciones ordenadas entre la multiplicidad $d = r!$ de permutaciones internas equivalentes) se purga el orden y emerge la expresión factorial cerrada:
 
 $$\binom{n}{r} = \frac{V_n^r}{r!} = \frac{\frac{n!}{(n - r)!}}{r!} = \frac{n!}{r!(n - r)!}$$
 
 > [!EXAMPLE] **Ejemplo 3:** Selección Simétrica de Nodos para Balanceo de Carga
+> 
 > De un grupo de $n = 10$ servidores disponibles en un centro de datos, un balanceador simétrico debe seleccionar un subconjunto de $r = 3$ nodos para distribuir copias idénticas de una caché de lectura sin distinción de jerarquía. Calcule cuántos subconjuntos de servidores pueden formarse.
-> 
-> **Solución:**
-> 
-> $$C_{10}^3 = \binom{10}{3} = \frac{10!}{3!(10 - 3)!} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2 \cdot 1} = \frac{720}{6} = 120 \text{ subconjuntos}$$
 
-**Paso 1:** Calculamos primero las $V_{10}^3 = 720$ secuencias ordenadas de tres servidores.
+En este problema se parte del mismo catálogo de servidores que en el ejemplo anterior, pero se elimina por completo la jerarquía entre los nodos escogidos. Se busca demostrar cómo la regla de la división purga el orden interno mediante combinaciones simples, evitando sobreestimar el espacio de configuraciones reales al tratar como equivalentes todos los arreglos que contienen los mismos servidores.
 
-**Paso 2:** Como cada trío de servidores puede permutarse internamente de $3! = 6$ maneras que representan el mismo grupo de caché, dividimos $720 / 6$ para obtener los $120$ subconjuntos únicos.
+1. Determinamos primero el número de secuencias ordenadas de $r = 3$ servidores extraídos de un total de $n = 10$ nodos distintos mediante variaciones sin repetición.
+
+$$V_{10}^3 = \frac{10!}{(10 - 3)!} = 10 \cdot 9 \cdot 8 = 720$$
+
+2. Identificamos que cada subconjunto de $3$ nodos puede permutarse internamente de $P_3 = 3!$ maneras que representan exactamente el mismo grupo de caché en el balanceador simétrico.
+
+$$d = 3! = 3 \cdot 2 \cdot 1 = 6$$
+
+3. Aplicamos la regla de la división (coeficiente binomial $C_{10}^3$) dividiendo las variaciones ordenadas entre la multiplicidad interna $3!$ para obtener la cantidad de subconjuntos únicos.
+
+$$C_{10}^3 = \binom{10}{3} = \frac{10!}{3!(10 - 3)!} = \frac{720}{6} = 120 \text{ subconjuntos}$$
 
 ## 2.2. Simetría Combinatoria e Identidad de Pascal
 
@@ -112,7 +130,7 @@ Los coeficientes binomiales $\binom{n}{r}$ obedecen propiedades estructurales qu
 > 
 > $$\binom{n}{k} = \binom{n - 1}{k} + \binom{n - 1}{k - 1}$$
 
-Intuitivamente, la **simetría combinatoria** establece que elegir los $r$ elementos que entran en un subconjunto equivale de manera biyectiva a elegir los $n - r$ elementos que quedan excluidos de él. Por su parte, la **identidad de Pascal** descompone la elección de $k$ elementos respecto a un elemento distinguido (llamémoslo $a_1$): todo subconjunto de tamaño $k$ o bien excluye a $a_1$ (obligando a elegir los $k$ elementos entre los $n - 1$ restantes), o bien incluye a $a_1$ (reduciendo la tarea a elegir $k - 1$ compañeros entre los $n - 1$ restantes).
+Intuitivamente, la simetría combinatoria establece que elegir los $r$ elementos que entran en un subconjunto equivale de manera biyectiva a elegir los $n - r$ elementos que quedan excluidos de él. Por su parte, la identidad de Pascal descompone la elección de $k$ elementos respecto a un elemento distinguido (llamémoslo $a_1$): todo subconjunto de tamaño $k$ o bien excluye a $a_1$ (obligando a elegir los $k$ elementos entre los $n - 1$ restantes), o bien incluye a $a_1$ (reduciendo la tarea a elegir $k - 1$ compañeros entre los $n - 1$ restantes).
 
 ![[PROBA 1-2 Permutaciones, Variaciones y Combinatoria Avanzada - Simetria de Coeficientes Binomiales.webp]]
 
@@ -141,15 +159,22 @@ Agrupamos bajo el denominador común y factorizamos $(n - 1)!$ en el numerador:
 $$\binom{n - 1}{k} + \binom{n - 1}{k - 1} = \frac{(n - 1)![(n - k) + k]}{k!(n - k)!} = \frac{(n - 1)! \cdot n}{k!(n - k)!} = \frac{n!}{k!(n - k)!} = \binom{n}{k} \quad \blacksquare$$
 
 > [!EXAMPLE] **Ejemplo 4:** Reducción de Carga Computacional por Simetría
+> 
 > Un sistema de auditoría debe evaluar todas las combinaciones posibles de $r = 47$ paquetes seleccionados de un lote de $n = 52$ tramas capturadas. Determine el número de combinaciones aprovechando la simetría combinatoria.
-> 
-> **Solución:**
-> 
-> $$\binom{52}{47} = \binom{52}{52 - 47} = \binom{52}{5} = \frac{52 \cdot 51 \cdot 50 \cdot 49 \cdot 48}{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1} = 2.598.960 \text{ combinaciones}$$
 
-**Paso 1:** En lugar de expandir $47$ factores en el numerador y denominador, aplicamos $\binom{52}{47} = \binom{52}{5}$ identificando que elegir $47$ tramas equivale a elegir las $5$ que se descartan.
+Calcular directamente un coeficiente binomial con parámetros grandes puede implicar expandir decenas de factores en el numerador y en el denominador. La finalidad de este ejercicio es aprovechar la propiedad de simetría combinatoria para transformar la selección de un subconjunto grande en la elección equivalente de los elementos descartados, minimizando así la carga de cálculo.
 
-**Paso 2:** Reducimos el cálculo a solo $5$ multiplicaciones y divisiones, obteniendo $2.598.960$ configuraciones idénticas a las manos de póker de cinco cartas.
+1. Planteamos el conteo sin orden de $r = 47$ tramas elegidas de un lote de $n = 52$ mediante el coeficiente binomial $\binom{52}{47}$ y aplicamos la propiedad de simetría combinatoria $\binom{n}{r} = \binom{n}{n - r}$, observando que elegir $47$ tramas equivale de forma biyectiva a elegir las $5$ que se excluyen.
+
+$$\binom{52}{47} = \binom{52}{52 - 47} = \binom{52}{5}$$
+
+2. Desarrollamos la expresión simplificada utilizando únicamente $5$ factores decrecientes en el numerador y $5!$ en el denominador.
+
+$$\binom{52}{5} = \frac{52 \cdot 51 \cdot 50 \cdot 49 \cdot 48}{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}$$
+
+3. Evaluamos el cociente resultante para obtener el número exacto de combinaciones posibles en el sistema de auditoría.
+
+$$\binom{52}{47} = 2.598.960 \text{ combinaciones}$$
 
 ## 2.3. Teorema del Binomio de Newton
 
@@ -163,15 +188,22 @@ La interpretación combinatoria de $\binom{n}{k}$ proporciona una demostración 
 Al expandir el producto de $n$ factores idénticos $(a + b)(a + b)\cdots(a + b)$, cada término elemental resultante se forma eligiendo exactamente una variable ($a$ o $b$) de cada uno de los $n$ paréntesis. Para obtener el monomio $a^k b^{n-k}$, es necesario seleccionar la variable $a$ en exactamente $k$ paréntesis y la variable $b$ en los $n - k$ paréntesis restantes. Como la multiplicación es conmutativa, el número de veces que aparece el término $a^k b^{n-k}$ coincide exactamente con el número de formas de elegir $k$ posiciones entre los $n$ factores sin importar el orden, es decir, $\binom{n}{k}$. Evaluando esta identidad en $a = 1, b = 1$ se demuestra inmediatamente que la cardinalidad del conjunto potencia de un conjunto de $n$ elementos es $\sum_{k=0}^n \binom{n}{k} = 2^n$.
 
 > [!EXAMPLE] **Ejemplo 5:** Conteo de Cadenas Binarias por Peso de Hamming
+> 
 > ¿Cuántas cadenas binarias de longitud $n = 8$ bits contienen exactamente $k = 3$ bits en estado lógico $1$ (peso de Hamming igual a $3$)?
-> 
-> **Solución:**
-> 
-> $$\text{Cadenas con } k=3 \text{ unos} = \binom{8}{3} = \frac{8 \cdot 7 \cdot 6}{3 \cdot 2 \cdot 1} = 56 \text{ cadenas}$$
 
-**Paso 1:** Asociamos cada posición de la palabra de $8\text{ bits}$ a un factor del binomio $(x + 1)^8$, donde elegir $x$ equivale a fijar un bit en $1$ y elegir $1$ equivale a fijar un bit en $0$.
+Este ejercicio conecta el conteo combinatorio con la representación polinómica del Teorema del Binomio de Newton en un contexto de codificación digital. Se busca determinar cuántas palabras de $8\text{ bits}$ tienen un peso de Hamming específico interpretando cada bit de la cadena como la elección de una variable en la expansión de un binomio.
 
-**Paso 2:** El coeficiente que acompaña a $x^3$ en la expansión es $\binom{8}{3} = 56$, cuantificando las palabras de $8\text{ bits}$ con exactamente tres unos.
+1. Asociamos cada una de las $n = 8$ posiciones de la palabra binaria a un factor del binomio $(x + 1)^8$, donde seleccionar $x$ representa fijar un bit en estado $1$ y seleccionar $1$ representa fijar un bit en estado $0$.
+
+$$(x + 1)^8 = \sum_{k=0}^8 \binom{8}{k} x^k \cdot 1^{8 - k}$$
+
+2. Identificamos que el número de cadenas con exactamente $k = 3$ bits en estado $1$ corresponde al coeficiente binomial que acompaña al término $x^3$ en dicha expansión.
+
+$$\text{Cadenas con } k = 3 \text{ unos} = \binom{8}{3}$$
+
+3. Desarrollamos el coeficiente binomial y efectuamos la simplificación aritmética para obtener el total de cadenas binarias válidas.
+
+$$\binom{8}{3} = \frac{8 \cdot 7 \cdot 6}{3 \cdot 2 \cdot 1} = 56 \text{ cadenas}$$
 
 # 3. Agrupamientos con Repetición y Restricciones de Identidad
 
@@ -189,15 +221,18 @@ Cuando se construye una secuencia ordenada de longitud $r$ tomando símbolos de 
 A diferencia de las variaciones simples, aquí no existe la restricción $r \le n$, pues el alfabeto nunca se agota. Cada una de las $r$ casillas de la secuencia admite exactamente $n$ posibilidades independientes; aplicando la regla del producto $r$ veces consecutivas se obtiene $n \cdot n \cdots n = n^r$.
 
 > [!EXAMPLE] **Ejemplo 6:** Espacio de Claves en Generación de Contraseñas
+> 
 > Un sistema de autenticación exige contraseñas de longitud exacta $r = 5$ caracteres construidas exclusivamente sobre un alfabeto reducido de $n = 16$ símbolos hexadecimales ($\{0\text{--}9, \text{A--F}\}$), permitiendo repetir símbolos. Determine la cardinalidad del espacio de búsqueda para un ataque de fuerza bruta.
-> 
-> **Solución:**
-> 
-> $$VR_{16}^5 = 16^5 = (2^4)^5 = 2^{20} = 1.048.576 \text{ contraseñas posibles}$$
 
-**Paso 1:** Verificamos que el orden distingue contraseñas distintas («A1B2C» $\neq$ «C2B1A») y que los símbolos pueden repetirse («AAAAA» es válida).
+En seguridad informática, dimensionar el tamaño del espacio de claves es fundamental para evaluar la resistencia de un esquema de autenticación frente a búsquedas exhaustivas. La finalidad de este ejercicio es calcular el número total de contraseñas válidas considerando que la posición de cada carácter importa y que el alfabeto no se agota al reutilizar símbolos.
 
-**Paso 2:** Multiplicamos las $16$ opciones independientes a lo largo de las $5$ posiciones, obteniendo $2^{20} = 1.048.576$ claves posibles.
+1. Verificamos que el orden distingue contraseñas diferentes (por ejemplo, «A1B2C» $\neq$ «C2B1A») y que se permite repetir un mismo símbolo en múltiples posiciones («AAAAA» es válida), lo que corresponde a variaciones con repetición ($VR_n^r = n^r$).
+
+$$n = 16, \quad r = 5, \qquad VR_n^r = n^r$$
+
+2. Aplicamos el principio multiplicativo asignando $16$ opciones independientes a cada una de las $5$ posiciones y expresamos el resultado en base $2$ para evaluar su magnitud binaria exacta.
+
+$$VR_{16}^5 = 16^5 = (2^4)^5 = 2^{20} = 1.048.576 \text{ contraseñas posibles}$$
 
 ## 3.2. Combinaciones con Repetición y el Método de Estrellas y Barras
 
@@ -222,28 +257,23 @@ Para contar todas las configuraciones válidas, observamos que cualquier diagram
 
 $$N_{\text{sol}} = \binom{n + r - 1}{r} = \binom{n + r - 1}{n - 1}$$
 
-### 3.2.2. Caso de Estudio: Asignación de Peticiones con Cota Mínima en Réplicas
-
 > [!EXAMPLE] **Ejemplo 7:** Asignación de Recursos Compartidos con Mínimo Garantizado
+> 
 > Demuestre analíticamente de cuántas formas se pueden asignar $15$ peticiones idénticas de base de datos a $n = 4$ servidores de réplica disponibles si cada servidor debe recibir al menos $2$ peticiones para evitar subutilización.
-> 
-> **Solución:**
-> 
-> Sea $x_i$ el número de peticiones asignadas al servidor $i$ ($i = 1, 2, 3, 4$). El problema equivale a hallar el número de soluciones enteras del sistema:
-> 
-> $$x_1 + x_2 + x_3 + x_4 = 15, \quad \text{sujeto a } x_i \ge 2 \quad \forall i \in \{1, 2, 3, 4\}$$
-> 
-> Definimos el cambio de variable $y_i = x_i - 2$, de modo que $y_i \ge 0$ para todo $i$. Sustituyendo $x_i = y_i + 2$ en la ecuación de balance:
-> 
-> $$(y_1 + 2) + (y_2 + 2) + (y_3 + 2) + (y_4 + 2) = 15 \implies y_1 + y_2 + y_3 + y_4 = 15 - 8 = 7$$
-> 
-> Aplicando el modelo de estrellas y barras con $n = 4$ servidores y $r' = 7$ peticiones libres restantes:
-> 
-> $$N_{\text{sol}} = \binom{4 + 7 - 1}{7} = \binom{10}{7} = \binom{10}{3} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2 \cdot 1} = 120 \text{ formas de asignación}$$
 
-**Paso 1:** Como las peticiones son idénticas entre sí y los servidores son entidades distinguibles, preasignamos deterministamente $2$ peticiones a cada uno de los $4$ servidores, consumiendo $4 \cdot 2 = 8$ peticiones del inventario para satisfacer la restricción $x_i \ge 2$.
+En este caso de estudio modelamos un problema de reparto de carga donde los elementos distribuidos son indistinguibles entre sí, pero los destinos son identificables y están sujetos a una cota inferior de asignación. Se busca hallar el número total de repartos válidos reduciendo la restricción mínima mediante un cambio de variable para aplicar el método de estrellas y barras (combinaciones con repetición).
 
-**Paso 2:** Reducimos el problema a distribuir sin restricciones ($y_i \ge 0$) las $r' = 7$ peticiones sobrantes entre los $n = 4$ servidores, lo que requiere $4 - 1 = 3$ barras separadoras y $7$ estrellas, generando $\binom{10}{3} = 120$ repartos posibles.
+1. Definimos $x_i$ como el número de peticiones asignadas al servidor $i$ ($i = 1, 2, 3, 4$) y formulamos el problema como el conteo de soluciones enteras de una ecuación diofántica sujeta a la restricción de mínimo garantizado.
+
+$$x_1 + x_2 + x_3 + x_4 = 15, \quad \text{sujeto a } x_i \ge 2 \quad \forall i \in \{1, 2, 3, 4\}$$
+
+2. Preasignamos deterministamente $2$ peticiones a cada uno de los $4$ servidores (consumiendo $4 \cdot 2 = 8$ peticiones del inventario) mediante el cambio de variable $y_i = x_i - 2$, de manera que las nuevas incógnitas sean enteras no negativas ($y_i \ge 0$).
+
+$$(y_1 + 2) + (y_2 + 2) + (y_3 + 2) + (y_4 + 2) = 15 \implies y_1 + y_2 + y_3 + y_4 = 15 - 8 = 7$$
+
+3. Aplicamos el modelo de estrellas y barras para distribuir sin restricciones las $r' = 7$ peticiones libres restantes entre los $n = 4$ servidores (lo cual requiere $4 - 1 = 3$ barras separadoras y $7$ estrellas) y simplificamos usando simetría combinatoria.
+
+$$N_{\text{sol}} = \binom{4 + 7 - 1}{7} = \binom{10}{7} = \binom{10}{3} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2 \cdot 1} = 120 \text{ formas de asignación}$$
 
 ## 3.3. Permutaciones con Elementos Indistinguibles y Fórmula Multinomial
 
@@ -256,20 +286,23 @@ Un último caso fundamental aparece cuando se ordena una secuencia completa de $
 
 La demostración aplica la **regla de la división** de forma iterativa. Si etiquetáramos artificialmente a todos los objetos con subíndices únicos para hacerlos distinguibles, existirían $n!$ ordenamientos lineales. Sin embargo, los $n_1$ clones del primer grupo pueden permutar entre sí de $n_1!$ maneras sin alterar la secuencia observable; por cada una de ellas, los $n_2$ clones del segundo grupo permutan de $n_2!$ formas sin efecto visible, y así hasta el grupo $k$. Por el principio multiplicativo, cada secuencia distinguible aparece repetida exactamente $d = n_1! \cdot n_2! \cdots n_k!$ veces en el conteo bruto, por lo que dividir $n!$ entre dicho producto entrega el total exacto.
 
-### 3.3.1. Caso de Estudio: Secuencias de Tramas de Control en Protocolos de Enlace
-
 > [!EXAMPLE] **Ejemplo 8:** Transmisión de Tramas de Control en Protocolos de Enlace
+> 
 > Un protocolo de enlace envía una ráfaga de $12$ paquetes de control: $5$ paquetes ACK, $4$ paquetes NACK y $3$ paquetes SYN, todos idénticos entre sí según su tipo. Calcule el número total de secuencias distinguibles que pueden recibirse en el nodo destino.
-> 
-> **Solución:**
-> 
-> Verificamos que la suma de subgrupos iguala el total de paquetes: $n = 5 + 4 + 3 = 12$. Aplicando la fórmula multinomial:
-> 
-> $$\binom{12}{5, 4, 3} = \frac{12!}{5! \cdot 4! \cdot 3!} = \frac{479.001.600}{120 \cdot 24 \cdot 6} = \frac{479.001.600}{17.280} = 27.720 \text{ secuencias distinguibles}$$
 
-**Paso 1:** Identificamos que el orden de llegada de los comandos altera el estado de la máquina de protocolo, pero intercambiar dos tramas ACK entre sí no produce un mensaje nuevo.
+Al analizar ráfagas de tráfico en protocolos de red, el orden de llegada de los comandos altera el estado del receptor, pero intercambiar dos paquetes del mismo tipo produce exactamente la misma secuencia observable. La finalidad de este ejercicio es cuantificar con exactitud el espacio de secuencias distinguibles aplicando la fórmula multinomial para descontar las permutaciones internas de cada clase de paquetes idénticos.
 
-**Paso 2:** Dividimos las $12!$ permutaciones brutas entre las simetrías internas de cada tipo de trama ($5! \cdot 4! \cdot 3! = 17.280$), reduciendo el espacio de estados efectivos a $27.720$ secuencias posibles.
+1. Identificamos los tamaños de los $k = 3$ grupos de tramas indistinguibles ($n_1 = 5$ ACK, $n_2 = 4$ NACK y $n_3 = 3$ SYN) y verificamos que su suma coincide con la longitud total de la ráfaga.
+
+$$n = n_1 + n_2 + n_3 = 5 + 4 + 3 = 12$$
+
+2. Planteamos el coeficiente multinomial dividiendo las $12!$ permutaciones brutas entre el producto de las simetrías internas ($n_1! \cdot n_2! \cdot n_3!$) de los paquetes idénticos de cada tipo.
+
+$$\binom{12}{5, 4, 3} = \frac{12!}{5! \cdot 4! \cdot 3!}$$
+
+3. Evaluamos los factoriales y efectuamos la división para determinar el número exacto de secuencias de control distinguibles en el nodo destino.
+
+$$\binom{12}{5, 4, 3} = \frac{479.001.600}{120 \cdot 24 \cdot 6} = \frac{479.001.600}{17.280} = 27.720 \text{ secuencias distinguibles}$$
 
 # 4. Síntesis Taxonómica y Compromisos de Ingeniería Computacional
 
@@ -306,15 +339,14 @@ En cada paso $i$, el acumulador parcial corresponde exactamente a $\binom{n}{i}$
 ---
 
 > [!RESOURCES] REFERENCIAS
+> - **Meyer, Paul L.** *Probabilidad y Aplicaciones Estadísticas* (Edición revisada). Addison-Wesley Iberoamericana.
 > 
-> - **Meyer, Paul L.** _Probabilidad y Aplicaciones Estadísticas_ (Edición revisada). Addison-Wesley Iberoamericana. Capítulo 1 («Introducción a la probabilidad») y Capítulo 2 («Espacios muestrales finitos», secciones «Métodos de enumeración», «Combinaciones» y «Permutaciones»).
->     
-> - **Feller, William.** _An Introduction to Probability Theory and Its Applications_, Vol. I (3.ª ed.). John Wiley & Sons, Inc., Nueva York, 1968. Capítulo 2 («Elements of Combinatorial Analysis»).
->     
-> - **Riordan, John.** _An Introduction to Combinatorial Analysis_. Dover Publications, Mineola, Nueva York, 2002.
->     
-> - **Parzen, Emanuel.** _Modern Probability Theory and Its Applications_. John Wiley & Sons, Inc., Nueva York, 1960.
->     
-> - **Lipschutz, Seymour.** _Probabilidad_. McGraw-Hill, México, 1970.
->     
-> - **Universidad Central de Venezuela (UCV), Facultad de Ciencias, Escuela de Computación.** _Probabilidad y Estadística: Introducción a la Probabilidad (G01) y Práctica Nº 0: Repaso de Combinatoria y Probabilidades (A00)_. Caracas, Venezuela, 2023.
+> - **Feller, William.** *An Introduction to Probability Theory and Its Applications*, Vol. I (3.ª ed.). John Wiley & Sons, Inc., Nueva York, 1968. Capítulos 1, 2 y 3.
+> 
+> - **Riordan, John.** *An Introduction to Combinatorial Analysis*. Dover Publications, Mineola, Nueva York, 2002.
+> 
+> - **Parzen, Emanuel.** *Modern Probability Theory and Its Applications*. John Wiley & Sons, Inc., Nueva York, 1960.
+> 
+> - **Lipschutz, Seymour.** *Probabilidad*. McGraw-Hill, México, 1970.
+> 
+> - **Universidad Central de Venezuela (UCV), Facultad de Ciencias, Escuela de Computación.** *Probabilidad y Estadística*. Caracas, Venezuela, 2023.

@@ -10,6 +10,8 @@ status: done
 
 <h1 id="main-title"  align="center"> Glosario de Términos </h1>
 
+# Sistema Endocrino
+
 Es la red de glándulas del cuerpo (como la tiroides, el páncreas o las suprarrenales) encargada de fabricar y liberar hormonas directamente en el torrente sanguíneo. Funciona como un sistema de mensajería química de respuesta lenta pero sostenida; por ejemplo, cuando te asustas o estresas, este sistema libera adrenalina para preparar a todo tu organismo frente a una amenaza, modulando funciones a mediano y largo plazo a diferencia de la respuesta eléctrica inmediata de los nervios.
 
 # Homeostasis
