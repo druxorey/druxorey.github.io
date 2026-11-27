@@ -35,7 +35,7 @@ Esta separación entre el catálogo de desenlaces y su peso numérico obliga a d
 
 En consecuencia, todo evento imposible es necesariamente improbable ($\mathbb{P}(\emptyset) = 0$), pero un evento puede ser perfectamente posible desde el punto de vista lógico y tener probabilidad nula. Al medir el instante continuo $T \in [0, 24]\text{ h}$ en que una persona llega a su puesto de trabajo, que el incidente ocurra exactamente a las $T = 8.0000\text{ h}$ es posible por pertenecer al intervalo temporal real, pero al existir infinitos instantes no numerables en un día, su medida puntual es $\mathbb{P}(T = 8) = 0$.
 
-## 1.2. El Espacio Muestral, los Eventos y la Función Probabilística
+## 1.2. El Espacio Muestral y los Eventos
 
 Instintivamente, para estudiar un experimento no determinístico podríamos pensar en anotar los posibles resultados, sin embargo no existe garantía de haber contemplado todas las posibilidades ni de evitar ambigüedades sobre qué estamos midiendo exactamente. Para resolver este problema, se formalizan tres elementos básicos:
 
@@ -83,7 +83,7 @@ $$\lvert \Omega \rvert = 2^3 = 8 \implies \lvert \text{Partes}(\Omega) \rvert = 
 
 $$E = {CCC, CCS, CSC, SCC} \implies \lvert E \rvert = 4$$
 
-# 2. Axiomática de la Función Probabilística y Corolarios Derivados
+# 2. La Función Probabilística
 
 Definida la función probabilística $P: \text{Partes}(\Omega) \to [0, 1]$, hace falta establecer las reglas mínimas que garantizan que cualquier asignación de probabilidades sea coherente y libre de contradicciones internas. Esta fundamentación axiomática, introducida por Andréi Kolmogórov, permite construir todo el cálculo de probabilidades a partir de tres postulados básicos.
 
@@ -127,9 +127,7 @@ $$P(\Omega) = p_1 + p_2 + p_3 = 1 \implies 4p_3 + 2p_3 + p_3 = 1 \implies 7p_3 =
 
 $$p_3 = \frac{1}{7}, \qquad p_2 = \frac{2}{7}, \qquad p_1 = \frac{4}{7}$$
 
-## 2.2. Propiedades Universales como Corolarios de los Axiomas
-
-La potencia del enfoque axiomático radica en que las demás reglas del cálculo de probabilidades no requieren ser postuladas ni verificadas experimentalmente: se demuestran como **corolarios** lógicos utilizando exclusivamente los tres axiomas anteriores y los corolarios ya demostrados.
+## 2.2. Propiedades Universales 
 
 ### 2.2.1. Probabilidad del Evento Complementario
 

@@ -263,7 +263,7 @@ Si el número de objetos $N$ multiplica varias veces la cantidad de contenedores
 
 La demostración de la cota $\lceil N/k \rceil$ procede por reducción al absurdo: si ningún recipiente contuviera al menos $\lceil N/k \rceil$ objetos, cada uno de los $k$ recipientes tendría a lo sumo $\lceil N/k \rceil - 1$ elementos. Dado que $\lceil x \rceil < x + 1$, el total máximo de objetos en todo el sistema sería estrictamente menor que $k\big((N/k + 1) - 1\big) = N$, contradiciendo el hecho de que hay $N$ objetos distribuidos.
 
-Asimismo, para hallar el umbral mínimo $N$ que garantiza una carga de $r$ elementos en alguna casilla, analizamos el **peor caso de saturación uniforme**. El sistema evita alcanzar la cuota $r$ mientras logre repartir los objetos de forma equilibrada colocando exactamente $r - 1$ elementos en cada una de las $k$ casillas, lo que consume $k(r - 1)$ objetos. En cuanto se introduce un objeto adicional, este rompe el equilibrio y eleva obligatoriamente la carga de alguna casilla a $r$, fijando el umbral en $N = k(r - 1) + 1$.
+Asimismo, para hallar el umbral mínimo $N$ que garantiza una carga de $r$ elementos en alguna casilla, analizamos el peor caso de saturación uniforme. El sistema evita alcanzar la cuota $r$ mientras logre repartir los objetos de forma equilibrada colocando exactamente $r - 1$ elementos en cada una de las $k$ casillas, lo que consume $k(r - 1)$ objetos. En cuanto se introduce un objeto adicional, este rompe el equilibrio y eleva obligatoriamente la carga de alguna casilla a $r$, fijando el umbral en $N = k(r - 1) + 1$.
 
 > [!EXAMPLE] **Ejemplo 7:** Garantía de Nivel Académico en un Curso
 > 
