@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medidas Descriptivas de Variables Aleatorias | Druxorey</title>
+  <meta name="description" content="Las medidas descriptivas de variables aleatorias resumen el comportamiento probabilístico de un fenómeno mediante parámetros escalares clave. La esperanza matemática establece el centro de masa de la distribución, mientras que la varianza y la desviación estándar cuantifican la dispersión de los datos. Complementadas por la mediana, la moda y los cuantiles, estas métricas permiten evaluar la posición central y el grado de asimetría sin requerir análisis gráficos complejos.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="/assets/main-Dehq_9UD.js"></script>
+  <script type="module" crossorigin src="/assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="/assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-u8MMlYs2.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#esperanza-matemática">1. Esperanza Matemática</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#esperanza-de-una-variable-transformada">1.1. Esperanza de una
+Variable Transformada</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#propiedades-de-la-esperanza-matemática">1.2. Propiedades de la
+Esperanza Matemática</a></li>
+<li class="toc-item"><a class="toc-link" href="#teoría-general-de-momentos">2. Teoría General de Momentos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#momentos-ordinarios-y-momentos-centrados">2.1. Momentos
+Ordinarios y Momentos Centrados</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#demostración-de-nulidad-del-primer-momento-centrado">2.2.
+Demostración de Nulidad del Primer Momento Centrado</a></li>
+<li class="toc-item"><a class="toc-link" href="#medidas-de-dispersión-y-escalamiento">3. Medidas de Dispersión y
+Escalamiento</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#varianza-y-desviación-estándar">3.1. Varianza y Desviación
+Estándar</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#teorema-de-könig">3.2. Teorema de König</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#impacto-de-transformaciones-lineales-en-la-varianza">3.3.
+Impacto de Transformaciones Lineales en la Varianza</a></li>
+<li class="toc-item"><a class="toc-link" href="#medidas-de-tendencia-central-y-asimetría">4. Medidas de
+Tendencia Central y Asimetría</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#moda">4.1. Moda</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#mediana">4.2. Mediana</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#orden-relativo-entre-media-mediana-y-moda">4.3. Orden Relativo
+entre Media, Mediana y Moda</a></li>
+<li class="toc-item"><a class="toc-link" href="#medidas-de-posición-no-central">5. Medidas de Posición No
+Central</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#cuantiles-percentiles-y-cuartiles">5.1. Cuantiles, Percentiles y
+Cuartiles</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#rango-intercuartílico-como-medida-robusta-de-dispersión">5.2.
+Rango Intercuartílico como Medida Robusta de Dispersión</a></li>
+<li class="toc-item"><a class="toc-link" href="#ejercicios-prácticos-resueltos">6. Ejercicios Prácticos
+Resueltos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#evaluación-de-sesgo-en-una-distribución-polinómica-acotada">6.1.
+Evaluación de Sesgo en una Distribución Polinómica Acotada</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#cálculo-de-cuantiles-y-rango-intercuartílico-en-tiempos-de-atención">6.2.
+Cálculo de Cuantiles y Rango Intercuartílico en Tiempos de Atención</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Probabilidad y Estadistica</div>
+          <h1 class="article-title">Medidas Descriptivas de Variables Aleatorias</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota 3.2</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>Las <strong>medidas descriptivas de variables
+aleatorias</strong> resumen el comportamiento probabilístico de un
+fenómeno mediante parámetros escalares clave. La <strong>esperanza
+matemática</strong> establece el centro de masa de la distribución,
+mientras que la <strong>varianza</strong> y la <strong>desviación
+estándar</strong> cuantifican la dispersión de los datos. Complementadas
+por la <strong>mediana</strong>, la <strong>moda</strong> y
+los <strong>cuantiles</strong>, estas métricas permiten evaluar la
+posición central y el grado de <strong>asimetría</strong> sin requerir
+análisis gráficos complejos.</p>
+  </div>
+</div>
+<p>Describir una variable aleatoria mediante toda su función de densidad
+o su función de distribución acumulada proporciona la información de
+cómo se reparte la incertidumbre a lo largo de su recorrido. Sin
+embargo, en la práctica cotidiana resulta poco manejable comparar dos
+fenómenos (como el tiempo de espera en dos taquillas de atención o la
+duración de dos lotes de bombillas) analizando curvas o tablas completas
+punto por punto: para tomar decisiones rápidas es necesario resumir todo
+ese comportamiento en unos pocos números representativos.</p>
+<p>El problema surge al intentar condensar una función completa en
+escalares aislados sin perder información crítica. Un único valor
+promedio puede ocultar fluctuaciones extremas o verse arrastrado hacia
+un extremo por unos pocos resultados atípicos. Para identificar dónde se
+concentra una distribución, qué tan dispersos están sus valores y hacia
+qué lado se inclina su forma, resulta indispensable construir un sistema
+ordenado de métricas escalares partiendo del punto de equilibrio
+fundamental de la probabilidad.</p>
+<h2  id="esperanza-matemática">1. Esperanza Matemática</h2>
+<p>El primer paso consiste en hallar un único número que represente el
+valor promedio teórico del experimento tras un número infinito de
+repeticiones. Dependiendo de si el recorrido <span
+class="math inline">\mathbb{R}_X</span> de una <a
+href="#proba-3-1-variables-aleatorias">variable aleatoria</a> está
+formado por puntos aislados o por un intervalo continuo sobre la recta
+real, la ponderación de cada resultado por su peso probabilístico se
+formula mediante una sumatoria o una integral.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 1:</strong> Esperanza Matemática
+(<span class="math inline">\mathbb{E}[X]</span>)</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">X</span> una variable aleatoria
+definida sobre un espacio de probabilidad. Su <strong>esperanza
+matemática</strong> (también llamada <strong>valor esperado</strong> o
+<strong>media</strong>), denotada por <span
+class="math inline">\mathbb{E}[X]</span> o <span
+class="math inline">\mu</span>, se define como:</p>
+<p><span class="math display">\mathbb{E}[X] = \begin{cases}
+\displaystyle \sum_{x \in \mathbb{R}_X} x \cdot p_X(x) &amp; \text{si }
+X \text{ es discreta} \\ \displaystyle \int_{-\infty}^{+\infty} x \cdot
+f_X(x) \, dx &amp; \text{si } X \text{ es continua}
+\end{cases}</span></p>
+<p>siendo <span class="math inline">p_X(x)</span> y <span
+class="math inline">f_X(x)</span> las correspondientes funciones de
+densidad de probabilidad discreta y continua de <span
+class="math inline">X</span>, siempre que la serie o la integral
+converjan de manera absoluta, es decir, que <span
+class="math inline">\sum_{x \in \mathbb{R}_X} \vert{}x\vert{}\,p_X(x)
+&lt; \infty</span> o <span class="math inline">\int_{-\infty}^{+\infty}
+\vert{}x\vert{}\,f_X(x)\,dx &lt; \infty</span>.</p>
+  </div>
+</div>
+<p>La esperanza matemática funciona exactamente como el <strong>centro
+de masa</strong> (o centro de gravedad) de la distribución. Si se
+reparte una masa unitaria total (<span class="math inline">1\text{
+kg}</span>) a lo largo de una varilla rígida graduada (ya sea mediante
+masas puntuales <span class="math inline">p_X(x)</span> en posiciones
+discretas o mediante una lámina de densidad lineal <span
+class="math inline">f_X(x)</span>), el valor <span
+class="math inline">\mu = \mathbb{E}[X]</span> señala la coordenada
+exacta donde debe situarse el punto de apoyo para que la varilla
+permanezca en equilibrio horizontal.</p>
+<p>Es importante destacar que <span
+class="math inline">\mathbb{E}[X]</span> viene expresada exactamente en
+las mismas unidades físicas que la variable <span
+class="math inline">X</span>, aunque no tiene por qué coincidir con un
+valor observable en un ensayo individual: al lanzar un dado legal, el
+valor esperado es <span class="math inline">3.5</span>, un número que
+jamás aparece en ninguna cara pero que determina el promedio hacia el
+cual converge la media aritmética tras miles de lanzamientos.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Esperanza Matemática en un
+Dado Legal y en un Tiempo de Espera Continuo</span>
+  </div>
+  <div class="callout-content">
+<p>Calcule el valor esperado <span
+class="math inline">\mathbb{E}[X]</span> para las siguientes dos
+variables aleatorias:</p>
+<ol type="1">
+<li>La variable discreta <span class="math inline">X =</span> «resultado
+obtenido al lanzar un dado legal de seis caras», cuya <a
+href="#2-1-densidad-de-probabilidad-de-variables-discretas">función de
+densidad de probabilidad discreta</a> es <span
+class="math inline">p_X(x) = \frac{1}{6}</span> para <span
+class="math inline">x \in \{1, 2, 3, 4, 5, 6\}</span>.</li>
+<li>La variable continua <span class="math inline">T =</span> «tiempo en
+minutos que transcurre hasta la llegada de un cliente a una taquilla
+bancaria», modelada por la <a
+href="#2-2-densidad-de-probabilidad-de-variables-continuas">función de
+densidad de probabilidad continua</a> <span class="math inline">f_T(t) =
+2e^{-2t}</span> para <span class="math inline">t \ge 0</span> (y <span
+class="math inline">0</span> para <span class="math inline">t &lt;
+0</span>).</li>
+</ol>
+  </div>
+</div>
+<p>En este ejercicio calculamos el centro de masa en los dos dominios
+fundamentales de la teoría de probabilidad. Lo que se busca es aplicar
+la suma ponderada en el caso discreto y resolver una integral impropia
+mediante integración por partes en el caso continuo, interpretando el
+significado físico de cada resultado.</p>
+<ol type="1">
+<li>Para el lanzamiento del dado legal, multiplicamos cada elemento del
+recorrido <span class="math inline">\mathbb{R}_X = \{1, 2, 3, 4, 5,
+6\}</span> por su probabilidad uniforme <span
+class="math inline">\frac{1}{6}</span> y sumamos los seis términos.</li>
+</ol>
+<p><span class="math display">\mathbb{E}[X] = \sum_{x=1}^{6} x \cdot
+\frac{1}{6} = \frac{1 + 2 + 3 + 4 + 5 + 6}{6} = \frac{21}{6} =
+\frac{7}{2} = 3.5</span></p>
+<ol start="2" type="1">
+<li>Para el tiempo continuo de llegada del cliente, planteamos la
+integral impropia sobre el soporte activo <span class="math inline">[0,
+\infty)</span> e integramos por partes escogiendo <span
+class="math inline">u = t</span> (<span class="math inline">du =
+dt</span>) y <span class="math inline">dv = 2e^{-2t}\,dt</span> (<span
+class="math inline">v = -e^{-2t}</span>).</li>
+</ol>
+<p><span class="math display">\mathbb{E}[T] = \int_{0}^{+\infty} t \cdot
+2e^{-2t} \, dt = \lim_{b \to +\infty} \left( \left[ -t\,e^{-2t}
+\right]_{0}^{b} + \int_{0}^{b} e^{-2t} \, dt \right)</span></p>
+<ol start="3" type="1">
+<li>Evaluamos los límites aplicando la regla de L’Hôpital en el primer
+término (<span class="math inline">\lim_{b \to +\infty} b\,e^{-2b} =
+0</span>) y resolviendo la integral exponencial restante, obteniendo un
+tiempo promedio de espera de medio minuto (<span
+class="math inline">30\text{ segundos}</span>).</li>
+</ol>
+<p><span class="math display">\mathbb{E}[T] = \lim_{b \to +\infty}
+\left( -b\,e^{-2b} + 0 + \left[ -\frac{1}{2}e^{-2t} \right]_{0}^{b}
+\right) = 0 - \frac{1}{2}\left(0 - 1\right) = \frac{1}{2}\text{
+min}</span></p>
+<h3  id="esperanza-de-una-variable-transformada">1.1. Esperanza de una
+Variable Transformada</h3>
+<p>A veces interesa calcular el valor esperado no de la variable
+original <span class="math inline">X</span>, sino de una transformación
+funcional <span class="math inline">Y = G(X)</span>, como el área de un
+cuadrado cuyo lado aleatorio es <span class="math inline">X</span> o una
+penalización proporcional a <span class="math inline">X^2</span>. El
+enfoque directo consistiría en deducir primero la distribución de
+probabilidad completa de <span class="math inline">Y</span> y luego
+aplicar la definición. El Teorema del Estadístico Inconsciente permite
+prescindir de ese paso intermedio.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 1:</strong> Esperanza Matemática de una
+Función <span class="math inline">G(X)</span></span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">X</span> una variable aleatoria y sea
+<span class="math inline">G: \mathbb{R} \to \mathbb{R}</span> una
+función real medible. La esperanza matemática de la variable
+transformada <span class="math inline">G(X)</span> se calcula
+directamente a partir de la función de densidad de probabilidad original
+de <span class="math inline">X</span>:</p>
+<p><span class="math display">\mathbb{E}[G(X)] = \begin{cases}
+\displaystyle \sum_{x \in \mathbb{R}_X} G(x) \cdot p_X(x) &amp; \text{si
+} X \text{ es discreta} \\ \displaystyle \int_{-\infty}^{+\infty} G(x)
+\cdot f_X(x) \, dx &amp; \text{si } X \text{ es continua}
+\end{cases}</span></p>
+<p>siempre que la suma o la integral converjan de manera absoluta.</p>
+  </div>
+</div>
+<p>Este teorema establece que para hallar el promedio de cualquier
+función <span class="math inline">G(X)</span> basta con sustituir el
+factor lineal <span class="math inline">x</span> de la fórmula de la
+esperanza por la expresión transformada <span
+class="math inline">G(x)</span>, ponderándola directamente con los
+mismos pesos <span class="math inline">p_X(x)</span> o <span
+class="math inline">f_X(x)</span> de la variable de partida. De este
+modo, no hace falta reconstruir el recorrido <span
+class="math inline">\mathbb{R}_Y</span> ni recalcular probabilidades
+inducidas cada vez que se aplica una transformación algebraica sobre
+<span class="math inline">X</span>.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Cálculo del Valor Esperado de
+una Transformación Cuadrática</span>
+  </div>
+  <div class="callout-content">
+<p>Al lanzar un dado legal de seis caras con resultado <span
+class="math inline">X \in \{1, 2, 3, 4, 5, 6\}</span>, un juego de azar
+otorga un premio en monedas igual al cuadrado del número obtenido, es
+decir, <span class="math inline">G(X) = X^2</span>. Calcule el premio
+promedio esperado <span class="math inline">\mathbb{E}[X^2]</span>
+utilizando el Teorema 1 y compárelo con <span
+class="math inline">(\mathbb{E}[X])^2</span>.</p>
+  </div>
+</div>
+<p>En este ejercicio aplicamos el Teorema 1 sobre una variable aleatoria
+discreta uniforme para evaluar la esperanza de una transformación no
+lineal. La finalidad es calcular directamente <span
+class="math inline">\mathbb{E}[X^2]</span> ponderando cada cuadrado
+perfecto por <span class="math inline">\frac{1}{6}</span> y comprobar
+una desigualdad esencial del cálculo probabilístico: cuando <span
+class="math inline">G</span> no es una función lineal, en general <span
+class="math inline">\mathbb{E}[G(X)] \neq G(\mathbb{E}[X])</span>.</p>
+<ol type="1">
+<li>Aplicamos la fórmula discreta del Teorema 1 sustituyendo <span
+class="math inline">G(x) = x^2</span> y ponderando cada valor por la
+probabilidad uniforme <span class="math inline">p_X(x) =
+\frac{1}{6}</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{E}[X^2] = \sum_{x=1}^{6} x^2 \cdot
+p_X(x) = \frac{1^2 + 2^2 + 3^2 + 4^2 + 5^2 + 6^2}{6}</span></p>
+<ol start="2" type="1">
+<li>Desarrollamos la suma de los cuadrados de los seis primeros enteros
+positivos y simplificamos el cociente resultante.</li>
+</ol>
+<p><span class="math display">\mathbb{E}[X^2] = \frac{1 + 4 + 9 + 16 +
+25 + 36}{6} = \frac{91}{6} \approx 15.17\text{ monedas}</span></p>
+<ol start="3" type="1">
+<li>Comparamos este resultado con el cuadrado de la media obtenida en el
+ejemplo previo (<span class="math inline">\mathbb{E}[X] =
+\frac{7}{2}</span>), verificando que <span
+class="math inline">\mathbb{E}[X^2] &gt; (\mathbb{E}[X])^2</span>.</li>
+</ol>
+<p><span class="math display">(\mathbb{E}[X])^2 =
+\left(\frac{7}{2}\right)^2 = \frac{49}{4} = 12.25 \neq
+\frac{91}{6}</span></p>
+<h3  id="propiedades-de-la-esperanza-matemática">1.2. Propiedades de la
+Esperanza Matemática</h3>
+<p>El operador esperanza <span
+class="math inline">\mathbb{E}[\cdot]</span> hereda directamente la
+estructura lineal de las sumatorias e integrales, lo que permite
+simplificar expresiones algebraicas sin volver a sumar o integrar desde
+cero:</p>
+<ol type="1">
+<li><strong>Linealidad estricta:</strong> Para cualesquiera constantes
+reales <span class="math inline">a, b \in \mathbb{R}</span> y funciones
+<span class="math inline">h_1(X), \dots, h_n(X)</span> con esperanzas
+finitas, el operador distribuye sobre sumas y extrae constantes
+multiplicativas:</li>
+</ol>
+<p><span class="math display">\mathbb{E}[aX + b] = a\mathbb{E}[X] + b,
+\qquad \mathbb{E}\left[\sum_{i=1}^{n} a_i h_i(X) + b\right] =
+\sum_{i=1}^{n} a_i \mathbb{E}[h_i(X)] + b</span></p>
+<ol start="2" type="1">
+<li><strong>Aditividad general:</strong> Para cualesquiera dos variables
+aleatorias <span class="math inline">X</span> e <span
+class="math inline">Y</span> definidas sobre el mismo espacio de
+probabilidad, la esperanza de su suma es siempre igual a la suma de sus
+esperanzas individuales, sin importar si son dependientes o
+independientes:</li>
+</ol>
+<p><span class="math display">\mathbb{E}[X + Y] = \mathbb{E}[X] +
+\mathbb{E}[Y]</span></p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
+    <span class="callout-title-text">La esperanza de un producto solo se factoriza como <span
+class="math inline">\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]</span>
+cuando existe <a href="#2-independencia-estadistica">independencia
+estadística</a> entre ambas variables.</span>
+  </div>
+  <div class="callout-content">
+
+  </div>
+</div>
+<ol start="3" type="1">
+<li><strong>Positividad y nulidad:</strong> Si una variable aleatoria
+toma exclusivamente valores no negativos (<span class="math inline">X
+\ge 0</span>), su esperanza es necesariamente no negativa (<span
+class="math inline">\mathbb{E}[X] \ge 0</span>). Más aún, para una
+variable no negativa, su esperanza se anula si y solo si toda la
+probabilidad se concentra en el cero con certeza total:</li>
+</ol>
+<p><span class="math display">X \ge 0 \implies \mathbb{E}[X] \ge 0,
+\qquad \text{y además } \mathbb{E}[X] = 0 \iff \mathbb{P}(X = 0) =
+1</span></p>
+<ol start="4" type="1">
+<li><strong>Monotonía y acotación modular:</strong> Si <span
+class="math inline">h(X) \le g(X)</span> en todo el recorrido, sus
+esperanzas conservan la desigualdad (<span
+class="math inline">\mathbb{E}[h(X)] \le \mathbb{E}[g(X)]</span>).
+Asimismo, por la desigualdad triangular de sumas e integrales, siempre
+se cumple <span class="math inline">\vert{}\mathbb{E}[X]\vert{} \le
+\mathbb{E}[\vert{}X\vert{}]</span>.</li>
+</ol>
+<h4 id="demostración-de-linealidad-estricta">1.3.1. Demostración de
+Linealidad Estricta</h4>
+<p>Para demostrar la identidad <span class="math inline">\mathbb{E}[aX +
+b] = a\mathbb{E}[X] + b</span> en el dominio continuo (siendo el caso
+discreto completamente análogo al sustituir la integral por una
+sumatoria sobre <span class="math inline">\mathbb{R}_X</span>),
+aplicamos el Teorema 1 con <span class="math inline">G(x) = ax +
+b</span>:</p>
+<p><span class="math display">\mathbb{E}[aX + b] =
+\int_{-\infty}^{+\infty} (ax + b)\,f_X(x) \, dx</span></p>
+<p>Por la linealidad de la integral definida, separamos la integral de
+la suma y extraemos las constantes <span class="math inline">a</span> y
+<span class="math inline">b</span> fuera del integrando:</p>
+<p><span class="math display">\mathbb{E}[aX + b] = a
+\int_{-\infty}^{+\infty} x\,f_X(x) \, dx + b \int_{-\infty}^{+\infty}
+f_X(x) \, dx</span></p>
+<p>Reconocemos que la primera integral es por definición <span
+class="math inline">\mathbb{E}[X]</span> y que la segunda integral
+equivale a <span class="math inline">1</span> por el axioma de
+normalización de toda función de densidad de probabilidad continua:</p>
+<p><span class="math display">\mathbb{E}[aX + b] = a\mathbb{E}[X] + b(1)
+= a\mathbb{E}[X] + b \quad \blacksquare</span></p>
+<p>En la práctica, esta propiedad garantiza que cualquier cambio de
+escala o de origen (como convertir temperaturas de grados Celsius a
+Fahrenheit mediante <span class="math inline">F = 1.8\,C + 32</span>)
+transforma el promedio exactamente con la misma relación lineal sin
+tener que deducir la nueva función de densidad.</p>
+<h2  id="teoría-general-de-momentos">2. Teoría General de Momentos</h2>
+<p>Así como en mecánica se calculan los momentos de una distribución de
+masa respecto a un punto de referencia para determinar su equilibrio y
+resistencia a la rotación, en probabilidad se evalúan las esperanzas de
+las potencias enteras de una variable aleatoria para caracterizar la
+geometría de su distribución.</p>
+<h3  id="momentos-ordinarios-y-momentos-centrados">2.1. Momentos
+Ordinarios y Momentos Centrados</h3>
+<p>Dependiendo de si las distancias se miden respecto al origen cero de
+la recta real o respecto al propio centro de masa <span
+class="math inline">\mu</span>, surgen dos familias complementarias de
+momentos.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 2:</strong> Momentos Ordinarios y
+Momentos Centrados de Orden <span class="math inline">k</span></span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">X</span> una variable aleatoria y sea
+<span class="math inline">k \in \mathbb{N}</span> un entero positivo
+(<span class="math inline">k = 1, 2, 3, \dots</span>). Siempre que las
+esperanzas correspondientes existan de forma finita, se definen:</p>
+<ol type="1">
+<li><strong>Momento ordinario (o respecto al origen) de orden <span
+class="math inline">k</span>:</strong></li>
+</ol>
+<p><span class="math display">\alpha_k = \mathbb{E}[X^k]</span></p>
+<ol type="1">
+<li><strong>Momento centrado (o respecto a la media <span
+class="math inline">\mu = \mathbb{E}[X]</span>) de orden <span
+class="math inline">k</span>:</strong></li>
+</ol>
+<p><span class="math display">\mu_k = \mathbb{E}\big[(X -
+\mu)^k\big]</span></p>
+  </div>
+</div>
+<p>Los momentos ordinarios <span class="math inline">\alpha_k =
+\mathbb{E}[X^k]</span> miden las potencias de la variable tomando como
+referencia fija el cero numérico, por lo que sus valores combinan tanto
+la ubicación global de la distribución en la recta real como su amplitud
+interna. En cambio, los momentos centrados <span
+class="math inline">\mu_k = \mathbb{E}[(X - \mu)^k]</span> restan
+previamente la media <span class="math inline">\mu</span> a cada
+observación, trasladando el origen de coordenadas al propio centro de
+gravedad de la variable para aislar su forma interna.</p>
+<p>El primer momento ordinario coincide exactamente con la media (<span
+class="math inline">\alpha_1 = \mathbb{E}[X] = \mu</span>), mientras que
+los momentos centrados de orden <span class="math inline">k = 2, 3,
+4</span> miden respectivamente la dispersión (varianza), la asimetría y
+el apuntamiento (curtosis) de la distribución.</p>
+<h3  id="demostración-de-nulidad-del-primer-momento-centrado">2.2.
+Demostración de Nulidad del Primer Momento Centrado</h3>
+<p>Al evaluar el momento centrado de primer orden (<span
+class="math inline">k = 1</span>), se obtiene el valor esperado de las
+desviaciones simples <span class="math inline">(X - \mu)</span>
+alrededor de la media. Sin embargo, este parámetro carece de utilidad
+como medida de dispersión porque se anula idénticamente para cualquier
+variable aleatoria.</p>
+<p>Para demostrarlo, partimos de la definición de <span
+class="math inline">\mu_1</span> y aplicamos la linealidad estricta de
+la esperanza matemática, recordando que <span class="math inline">\mu =
+\mathbb{E}[X]</span> es una constante real:</p>
+<p><span class="math display">\mu_1 = \mathbb{E}\big[(X - \mu)^1\big] =
+\mathbb{E}[X - \mu]</span></p>
+<p>Distribuimos el operador esperanza sobre la resta y extraemos la
+constante <span class="math inline">\mu</span>:</p>
+<p><span class="math display">\mu_1 = \mathbb{E}[X] - \mathbb{E}[\mu] =
+\mathbb{E}[X] - \mu</span></p>
+<p>Sustituimos <span class="math inline">\mathbb{E}[X] = \mu</span> y
+simplificamos:</p>
+<p><span class="math display">\mu_1 = \mu - \mu = 0 \quad
+\blacksquare</span></p>
+<p>Geométricamente, que <span class="math inline">\mu_1 = 0</span>
+confirma que <span class="math inline">\mu</span> es el verdadero punto
+de equilibrio de la distribución: las desviaciones positivas de los
+valores mayores que la media (<span class="math inline">X &gt;
+\mu</span>) compensan exactamente en peso probabilístico a las
+desviaciones negativas de los valores menores que la media (<span
+class="math inline">X &lt; \mu</span>). Como los signos opuestos se
+cancelan entre sí, para cuantificar qué tan alejados se encuentran los
+valores respecto al centro es necesario elevar las desviaciones al
+cuadrado, pasando al segundo momento centrado.</p>
+<h2  id="medidas-de-dispersión-y-escalamiento">3. Medidas de Dispersión y
+Escalamiento</h2>
+<p>Conocer únicamente el centro de masa <span
+class="math inline">\mu</span> resulta insuficiente para caracterizar un
+fenómeno aleatorio. Dos regiones distintas pueden registrar exactamente
+la misma temperatura media anual de <span
+class="math inline">20\,^\circ\text{C}</span>: en una la temperatura
+oscila suavemente entre <span
+class="math inline">18\,^\circ\text{C}</span> y <span
+class="math inline">22\,^\circ\text{C}</span>, mientras que en otra
+alterna entre inviernos de <span
+class="math inline">-5\,^\circ\text{C}</span> y veranos de <span
+class="math inline">45\,^\circ\text{C}</span>. Cuantificar esa amplitud
+de fluctuación exige definir medidas de dispersión.</p>
+<h3  id="varianza-y-desviación-estándar">3.1. Varianza y Desviación
+Estándar</h3>
+<p>Al elevar al cuadrado la distancia <span class="math inline">(X -
+\mu)</span> antes de calcular su esperanza, se eliminan los signos
+negativos sin introducir puntos no derivables (como ocurriría con el
+valor absoluto <span class="math inline">|X - \mu|</span>) y se ponderan
+con mayor peso las desviaciones grandes respecto a la media.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 3:</strong> Varianza (<span
+class="math inline">\sigma^2</span>) y Desviación Estándar (<span
+class="math inline">\sigma</span>)</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">X</span> una variable aleatoria con
+media finita <span class="math inline">\mu = \mathbb{E}[X]</span>. Se
+define la <strong>varianza</strong> de <span
+class="math inline">X</span>, denotada por <span
+class="math inline">\mathrm{Var}(X)</span> o <span
+class="math inline">\sigma^2</span>, como su segundo momento
+centrado:</p>
+<p><span class="math display">\mathrm{Var}(X) = \sigma^2 = \mu_2 =
+\mathbb{E}\big[(X - \mu)^2\big] = \begin{cases} \displaystyle \sum_{x
+\in \mathbb{R}_X} (x - \mu)^2 \cdot p_X(x) &amp; \text{si } X \text{ es
+discreta} \\[12pt] \displaystyle \int_{-\infty}^{+\infty} (x - \mu)^2
+\cdot f_X(x) \, dx &amp; \text{si } X \text{ es continua}
+\end{cases}</span></p>
+<p>La <strong>desviación estándar</strong> (o desviación típica),
+denotada por <span class="math inline">\sigma</span>, se define como la
+raíz cuadrada no negativa de la varianza:</p>
+<p><span class="math display">\sigma = \sqrt{\mathrm{Var}(X)} =
+\sqrt{\mathbb{E}\big[(X - \mu)^2\big]}</span></p>
+  </div>
+</div>
+<p>Por la propiedad de positividad de la esperanza sobre la variable no
+negativa <span class="math inline">(X - \mu)^2 \ge 0</span>, la varianza
+satisface siempre <span class="math inline">\mathrm{Var}(X) \ge
+0</span>, y se anula (<span class="math inline">\sigma^2 = 0</span>)
+únicamente en el caso degenerado en que toda la probabilidad se
+concentra en un único punto constante (<span
+class="math inline">\mathbb{P}(X = \mu) = 1</span>).</p>
+<p>La razón por la que se introduce la desviación estándar <span
+class="math inline">\sigma</span> junto a la varianza <span
+class="math inline">\sigma^2</span> es estrictamente dimensional. Si la
+variable <span class="math inline">X</span> mide el tiempo de duración
+de una bombilla en <span class="math inline">\text{horas}</span>,
+entonces <span class="math inline">(X - \mu)^2</span> y la varianza
+<span class="math inline">\sigma^2</span> quedan expresadas en <span
+class="math inline">\text{horas}^2</span>, una unidad cuadrática sin
+interpretación física directa. Al extraer la raíz cuadrada, la
+desviación estándar <span class="math inline">\sigma</span> devuelve la
+medida de dispersión a <span class="math inline">\text{horas}</span>
+lineales, permitiendo compararla directamente con la media <span
+class="math inline">\mu</span>.</p>
+<h3  id="teorema-de-könig">3.2. Teorema de König</h3>
+<p>Calcular la varianza mediante su definición integral o sumatoria
+exige restar <span class="math inline">\mu</span> a cada valor <span
+class="math inline">x</span> y elevar ese binomio al cuadrado antes de
+operar, lo cual resulta algebraicamente laborioso cuando <span
+class="math inline">\mu</span> es una fracción o un número irracional.
+El <strong>teorema de König</strong> (o fórmula abreviada de la
+varianza) evita ese desarrollo relacionando <span
+class="math inline">\sigma^2</span> directamente con los dos primeros
+momentos ordinarios.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 2:</strong> Teorema de König para la
+Varianza</span>
+  </div>
+  <div class="callout-content">
+<p>Para toda variable aleatoria <span class="math inline">X</span> con
+segundo momento ordinario finito (<span
+class="math inline">\mathbb{E}[X^2] &lt; \infty</span>), la varianza
+equivale a la diferencia entre el segundo momento ordinario y el
+cuadrado de la esperanza matemática:</p>
+<p><span class="math display">\mathrm{Var}(X) = \sigma^2 =
+\mathbb{E}[X^2] - \big(\mathbb{E}[X]\big)^2 = \mathbb{E}[X^2] - \mu^2 =
+\alpha_2 - \alpha_1^2</span></p>
+  </div>
+</div>
+<p>Partimos de la definición formal de varianza y desarrollamos el
+cuadrado del binomio dentro del operador esperanza:</p>
+<p><span class="math display">\mathrm{Var}(X) = \mathbb{E}\big[(X -
+\mu)^2\big] = \mathbb{E}\big[X^2 - 2\mu X + \mu^2\big]</span></p>
+<p>Aplicamos la propiedad de linealidad estricta de la esperanza para
+separar los tres sumandos y extraer los factores constantes <span
+class="math inline">-2\mu</span> y <span
+class="math inline">\mu^2</span>:</p>
+<p><span class="math display">\mathrm{Var}(X) = \mathbb{E}[X^2] -
+2\mu\mathbb{E}[X] + \mu^2</span></p>
+<p>Sustituimos <span class="math inline">\mathbb{E}[X] = \mu</span> y
+reducimos los términos semejantes en <span
+class="math inline">\mu^2</span>:</p>
+<p><span class="math display">\mathrm{Var}(X) = \mathbb{E}[X^2] -
+2\mu(\mu) + \mu^2 = \mathbb{E}[X^2] - 2\mu^2 + \mu^2 = \mathbb{E}[X^2] -
+\mu^2 \quad \blacksquare</span></p>
+<p>Además de simplificar los cálculos manuales, esta identidad demuestra
+de inmediato que <span class="math inline">\mathbb{E}[X^2] \ge
+(\mathbb{E}[X])^2</span> para cualquier variable aleatoria, dado que
+<span class="math inline">\mathrm{Var}(X) \ge 0</span>.</p>
+<h3  id="impacto-de-transformaciones-lineales-en-la-varianza">3.3.
+Impacto de Transformaciones Lineales en la Varianza</h3>
+<p>Cuando una variable aleatoria <span class="math inline">X</span> se
+somete a un cambio de escala y desplazamiento <span
+class="math inline">Y = aX + b</span>, su dispersión responde de manera
+distinta a su esperanza matemática.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 3:</strong> Varianza de una Transformación
+Lineal</span>
+  </div>
+  <div class="callout-content">
+<p>Sean <span class="math inline">a, b \in \mathbb{R}</span> constantes
+reales y <span class="math inline">X</span> una variable aleatoria con
+varianza finita. Entonces:</p>
+<p><span class="math display">\mathrm{Var}(aX + b) = a^2
+\mathrm{Var}(X)</span></p>
+<p>y, en consecuencia, la desviación estándar escalada satisface <span
+class="math inline">\sigma_{aX + b} = |a|\,\sigma_X</span>.</p>
+  </div>
+</div>
+<p>Aplicamos la definición formal de varianza sobre la variable
+transformada <span class="math inline">Y = aX + b</span> y sustituimos
+<span class="math inline">\mathbb{E}[aX + b] = a\mu + b</span> por
+linealidad de la esperanza:</p>
+<p><span class="math display">\mathrm{Var}(aX + b) =
+\mathbb{E}\Big[\big((aX + b) - \mathbb{E}[aX + b]\big)^2\Big] =
+\mathbb{E}\Big[\big((aX + b) - (a\mu + b)\big)^2\Big]</span></p>
+<p>Cancelamos las constantes de traslación <span
+class="math inline">+b</span> y <span class="math inline">-b</span>,
+factorizamos <span class="math inline">a</span> dentro del cuadrado y
+extraemos la constante <span class="math inline">a^2</span> fuera del
+operador esperanza:</p>
+<p><span class="math display">\mathrm{Var}(aX + b) =
+\mathbb{E}\Big[\big(a(X - \mu)\big)^2\Big] = \mathbb{E}\Big[a^2(X -
+\mu)^2\Big] = a^2 \mathbb{E}\big[(X - \mu)^2\big] = a^2 \mathrm{Var}(X)
+\quad \blacksquare</span></p>
+<p>Este teorema manifiesta dos propiedades geométricas
+fundamentales:</p>
+<ul>
+<li><p><strong>Invarianza ante traslaciones (<span
+class="math inline">b</span>):</strong> Sumar o restar una constante
+<span class="math inline">b</span> desplaza toda la distribución hacia
+la derecha o hacia la izquierda sobre la recta real, pero no modifica la
+separación relativa entre sus valores; por ello <span
+class="math inline">b</span> desaparece por completo de la
+varianza.</p></li>
+<li><p><strong>Escalamiento cuadrático (<span
+class="math inline">a^2</span>):</strong> Multiplicar la variable por
+<span class="math inline">a</span> estira o contrae las distancias por
+un factor <span class="math inline">\vert{}a\vert{}</span>; al estar la
+varianza definida en unidades cuadráticas, el factor sale elevado a
+<span class="math inline">a^2</span> (y si <span class="math inline">a =
+-1</span>, reflejar la distribución conserva intacta su dispersión:
+<span class="math inline">\mathrm{Var}(-X) =
+\mathrm{Var}(X)</span>).</p></li>
+</ul>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3:</strong> Varianza mediante König y
+Cambio de Escala en un Dado Legal</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">X</span> el resultado obtenido al
+lanzar un dado legal de seis caras (<span
+class="math inline">\mathbb{E}[X] = \frac{7}{2}</span> y <span
+class="math inline">\mathbb{E}[X^2] = \frac{91}{6}</span>). Calcule su
+varianza <span class="math inline">\mathrm{Var}(X)</span> y su
+desviación estándar <span class="math inline">\sigma_X</span> mediante
+el teorema de König. Posteriormente, si un juego asigna una puntuación
+lineal <span class="math inline">Y = 10X - 15</span>, determine <span
+class="math inline">\mathbb{E}[Y]</span>, <span
+class="math inline">\mathrm{Var}(Y)</span> y <span
+class="math inline">\sigma_Y</span> sin reconstruir la distribución de
+<span class="math inline">Y</span>.</p>
+  </div>
+</div>
+<p>En este ejercicio aplicamos el teorema de König junto con las leyes
+de transformación lineal de esperanza y varianza. Lo que se busca es
+comprobar cómo el teorema de König evita calcular seis diferencias
+fraccionarias al cuadrado, y cómo el desplazamiento (<span
+class="math inline">-15</span>) modifica el promedio pero deja
+inalterada la dispersión escalada únicamente por el factor <span
+class="math inline">10</span>.</p>
+<ol type="1">
+<li>Calculamos la varianza de <span class="math inline">X</span>
+sustituyendo los momentos ordinarios <span
+class="math inline">\mathbb{E}[X^2] = \frac{91}{6}</span> y <span
+class="math inline">\mathbb{E}[X] = \frac{7}{2}</span> en la fórmula del
+teorema de König.</li>
+</ol>
+<p><span class="math display">\mathrm{Var}(X) = \mathbb{E}[X^2] -
+\big(\mathbb{E}[X]\big)^2 = \frac{91}{6} - \left(\frac{7}{2}\right)^2 =
+\frac{91}{6} - \frac{49}{4} = \frac{182 - 147}{12} = \frac{35}{12}
+\approx 2.9167</span></p>
+<ol start="2" type="1">
+<li>Extraemos la raíz cuadrada no negativa para obtener la desviación
+estándar <span class="math inline">\sigma_X</span> en las mismas
+unidades del dado.</li>
+</ol>
+<p><span class="math display">\sigma_X = \sqrt{\frac{35}{12}} \approx
+1.7078</span></p>
+<ol start="3" type="1">
+<li>Calculamos la esperanza de la puntuación transformada <span
+class="math inline">Y = 10X - 15</span> aplicando la propiedad de
+linealidad estricta <span class="math inline">\mathbb{E}[aX + b] =
+a\mathbb{E}[X] + b</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{E}[Y] = \mathbb{E}[10X - 15] =
+10\,\mathbb{E}[X] - 15 = 10\left(\frac{7}{2}\right) - 15 = 35 - 15 =
+20\text{ puntos}</span></p>
+<ol start="4" type="1">
+<li>Evaluamos la varianza y la desviación estándar de <span
+class="math inline">Y</span> aplicando <span
+class="math inline">\mathrm{Var}(aX + b) = a^2\mathrm{Var}(X)</span>,
+observando que el término constante <span class="math inline">-15</span>
+no altera la dispersión.</li>
+</ol>
+<p><span class="math display">\mathrm{Var}(Y) = 10^2 \cdot
+\mathrm{Var}(X) = 100 \cdot \frac{35}{12} = \frac{875}{3} \approx
+291.67\text{ puntos}^2</span> <span class="math display">\sigma_Y =
+|10|\,\sigma_X = 10\sqrt{\frac{35}{12}} \approx 17.078\text{
+puntos}</span></p>
+<h2  id="medidas-de-tendencia-central-y-asimetría">4. Medidas de
+Tendencia Central y Asimetría</h2>
+<p>La media <span class="math inline">\mu = \mathbb{E}[X]</span> puede
+resultar engañosa cuando la distribución tiene colas alargadas o valores
+extremos aislados. Para obtener una visión más completa del
+comportamiento central de un fenómeno, la estadística complementa la
+media con la moda y la mediana.</p>
+<h3  id="moda">4.1. Moda</h3>
+<p>Mientras que la media pondera todos los valores del recorrido según
+su magnitud, la moda identifica exclusivamente dónde se encuentra la
+mayor concentración local de probabilidad.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 4:</strong> Moda (<span
+class="math inline">x_m</span>)</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>moda</strong> de una variable aleatoria <span
+class="math inline">X</span>, denotada por <span
+class="math inline">x_m</span>, es aquel valor del recorrido <span
+class="math inline">\mathbb{R}_X</span> donde la función de densidad de
+probabilidad alcanza su máximo global:</p>
+<p><span class="math display">x_m = \arg\max_{x \in \mathbb{R}_X} p_X(x)
+\quad (\text{caso discreto}) \qquad \text{o bien} \qquad x_m =
+\arg\max_{x \in \mathbb{R}_X} f_X(x) \quad (\text{caso
+continuo})</span></p>
+<p>Es decir, <span class="math inline">p_X(x) \le p_X(x_m)</span> para
+todo <span class="math inline">x \in \mathbb{R}_X</span> en el caso
+discreto, o <span class="math inline">f_X(x) \le f_X(x_m)</span> para
+todo <span class="math inline">x \in \mathbb{R}_X</span> en el caso
+continuo.</p>
+  </div>
+</div>
+<p>Según la cantidad de máximos globales que presente la distribución,
+se distinguen tres casos:</p>
+<ul>
+<li><p><strong>Distribución unimodal:</strong> Posee un único valor
+modal bien definido (por ejemplo, al lanzar dos monedas equilibradas, la
+cantidad de caras <span class="math inline">X \in \{0, 1, 2\}</span>
+tiene una única moda en <span class="math inline">x_m = 1</span> con
+probabilidad <span class="math inline">0.50</span>).</p></li>
+<li><p><strong>Distribución multimodal:</strong> Presenta dos o más
+picos aislados de máxima probabilidad (bimodal si tiene dos máximos
+locales diferenciados).</p></li>
+<li><p><strong>Distribución amodal:</strong> Ocurre cuando todos los
+valores del recorrido tienen exactamente la misma probabilidad o
+densidad constante, como sucede al lanzar un dado legal donde <span
+class="math inline">p_X(x) = \frac{1}{6}</span> para todos los valores
+del <span class="math inline">1</span> al <span
+class="math inline">6</span>.</p></li>
+</ul>
+<h3  id="mediana">4.2. Mediana</h3>
+<p>La segunda alternativa central divide la masa probabilística
+exactamente por la mitad, sin importar qué tan lejos se extiendan los
+valores extremos de las colas.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 5:</strong> Mediana (<span
+class="math inline">m</span>)</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>mediana</strong> de una variable aleatoria continua <span
+class="math inline">X</span>, denotada por <span
+class="math inline">m</span> o <span
+class="math inline">\tilde{\mu}</span>, es el punto de la recta real
+donde la <a href="#3-funcion-de-distribucion-acumulada-fda">función de
+distribución acumulada (FDA)</a> alcanza exactamente el valor <span
+class="math inline">0.5</span>:</p>
+<p><span class="math display">F_X(m) = \mathbb{P}(X \le m) = 0.5 \iff m
+= F_X^{-1}(0.5)</span></p>
+<p>(En variables discretas donde <span class="math inline">F_X(x)</span>
+avanza mediante saltos escalonados, la mediana se define como cualquier
+valor <span class="math inline">m</span> que satisfaga simultáneamente
+<span class="math inline">\mathbb{P}(X &lt; m) \le 0.5</span> y <span
+class="math inline">\mathbb{P}(X \le m) \ge 0.5</span>.)</p>
+  </div>
+</div>
+<p>En una distribución continua la mediana <span
+class="math inline">m</span> es la recta vertical que corta el área
+total bajo la curva <span class="math inline">f_X(x)</span> en dos
+regiones de exactamente <span class="math inline">0.5</span> de área
+cada una (<span class="math inline">50\%</span> de probabilidad a la
+izquierda y <span class="math inline">50\%</span> a la derecha).</p>
+<p>Su ventaja fundamental frente a la media es su inmunidad (robustez)
+frente a valores atípicos. Si se estudia la variable aleatoria <span
+class="math inline">X =</span> «ingreso personal anual en dólares» de
+una población con fuerte desigualdad económica, donde el <span
+class="math inline">99\%</span> de los habitantes percibe menos de <span
+class="math inline">10\,000\text{ USD}</span> anuales y el <span
+class="math inline">1\%</span> restante percibe ingresos superiores a
+<span class="math inline">100\,000\text{ USD}</span>, ese pequeño <span
+class="math inline">1\%</span> arrastra el centro de masa <span
+class="math inline">\mu = \mathbb{E}[X]</span> hacia un valor intermedio
+que no representa el ingreso habitual de la mayoría. La mediana <span
+class="math inline">m</span>, en cambio, permanece anclada en el centro
+real de la distribución poblacional sin inmutarse por los valores
+extremos de la cola superior.</p>
+<h3  id="orden-relativo-entre-media-mediana-y-moda">4.3. Orden Relativo
+entre Media, Mediana y Moda</h3>
+<p>La comparación simultánea de la media (<span
+class="math inline">\mu</span>), la mediana (<span
+class="math inline">m</span>) y la moda (<span
+class="math inline">x_m</span>) en una distribución unimodal revela de
+inmediato su grado y dirección de asimetría (o sesgo):</p>
+<ol type="1">
+<li><p><strong>Distribución simétrica (<span class="math inline">\mu = m
+= x_m</span>):</strong> Cuando la función de densidad es especular
+respecto a un eje central, el pico máximo, el punto que divide el área
+por la mitad y el centro de equilibrio coinciden exactamente en el mismo
+lugar. Un ejemplo clásico es la distribución normal <span
+class="math inline">N(\mu, \sigma^2)</span> o la distribución triangular
+sobre <span class="math inline">[a, b]</span> con vértice en el punto
+medio <span class="math inline">c = \frac{a + b}{2}</span>.</p></li>
+<li><p><strong>Asimetría positiva o sesgo a la derecha (<span
+class="math inline">x_m &lt; m &lt; \mu</span>):</strong> La
+distribución concentra la mayor parte de su masa en valores bajos (a la
+izquierda) y extiende una cola larga hacia valores altos (a la derecha).
+Esa cola derecha actúa como un brazo de palanca largo que arrastra la
+media <span class="math inline">\mu</span> hacia la derecha, dejando la
+mediana en posición intermedia. Un ejemplo directo es el número de
+lanzamientos de una moneda legal hasta obtener la primera cara: el
+resultado más probable es <span class="math inline">x_m = 1</span> (con
+probabilidad <span class="math inline">0.5</span>), mientras que la
+posibilidad de rachas largas de sellos eleva la media hasta <span
+class="math inline">\mu = 2</span>.</p></li>
+<li><p><strong>Asimetría negativa o sesgo a la izquierda (<span
+class="math inline">\mu &lt; m &lt; x_m</span>):</strong> La
+distribución concentra la mayor parte de su masa en valores altos (a la
+derecha) y presenta una cola alargada hacia valores bajos (a la
+izquierda). En este escenario, los valores bajos desplazan el centro de
+masa hacia la izquierda, situando <span class="math inline">\mu</span>
+por debajo de la mediana y de la moda.</p></li>
+</ol>
+<figure class="article-figure">
+<img src="/images/notes/PROBA 3-2 Medidas Descriptivas de Variables Aleatorias - Orden de Tendencia Central Según la Asimetría.webp" alt="Orden de Tendencia Central Según la Asimetría" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+Orden de Tendencia Central Según la Asimetría
+</figcaption>
+</figure>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 4:</strong> Localización de Media, Mediana
+y Moda en una Distribución Triangular</span>
+  </div>
+  <div class="callout-content">
+<p>Considere una variable aleatoria continua <span
+class="math inline">X</span> que representa el tiempo en minutos de
+atención en una ventanilla bancaria, modelada por una distribución
+triangular sobre el intervalo <span class="math inline">[0, 6]\text{
+min}</span> con pico máximo en <span class="math inline">c = 1\text{
+min}</span>, cuya función de densidad de probabilidad continua es:</p>
+<p><span class="math display">f_X(x) = \begin{cases} \dfrac{x}{3} &amp;
+\text{si } 0 \le x \le 1 \\[6pt] \dfrac{6 - x}{15} &amp; \text{si } 1
+&lt; x \le 6 \\[6pt] 0 &amp; \text{en otro caso} \end{cases}</span></p>
+<p>Calcule analíticamente la moda <span class="math inline">x_m</span>,
+la mediana <span class="math inline">m</span> y la media <span
+class="math inline">\mu = \mathbb{E}[X]</span>, y clasifique la
+asimetría de la distribución justificando sus posiciones relativas.</p>
+  </div>
+</div>
+<p>En este ejercicio estudiamos una distribución continua triangular
+asimétrica definida por tramos lineales, analizando cómo una cola
+derecha más prolongada desplaza las medidas de localización central. Lo
+que se busca es determinar el máximo global de la densidad para hallar
+la moda, integrar hasta acumular <span class="math inline">0.5</span>
+para despejar la mediana y evaluar el centro de masa mediante
+integración por tramos, verificando finalmente el orden característico
+<span class="math inline">x_m &lt; m &lt; \mu</span>.</p>
+<ol type="1">
+<li>Identificamos la moda <span class="math inline">x_m</span>
+observando que <span class="math inline">f_X(x)</span> crece linealmente
+en <span class="math inline">[0, 1]</span> hasta alcanzar su máximo
+absoluto <span class="math inline">f_X(1) = \frac{1}{3}</span> y luego
+decrece en <span class="math inline">(1, 6]</span> hasta anularse en
+<span class="math inline">x = 6</span>.</li>
+</ol>
+<p><span class="math display">x_m = 1\text{ min}, \qquad f_X(1) =
+\frac{1}{3}</span></p>
+<ol start="2" type="1">
+<li>Para hallar la mediana <span class="math inline">m</span>,
+comprobamos primero cuánta probabilidad se acumula hasta la moda <span
+class="math inline">x = 1</span>: como <span
+class="math inline">\int_0^1 \frac{x}{3}\,dx = \frac{1}{6} &lt;
+0.5</span>, la mediana debe ubicarse en el segundo tramo <span
+class="math inline">(1, 6]</span>, por lo que integramos desde <span
+class="math inline">0</span> hasta <span class="math inline">m</span> e
+igualamos a <span class="math inline">\frac{1}{2}</span>.</li>
+</ol>
+<p><span class="math display">\int_{0}^{1} \frac{x}{3}\,dx +
+\int_{1}^{m} \frac{6 - x}{15}\,dx = \frac{1}{6} + \left[ \frac{6x}{15} -
+\frac{x^2}{30} \right]_{1}^{m} = \frac{1}{2}</span></p>
+<ol start="3" type="1">
+<li>Simplificamos la ecuación cuadrática resultante en <span
+class="math inline">m</span> y seleccionamos la raíz comprendida dentro
+del intervalo <span class="math inline">(1, 6]</span>.</li>
+</ol>
+<p><span class="math display">\frac{1}{6} + \frac{12m - m^2 - 11}{30} =
+\frac{1}{2} \implies 5 + 12m - m^2 - 11 = 15 \implies m^2 - 12m + 21 =
+0</span></p>
+<p><span class="math display">m = \frac{12 \pm \sqrt{144 - 84}}{2} = 6
+\pm \sqrt{15} \implies m = 6 - \sqrt{15} \approx 2.127\text{
+min}</span></p>
+<ol start="4" type="1">
+<li>Calculamos la media <span class="math inline">\mu =
+\mathbb{E}[X]</span> integrando <span
+class="math inline">x\,f_X(x)</span> sobre ambos tramos (o aplicando la
+fórmula general de la triangular <span class="math inline">\frac{a + b +
+c}{3}</span>).</li>
+</ol>
+<p><span class="math display">\mu = \int_{0}^{1} \frac{x^2}{3}\,dx +
+\int_{1}^{6} \frac{6x - x^2}{15}\,dx</span> <span
+class="math display">\mu = \left[\frac{x^3}{9}\right]_{0}^{1} +
+\left[\frac{3x^2}{15} - \frac{x^3}{45}\right]_{1}^{6} = \frac{1}{9} +
+\left(\frac{108}{15} - \frac{216}{45}\right) - \left(\frac{3}{15} -
+\frac{1}{45}\right) = \frac{7}{3} \approx 2.333\text{ min}</span></p>
+<ol start="5" type="1">
+<li>Comparamos las tres métricas obtenidas y concluimos que la
+distribución presenta asimetría positiva (sesgo a la derecha), ya que la
+cola extendida hacia <span class="math inline">x = 6</span> arrastra la
+media por encima de la mediana y de la moda.</li>
+</ol>
+<p><span class="math display">x_m = 1 &lt; m \approx 2.127 &lt; \mu
+\approx 2.333</span></p>
+<h2  id="medidas-de-posición-no-central">5. Medidas de Posición No
+Central</h2>
+<p>En muchas aplicaciones prácticas no basta con conocer el centro de la
+distribución: interesa saber por debajo de qué umbral cae el <span
+class="math inline">90\%</span> de los tiempos de espera, o cuál es el
+margen que abarca el <span class="math inline">50\%</span> más habitual
+de las observaciones sin dejarse contaminar por anomalías extremas. Para
+responder estas preguntas se generaliza el concepto de mediana mediante
+los cuantiles.</p>
+<h3  id="cuantiles-percentiles-y-cuartiles">5.1. Cuantiles, Percentiles y
+Cuartiles</h3>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 6:</strong> Cuantil de Orden <span
+class="math inline">\alpha</span> (<span
+class="math inline">x_{(\alpha)}</span>)</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">X</span> una variable aleatoria
+continua con <a href="#3-funcion-de-distribucion-acumulada-fda">función
+de distribución acumulada (FDA)</a> estrictamente creciente <span
+class="math inline">F_X(x)</span>, y sea <span
+class="math inline">\alpha \in (0, 1)</span> una proporción de
+probabilidad dada. El <strong>cuantil de orden <span
+class="math inline">\alpha</span></strong>, denotado por <span
+class="math inline">x_{(\alpha)}</span> o <span
+class="math inline">q_\alpha</span>, es el valor del recorrido que
+acumula una probabilidad exacta igual a <span
+class="math inline">\alpha</span> a su izquierda:</p>
+<p><span class="math display">F_X\big(x_{(\alpha)}\big) =
+\mathbb{P}\big(X \le x_{(\alpha)}\big) = \alpha \iff x_{(\alpha)} =
+F_X^{-1}(\alpha)</span></p>
+  </div>
+</div>
+<p>El cuantil <span class="math inline">x_{(\alpha)}</span> actúa como
+una frontera numérica sobre la recta real que divide el recorrido en dos
+zonas: una fracción <span class="math inline">\alpha</span> (o <span
+class="math inline">100\alpha\%</span>) de los resultados ocurre en o
+por debajo de <span class="math inline">x_{(\alpha)}</span>, y la
+fracción complementaria <span class="math inline">1 - \alpha</span>
+ocurre por encima de él. Dependiendo de la subdivisión porcentual
+elegida, los cuantiles reciben nombres específicos:</p>
+<ul>
+<li><p><strong>Percentiles (<span class="math inline">P_1, P_2, \dots,
+P_{99}</span>):</strong> Dividen la distribución en <span
+class="math inline">100</span> intervalos equiprobables de <span
+class="math inline">1\%</span> de probabilidad cada uno. El <span
+class="math inline">k</span>-ésimo percentil corresponde al cuantil de
+orden <span class="math inline">\alpha = k/100</span>, es decir, <span
+class="math inline">P_k = x_{(k/100)} = F_X^{-1}(k/100)</span>. Por
+ejemplo, el percentil <span class="math inline">95</span> (<span
+class="math inline">P_{95} = x_{(0.95)}</span>) indica el umbral que
+solo es superado por el <span class="math inline">5\%</span> de los
+casos más extremos.</p></li>
+<li><p><strong>Cuartiles (<span class="math inline">Q_1, Q_2,
+Q_3</span>):</strong> Dividen la distribución en <span
+class="math inline">4</span> bloques equiprobables de <span
+class="math inline">25\%</span> cada uno:</p></li>
+<li><p><strong>Primer cuartil (<span
+class="math inline">Q_1</span>):</strong> Equivale al percentil <span
+class="math inline">25</span> (<span class="math inline">Q_1 =
+x_{(0.25)} = F_X^{-1}(0.25)</span>), acumulando el <span
+class="math inline">25\%</span> inferior de la distribución.</p></li>
+<li><p><strong>Segundo cuartil (<span
+class="math inline">Q_2</span>):</strong> Equivale al percentil <span
+class="math inline">50</span> (<span class="math inline">Q_2 =
+x_{(0.50)} = F_X^{-1}(0.50)</span>), coincidiendo exactamente con la
+<strong>mediana</strong> <span class="math inline">m</span>.</p></li>
+<li><p><strong>Tercer cuartil (<span
+class="math inline">Q_3</span>):</strong> Equivale al percentil <span
+class="math inline">75</span> (<span class="math inline">Q_3 =
+x_{(0.75)} = F_X^{-1}(0.75)</span>), acumulando el <span
+class="math inline">75\%</span> de la probabilidad a su
+izquierda.</p></li>
+</ul>
+<h3  id="rango-intercuartílico-como-medida-robusta-de-dispersión">5.2.
+Rango Intercuartílico como Medida Robusta de Dispersión</h3>
+<p>Así como la media es sensible a los valores atípicos y encuentra su
+alternativa robusta en la mediana, la desviación estándar <span
+class="math inline">\sigma</span> también puede inflarse artificialmente
+por unas pocas observaciones extremas en las colas. Para medir la
+dispersión del núcleo central de la distribución ignorando los extremos,
+se utiliza la amplitud comprendida entre el tercer y el primer
+cuartil.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 7:</strong> Rango Intercuartílico
+(<span class="math inline">\text{RIC}</span> / <span
+class="math inline">\text{IQR}</span>)</span>
+  </div>
+  <div class="callout-content">
+<p>El <strong>Rango Intercuartílico</strong> (abreviado <span
+class="math inline">\text{RIC}</span> en español o <span
+class="math inline">\text{IQR}</span> del inglés ‘Interquartile Range’)
+se define como la diferencia entre el tercer cuartil y el primer cuartil
+de la distribución: <span class="math display">\text{RIC} = Q_3 - Q_1 =
+x_{(0.75)} - x_{(0.25)} = F_X^{-1}(0.75) - F_X^{-1}(0.25)</span></p>
+  </div>
+</div>
+<p>El <span class="math inline">\text{RIC}</span> mide el ancho del
+intervalo <span class="math inline">[Q_1, Q_3]</span> que encierra
+exactamente al <span class="math inline">50\%</span> central de la
+probabilidad total (<span class="math inline">\mathbb{P}(Q_1 \le X \le
+Q_3) = F_X(Q_3) - F_X(Q_1) = 0.75 - 0.25 = 0.50</span>). Dado que
+descarta el <span class="math inline">25\%</span> más bajo y el <span
+class="math inline">25\%</span> más alto de la distribución, el <span
+class="math inline">\text{RIC}</span> es completamente insensible a las
+colas pesadas o mediciones anómalas en los extremos, conservando además
+las mismas unidades lineales de la variable <span
+class="math inline">X</span>.</p>
+<figure class="article-figure">
+<img src="/images/notes/PROBA 3-2 Medidas Descriptivas de Variables Aleatorias - Cuartiles y Rango Intercuantílico.webp" alt="Cuartiles y Rango Intercuantílico" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+Cuartiles y Rango Intercuantílico
+</figcaption>
+</figure>
+<h2  id="ejercicios-prácticos-resueltos">6. Ejercicios Prácticos
+Resueltos</h2>
+<h3  id="evaluación-de-sesgo-en-una-distribución-polinómica-acotada">6.1.
+Evaluación de Sesgo en una Distribución Polinómica Acotada</h3>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 5:</strong> Análisis Completo de
+Localización, Dispersión y Asimetría</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">X</span> una variable aleatoria
+continua que modela la fracción de capacidad utilizada en un depósito de
+agua antes de iniciar su vaciado automático, cuya función de densidad de
+probabilidad continua está definida por:</p>
+<p><span class="math display">f_X(x) = \begin{cases} 3x^2 &amp; \text{si
+} 0 &lt; x &lt; 1 \\ 0 &amp; \text{en otro caso} \end{cases}</span></p>
+<p>Calcule analíticamente la media <span class="math inline">\mu =
+\mathbb{E}[X]</span>, la varianza <span
+class="math inline">\sigma^2</span> mediante el teorema de König, la
+desviación estándar <span class="math inline">\sigma</span>, la moda
+<span class="math inline">x_m</span> y la mediana <span
+class="math inline">m</span>. Clasifique la asimetría de la distribución
+justificando las posiciones relativas de sus medidas de tendencia
+central.</p>
+  </div>
+</div>
+<p>En este ejercicio trabajamos con una variable aleatoria continua
+acotada en el intervalo unitario <span class="math inline">(0,
+1)</span>, cuya densidad crece de forma cuadrática a medida que <span
+class="math inline">x</span> se aproxima al extremo superior <span
+class="math inline">1</span>. Lo que se busca es caracterizar
+integralmente la distribución calculando su centro de masa, su
+dispersión alrededor de la media y sus puntos de concentración y
+partición.</p>
+<p>A partir de los valores obtenidos, se pide comparar la posición
+relativa de la media, la mediana y la moda para determinar si la curva
+presenta sesgo positivo, simetría o sesgo negativo, explicando el
+mecanismo geométrico que produce dicho desplazamiento.</p>
+<ol type="1">
+<li>Verificamos que <span class="math inline">f_X(x) \ge 0</span> en
+<span class="math inline">(0, 1)</span> y que su integral total es igual
+a <span class="math inline">1</span>, y calculamos la esperanza
+matemática <span class="math inline">\mu = \mathbb{E}[X]</span>
+integrando <span class="math inline">x\,f_X(x)</span> sobre el soporte
+activo.</li>
+</ol>
+<p><span class="math display">\int_{0}^{1} 3x^2 \, dx =
+\Big[x^3\Big]_{0}^{1} = 1, \qquad \mu = \mathbb{E}[X] = \int_{0}^{1}
+x\,(3x^2) \, dx = \int_{0}^{1} 3x^3 \, dx =
+\left[\frac{3}{4}x^4\right]_{0}^{1} = \frac{3}{4} = 0.75</span></p>
+<ol start="2" type="1">
+<li>Calculamos el segundo momento ordinario <span
+class="math inline">\alpha_2 = \mathbb{E}[X^2]</span> aplicando el
+Teorema 1 con <span class="math inline">G(x) = x^2</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{E}[X^2] = \int_{0}^{1} x^2\,(3x^2)
+\, dx = \int_{0}^{1} 3x^4 \, dx = \left[\frac{3}{5}x^5\right]_{0}^{1} =
+\frac{3}{5} = 0.60</span></p>
+<ol start="3" type="1">
+<li>Aplicamos el teorema de König (<span
+class="math inline">\mathrm{Var}(X) = \mathbb{E}[X^2] - \mu^2</span>)
+para hallar la varianza exacta y extraemos su raíz cuadrada no negativa
+para obtener la desviación estándar <span
+class="math inline">\sigma</span>.</li>
+</ol>
+<p><span class="math display">\sigma^2 = \mathrm{Var}(X) = \frac{3}{5} -
+\left(\frac{3}{4}\right)^2 = \frac{3}{5} - \frac{9}{16} = \frac{48 -
+45}{80} = \frac{3}{80} = 0.0375</span></p>
+<p><span class="math display">\sigma = \sqrt{\frac{3}{80}} =
+\frac{\sqrt{15}}{20} \approx 0.1936</span></p>
+<ol start="4" type="1">
+<li>Determinamos la moda <span class="math inline">x_m</span> analizando
+la derivada primera <span class="math inline">f_X&#39;(x) = 6x &gt;
+0</span> para todo <span class="math inline">x \in (0, 1)</span>: al ser
+estrictamente creciente, la densidad alcanza su supremo global en el
+extremo derecho del intervalo.</li>
+</ol>
+<p><span class="math display">x_m = \lim_{x \to 1^-} \arg\max f_X(x) =
+1</span></p>
+<ol start="5" type="1">
+<li>Deducimos la función de distribución acumulada <span
+class="math inline">F_X(x) = \int_0^x 3t^2\,dt = x^3</span> para <span
+class="math inline">x \in (0, 1)</span> e igualamos <span
+class="math inline">F_X(m) = 0.5</span> para despejar la mediana <span
+class="math inline">m</span>.</li>
+</ol>
+<p><span class="math display">F_X(m) = m^3 = \frac{1}{2} \implies m =
+\left(\frac{1}{2}\right)^{1/3} = \frac{1}{\sqrt[3]{2}} \approx
+0.7937</span></p>
+<ol start="6" type="1">
+<li>Comparamos las tres medidas centrales obtenidas (<span
+class="math inline">\mu = 0.75 &lt; m \approx 0.7937 &lt; x_m =
+1</span>) y clasificamos la distribución como asimétrica negativa
+(sesgada a la izquierda): la mayor parte de la masa probabilística se
+agrupa cerca de <span class="math inline">x = 1</span>, mientras que la
+cola extendida hacia <span class="math inline">x = 0</span> desplaza el
+centro de masa <span class="math inline">\mu</span> por debajo de la
+mediana y de la moda.</li>
+</ol>
+<p><span class="math display">\mu = 0.7500 &lt; m \approx 0.7937 &lt;
+x_m = 1.0000</span></p>
+<h3 
+id="cálculo-de-cuantiles-y-rango-intercuartílico-en-tiempos-de-atención">6.2.
+Cálculo de Cuantiles y Rango Intercuartílico en Tiempos de Atención</h3>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 6:</strong> Cuartiles y Dispersión Robusta
+en Tiempos de Atención Acumulados</span>
+  </div>
+  <div class="callout-content">
+<p>El tiempo total <span class="math inline">X</span> (en minutos)
+necesario para atender consecutivamente a dos clientes en una oficina de
+atención al público sigue una distribución continua cuya función de
+distribución acumulada (FDA) está dada por:</p>
+<p><span class="math display">F_X(x) = \begin{cases} 1 - (1 + x)e^{-x}
+&amp; \text{si } x \ge 0 \\ 0 &amp; \text{si } x &lt; 0
+\end{cases}</span></p>
+<p>Plantee las ecuaciones exactas para los cuantiles de orden <span
+class="math inline">\alpha</span>, deduzca el primer cuartil <span
+class="math inline">Q_1</span>, la mediana <span
+class="math inline">Q_2</span> y el tercer cuartil <span
+class="math inline">Q_3</span>, y calcule el Rango Intercuartílico
+(<span class="math inline">\text{RIC}</span>) para evaluar la dispersión
+robusta del proceso.</p>
+  </div>
+</div>
+<p>En este ejercicio partimos directamente de la función de distribución
+acumulada de una variable continua no acotada superiormente (<span
+class="math inline">x \ge 0</span>). La finalidad es determinar las
+fronteras que delimitan el <span class="math inline">25\%</span>, <span
+class="math inline">50\%</span> y <span class="math inline">75\%</span>
+de los tiempos de servicio y obtener la amplitud del <span
+class="math inline">50\%</span> central mediante el Rango
+Intercuartílico, evitando el efecto de las esperas excepcionalmente
+largas en la cola superior.</p>
+<p>Dado que la ecuación <span class="math inline">1 - (1 + x)e^{-x} =
+\alpha</span> combina un término lineal con una exponencial decreciente,
+no admite despeje mediante funciones elementales básicas; por ello,
+formularemos primero la relación trascendente exacta (cuya solución
+cerrada corresponde a la rama secundaria de la función <span
+class="math inline">W</span> de Lambert) y resolveremos numéricamente
+cada cuartil mediante aproximación iterativa.</p>
+<ol type="1">
+<li>Planteamos la condición general de cuantil <span
+class="math inline">F_X(x_{(\alpha)}) = \alpha</span> para <span
+class="math inline">\alpha \in (0, 1)</span> sobre el soporte activo
+<span class="math inline">x \ge 0</span> y reordenamos la ecuación
+trascendente resultante (equivalente analíticamente a <span
+class="math inline">x_{(\alpha)} = -1 -
+W_{-1}\!\left(-\frac{1-\alpha}{e}\right)</span>).</li>
+</ol>
+<p><span class="math display">1 - \big(1 +
+x_{(\alpha)}\big)e^{-x_{(\alpha)}} = \alpha \iff \big(1 +
+x_{(\alpha)}\big)e^{-x_{(\alpha)}} = 1 - \alpha</span></p>
+<ol start="2" type="1">
+<li>Sustituimos <span class="math inline">\alpha = 0.25</span> para
+obtener la ecuación del primer cuartil <span class="math inline">Q_1 =
+x_{(0.25)}</span> y resolvemos numéricamente mediante el método de
+Newton-Raphson sobre <span class="math inline">g(x) = (1 + x)e^{-x} -
+0.75 = 0</span> (con derivada <span class="math inline">g&#39;(x) =
+-x\,e^{-x}</span>).</li>
+</ol>
+<p><span class="math display">(1 + Q_1)e^{-Q_1} = 0.75 \implies Q_1
+\approx 0.9613\text{ min}</span></p>
+<ol start="3" type="1">
+<li>Sustituimos <span class="math inline">\alpha = 0.50</span> para
+determinar de forma análoga la mediana <span class="math inline">Q_2 =
+x_{(0.50)}</span>, comprobando que la mitad de los servicios concluye
+antes de <span class="math inline">1.68\text{ minutos}</span>.</li>
+</ol>
+<p><span class="math display">(1 + Q_2)e^{-Q_2} = 0.50 \implies Q_2
+\approx 1.6783\text{ min}</span></p>
+<ol start="4" type="1">
+<li>Sustituimos <span class="math inline">\alpha = 0.75</span> para
+calcular el tercer cuartil <span class="math inline">Q_3 =
+x_{(0.75)}</span>, que marca el umbral superado únicamente por el <span
+class="math inline">25\%</span> de las atenciones más prolongadas.</li>
+</ol>
+<p><span class="math display">(1 + Q_3)e^{-Q_3} = 0.25 \implies Q_3
+\approx 2.6926\text{ min}</span></p>
+<ol start="5" type="1">
+<li>Calculamos el Rango Intercuartílico (<span
+class="math inline">\text{RIC} = Q_3 - Q_1</span>), concluyendo que el
+<span class="math inline">50\%</span> central de las atenciones
+consecutivas se concentra dentro de una franja de amplitud aproximada de
+<span class="math inline">1.73\text{ minutos}</span> alrededor de la
+mediana.</li>
+</ol>
+<p><span class="math display">\text{RIC} = Q_3 - Q_1 \approx 2.6926 -
+0.9613 = 1.7313\text{ min}</span></p>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Meyer, Paul L.</strong> <em>Probabilidad y Aplicaciones
+Estadísticas</em> (Edición revisada). Addison-Wesley
+Iberoamericana.</p></li>
+<li><p><strong>Feller, William.</strong> <em>An Introduction to
+Probability Theory and Its Applications</em>, Vol. I (3.ª ed.). John
+Wiley &amp; Sons, Inc., Nueva York, 1968. Capítulos 1, 2 y 3.</p></li>
+<li><p><strong>Riordan, John.</strong> <em>An Introduction to
+Combinatorial Analysis</em>. Dover Publications, Mineola, Nueva York,
+2002.</p></li>
+<li><p><strong>Parzen, Emanuel.</strong> <em>Modern Probability Theory
+and Its Applications</em>. John Wiley &amp; Sons, Inc., Nueva York,
+1960.</p></li>
+<li><p><strong>Lipschutz, Seymour.</strong> <em>Probabilidad</em>.
+McGraw-Hill, México, 1970.</p></li>
+<li><p><strong>Universidad Central de Venezuela (UCV), Facultad de
+Ciencias, Escuela de Computación.</strong> <em>Probabilidad y
+Estadística</em>. Caracas, Venezuela, 2023.</p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Probabilidad Condicional | Druxorey</title>
+  <meta name="description" content="La probabilidad condicional ajusta la medida de incertidumbre de un evento cuando se dispone de evidencia parcial que reduce el espacio muestral original a un subconjunto conocido. Este enfoque métrico, complementado por la independencia estadística y la ley multiplicativa, permite actualizar estimaciones lógicas, descomponer sistemas complejos de fiabilidad y resolver cadenas de sucesos sucesivos sin reposición.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="/assets/main-Dehq_9UD.js"></script>
+  <script type="module" crossorigin src="/assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="/assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-u8MMlYs2.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#probabilidad-condicional-y-reducción-del-espacio-muestral">1.
+Probabilidad Condicional y Reducción del Espacio Muestral</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#masa-probabilística-positiva">1.1. Masa Probabilística
+Positiva</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#causalidad-temporal-y-la-actualización-de-información">1.2.
+Causalidad Temporal y la Actualización de Información</a></li>
+<li class="toc-item"><a class="toc-link" href="#independencia-estadística">2. Independencia Estadística</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#definición-formal-y-caracterización-equivalente">2.1. Definición
+Formal y Caracterización Equivalente</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#incompatibilidad-con-la-exclusión-mutua-e-inclusión-de-subconjuntos">2.2.
+Incompatibilidad con la Exclusión Mutua e Inclusión de Subconjuntos</a></li>
+<li class="toc-item"><a class="toc-link" href="#ley-multiplicativa-de-la-probabilidad">3. Ley Multiplicativa de
+la Probabilidad</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#regla-multiplicativa-generalizada">3.1. Regla Multiplicativa
+Generalizada</a></li>
+<li class="toc-item"><a class="toc-link" href="#ejercicios-prácticos-resueltos">4. Ejercicios Prácticos
+Resueltos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#auditoría-de-consistencia-de-datos-sin-reemplazo">4.1. Auditoría
+de Consistencia de Datos sin Reemplazo</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#la-paradoja-de-los-cumpleaños">4.2. La Paradoja de los
+Cumpleaños</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Probabilidad y Estadistica</div>
+          <h1 class="article-title">Probabilidad Condicional</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota 2.2</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>probabilidad condicional</strong> ajusta la medida de
+incertidumbre de un evento cuando se dispone de evidencia parcial que
+reduce el espacio muestral original a un subconjunto conocido. Este
+enfoque métrico, complementado por la <strong>independencia
+estadística</strong> y la <strong>ley multiplicativa</strong>, permite
+actualizar estimaciones lógicas, descomponer sistemas complejos de
+fiabilidad y resolver cadenas de sucesos sucesivos sin reposición.</p>
+  </div>
+</div>
+<p>En cualquier entorno operativo real, la información sobre el estado
+de un sistema rara vez llega completa de una sola vez. Descartar los
+datos nuevos para evaluar el riesgo usando únicamente las probabilidades
+iniciales no solo ignora evidencia valiosa, sino que conduce a
+estimaciones imprecisas; por el contrario, integrar cualquier
+información previa disponible mejora drásticamente la toma de
+decisiones, un principio fundamental que nos obliga a estudiar cómo
+actualizar formalmente nuestra incertidumbre mediante la probabilidad
+condicional.</p>
+<h2  id="probabilidad-condicional-y-reducción-del-espacio-muestral">1.
+Probabilidad Condicional y Reducción del Espacio Muestral</h2>
+<p>El cálculo tradicional de <span
+class="math inline">\mathbb{P}(A)</span> evalúa el peso del evento <span
+class="math inline">A</span> respecto a la totalidad del espacio
+muestral <span class="math inline">\Omega</span>. Sin embargo, cuando
+sabemos con certeza que ya ocurrió un evento <span
+class="math inline">B</span>, cualquier resultado elemental fuera de
+<span class="math inline">B</span> queda descartado. Mantener <span
+class="math inline">\Omega</span> como referencia total distorsionaría
+el cálculo porque asignaría peso a escenarios que ya sabemos que no
+sucedieron.</p>
+<h3  id="masa-probabilística-positiva">1.1. Masa Probabilística
+Positiva</h3>
+<p>Para integrar la ocurrencia confirmada de <span
+class="math inline">B</span>, el espacio muestral original se contrae
+hacia el subconjunto <span class="math inline">B</span> y las
+probabilidades de los resultados contenidos dentro de él se reescalan
+proporcionalmente para que su suma vuelva a ser igual a la unidad.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 1:</strong> Probabilidad
+Condicional</span>
+  </div>
+  <div class="callout-content">
+<p>Sean <span class="math inline">A</span> y <span
+class="math inline">B</span> dos eventos pertenecientes a un mismo
+espacio de probabilidad <span class="math inline">(\Omega, \mathcal{F},
+\mathbb{P})</span> tales que <span class="math inline">\mathbb{P}(B)
+&gt; 0</span>. La <strong>probabilidad condicional</strong> de que
+ocurra <span class="math inline">A</span>, dado que ha ocurrido <span
+class="math inline">B</span>, se denota como <span
+class="math inline">\mathbb{P}(A \mid B)</span> y se define mediante el
+cociente:</p>
+<p><span class="math display">\mathbb{P}(A \mid B) = \frac{\mathbb{P}(A
+\cap B)}{\mathbb{P}(B)}</span></p>
+  </div>
+</div>
+<p>Calcular <span class="math inline">\mathbb{P}(A \mid B)</span>
+equivale a enfocar exclusivamente la región <span
+class="math inline">B</span> del espacio muestral y medir qué fracción
+de esa región está ocupada por <span class="math inline">A</span>. Como
+solo nos interesan los resultados donde ocurre <span
+class="math inline">B</span>, los únicos casos favorables para <span
+class="math inline">A</span> son aquellos que pertenecen simultáneamente
+a ambos conjuntos (<span class="math inline">A \cap B</span>). Dividir
+entre <span class="math inline">\mathbb{P}(B)</span> normaliza la medida
+para que el nuevo espacio muestral reducido <span
+class="math inline">B</span> conserve una probabilidad total de <span
+class="math inline">1</span>.</p>
+<p>El requisito de exigir <span class="math inline">\mathbb{P}(B) &gt;
+0</span> evita una indeterminación matemática del tipo <span
+class="math inline">\frac{0}{0}</span>, pues si <span
+class="math inline">\mathbb{P}(B) = 0</span>, la monotonía de la
+probabilidad obliga a que <span class="math inline">\mathbb{P}(A \cap B)
+= 0</span> al cumplirse <span class="math inline">A \cap B \subseteq
+B</span>. Además, condicionar un cálculo sobre un evento de probabilidad
+nula carece de utilidad práctica porque supone restringir el análisis a
+un escenario que no ocurre en el experimento.</p>
+<p>Asimismo, para un evento condicionante fijo <span
+class="math inline">B</span> con <span class="math inline">\mathbb{P}(B)
+&gt; 0</span>, la aplicación <span class="math inline">A \mapsto
+\mathbb{P}(A \mid B)</span> satisface todos los <a
+href="#2-1-los-tres-axiomas-fundamentales">axiomas de Kolmogórov</a>: es
+no negativa (<span class="math inline">\mathbb{P}(A \mid B) \ge
+0</span>), asigna certeza total al nuevo universo (<span
+class="math inline">\mathbb{P}(B \mid B) = 1</span>) y es aditiva para
+eventos mutuamente excluyentes. En consecuencia, todas las propiedades
+derivadas de los axiomas siguen siendo válidas bajo condicionamiento,
+como la regla del complemento condicional:</p>
+<p><span class="math display">\mathbb{P}(A^c \mid B) = 1 - \mathbb{P}(A
+\mid B)</span></p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Control de Calidad en
+Producción de Listones Textiles</span>
+  </div>
+  <div class="callout-content">
+<p>En un proceso industrial textil se producen listones de tela que
+pueden presentar defectos en su longitud (<span
+class="math inline">L</span>) o en su textura (<span
+class="math inline">T</span>). A partir de registros históricos se sabe
+que el <span class="math inline">10\%</span> de los listones no pasan la
+prueba de longitud, el <span class="math inline">5\%</span> no pasan la
+prueba de textura y el <span class="math inline">0.8\%</span> fallan
+simultáneamente en ambas pruebas. Si se selecciona un listón al azar y
+una inspección rápida confirma que no pasa la prueba de longitud,
+calcule la probabilidad de que su textura también esté defectuosa.</p>
+  </div>
+</div>
+<p>En este ejercicio analizamos un caso de control de calidad industrial
+donde dos tipos de fallas pueden superponerse sobre un mismo producto.
+La finalidad es determinar cómo la detección temprana de un defecto de
+longitud actualiza la probabilidad de encontrar un defecto de textura,
+restringiendo el espacio muestral al grupo de piezas defectuosas en
+longitud mediante la definición de probabilidad condicional.</p>
+<ol type="1">
+<li>Definimos los eventos <span class="math inline">L</span> («el listón
+falla la prueba de longitud») y <span class="math inline">T</span> («el
+listón falla la prueba de textura»), y traducimos los porcentajes
+históricos del enunciado a probabilidades marginales y conjuntas.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(L) = 0.10, \qquad \mathbb{P}(T)
+= 0.05, \qquad \mathbb{P}(L \cap T) = 0.008</span></p>
+<ol start="2" type="1">
+<li>Verificamos que el evento condicionante tiene probabilidad
+estrictamente positiva (<span class="math inline">\mathbb{P}(L) = 0.10
+&gt; 0</span>) y planteamos la fórmula de probabilidad condicional <span
+class="math inline">\mathbb{P}(T \mid L)</span> dividiendo la
+probabilidad conjunta entre la marginal del evento observado.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(T \mid L) = \frac{\mathbb{P}(L
+\cap T)}{\mathbb{P}(L)} = \frac{0.008}{0.10}</span></p>
+<ol start="3" type="1">
+<li>Efectuamos el cociente para obtener la probabilidad actualizada,
+observando que conocer el fallo en longitud eleva el riesgo de defecto
+en textura desde el <span class="math inline">5\%</span> inicial hasta
+el <span class="math inline">8\%</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(T \mid L) = 0.08</span></p>
+<h3  id="causalidad-temporal-y-la-actualización-de-información">1.2.
+Causalidad Temporal y la Actualización de Información</h3>
+<p>En el lenguaje cotidiano, la expresión «dado que ocurrió <span
+class="math inline">B</span>» suele asociarse con una secuencia
+cronológica en la que <span class="math inline">B</span> sucede antes
+que <span class="math inline">A</span>. Sin embargo, la probabilidad
+condicional <span class="math inline">\mathbb{P}(A \mid B)</span> no
+exige orden temporal ni relación física de causa y efecto entre los
+eventos.</p>
+<p>El condicionamiento refleja una actualización lógica basada en la
+información disponible. Tanto <span class="math inline">A</span> como
+<span class="math inline">B</span> son subconjuntos de un mismo espacio
+muestral <span class="math inline">\Omega</span>; por lo tanto, es igual
+de válido evaluar la probabilidad de un desenlace futuro dada una
+condición inicial (<span class="math inline">\mathbb{P}(\text{Efecto}
+\mid \text{Causa})</span>) que evaluar la probabilidad de una condición
+pasada a partir de una observación posterior (<span
+class="math inline">\mathbb{P}(\text{Causa} \mid \text{Efecto})</span>).
+Saber qué ocurrió al final del experimento descarta los resultados
+elementales incompatibles con esa observación y reajusta las
+probabilidades de las etapas previas.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Actualización Inversa de
+Información en Puntualidad de Vuelos</span>
+  </div>
+  <div class="callout-content">
+<p>En una ruta aérea comercial, la probabilidad de que un vuelo salga a
+tiempo (<span class="math inline">D</span>) es <span
+class="math inline">0.83</span>, la probabilidad de que llegue a tiempo
+(<span class="math inline">A</span>) es <span
+class="math inline">0.82</span>, y la probabilidad de que salga y llegue
+a tiempo simultáneamente es <span class="math inline">0.78</span>.
+Calcule:</p>
+<ol type="1">
+<li><p>La probabilidad de que el vuelo haya salido a tiempo, sabiendo
+que llegó a tiempo (<span class="math inline">\mathbb{P}(D \mid
+A)</span>).</p></li>
+<li><p>La probabilidad de que el vuelo llegue a tiempo, sabiendo que no
+salió a tiempo (<span class="math inline">\mathbb{P}(A \mid
+D^c)</span>).</p></li>
+</ol>
+  </div>
+</div>
+<p>Este ejercicio ilustra que la probabilidad condicional opera en ambos
+sentidos temporales: tanto para inferir un evento previo a partir de un
+resultado posterior como para actualizar el pronóstico de un evento
+futuro ante un retraso inicial. Lo que se busca es aplicar la definición
+de probabilidad condicional junto con la descomposición de conjuntos
+para cuantificar ambos escenarios.</p>
+<ol type="1">
+<li>Registramos las probabilidades dadas para la salida puntual (<span
+class="math inline">D</span>), la llegada puntual (<span
+class="math inline">A</span>) y su ocurrencia simultánea (<span
+class="math inline">D \cap A</span>).</li>
+</ol>
+<p><span class="math display">\mathbb{P}(D) = 0.83, \qquad \mathbb{P}(A)
+= 0.82, \qquad \mathbb{P}(D \cap A) = 0.78</span></p>
+<ol start="2" type="1">
+<li>Calculamos <span class="math inline">\mathbb{P}(D \mid A)</span>
+dividiendo la intersección <span class="math inline">\mathbb{P}(D \cap
+A)</span> entre <span class="math inline">\mathbb{P}(A)</span>,
+actualizando la probabilidad de salida puntual a partir de la
+confirmación posterior de que el avión aterrizó a tiempo.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(D \mid A) = \frac{\mathbb{P}(D
+\cap A)}{\mathbb{P}(A)} = \frac{0.78}{0.82} = \frac{39}{41} \approx
+0.9512</span></p>
+<ol start="3" type="1">
+<li>Para el segundo inciso, calculamos primero la probabilidad de que el
+vuelo no salga a tiempo (<span
+class="math inline">\mathbb{P}(D^c)</span>) mediante la regla del
+complemento, y la probabilidad de que llegue a tiempo habiendo salido
+tarde (<span class="math inline">\mathbb{P}(A \cap D^c)</span>) restando
+la intersección <span class="math inline">\mathbb{P}(A \cap D)</span> a
+la probabilidad total de llegada puntual <span
+class="math inline">\mathbb{P}(A)</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(D^c) = 1 - \mathbb{P}(D) = 1 -
+0.83 = 0.17, \qquad \mathbb{P}(A \cap D^c) = \mathbb{P}(A) -
+\mathbb{P}(A \cap D) = 0.82 - 0.78 = 0.04</span></p>
+<ol start="4" type="1">
+<li>Dividimos <span class="math inline">\mathbb{P}(A \cap D^c)</span>
+entre <span class="math inline">\mathbb{P}(D^c)</span> para obtener la
+probabilidad condicionada <span class="math inline">\mathbb{P}(A \mid
+D^c)</span>, comprobando cómo el retraso en el despegue reduce
+drásticamente la probabilidad de llegar a tiempo desde el <span
+class="math inline">82\%</span> original hasta aproximadamente el <span
+class="math inline">23.53\%</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(A \mid D^c) =
+\frac{\mathbb{P}(A \cap D^c)}{\mathbb{P}(D^c)} = \frac{0.04}{0.17} =
+\frac{4}{17} \approx 0.2353</span></p>
+<h2  id="independencia-estadística">2. Independencia Estadística</h2>
+<p>Una vez establecido cómo la ocurrencia de un evento <span
+class="math inline">B</span> modifica la probabilidad de <span
+class="math inline">A</span>, surge el caso límite opuesto: ¿qué ocurre
+cuando saber que sucedió <span class="math inline">B</span> no aporta
+ningún dato relevante para predecir <span class="math inline">A</span>?
+Esa ausencia de influencia mutua define la independencia
+estadísticas.</p>
+<h3  id="definición-formal-y-caracterización-equivalente">2.1. Definición
+Formal y Caracterización Equivalente</h3>
+<p>Intuitivamente, dos eventos <span class="math inline">A</span> y
+<span class="math inline">B</span> son independientes si la probabilidad
+condicional de <span class="math inline">A</span> dado <span
+class="math inline">B</span> coincide exactamente con la probabilidad
+original de <span class="math inline">A</span>, es decir, <span
+class="math inline">\mathbb{P}(A \mid B) = \mathbb{P}(A)</span>. Sin
+embargo, escribir esta condición como un cociente exige que <span
+class="math inline">\mathbb{P}(B) &gt; 0</span>. Para eliminar esa
+restricción de división y expresar la propiedad de manera simétrica, la
+definición formal se formula mediante el producto de probabilidades.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 2:</strong> Independencia
+Estadística de Dos Eventos</span>
+  </div>
+  <div class="callout-content">
+<p>Dos eventos <span class="math inline">A</span> y <span
+class="math inline">B</span> de un espacio de probabilidad <span
+class="math inline">(\Omega, \mathcal{F}, \mathbb{P})</span> son
+<strong>estadísticamente independientes</strong> si y solo si la
+probabilidad de su ocurrencia simultánea es igual al producto de sus
+probabilidades individuales:</p>
+<p><span class="math display">\mathbb{P}(A \cap B) =
+\mathbb{P}(A)\,\mathbb{P}(B)</span></p>
+<p>Cuando <span class="math inline">\mathbb{P}(A) &gt; 0</span> y <span
+class="math inline">\mathbb{P}(B) &gt; 0</span>, esta igualdad es
+equivalente a las relaciones condicionales:</p>
+<p><span class="math display">\mathbb{P}(A \mid B) = \mathbb{P}(A) \quad
+\land \quad \mathbb{P}(B \mid A) = \mathbb{P}(B)</span></p>
+  </div>
+</div>
+<p>La independencia significa observar uno de los eventos no altera las
+proporciones relativas del otro dentro del espacio muestral. Además, la
+simetría de la multiplicación (<span
+class="math inline">\mathbb{P}(A)\mathbb{P}(B) =
+\mathbb{P}(B)\mathbb{P}(A)</span>) garantiza que la independencia es
+siempre recíproca: si <span class="math inline">A</span> es
+independiente de <span class="math inline">B</span>, entonces <span
+class="math inline">B</span> es necesariamente independiente de <span
+class="math inline">A</span>.</p>
+<p>Cuando se analizan tres o más eventos <span class="math inline">A_1,
+A_2, \dots, A_n</span>, la independencia mutua exige una condición más
+estricta que la simple independencia por pares: la probabilidad de la
+intersección de <em>cualquier</em> subcolección de <span
+class="math inline">2, 3, \dots, n</span> eventos debe factorizarse como
+el producto de sus probabilidades individuales. Es decir, si tenemos
+tres eventos <span class="math inline">A_1, A_2</span> y <span
+class="math inline">A_3</span>, no basta con que:</p>
+<p><span class="math display">\mathbb{P}(A_1 \cap A_2) =
+\mathbb{P}(A_1)\mathbb{P}(A_2) \quad \land \quad \mathbb{P}(A_1 \cap
+A_3) = \mathbb{P}(A_1)\mathbb{P}(A_3) \quad \land \quad \mathbb{P}(A_2
+\cap A_3) = \mathbb{P}(A_2)\mathbb{P}(A_3)</span></p>
+<p>Sino que además se debe cumplir estrictamente que:</p>
+<p><span class="math display">\mathbb{P}(A_1 \cap A_2 \cap A_3) =
+\mathbb{P}(A_1)\mathbb{P}(A_2)\mathbb{P}(A_3)</span></p>
+<h3 
+id="incompatibilidad-con-la-exclusión-mutua-e-inclusión-de-subconjuntos">2.2.
+Incompatibilidad con la Exclusión Mutua e Inclusión de Subconjuntos</h3>
+<p>Un error conceptual frecuente consiste en confundir eventos
+mutuamente excluyentes (<span class="math inline">A \cap B =
+\emptyset</span>) con eventos estadísticamente independientes. Mientras
+que la exclusión mutua es una propiedad geométrica de conjuntos (no
+comparten elementos), la independencia es una propiedad métrica de
+proporciones. De hecho, para eventos con probabilidad positiva, ambas
+propiedades son lógicamente incompatibles.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 1:</strong> Incompatibilidad entre Exclusión
+Mutua e Independencia</span>
+  </div>
+  <div class="callout-content">
+<p>Sean <span class="math inline">A</span> y <span
+class="math inline">B</span> dos eventos tales que <span
+class="math inline">\mathbb{P}(A) &gt; 0</span> y <span
+class="math inline">\mathbb{P}(B) &gt; 0</span>. Si <span
+class="math inline">A</span> y <span class="math inline">B</span> son
+mutuamente excluyentes (<span class="math inline">A \cap B =
+\emptyset</span>), entonces <strong>no pueden ser estadísticamente
+independientes</strong>.</p>
+  </div>
+</div>
+<p>La demostración es directa a partir de los axiomas. Si <span
+class="math inline">A</span> y <span class="math inline">B</span> son
+mutuamente excluyentes, entonces <span class="math inline">A \cap B =
+\emptyset</span>, por lo que <span class="math inline">\mathbb{P}(A \cap
+B) = \mathbb{P}(\emptyset) = 0</span>. Por otra parte, como <span
+class="math inline">\mathbb{P}(A) &gt; 0</span> y <span
+class="math inline">\mathbb{P}(B) &gt; 0</span>, su producto es
+estrictamente mayor que cero (<span
+class="math inline">\mathbb{P}(A)\mathbb{P}(B) &gt; 0</span>). Al
+cumplirse <span class="math inline">\mathbb{P}(A \cap B) = 0 \neq
+\mathbb{P}(A)\mathbb{P}(B)</span>, la condición de independencia se
+viola de inmediato. En la práctica, dos eventos excluyentes presentan la
+máxima dependencia negativa posible: saber que ocurrió <span
+class="math inline">B</span> garantiza con certeza absoluta que <span
+class="math inline">A</span> no ocurrió (<span
+class="math inline">\mathbb{P}(A \mid B) = 0 \neq
+\mathbb{P}(A)</span>).</p>
+<p>De manera análoga, ocurre una dependencia estricta cuando un evento
+está contenido dentro de otro (<span class="math inline">A \subset
+B</span>) bajo probabilidades no triviales (<span class="math inline">0
+&lt; \mathbb{P}(A) &lt; \mathbb{P}(B) &lt; 1</span>). Al estar <span
+class="math inline">A</span> incluido en <span
+class="math inline">B</span>, su intersección coincide con el conjunto
+menor (<span class="math inline">A \cap B = A</span>), lo que implica
+<span class="math inline">\mathbb{P}(A \cap B) = \mathbb{P}(A)</span>.
+Al evaluar las probabilidades condicionales resulta:</p>
+<p><span class="math display">\mathbb{P}(B \mid A) = \frac{\mathbb{P}(A
+\cap B)}{\mathbb{P}(A)} = \frac{\mathbb{P}(A)}{\mathbb{P}(A)} = 1 \neq
+\mathbb{P}(B)</span></p>
+<p><span class="math display">\mathbb{P}(A \mid B) = \frac{\mathbb{P}(A
+\cap B)}{\mathbb{P}(B)} = \frac{\mathbb{P}(A)}{\mathbb{P}(B)} &gt;
+\mathbb{P}(A)</span></p>
+<p>Por lo tanto, saber que sucedió el evento más específico <span
+class="math inline">A</span> fuerza la certeza absoluta de que también
+sucedió <span class="math inline">B</span>, descartando la independencia
+(que solo podría sostenerse en los casos extremos degenerados donde
+<span class="math inline">\mathbb{P}(A) = 0</span> o <span
+class="math inline">\mathbb{P}(B) = 1</span>).</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3:</strong> Contraste entre Independencia
+y Exclusión Mutua en un Dado</span>
+  </div>
+  <div class="callout-content">
+<p>Se lanza un dado equilibrado de seis caras (<span
+class="math inline">\Omega = \{1, 2, 3, 4, 5, 6\}</span>) y se definen
+los eventos: <span class="math inline">A = \{2, 4, 6\}</span> («obtener
+un número par»), <span class="math inline">B = \{1, 2, 3, 4\}</span>
+(«obtener un número menor que <span class="math inline">5</span>») y
+<span class="math inline">C = \{1, 3, 5\}</span> («obtener un número
+impar»). Compruebe analíticamente si <span class="math inline">A</span>
+y <span class="math inline">B</span> son estadísticamente
+independientes, y verifique por qué <span class="math inline">A</span> y
+<span class="math inline">C</span> no lo son.</p>
+  </div>
+</div>
+<p>En este ejercicio aplicamos el criterio algebraico de independencia
+sobre un espacio muestral equiprobable sencillo. Se busca contrastar dos
+parejas de eventos para observar cómo la intersección de conjuntos con
+proporciones balanceadas preserva la independencia, mientras que la
+ausencia total de elementos comunes la destruye.</p>
+<ol type="1">
+<li>Calculamos las probabilidades individuales de los tres eventos bajo
+el modelo clásico de Laplace sobre el espacio muestral <span
+class="math inline">\Omega</span> de <span class="math inline">6</span>
+resultados equiprobables.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(A) = \frac{3}{6} = \frac{1}{2},
+\qquad \mathbb{P}(B) = \frac{4}{6} = \frac{2}{3}, \qquad \mathbb{P}(C) =
+\frac{3}{6} = \frac{1}{2}</span></p>
+<ol start="2" type="1">
+<li>Determinamos la intersección <span class="math inline">A \cap
+B</span> («número par menor que <span class="math inline">5</span>»),
+calculamos su probabilidad y la comparamos con el producto <span
+class="math inline">\mathbb{P}(A)\mathbb{P}(B)</span>, confirmando que
+son iguales y que, por tanto, <span class="math inline">A</span> y <span
+class="math inline">B</span> son independientes.</li>
+</ol>
+<p><span class="math display">A \cap B = \{2, 4\} \implies \mathbb{P}(A
+\cap B) = \frac{2}{6} = \frac{1}{3}</span> <span
+class="math display">\mathbb{P}(A)\,\mathbb{P}(B) = \frac{1}{2} \cdot
+\frac{2}{3} = \frac{1}{3} \implies \mathbb{P}(A \cap B) =
+\mathbb{P}(A)\,\mathbb{P}(B)</span></p>
+<ol start="3" type="1">
+<li>Evaluamos la intersección <span class="math inline">A \cap C</span>:
+al ser eventos mutuamente excluyentes su probabilidad conjunta es cero,
+valor que difiere del producto <span
+class="math inline">\mathbb{P}(A)\mathbb{P}(C) = \frac{1}{4}</span>,
+demostrando que <span class="math inline">A</span> y <span
+class="math inline">C</span> son dependientes.</li>
+</ol>
+<p><span class="math display">A \cap C = \emptyset \implies \mathbb{P}(A
+\cap C) = 0 \neq \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{4}</span></p>
+<h2  id="ley-multiplicativa-de-la-probabilidad">3. Ley Multiplicativa de
+la Probabilidad</h2>
+<p>Despejar el numerador en la definición de probabilidad condicional
+produce la identidad <span class="math inline">\mathbb{P}(A \cap B) =
+\mathbb{P}(A)\,\mathbb{P}(B \mid A)</span>. Esta expresión resulta
+indispensable cuando se desea calcular la probabilidad de que ocurran
+varios sucesos en secuencia y el resultado de cada etapa altera las
+condiciones de las etapas posteriores.</p>
+<h3  id="regla-multiplicativa-generalizada">3.1. Regla Multiplicativa
+Generalizada</h3>
+<p>Al extender este encadenamiento desde dos eventos hasta una colección
+finita de <span class="math inline">n</span> eventos sucesivos, se
+obtiene la ley multiplicativa generalizada.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 2:</strong> Ley Multiplicativa (Regla de la
+Cadena para <span class="math inline">n</span> Eventos)</span>
+  </div>
+  <div class="callout-content">
+<p>Sean <span class="math inline">A_1, A_2, \dots, A_n \in
+\mathcal{F}</span> eventos tales que <span
+class="math inline">\mathbb{P}\left(\bigcap_{j=1}^{n-1} A_j\right) &gt;
+0</span>. La probabilidad de que ocurran simultáneamente todos los <span
+class="math inline">n</span> eventos está dada por:</p>
+<p><span class="math display">\mathbb{P}\left(\bigcap_{i=1}^n A_i\right)
+= \mathbb{P}(A_1)\,\mathbb{P}(A_2 \mid A_1)\,\mathbb{P}(A_3 \mid A_1
+\cap A_2)\cdots \mathbb{P}\left(A_n \mid \bigcap_{j=1}^{n-1}
+A_j\right)</span></p>
+  </div>
+</div>
+<p>La regla de la cadena equivale a recorrer una rama específica de un
+árbol de probabilidad desde la raíz hasta una hoja terminal. Para que la
+secuencia completa tenga éxito, primero debe ocurrir <span
+class="math inline">A_1</span>; luego debe ocurrir <span
+class="math inline">A_2</span> sabiendo que ya pasó <span
+class="math inline">A_1</span>; a continuación debe ocurrir <span
+class="math inline">A_3</span> bajo la condición de que ya sucedieron
+tanto <span class="math inline">A_1</span> como <span
+class="math inline">A_2</span>, y así sucesivamente hasta el paso <span
+class="math inline">n</span>. Multiplicar las probabilidades
+condicionales a lo largo de esa trayectoria entrega la probabilidad
+conjunta exacta. Cuando los <span class="math inline">n</span> eventos
+son mutuamente independientes, cada término condicional colapsa a su
+probabilidad marginal <span class="math inline">\mathbb{P}(A_i)</span> y
+la fórmula se reduce a <span class="math inline">\prod_{i=1}^n
+\mathbb{P}(A_i)</span>.</p>
+<h4 id="demostración-por-inducción-matemática">3.1.1. Demostración por
+Inducción Matemática</h4>
+<p>Para validar la regla de la cadena para cualquier entero <span
+class="math inline">n \ge 2</span>, procedemos por inducción matemática
+sobre el número de eventos:</p>
+<p><strong>Caso base (<span class="math inline">n = 2</span>):</strong>
+Dados dos eventos <span class="math inline">A_1</span> y <span
+class="math inline">A_2</span> con <span
+class="math inline">\mathbb{P}(A_1) &gt; 0</span>, partimos de la
+Definición Formal 1:</p>
+<p><span class="math display">\mathbb{P}(A_2 \mid A_1) =
+\frac{\mathbb{P}(A_1 \cap A_2)}{\mathbb{P}(A_1)}</span></p>
+<p>Multiplicando ambos miembros por <span
+class="math inline">\mathbb{P}(A_1)</span> obtenemos directamente la
+identidad para dos eventos:</p>
+<p><span class="math display">\mathbb{P}(A_1 \cap A_2) =
+\mathbb{P}(A_1)\,\mathbb{P}(A_2 \mid A_1)</span></p>
+<p><strong>Hipótesis inductiva:</strong> Supongamos que la fórmula es
+válida para cualquier colección de <span class="math inline">n -
+1</span> eventos cuya intersección hasta el término <span
+class="math inline">n - 2</span> tenga probabilidad positiva:</p>
+<p><span class="math display">\mathbb{P}\left(\bigcap_{i=1}^{n-1}
+A_i\right) = \mathbb{P}(A_1)\,\mathbb{P}(A_2 \mid A_1)\,\mathbb{P}(A_3
+\mid A_1 \cap A_2)\cdots \mathbb{P}\left(A_{n-1} \mid
+\bigcap_{j=1}^{n-2} A_j\right)</span></p>
+<p><strong>Paso inductivo:</strong> Definimos el evento compuesto <span
+class="math inline">E = \bigcap_{j=1}^{n-1} A_j</span>, el cual cumple
+<span class="math inline">\mathbb{P}(E) &gt; 0</span> por hipótesis.
+Asociando los primeros <span class="math inline">n - 1</span> eventos
+dentro de <span class="math inline">E</span>, aplicamos el caso base
+(<span class="math inline">n = 2</span>) al par de eventos <span
+class="math inline">E</span> y <span class="math inline">A_n</span>:</p>
+<p><span class="math display">\mathbb{P}\left(\bigcap_{i=1}^n A_i\right)
+= \mathbb{P}\left(\left(\bigcap_{j=1}^{n-1} A_j\right) \cap A_n\right) =
+\mathbb{P}(E \cap A_n) = \mathbb{P}(E)\,\mathbb{P}(A_n \mid
+E)</span></p>
+<p>Sustituimos ahora <span class="math inline">\mathbb{P}(E)</span> por
+la expresión de la hipótesis inductiva y reescribimos <span
+class="math inline">E = \bigcap_{j=1}^{n-1} A_j</span> en el último
+factor condicional:</p>
+<p><span class="math display">\mathbb{P}\left(\bigcap_{i=1}^n A_i\right)
+= \mathbb{P}(A_1)\,\mathbb{P}(A_2 \mid A_1)\,\mathbb{P}(A_3 \mid A_1
+\cap A_2)\cdots \mathbb{P}\left(A_{n-1} \mid \bigcap_{j=1}^{n-2}
+A_j\right)\,\mathbb{P}\left(A_n \mid \bigcap_{j=1}^{n-1} A_j\right)
+\quad \blacksquare</span></p>
+<h2  id="ejercicios-prácticos-resueltos">4. Ejercicios Prácticos
+Resueltos</h2>
+<h3  id="auditoría-de-consistencia-de-datos-sin-reemplazo">4.1. Auditoría
+de Consistencia de Datos sin Reemplazo</h3>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 4:</strong> Auditoría de Integridad en una
+Base de Datos sin Reemplazo</span>
+  </div>
+  <div class="callout-content">
+<p>En una base de datos con <span class="math inline">100</span>
+registros, <span class="math inline">6</span> contienen campos corruptos
+y los <span class="math inline">94</span> restantes son íntegros. Si un
+script de auditoría inspecciona aleatoriamente <span
+class="math inline">4</span> registros sin reemplazo, calcule la
+probabilidad de que todos los registros inspeccionados sean íntegros
+aplicando la ley multiplicativa de la probabilidad.</p>
+  </div>
+</div>
+<p>En este ejercicio modelamos un procedimiento de muestreo aleatorio
+sin reposición sobre un lote finito de registros. Dado que cada registro
+revisado se retira del conjunto candidato antes de la siguiente
+selección, el resultado de una inspección modifica tanto el total de
+registros disponibles como la proporción de registros íntegros
+restantes, invalidando el supuesto de independencia.</p>
+<p>Lo que se busca es encadenar las probabilidades condicionales de cada
+extracción sucesiva mediante la regla de la cadena para determinar la
+probabilidad exacta de superar las cuatro inspecciones sin detectar
+ningún dato corrupto.</p>
+<ol type="1">
+<li>Definimos los eventos <span class="math inline">I_k</span> («el
+<span class="math inline">k</span>-ésimo registro inspeccionado es
+íntegro») para <span class="math inline">k \in \{1, 2, 3, 4\}</span> y
+expresamos la probabilidad de que los cuatro sean íntegros mediante la
+ley multiplicativa para <span class="math inline">n = 4</span>
+eventos.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(I_1 \cap I_2 \cap I_3 \cap I_4)
+= \mathbb{P}(I_1)\,\mathbb{P}(I_2 \mid I_1)\,\mathbb{P}(I_3 \mid I_1
+\cap I_2)\,\mathbb{P}(I_4 \mid I_1 \cap I_2 \cap I_3)</span></p>
+<ol start="2" type="1">
+<li>Evaluamos cada factor condicional de forma secuencial: en la primera
+extracción hay <span class="math inline">94</span> registros íntegros de
+<span class="math inline">100</span>; si el primero resulta íntegro,
+quedan <span class="math inline">93</span> íntegros de <span
+class="math inline">99</span>, y así sucesivamente hasta la cuarta
+inspección.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(I_1) = \frac{94}{100}, \quad
+\mathbb{P}(I_2 \mid I_1) = \frac{93}{99}, \quad \mathbb{P}(I_3 \mid I_1
+\cap I_2) = \frac{92}{98}, \quad \mathbb{P}(I_4 \mid I_1 \cap I_2 \cap
+I_3) = \frac{91}{97}</span></p>
+<ol start="3" type="1">
+<li>Multiplicamos las cuatro probabilidades condicionales y
+simplificamos la fracción resultante para obtener la probabilidad exacta
+de que la muestra completa esté libre de corrupción.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(I_1 \cap I_2 \cap I_3 \cap I_4)
+= \frac{94}{100} \cdot \frac{93}{99} \cdot \frac{92}{98} \cdot
+\frac{91}{97} = \frac{73\,188\,024}{94\,109\,400} =
+\frac{435\,643}{560\,175} \approx 0.7777</span></p>
+<h3  id="la-paradoja-de-los-cumpleaños">4.2. La Paradoja de los
+Cumpleaños</h3>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 5:</strong> La Paradoja de los Cumpleaños
+y Colisiones en Funciones Hash</span>
+  </div>
+  <div class="callout-content">
+<p>Considere un calendario uniforme de <span
+class="math inline">365</span> días al año (ignorando años bisiestos) y
+fechas de nacimiento independientes entre personas. Utilizando la ley
+multiplicativa de la probabilidad y la regla del complemento, derive la
+expresión general para la probabilidad de que al menos dos personas en
+un grupo de <span class="math inline">n</span> compartan fecha de
+nacimiento (modelo base para calcular colisiones en funciones hash con
+<span class="math inline">365</span> salidas equiprobables), y determine
+el valor mínimo de <span class="math inline">n</span> para el cual dicho
+riesgo supera el <span class="math inline">50\%</span>.</p>
+  </div>
+</div>
+<p>En seguridad informática y diseño de estructuras de datos, el «ataque
+de cumpleaños» analiza qué tan rápido aparece una colisión cuando se
+asignan identificadores aleatorios dentro de un espacio de salida
+finito. Calcular directamente la probabilidad de que haya <em>al menos
+una</em> coincidencia exigiría sumar múltiples escenarios solapados
+(parejas, tríos, múltiples pares distintos).</p>
+<p>La finalidad de este ejercicio es evitar esa complejidad combinatoria
+aplicando la regla del complemento: calcularemos primero la probabilidad
+de que <em>todas</em> las <span class="math inline">n</span> fechas sean
+distintas entre sí mediante la regla de la cadena, y luego restaremos
+ese valor de la unidad para hallar el umbral crítico donde el riesgo de
+colisión supera el <span class="math inline">50\%</span>.</p>
+<ol type="1">
+<li>Definimos el evento <span class="math inline">C_n</span> («al menos
+dos personas entre las <span class="math inline">n</span> comparten
+fecha de nacimiento») para <span class="math inline">1 \le n \le
+365</span>, y expresamos su probabilidad en términos del evento
+complementario <span class="math inline">C_n^c</span> («las <span
+class="math inline">n</span> personas tienen fechas de nacimiento todas
+distintas entre sí»).</li>
+</ol>
+<p><span class="math display">\mathbb{P}(C_n) = 1 -
+\mathbb{P}(C_n^c)</span></p>
+<ol start="2" type="1">
+<li>Descomponemos <span class="math inline">C_n^c</span> como la
+intersección de <span class="math inline">n</span> eventos secuenciales
+<span class="math inline">D_1 \cap D_2 \cap \dots \cap D_n</span>, donde
+<span class="math inline">D_k</span> indica que la <span
+class="math inline">k</span>-ésima persona no coincide con ninguna de
+las <span class="math inline">k - 1</span> anteriores, y aplicamos la
+regla de la cadena: la primera persona dispone de los <span
+class="math inline">365</span> días libres, la segunda de <span
+class="math inline">364</span>, y la <span
+class="math inline">n</span>-ésima de <span class="math inline">365 - (n
+- 1) = 365 - n + 1</span> días disponibles.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(C_n^c) = \frac{365}{365} \cdot
+\frac{364}{365} \cdot \frac{363}{365} \cdots \frac{365 - n + 1}{365} =
+\frac{365!}{(365 - n)!\,365^n}</span></p>
+<ol start="3" type="1">
+<li>Sustituimos la expresión de <span
+class="math inline">\mathbb{P}(C_n^c)</span> en la regla del complemento
+para obtener la fórmula general cerrada de la probabilidad de colisión
+en función del tamaño del grupo <span class="math inline">n</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(C_n) = 1 - \frac{365!}{(365 -
+n)!\,365^n}</span></p>
+<ol start="4" type="1">
+<li>Evaluamos la fórmula para valores crecientes de <span
+class="math inline">n</span> hasta cruzar el umbral del <span
+class="math inline">50\%</span>: para <span class="math inline">n =
+22</span> el riesgo aún es inferior a la mitad, pero al incorporar a la
+persona número <span class="math inline">23</span> la probabilidad de
+coincidencia supera el <span class="math inline">50\%</span>, fijando en
+<span class="math inline">n = 23</span> el valor crítico buscado.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(C_{22}) = 1 -
+\frac{365!}{343!\,365^{22}} \approx 0.4757</span> <span
+class="math display">\mathbb{P}(C_{23}) = 1 -
+\frac{365!}{342!\,365^{23}} \approx 0.5073 </span></p>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Meyer, Paul L.</strong> <em>Probabilidad y Aplicaciones
+Estadísticas</em> (Edición revisada). Addison-Wesley
+Iberoamericana.</p></li>
+<li><p><strong>Feller, William.</strong> <em>An Introduction to
+Probability Theory and Its Applications</em>, Vol. I (3.ª ed.). John
+Wiley &amp; Sons, Inc., Nueva York, 1968. Capítulos 1, 2 y 3.</p></li>
+<li><p><strong>Riordan, John.</strong> <em>An Introduction to
+Combinatorial Analysis</em>. Dover Publications, Mineola, Nueva York,
+2002.</p></li>
+<li><p><strong>Parzen, Emanuel.</strong> <em>Modern Probability Theory
+and Its Applications</em>. John Wiley &amp; Sons, Inc., Nueva York,
+1960.</p></li>
+<li><p><strong>Lipschutz, Seymour.</strong> <em>Probabilidad</em>.
+McGraw-Hill, México, 1970.</p></li>
+<li><p><strong>Universidad Central de Venezuela (UCV), Facultad de
+Ciencias, Escuela de Computación.</strong> <em>Probabilidad y
+Estadística</em>. Caracas, Venezuela, 2023.</p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>

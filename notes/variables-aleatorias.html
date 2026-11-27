@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Variables Aleatorias | Druxorey</title>
+  <meta name="description" content="Una variable aleatoria es una función medible que transforma los resultados cualitativos de un experimento en números reales, permitiendo realizar análisis cuantitativos. Su comportamiento se caracteriza mediante la Función de Densidad de Probabilidad, que describe la distribución de frecuencias en recorridos discretos o continuos, y la Función de Distribución Acumulada, herramienta fundamental para evaluar probabilidades en intervalos.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="/assets/main-Dehq_9UD.js"></script>
+  <script type="module" crossorigin src="/assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="/assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-u8MMlYs2.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#variable-aleatoria">1. Variable Aleatoria</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#variables-aleatorias-discretas">1.1. Variables Aleatorias
+Discretas</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#variables-aleatorias-continuas">1.2. Variables Aleatorias
+Continuas</a></li>
+<li class="toc-item"><a class="toc-link" href="#función-de-densidad-de-probabilidad">2. Función de Densidad de
+Probabilidad</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#densidad-de-probabilidad-de-variables-discretas">2.1. Densidad
+de Probabilidad de Variables Discretas</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#densidad-de-probabilidad-de-variables-continuas">2.2. Densidad
+de Probabilidad de Variables Continuas</a></li>
+<li class="toc-item"><a class="toc-link" href="#función-de-distribución-acumulada-fda">3. Función de
+Distribución Acumulada (FDA)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#definición-universal-y-morfología-por-tipo-de-soporte">3.1.
+Definición Universal y Morfología por Tipo de Soporte</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#propiedades-analíticas-fundamentales-de-la-fda">3.2. Propiedades
+Analíticas Fundamentales de la FDA</a></li>
+<li class="toc-item"><a class="toc-link" href="#operatoria-de-intervalos-e-inversión-analítica">4. Operatoria de
+Intervalos e Inversión Analítica</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#cálculo-de-probabilidades-en-intervalos-y-fronteras">4.1.
+Cálculo de Probabilidades en Intervalos y Fronteras</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#recuperación-de-la-función-puntual-desde-la-cdf">4.2.
+Recuperación de la Función Puntual desde la CDF</a></li>
+<li class="toc-item"><a class="toc-link" href="#ejercicios-prácticos-resueltos">5. Ejercicios Prácticos
+Resueltos</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#verificación-acumulación-y-cálculo-de-intervalos-en-una-variable-continua">5.1.
+Verificación, Acumulación y Cálculo de Intervalos en una Variable
+Continua</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#reconstrucción-de-la-pmf-y-contraste-de-intervalos-en-una-fda-escalonada">5.2.
+Reconstrucción de la PMF y Contraste de Intervalos en una FDA
+Escalonada</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Probabilidad y Estadistica</div>
+          <h1 class="article-title">Variables Aleatorias</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota 3.1</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>Una <strong>variable aleatoria</strong> es una función medible que
+transforma los resultados cualitativos de un experimento
+en <strong>números reales</strong>, permitiendo realizar análisis
+cuantitativos. Su comportamiento se caracteriza mediante
+la <strong>Función de Densidad de Probabilidad</strong>, que describe la
+distribución de frecuencias en
+recorridos <strong>discretos</strong> o <strong>continuos</strong>, y
+la <strong>Función de Distribución Acumulada</strong>, herramienta
+fundamental para evaluar probabilidades en intervalos.</p>
+  </div>
+</div>
+<p>En la observación de fenómenos sujetos al azar, los resultados de un
+experimento suelen expresarse mediante descripciones cualitativas (por
+ejemplo anotar si una moneda cae en «cara» o «sello»). Aunque la teoría
+de conjuntos permite agrupar estos desenlaces en subconjuntos y
+asignarles probabilidades individuales, el análisis cuantitativo exige
+sumar resultados, calcular promedios o integrar variaciones a lo largo
+del tiempo.</p>
+<p>El problema principal es que las operaciones del álgebra no pueden
+ejecutarse sobre conceptos como «cara» o «defectuoso», sino
+exclusivamente sobre números reales. Por ello resulta indispensable
+construir un mecanismo formal que transforme cada resultado elemental
+del experimento en una magnitud numérica medible sobre <span
+class="math inline">\mathbb{R}</span> y clasifique el conjunto de
+valores resultantes.</p>
+<h2  id="variable-aleatoria">1. Variable Aleatoria</h2>
+<p>Para trasladar ese universo cualitativo al terreno del análisis real,
+se establece una regla de asignación numérica sobre cada elemento de
+<span class="math inline">\Omega</span>.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 1:</strong> Variable Aleatoria y
+Recorrido (<span class="math inline">\mathbb{R}_X</span>)</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">(\Omega, \mathcal{F},
+\mathbb{P})</span> un espacio de probabilidad. Una <strong>variable
+aleatoria</strong> (abreviada v.a.) es una función medible <span
+class="math inline">X: \Omega \to \mathbb{R}</span> que asigna a cada
+resultado elemental <span class="math inline">\omega \in \Omega</span>
+un único número real <span class="math inline">X(\omega)</span>: <span
+class="math display">\omega \mapsto X(\omega) \in \mathbb{R}</span></p>
+<p>El conjunto imagen de esta aplicación constituye el
+<strong>rango</strong> o <strong>recorrido</strong> de la variable
+aleatoria, denotado por <span class="math inline">\mathbb{R}_X</span>:
+<span class="math display">\mathbb{R}_X = \{x \in \mathbb{R} \mid
+\exists \omega \in \Omega \text{ tal que } X(\omega) = x\} \subseteq
+\mathbb{R}</span></p>
+  </div>
+</div>
+<p>Por convención estándar, se utilizan letras mayúsculas (<span
+class="math inline">X, Y, Z</span>) para designar a la variable
+aleatoria como función, mientras que se emplean letras minúsculas (<span
+class="math inline">x, y, z</span>) para representar un valor numérico
+concreto que dicha variable puede adoptar tras realizar el experimento.
+Asimismo, la condición técnica de que <span class="math inline">X</span>
+sea «medible» garantiza que, para cualquier subconjunto numérico <span
+class="math inline">B \subseteq \mathbb{R}_X</span>, el conjunto de
+resultados que producen dichos valores, <span class="math inline">E =
+\{\omega \in \Omega \mid X(\omega) \in B\}</span>, sea un evento válido
+dentro de <span class="math inline">\mathcal{F}</span> con probabilidad
+bien definida <span class="math inline">\mathbb{P}(B) =
+\mathbb{P}(E)</span>.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Variable Aleatoria en el
+Lanzamiento de Dos Monedas</span>
+  </div>
+  <div class="callout-content">
+<p>Se lanzan dos monedas regulares al azar y se observa la cara superior
+de cada una. Defina formalmente el espacio muestral <span
+class="math inline">\Omega</span>, construya la variable aleatoria <span
+class="math inline">X =</span> «cantidad de veces que sale cara»,
+determine su recorrido <span class="math inline">\mathbb{R}_X</span> y
+calcule las probabilidades inducidas sobre cada valor del rango.</p>
+  </div>
+</div>
+<p>En este ejercicio partimos de un experimento aleatorio elemental cuyo
+espacio muestral está compuesto por secuencias simbólicas de caras y
+sellos. Lo que se busca es ilustrar cómo una variable aleatoria
+transforma esas etiquetas cualitativas en números reales manejables y
+traslada las probabilidades originales hacia el nuevo conjunto numérico
+<span class="math inline">\mathbb{R}_X</span>.</p>
+<ol type="1">
+<li>Construimos el espacio muestral <span
+class="math inline">\Omega</span> listando los cuatro resultados
+elementales posibles al lanzar dos monedas (donde <span
+class="math inline">C</span> representa «cara» y <span
+class="math inline">S</span> representa «sello»), todos equiprobables
+con probabilidad <span class="math inline">\frac{1}{4}</span> por
+simetría física.</li>
+</ol>
+<p><span class="math display">\Omega = \{SS, SC, CS, CC\}, \qquad
+\mathbb{P}(\omega) = \frac{1}{4} \quad \forall \omega \in
+\Omega</span></p>
+<ol start="2" type="1">
+<li>Evaluamos la función <span class="math inline">X: \Omega \to
+\mathbb{R}</span> sobre cada resultado elemental contando cuántas caras
+aparecen en la pareja observada, y reunimos las imágenes obtenidas para
+delimitar el recorrido <span
+class="math inline">\mathbb{R}_X</span>.</li>
+</ol>
+<p><span class="math display">X(SS) = 0, \quad X(SC) = 1, \quad X(CS) =
+1, \quad X(CC) = 2 \implies \mathbb{R}_X = \{0, 1, 2\}</span></p>
+<ol start="3" type="1">
+<li>Calculamos la probabilidad de cada valor del recorrido sumando las
+probabilidades de los eventos equivalentes en <span
+class="math inline">\Omega</span> que son mapeados hacia dicho número
+real.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(X = 0) = \mathbb{P}(\{SS\}) =
+\frac{1}{4}</span> <span class="math display">\mathbb{P}(X = 1) =
+\mathbb{P}(\{SC, CS\}) = \frac{2}{4} = \frac{1}{2}</span> <span
+class="math display"> \qquad \mathbb{P}(X = 2) = \mathbb{P}(\{CC\}) =
+\frac{1}{4}</span></p>
+<h3  id="variables-aleatorias-discretas">1.1. Variables Aleatorias
+Discretas</h3>
+<p>Una variable aleatoria <span class="math inline">X</span> es discreta
+cuando su recorrido <span class="math inline">\mathbb{R}_X</span> es un
+conjunto numerable, ya sea finito (<span
+class="math inline">\mathbb{R}_X = \{x_1, x_2, \dots, x_n\}</span>) o
+infinito numerable (<span class="math inline">\mathbb{R}_X = \{x_1, x_2,
+x_3, \dots\}</span>). Surgen habitualmente de procesos de conteo
+(«cantidad de veces que ocurre un suceso»).</p>
+<p>Cabe señalar que, aunque toda variable que toma exclusivamente
+valores enteros es discreta, no es obligatorio que sus valores sean
+enteros: si <span class="math inline">\mathbb{R}_X = \{-1, 0, \sqrt{2},
+e, \pi\}</span>, la variable sigue siendo discreta porque sus elementos
+pueden enumerarse uno a uno sin formar intervalos continuos.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Variable Discreta con
+Recorrido Infinito Numerable</span>
+  </div>
+  <div class="callout-content">
+<p>Se lanza reiteradamente una moneda equilibrada hasta que aparezca
+«cara» (<span class="math inline">C</span>) por primera vez. Sea <span
+class="math inline">X =</span> «cantidad total de lanzamientos
+realizados hasta obtener la primera cara». Describa el espacio muestral
+<span class="math inline">\Omega</span>, identifique el recorrido <span
+class="math inline">\mathbb{R}_X</span> y deduzca la probabilidad <span
+class="math inline">\mathbb{P}(X = n)</span> para cualquier entero
+positivo <span class="math inline">n</span>.</p>
+  </div>
+</div>
+<p>En este ejercicio el ensayo no se detiene hasta que ocurre un
+desenlace específico, lo que abre la posibilidad teórica de observar
+secuencias arbitrariamente largas de sellos iniciales. La finalidad de
+este ejercicio es demostrar que una variable aleatoria discreta puede
+poseer un recorrido infinito numerable y calcular la ley de probabilidad
+asociada a cada conteo entero mediante la <a
+href="#2-independencia-estadistica">independencia estadística</a> de los
+lanzamientos.</p>
+<ol type="1">
+<li>Formulamos el espacio muestral <span
+class="math inline">\Omega</span> como la colección infinita numerable
+de secuencias que acumulan <span class="math inline">n - 1</span> sellos
+consecutivos antes de finalizar con una cara, y aplicamos la función
+<span class="math inline">X</span> para obtener su recorrido.</li>
+</ol>
+<p><span class="math display">\Omega = \{C, SC, SSC, SSSC, \dots\}
+\implies \mathbb{R}_X = \{1, 2, 3, 4, \dots\} = \mathbb{N}</span></p>
+<ol start="2" type="1">
+<li>Para un entero genérico <span class="math inline">n \ge 1</span>,
+identificamos que el evento <span class="math inline">\{X = n\}</span>
+corresponde exclusivamente a la secuencia única de <span
+class="math inline">n - 1</span> sellos seguidos de una cara, y
+multiplicamos las probabilidades individuales de cada lanzamiento
+independiente (<span class="math inline">\mathbb{P}(C) = \mathbb{P}(S) =
+\frac{1}{2}</span>).</li>
+</ol>
+<p><span class="math display">\mathbb{P}(X = n) =
+\mathbb{P}(\underbrace{SS\cdots S}_{n - 1\text{ veces}}C) =
+\left(\frac{1}{2}\right)^{n - 1} \left(\frac{1}{2}\right) =
+\left(\frac{1}{2}\right)^n \quad \forall n \in \{1, 2, 3,
+\dots\}</span></p>
+<h3  id="variables-aleatorias-continuas">1.2. Variables Aleatorias
+Continuas</h3>
+<p>Una variable aleatoria <span class="math inline">X</span> es continua
+cuando su recorrido <span class="math inline">\mathbb{R}_X</span> es un
+conjunto infinito no numerable, constituido por uno o varios intervalos
+dentro de la recta real <span class="math inline">\mathbb{R}</span>
+(acotados como <span class="math inline">[a, b]</span> o no acotados
+como <span class="math inline">(0, \infty)</span>). Aparecen al modelar
+magnitudes físicas susceptibles de medición con precisión teórica
+arbitraria, tales como el tiempo, la temperatura, la masa, la longitud o
+el voltaje.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3:</strong> Variable Continua en el Tiempo
+de Espera del Transporte Público</span>
+  </div>
+  <div class="callout-content">
+<p>En una parada de autobús urbano, las unidades pasan con una
+frecuencia regular de <span class="math inline">20\text{
+minutos}</span>, pero un pasajero llega sin conocer el horario exacto
+del recorrido. Se define la variable aleatoria <span
+class="math inline">X =</span> «tiempo de espera (en minutos) hasta que
+llega el próximo autobús». Formalice el espacio muestral <span
+class="math inline">\Omega</span>, determine el recorrido <span
+class="math inline">\mathbb{R}_X</span> de la variable y calcule la
+probabilidad de que el pasajero espere entre <span
+class="math inline">5</span> y <span class="math inline">12\text{
+minutos}</span> bajo condiciones de uniformidad temporal.</p>
+  </div>
+</div>
+<p>En este ejercicio analizamos una magnitud física continua como el
+tiempo de espera, donde entre dos instantes cualesquiera existen
+infinitos valores decimales posibles. Lo que se busca es mostrar cómo
+una variable aleatoria proyecta un fenómeno temporal sobre un intervalo
+continuo no numerable de la recta real, impidiendo enumerar los
+desenlaces uno por uno.</p>
+<p>Asimismo, aprovechando que todos los instantes dentro del intervalo
+tienen la misma factibilidad de ocurrencia, se pide cuantificar la
+probabilidad de un subintervalo de espera sustituyendo el conteo
+discreto por la medición de longitudes mediante la <a
+href="#3-3-enfoque-geometrico-medidas-continuas">probabilidad
+geométrica</a>.</p>
+<ol type="1">
+<li>Delimitamos el espacio muestral <span
+class="math inline">\Omega</span> como todos los instantes de espera
+posibles dentro del ciclo de <span class="math inline">20\text{
+minutos}</span> y aplicamos la función identidad <span
+class="math inline">X(\omega) = \omega</span> para establecer el
+recorrido continuo <span class="math inline">\mathbb{R}_X</span>.</li>
+</ol>
+<p><span class="math display">\Omega = [0, 20]\text{ min} \implies
+\mathbb{R}_X = [0, 20]</span></p>
+<ol start="2" type="1">
+<li>Definimos el evento de interés <span class="math inline">E</span>
+correspondiente a esperar entre <span class="math inline">5</span> y
+<span class="math inline">12\text{ minutos}</span> y calculamos la
+longitud unidimensional tanto del subintervalo favorable como del
+recorrido completo.</li>
+</ol>
+<p><span class="math display">E = [5, 12]\text{ min} \implies
+\text{Longitud}(E) = 12 - 5 = 7\text{ min}, \qquad
+\text{Longitud}(\mathbb{R}_X) = 20 - 0 = 20\text{ min}</span></p>
+<ol start="3" type="1">
+<li>Aplicamos el enfoque de probabilidad geométrica dividiendo ambas
+longitudes para obtener la probabilidad exacta de que el tiempo de
+espera caiga en dicha franja.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(5 \le X \le 12) =
+\frac{\text{Longitud}(E)}{\text{Longitud}(\mathbb{R}_X)} = \frac{7}{20}
+= 0.35</span></p>
+<h2  id="función-de-densidad-de-probabilidad">2. Función de Densidad de
+Probabilidad</h2>
+<p>Delimitar el recorrido <span class="math inline">\mathbb{R}_X</span>
+permite conocer los valores numéricos que puede arrojar un experimento,
+pero resulta insuficiente para describir su comportamiento aleatorio.
+Dos variables distintas pueden compartir exactamente el mismo recorrido
+(por ejemplo, el conjunto <span class="math inline">\{0, 1, 2\}</span> o
+el intervalo <span class="math inline">[0, 10]</span>) y aun así diferir
+radicalmente en la frecuencia con la que aparecen sus distintos
+resultados</p>
+<p>Para caracterizar por completo la incertidumbre de <span
+class="math inline">X</span>, es necesario establecer una regla
+matemática que indique cómo se reparte la unidad total de probabilidad
+(<span class="math inline">\mathbb{P}(\Omega) = 1</span>) a lo largo de
+<span class="math inline">\mathbb{R}_X</span>: esa función recibe el
+nombre de Función de Densidad de Probabilidad (FDP), y su formulación
+cambia según si los valores del recorrido están aislados o forman un
+continuo.</p>
+<h3  id="densidad-de-probabilidad-de-variables-discretas">2.1. Densidad
+de Probabilidad de Variables Discretas</h3>
+<p>Cuando el recorrido <span class="math inline">\mathbb{R}_X</span>
+está compuesto por puntos aislados, cada valor individual <span
+class="math inline">x_i</span> puede concentrar una fracción positiva de
+la probabilidad total. Para formalizar esta asignación puntual se define
+la Función de Densidad de Probabilidad para variables discretas.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 2:</strong> Función de Densidad de
+Probabilidad (Caso Discreto)</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">X</span> una variable aleatoria
+discreta con recorrido <span class="math inline">\mathbb{R}_X</span>. Su
+<strong>Función de Densidad de Probabilidad Discreta</strong>, denotada
+por <span class="math inline">p_X: \mathbb{R} \to [0, 1]</span>, asigna
+a cada número real <span class="math inline">x</span> la probabilidad
+puntual de que la variable tome exactamente ese valor: <span
+class="math display">p_X(x) = \mathbb{P}(X = x) = \mathbb{P}(\{\omega
+\in \Omega \mid X(\omega) = x\})</span></p>
+<p>Para que <span class="math inline">p_X(x)</span> sea una FDP
+legítima, debe satisfacer obligatoriamente los axiomas de no negatividad
+y normalización:</p>
+<ol type="1">
+<li><span class="math inline">\forall x \in \mathbb{R}: \quad 0 \le
+p_X(x) \le 1</span> (con <span class="math inline">p_X(x) = 0</span> si
+<span class="math inline">x \notin \mathbb{R}_X</span>).</li>
+<li><span class="math inline">\displaystyle\sum_{x \in \mathbb{R}_X}
+p_X(x) = 1</span>.</li>
+</ol>
+  </div>
+</div>
+<p>La función de densidad de probabilidad discreta <span
+class="math inline">p_X(x)</span> actúa como una regla de consulta
+directa que asigna a cada número real <span class="math inline">x</span>
+su peso probabilístico exacto. Si el número <span
+class="math inline">x</span> pertenece al recorrido <span
+class="math inline">\mathbb{R}_X</span>, la función devuelve
+directamente la probabilidad puntual de que la variable aleatoria tome
+ese valor específico; si <span class="math inline">x</span> queda fuera
+del recorrido, la función simplemente le asigna el valor <span
+class="math inline">0</span>.</p>
+<p>Las dos condiciones que acompañan a la definición formal garantizan
+que este reparto de probabilidades sea matemáticamente coherente:</p>
+<ol type="1">
+<li>Impide asignar probabilidades negativas o superiores a la unidad a
+ningún punto aislado.</li>
+<li>Exige que, al sumar las probabilidades de todos los puntos posibles
+del recorrido, se recupere exactamente la certeza total del experimento
+(<span class="math inline">\mathbb{P}(\Omega) = 1</span>).</li>
+</ol>
+<figure class="article-figure">
+<img src="/images/notes/PROBA 3-1 Variables Aleatorias - Fdp de una Variable Aleatoria Discreta.webp" alt="Fdp de una Variable Aleatoria Discreta" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+Fdp de una Variable Aleatoria Discreta
+</figcaption>
+</figure>
+<h3  id="densidad-de-probabilidad-de-variables-continuas">2.2. Densidad
+de Probabilidad de Variables Continuas</h3>
+<p>Si intentáramos aplicar el esquema discreto sobre un intervalo
+continuo como <span class="math inline">[0, 2]</span>, chocaríamos con
+una imposibilidad aritmética: al existir infinitos números reales no
+numerables dentro del intervalo, asignar una probabilidad positiva a
+cada punto haría que la suma total diverja hacia infinito, violando
+<span class="math inline">\mathbb{P}(\Omega) = 1</span>.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 3:</strong> Función de Densidad de
+Probabilidad (PDF)</span>
+  </div>
+  <div class="callout-content">
+<p>Una variable aleatoria <span class="math inline">X</span> es
+<strong>continua</strong> si existe una función integrable <span
+class="math inline">f_X: \mathbb{R} \to [0, \infty)</span>, denominada
+<strong>Función de Densidad de Probabilidad Contínua</strong>, tal que
+para cualesquiera números reales <span class="math inline">a \le
+b</span>, la probabilidad de que <span class="math inline">X</span>
+caiga en el intervalo <span class="math inline">[a, b]</span> equivale
+al área bajo su curva:</p>
+<p><span class="math display">\mathbb{P}(a \le X \le b) = \int_{a}^{b}
+f_X(x) \, dx</span></p>
+<p>Una función <span class="math inline">f_X(x)</span> constituye una
+PDF válida si y solo si cumple dos condiciones fundamentales:</p>
+<ol type="1">
+<li><strong>No negatividad:</strong> <span class="math inline">\forall x
+\in \mathbb{R}: \quad f_X(x) \ge 0</span>.</li>
+<li><strong>Normalización de área unitaria:</strong> <span
+class="math inline">\displaystyle\int_{-\infty}^{+\infty} f_X(x) \, dx =
+1</span>.</li>
+</ol>
+  </div>
+</div>
+<p>A diferencia del caso discreto, la función <span
+class="math inline">f_X(x)</span> no entrega directamente la
+probabilidad de obtener un valor aislado, sino una medida de intensidad
+o concentración relativa alrededor de cada punto <span
+class="math inline">x</span>. Donde la curva de <span
+class="math inline">f_X(x)</span> alcanza mayor altura, los valores
+cercanos a esa zona tienen una concentración de probabilidad más alta;
+donde la curva desciende cerca del eje horizontal, la probabilidad se
+encuentra mucho más dispersa.</p>
+<p>Para transformar esa densidad en una probabilidad real es
+indispensable evaluar un intervalo completo <span
+class="math inline">[a, b]</span> calculando el área geométrica
+encerrada entre la curva <span class="math inline">f_X(x)</span> y el
+eje horizontal a lo largo de ese tramo. Por esta razón, las dos
+propiedades fundamentales exigen que la gráfica nunca tome valores
+negativos (evitando áreas negativas sin sentido) y que el área total
+acumulada bajo toda la curva sobre la recta real sea exactamente igual a
+<span class="math inline">1</span>.</p>
+<figure class="article-figure">
+<img src="/images/notes/PROBA 3-1 Variables Aleatorias - Fdp de una Variable Aleatoria Contínua.webp" alt="Fdp de una Variable Aleatoria Contínua" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+Fdp de una Variable Aleatoria Contínua
+</figcaption>
+</figure>
+<p>De la definición se desprende que para cualquier número real aislado
+<span class="math inline">x_0 \in \mathbb{R}</span>, la probabilidad de
+que la variable aleatoria tome exactamente ese valor puntual es
+estrictamente cero:</p>
+<p><span class="math display">\mathbb{P}(X = x_0) = \mathbb{P}(x_0 \le X
+\le x_0) = \int_{x_0}^{x_0} f_X(x) \, dx = 0</span></p>
+<p>Geométricamente, un punto aislado corresponde a un rectángulo
+vertical de base nula (<span class="math inline">\Delta x = 0</span>),
+cuya área es cero sin importar cuál sea la altura <span
+class="math inline">f_X(x_0)</span>. Este resultado conlleva dos
+consecuencias analíticas indispensables:</p>
+<ol type="1">
+<li><p><span class="math inline">f_X(x)</span> no es una probabilidad,
+sino una tasa de densidad, esto pues dado que <span
+class="math inline">f_X(x_0) \neq \mathbb{P}(X = x_0)</span>, la función
+de densidad no está acotada superiormente por <span
+class="math inline">1</span>. Es perfectamente válido que <span
+class="math inline">f_X(x) &gt; 1</span> en intervalos estrechos (por
+ejemplo, si <span class="math inline">1\text{ kg}</span> de masa se
+concentra uniformemente en una barra de <span
+class="math inline">0.25\text{ m}</span>, su densidad lineal es <span
+class="math inline">f_X(x) = 4 &gt; 1</span>), siempre que la integral
+global sobre todo <span class="math inline">\mathbb{R}</span> siga
+siendo igual a <span class="math inline">1</span>.</p></li>
+<li><p>Improbable no equivale a imposible, lo que quiere decir que <span
+class="math inline">\mathbb{P}(X = x_0) = 0</span> significa que el
+suceso puntual es improbable (tiene medida geométrica nula), pero no
+imposible (<span class="math inline">x_0</span> sigue perteneciendo al
+recorrido <span class="math inline">\mathbb{R}_X</span>). Si medimos la
+estatura exacta de una persona adulta en centímetros, obtener
+exactamente <span class="math inline">172.0000\dots1\text{ cm}</span> es
+un resultado lógicamente posible dentro del intervalo, pero al existir
+infinitos valores reales vecinos indiscernibles entre sí, su
+probabilidad puntual es nula.</p></li>
+</ol>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 4:</strong> Validación de Densidad y
+Cálculo de Área en Tiempo de Espera</span>
+  </div>
+  <div class="callout-content">
+<p>El tiempo <span class="math inline">X</span> (en minutos) que
+transcurre hasta que ocurre un evento aleatorio, como la llegada de un
+cliente a una taquilla bancaria, se modela mediante la siguiente función
+de densidad de probabilidad: <span class="math display">f_X(x) =
+\begin{cases} 2e^{-2x} &amp; \text{si } x \ge 0 \\ 0 &amp; \text{si } x
+&lt; 0 \end{cases}</span></p>
+<p>Verifique que <span class="math inline">f_X(x)</span> constituye una
+PDF válida y calcule la probabilidad de que el cliente llegue entre el
+minuto <span class="math inline">1</span> y el minuto <span
+class="math inline">2</span>, así como la probabilidad de que tarde más
+de <span class="math inline">2\text{ minutos}</span>.</p>
+  </div>
+</div>
+<p>En este ejercicio trabajamos con una variable aleatoria continua
+definida sobre el semieje real no negativo <span
+class="math inline">\mathbb{R}_X = [0, \infty)</span>, donde la densidad
+de probabilidad decrece exponencialmente con el paso del tiempo
+(observándose que en <span class="math inline">x = 0</span> la densidad
+alcanza <span class="math inline">f_X(0) = 2 &gt; 1</span>). Lo que se
+busca es comprobar que la función satisface las condiciones de no
+negatividad e integral unitaria, y evaluar dos probabilidades de
+intervalo mediante integración definida sobre las regiones
+correspondientes.</p>
+<ol type="1">
+<li>Verificamos la no negatividad observando que <span
+class="math inline">2e^{-2x} &gt; 0</span> para todo <span
+class="math inline">x \ge 0</span> y <span class="math inline">0</span>
+para <span class="math inline">x &lt; 0</span>, y evaluamos la integral
+impropia sobre todo el eje real para confirmar que el área total bajo la
+curva es igual a la unidad.</li>
+</ol>
+<p><span class="math display">\int_{-\infty}^{+\infty} f_X(x) \, dx =
+\int_{0}^{+\infty} 2e^{-2x} \, dx = \lim_{b \to +\infty} \left[ -e^{-2x}
+\right]_{0}^{b} = \lim_{b \to +\infty} \left( -e^{-2b} + e^{0} \right) =
+0 + 1 = 1</span></p>
+<ol start="2" type="1">
+<li>Calculamos la probabilidad de que la llegada ocurra en la franja
+temporal entre <span class="math inline">x = 1</span> y <span
+class="math inline">x = 2</span> integrando <span
+class="math inline">f_X(x)</span> sobre el intervalo <span
+class="math inline">[1, 2]</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(1 &lt; X &lt; 2) = \int_{1}^{2}
+2e^{-2x} \, dx = \left[ -e^{-2x} \right]_{1}^{2} = -e^{-4} -
+(-e^{-2})</span> <span class="math display">\mathbb{P}(1 &lt; X &lt; 2)
+= e^{-2} - e^{-4} \approx 0.1353 - 0.0183 = 0.1170</span></p>
+<ol start="3" type="1">
+<li>Determinamos la probabilidad de que el tiempo de espera supere los
+<span class="math inline">2\text{ minutos}</span> integrando la densidad
+desde <span class="math inline">x = 2</span> hasta <span
+class="math inline">+\infty</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(X &gt; 2) = \int_{2}^{+\infty}
+2e^{-2x} \, dx = \lim_{b \to +\infty} \left[ -e^{-2x} \right]_{2}^{b} =
+0 - (-e^{-4}) = e^{-4} \approx 0.0183</span></p>
+<h2  id="función-de-distribución-acumulada-fda">3. Función de
+Distribución Acumulada (FDA)</h2>
+<p>Las funciones de densidad puntual (<span
+class="math inline">p_X</span> y <span class="math inline">f_X</span>)
+describen cómo se distribuye la probabilidad de manera local en cada
+punto o vecindad del recorrido. Sin embargo, en el análisis
+probabilístico suele interesar evaluar el comportamiento global hasta un
+umbral máximo (<span class="math inline">\mathbb{P}(X \le x)</span>),
+además de que existen variables aleatorias (como las de naturaleza
+mixta) que no admiten una descripción pura mediante masas puntuales ni
+mediante una función de densidad continua.</p>
+<p>Para medir esta acumulación progresiva y contar con una herramienta
+matemática que exista siempre para cualquier variable aleatoria sin
+excepción, se define la Función de Distribución Acumulada (FDA).</p>
+<h3  id="definición-universal-y-morfología-por-tipo-de-soporte">3.1.
+Definición Universal y Morfología por Tipo de Soporte</h3>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 4:</strong> Función de
+Distribución Acumulada</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">X</span> una variable aleatoria
+cualquiera definida sobre un espacio de probabilidad <span
+class="math inline">(\Omega, \mathcal{F}, \mathbb{P})</span>. Su Función
+de Distribución Acumulada, denotada por <span class="math inline">F_X:
+\mathbb{R} \to [0, 1]</span>, asigna a cada número real <span
+class="math inline">x</span> la probabilidad de que la variable
+aleatoria tome un valor menor o igual a <span
+class="math inline">x</span>:</p>
+<p><span class="math display">F_X(x) = \mathbb{P}(X \le x) \quad \forall
+x \in \mathbb{R}</span></p>
+<p>Su cálculo adopta dos formas según el soporte de <span
+class="math inline">X</span>:</p>
+<ul>
+<li><strong>Caso Discreto:</strong> Suma de todas las masas puntuales
+ubicadas a la izquierda o sobre el umbral <span
+class="math inline">x</span>:</li>
+</ul>
+<p><span class="math display">F_X(x) = \sum_{x_i \le x}
+p_X(x_i)</span></p>
+<ul>
+<li><strong>Caso Continuo:</strong> Integral de la función de densidad
+desde <span class="math inline">-\infty</span> hasta el límite superior
+<span class="math inline">x</span>:</li>
+</ul>
+<p><span class="math display">F_X(x) = \int_{-\infty}^{x} f_X(t) \,
+dt</span></p>
+  </div>
+</div>
+<p>La función de distribución acumulada <span
+class="math inline">F_X(x)</span> recorre la recta real desde el extremo
+izquierdo (<span class="math inline">-\infty</span>) hasta un punto de
+corte <span class="math inline">x</span> y va sumando toda la
+probabilidad que encuentra en el camino, incluyendo la del propio punto
+<span class="math inline">x</span>. Al evaluar <span
+class="math inline">F_X(x)</span>, lo que se obtiene es la probabilidad
+total acumulada de que la variable aleatoria arroje un resultado menor o
+igual a ese umbral.</p>
+<p>Debido a esta mecánica de barrido de izquierda a derecha, <span
+class="math inline">F_X(x)</span> comienza valiendo <span
+class="math inline">0</span> antes de alcanzar los primeros valores
+posibles de la variable y crece de forma progresiva hasta estabilizarse
+en <span class="math inline">1</span> una vez que rebasa todo su
+recorrido. En el caso discreto esa acumulación se calcula sumando los
+pesos puntuales ubicados hasta <span class="math inline">x</span>,
+mientras que en el caso continuo se obtiene midiendo el área acumulada
+bajo la curva de densidad desde <span class="math inline">-\infty</span>
+hasta el corte en <span class="math inline">x</span>.</p>
+<p>Esta forma de acumulación resulta en una geometría característica en
+la gráfica de <span class="math inline">F_X(x)</span>:</p>
+<ul>
+<li><p><strong>En variables discretas:</strong> Como la probabilidad se
+concentra exclusivamente en puntos aislados <span
+class="math inline">x_i \in \mathbb{R}_X</span>, la FDA permanece
+completamente plana (constante) en los tramos intermedios y experimenta
+saltos verticales abruptos únicamente al cruzar cada punto <span
+class="math inline">x_i</span>, donde la altura exacta del escalón
+coincide con <span class="math inline">p_X(x_i)</span>. Su gráfica tiene
+el aspecto de una escalera discontinua.</p></li>
+<li><p><strong>En variables continuas:</strong> Al no existir
+concentraciones puntuales de masa (<span
+class="math inline">\mathbb{P}(X = x_0) = 0</span>), el área acumulada
+crece de manera gradual sin saltos verticales, generando una curva
+continua y suave en todo <span
+class="math inline">\mathbb{R}</span>.</p></li>
+</ul>
+<figure class="article-figure">
+<img src="/images/notes/PROBA 3-1 Variables Aleatorias - Comparación Entre la FDA Discreta y Contínua.webp" alt="Comparación Entre la FDA Discreta y Contínua" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+Comparación Entre la FDA Discreta y Contínua
+</figcaption>
+</figure>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 5:</strong> Deducción de la FDA en los
+Paradigmas Discreto y Continuo</span>
+  </div>
+  <div class="callout-content">
+<p>Obtenga la expresión analítica completa por tramos de la Función de
+Distribución Acumulada <span class="math inline">F_X(x)</span> para las
+dos variables estudiadas previamente:</p>
+<ol type="1">
+<li>La variable discreta <span class="math inline">X =</span> «cantidad
+de caras al lanzar dos monedas legales» (<span
+class="math inline">p_X(0) = \frac{1}{4}</span>, <span
+class="math inline">p_X(1) = \frac{1}{2}</span>, <span
+class="math inline">p_X(2) = \frac{1}{4}</span>).</li>
+<li>La variable continua <span class="math inline">X =</span> «tiempo de
+espera hasta la llegada de un cliente» (<span class="math inline">f_X(x)
+= 2e^{-2x}</span> para <span class="math inline">x \ge 0</span> y <span
+class="math inline">0</span> para <span class="math inline">x &lt;
+0</span>).</li>
+</ol>
+  </div>
+</div>
+<p>Este ejercicio aplica la definición en ambos dominios para contrastar
+cómo la acumulación opera mediante sumas parciales escalonadas cuando el
+recorrido es finito y mediante integración indefinida suave cuando el
+recorrido es un intervalo continuo. Lo que se busca es construir ambas
+expresiones para todo <span class="math inline">x \in \mathbb{R}</span>,
+asegurando que la FDA quede definida incluso fuera del soporte original
+de la variable.</p>
+<ol type="1">
+<li>Para la variable discreta de las dos monedas, evaluamos la suma
+acumulada <span class="math inline">F_X(x) = \sum_{x_i \le x}
+p_X(x_i)</span> en cada intervalo delimitado por los puntos del
+recorrido <span class="math inline">\{0, 1, 2\}</span>, observando que
+el valor salta en cada entero incluido y permanece constante hasta justo
+antes del siguiente entero.</li>
+</ol>
+<p><span class="math display">F_X(x) = \begin{cases} 0 &amp; \text{si }
+x &lt; 0 \\[4pt] \dfrac{1}{4} &amp; \text{si } 0 \le x &lt; 1 \\[6pt]
+\dfrac{1}{4} + \dfrac{1}{2} = \dfrac{3}{4} &amp; \text{si } 1 \le x &lt;
+2 \\[6pt] \dfrac{3}{4} + \dfrac{1}{4} = 1 &amp; \text{si } x \ge 2
+\end{cases}</span></p>
+<ol start="2" type="1">
+<li>Para la variable continua del tiempo de espera, observamos que para
+<span class="math inline">x &lt; 0</span> la densidad es idénticamente
+nula, por lo que <span class="math inline">F_X(x) = 0</span>; mientras
+que para <span class="math inline">x \ge 0</span> integramos la densidad
+<span class="math inline">f_X(t) = 2e^{-2t}</span> desde <span
+class="math inline">0</span> hasta el umbral variable <span
+class="math inline">x</span>.</li>
+</ol>
+<p><span class="math display">F_X(x) = \int_{0}^{x} 2e^{-2t} \, dt =
+\left[ -e^{-2t} \right]_{0}^{x} = -e^{-2x} - (-e^{0}) = 1 - e^{-2x}
+\quad (\text{para } x \ge 0)</span></p>
+<ol start="3" type="1">
+<li>Consolidamos la expresión por tramos de la FDA continua sobre toda
+la recta real <span class="math inline">\mathbb{R}</span>.</li>
+</ol>
+<p><span class="math display">F_X(x) = \begin{cases} 0 &amp; \text{si }
+x &lt; 0 \\ 1 - e^{-2x} &amp; \text{si } x \ge 0 \end{cases}</span></p>
+<h3  id="propiedades-analíticas-fundamentales-de-la-fda">3.2. Propiedades
+Analíticas Fundamentales de la FDA</h3>
+<p>Toda función <span class="math inline">F_X: \mathbb{R} \to [0,
+1]</span> que represente la Función de Distribución Acumulada de una
+variable aleatoria cumple necesariamente cuatro propiedades analíticas
+universales, independientemente de si la variable es discreta o
+continua.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 1:</strong> Propiedades Universales de la
+Función de Distribución Acumulada</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">F_X(x) = \mathbb{P}(X \le x)</span> la
+FDA de una variable aleatoria <span class="math inline">X</span>.
+Entonces se satisfacen las siguientes propiedades:</p>
+<ol type="1">
+<li><strong>Acotación en el intervalo unitario:</strong> <span
+class="math inline">\forall x \in \mathbb{R}: \quad 0 \le F_X(x) \le
+1</span>.</li>
+<li><strong>Límites asintóticos extremos:</strong></li>
+</ol>
+<p><span class="math display">\lim_{x \to -\infty} F_X(x) = 0 \quad
+\land \quad \lim_{x \to +\infty} F_X(x) = 1</span></p>
+<ol type="1">
+<li><strong>Monotonía no decreciente:</strong> <span
+class="math inline">\forall x_1, x_2 \in \mathbb{R}: \quad x_1 \le x_2
+\implies F_X(x_1) \le F_X(x_2)</span>.</li>
+<li><strong>Continuidad por la derecha:</strong> <span
+class="math inline">\forall a \in \mathbb{R}: \quad \lim_{x \to a^+}
+F_X(x) = F_X(a)</span>.</li>
+</ol>
+  </div>
+</div>
+<p>Cada una de estas cuatro propiedades posee una justificación directa
+tanto intuitiva como axiomática:</p>
+<ul>
+<li><p><strong>Acotación y límites asintóticos:</strong> Como <span
+class="math inline">F_X(x)</span> es la probabilidad del evento <span
+class="math inline">\{X \le x\}</span>, los <a
+href="#2-la-funcion-probabilistica">axiomas de Kolmogórov</a> garantizan
+que su valor nunca puede ser negativo ni mayor que <span
+class="math inline">1</span>. Cuando el umbral <span
+class="math inline">x</span> retrocede hacia <span
+class="math inline">-\infty</span>, el evento <span
+class="math inline">\{X \le x\}</span> se contrae hacia el conjunto
+vacío <span class="math inline">\emptyset</span>, anulando la
+probabilidad; cuando <span class="math inline">x</span> avanza hacia
+<span class="math inline">+\infty</span>, <span class="math inline">\{X
+\le x\}</span> abarca todo el espacio muestral <span
+class="math inline">\Omega</span>, alcanzando la certeza absoluta de
+<span class="math inline">1</span>.</p></li>
+<li><p><strong>Monotonía no decreciente:</strong> Si <span
+class="math inline">x_1 \le x_2</span>, todo resultado que cumpla <span
+class="math inline">X \le x_1</span> cumple automáticamente <span
+class="math inline">X \le x_2</span>, por lo que se tiene la inclusión
+de conjuntos <span class="math inline">\{X \le x_1\} \subseteq \{X \le
+x_2\}</span>. Por la propiedad de monotonía de la probabilidad,
+necesariamente <span class="math inline">F_X(x_1) \le F_X(x_2)</span>:
+una función acumulada jamás puede descender.</p></li>
+<li><p><strong>Continuidad por la derecha:</strong> En un salto discreto
+ubicado en <span class="math inline">x = a</span>, la definición <span
+class="math inline">F_X(a) = \mathbb{P}(X \le a)</span> incluye el punto
+<span class="math inline">a</span> mediante la desigualdad no estricta
+(<span class="math inline">\le</span>). Si nos acercamos a <span
+class="math inline">a</span> desde valores mayores (<span
+class="math inline">x \to a^+</span>), siempre estamos incluyendo el
+salto de <span class="math inline">a</span>, por lo que el límite
+lateral derecho coincide con <span class="math inline">F_X(a)</span>
+(representado gráficamente por el círculo relleno al inicio de cada
+escalón). En cambio, al acercarnos por la izquierda (<span
+class="math inline">x \to a^-</span>), el límite lateral izquierdo
+converge a <span class="math inline">\mathbb{P}(X &lt; a) =
+F_X(a^-)</span>, que difiere de <span class="math inline">F_X(a)</span>
+exactamente en la masa puntual <span class="math inline">p_X(a) = F_X(a)
+- F_X(a^-)</span>.</p></li>
+</ul>
+<h2  id="operatoria-de-intervalos-e-inversión-analítica">4. Operatoria de
+Intervalos e Inversión Analítica</h2>
+<p>Conocer la Función de Distribución Acumulada <span
+class="math inline">F_X(x)</span> proporciona una ventaja operativa
+inmediata: evita tener que sumar decenas de términos o resolver nuevas
+integrales cada vez que se desea calcular la probabilidad de un
+intervalo, y además contiene toda la información necesaria para
+reconstruir la función puntual original.</p>
+<h3  id="cálculo-de-probabilidades-en-intervalos-y-fronteras">4.1.
+Cálculo de Probabilidades en Intervalos y Fronteras</h3>
+<p>Para dos números reales cualesquiera <span class="math inline">a &lt;
+b</span>, el evento <span class="math inline">\{X \le b\}</span> puede
+descomponerse como la unión de dos eventos mutuamente excluyentes: <span
+class="math inline">\{X \le a\}</span> y <span class="math inline">\{a
+&lt; X \le b\}</span>. Aplicando la aditividad axiomática, se
+obtiene:</p>
+<p><span class="math display">\mathbb{P}(X \le b) = \mathbb{P}(X \le a)
++ \mathbb{P}(a &lt; X \le b) \implies \mathbb{P}(a &lt; X \le b) =
+F_X(b) - F_X(a)</span></p>
+<p>Esta relación fundamental semiabierta por la izquierda es universal,
+pero el efecto de cambiar los signos de desigualdad estricta (<span
+class="math inline">&lt;</span>) por desigualdades no estrictas (<span
+class="math inline">\le</span>) diverge radicalmente entre variables
+continuas y discretas:</p>
+<h4 id="indiferencia-de-extremos-en-variables-continuas">4.1.1.
+Indiferencia de extremos en variables continuas</h4>
+<p>Como cualquier punto aislado tiene probabilidad nula (<span
+class="math inline">\mathbb{P}(X = a) = \mathbb{P}(X = b) = 0</span>),
+incluir o excluir los bordes de un intervalo no altera el área bajo la
+curva. Las cuatro variantes de intervalo producen exactamente el mismo
+valor:</p>
+<p><span class="math display">\mathbb{P}(a \le X \le b) = \mathbb{P}(a
+&lt; X \le b) = \mathbb{P}(a \le X &lt; b) = \mathbb{P}(a &lt; X &lt; b)
+= F_X(b) - F_X(a)</span></p>
+<h4 id="impacto-estricto-de-fronteras-en-variables-discretas">4.1.2.
+Impacto estricto de fronteras en variables discretas</h4>
+<p>Cuando <span class="math inline">X</span> es discreta, los extremos
+<span class="math inline">a</span> y <span class="math inline">b</span>
+pueden concentrar masa puntual positiva (<span
+class="math inline">p_X(a) &gt; 0</span>, <span
+class="math inline">p_X(b) &gt; 0</span>). Restar <span
+class="math inline">F_X(a)</span> elimina toda la masa acumulada hasta
+<span class="math inline">a</span> <em>inclusive</em>; por lo tanto, si
+se desea incluir el extremo inferior <span class="math inline">a</span>
+o excluir el extremo superior <span class="math inline">b</span>, es
+obligatorio realizar ajustes puntuales:</p>
+<ul>
+<li><strong>Intervalo semiabierto estándar <span class="math inline">(a,
+b]</span>:</strong> <span class="math inline">\mathbb{P}(a &lt; X \le b)
+= F_X(b) - F_X(a)</span></li>
+<li><strong>Intervalo cerrado <span class="math inline">[a,
+b]</span>:</strong> <span class="math inline">\mathbb{P}(a \le X \le b)
+= F_X(b) - F_X(a) + p_X(a)</span></li>
+<li><strong>Intervalo abierto <span class="math inline">(a,
+b)</span>:</strong> <span class="math inline">\mathbb{P}(a &lt; X &lt;
+b) = F_X(b) - F_X(a) - p_X(b)</span></li>
+<li><strong>Intervalo semiabierto <span class="math inline">[a,
+b)</span>:</strong> <span class="math inline">\mathbb{P}(a \le X &lt; b)
+= F_X(b) - F_X(a) + p_X(a) - p_X(b)</span></li>
+</ul>
+<p>En particular, cuando el recorrido discreto está formado por números
+enteros (<span class="math inline">a, b \in \mathbb{Z}</span>), el valor
+acumulado justo antes de <span class="math inline">a</span> es <span
+class="math inline">F_X(a - 1)</span>, lo que simplifica las expresiones
+de intervalos cerrados y semiabiertos:</p>
+<p><span class="math display">\mathbb{P}(a &lt; X \le b) = F_X(b) -
+F_X(a), \qquad \mathbb{P}(a \le X \le b) = F_X(b) - F_X(a - 1) \quad
+(\text{para } a, b \in \mathbb{Z})</span></p>
+<h3  id="recuperación-de-la-función-puntual-desde-la-cdf">4.2.
+Recuperación de la Función Puntual desde la CDF</h3>
+<p>Dado que la CDF se construye acumulando la función puntual, aplicar
+el proceso matemático inverso permite recuperar la PMF o la PDF a partir
+de <span class="math inline">F_X(x)</span> sin ambigüedad:</p>
+<h4 id="sustracción-escalonada-en-variables-discretas">4.2.1.
+Sustracción escalonada en variables discretas</h4>
+<p>La probabilidad puntual en un valor <span
+class="math inline">x</span> corresponde exactamente a la altura del
+salto vertical que experimenta la CDF en dicho punto, es decir, la
+diferencia entre el valor de la función en <span
+class="math inline">x</span> y su límite por la izquierda <span
+class="math inline">F_X(x^-)</span>. Si el recorrido es entero (<span
+class="math inline">x \in \mathbb{Z}</span>), el peldaño inmediatamente
+anterior se evalúa en <span class="math inline">x - 1</span>:</p>
+<p><span class="math display">p_X(x) = \mathbb{P}(X = x) = F_X(x) -
+F_X(x^-) = F_X(x) - F_X(x - 1) \quad (\text{para } x \in
+\mathbb{Z})</span></p>
+<h4 id="diferenciación-analítica-en-variables-continuas">4.2.2.
+Diferenciación analítica en variables continuas</h4>
+<p>Por el Teorema Fundamental del Cálculo Integral, la operación inversa
+de la integral definida es la derivada respecto al límite superior de
+integración. En todo punto <span class="math inline">x</span> donde
+<span class="math inline">F_X(x)</span> sea derivable, la función de
+densidad se recupera diferenciando directamente la acumulada:</p>
+<p><span class="math display">F_X(x) = \int_{-\infty}^{x} f_X(t) \, dt
+\iff f_X(x) = \frac{dF_X(x)}{dx} = F_X&#39;(x)</span></p>
+<h2  id="ejercicios-prácticos-resueltos">5. Ejercicios Prácticos
+Resueltos</h2>
+<h3 
+id="verificación-acumulación-y-cálculo-de-intervalos-en-una-variable-continua">5.1.
+Verificación, Acumulación y Cálculo de Intervalos en una Variable
+Continua</h3>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 6:</strong> Verificación y Acumulación en
+Tiempo de Resolución de una Prueba</span>
+  </div>
+  <div class="callout-content">
+<p>El tiempo <span class="math inline">X</span> (medido en horas) que
+tarda un estudiante en completar un examen escrito está modelado por la
+siguiente función de densidad de probabilidad: <span
+class="math display">f_X(x) = \begin{cases} c\,x(2 - x) &amp; \text{si }
+0 \le x \le 2 \\ 0 &amp; \text{en otro caso} \end{cases}</span></p>
+<ol type="1">
+<li>Calcule analíticamente el valor de la constante de normalización
+<span class="math inline">c</span> para que <span
+class="math inline">f_X(x)</span> sea una PDF válida.</li>
+<li>Deduzca la expresión analítica por tramos de la Función de
+Distribución Acumulada <span class="math inline">F_X(x)</span> para todo
+<span class="math inline">x \in \mathbb{R}</span>.</li>
+<li>Determine la probabilidad <span class="math inline">\mathbb{P}(0.5
+\le X \le 1.5)</span> de que el estudiante termine el examen entre media
+hora y hora y media.</li>
+</ol>
+  </div>
+</div>
+<p>En este ejercicio analizamos una variable aleatoria continua acotada
+sobre el intervalo temporal <span class="math inline">[0, 2]\text{
+h}</span>, cuya curva de densidad adopta una forma parabólica invertida
+que se anula en los extremos y alcanza su máximo en el punto medio <span
+class="math inline">x = 1</span>. Lo que se busca es garantizar primero
+que la función cumpla el axioma de área total unitaria determinando el
+factor de escala <span class="math inline">c</span>.</p>
+<p>A partir de la densidad normalizada, se pide construir la Función de
+Distribución Acumulada <span class="math inline">F_X(x)</span> mediante
+integración definida por tramos sobre toda la recta real, para
+finalmente utilizar dicha función acumulada en el cálculo directo de la
+probabilidad dentro de un subintervalo interior sin tener que repetir el
+proceso de integración.</p>
+<figure class="article-figure">
+<img src="/images/notes/PROBA 3-1 Variables Aleatorias - Comparación de Distribución Parabólica Contínua.webp" alt="Comparación de Distribución Parabólica Contínua" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+Comparación de Distribución Parabólica Contínua
+</figcaption>
+</figure>
+<ol type="1">
+<li>Aplicamos la condición de normalización <span
+class="math inline">\int_{-\infty}^{+\infty} f_X(x)\,dx = 1</span> sobre
+el soporte activo <span class="math inline">[0, 2]</span> y despejamos
+la constante <span class="math inline">c</span>, verificando además que
+<span class="math inline">c &gt; 0</span> garantiza <span
+class="math inline">f_X(x) \ge 0</span> en todo <span
+class="math inline">[0, 2]</span>.</li>
+</ol>
+<p><span class="math display">\int_{0}^{2} c\,x(2 - x) \, dx = c
+\int_{0}^{2} (2x - x^2) \, dx = c \left[ x^2 - \frac{x^3}{3}
+\right]_{0}^{2} = c \left( 4 - \frac{8}{3} \right) = \frac{4}{3}c = 1
+\implies c = \frac{3}{4}</span></p>
+<ol start="2" type="1">
+<li>Para deducir la CDF <span class="math inline">F_X(x) =
+\int_{-\infty}^x f_X(t)\,dt</span> en el tramo central <span
+class="math inline">0 \le x \le 2</span>, integramos la densidad
+normalizada <span class="math inline">f_X(t) = \frac{3}{4}(2t -
+t^2)</span> desde el límite inferior del soporte <span
+class="math inline">0</span> hasta un umbral genérico <span
+class="math inline">x</span>.</li>
+</ol>
+<p><span class="math display">F_X(x) = \int_{0}^{x} \frac{3}{4}(2t -
+t^2) \, dt = \frac{3}{4} \left[ t^2 - \frac{t^3}{3} \right]_{0}^{x} =
+\frac{3}{4}x^2 - \frac{1}{4}x^3 = \frac{x^2(3 - x)}{4}</span></p>
+<ol start="3" type="1">
+<li>Consolidamos la expresión por tramos de <span
+class="math inline">F_X(x)</span> para todo <span class="math inline">x
+\in \mathbb{R}</span>, asignando <span class="math inline">0</span>
+antes del inicio del soporte (<span class="math inline">x &lt; 0</span>)
+y <span class="math inline">1</span> una vez rebasado el límite superior
+(<span class="math inline">x &gt; 2</span>), comprobando su continuidad
+en <span class="math inline">F_X(0) = 0</span> y <span
+class="math inline">F_X(2) = 1</span>.</li>
+</ol>
+<p><span class="math display">F_X(x) = \begin{cases} 0 &amp; \text{si }
+x &lt; 0 \\[4pt] \dfrac{x^2(3 - x)}{4} &amp; \text{si } 0 \le x \le 2
+\\[6pt] 1 &amp; \text{si } x &gt; 2 \end{cases}</span></p>
+<ol start="4" type="1">
+<li>Evaluamos la probabilidad <span class="math inline">\mathbb{P}(0.5
+\le X \le 1.5)</span> aplicando la propiedad de intervalos continuos
+<span class="math inline">\mathbb{P}(a \le X \le b) = F_X(b) -
+F_X(a)</span> mediante fracciones exactas.</li>
+</ol>
+<p><span class="math display">F_X(1.5) = F_X\left(\frac{3}{2}\right) =
+\frac{\left(\frac{3}{2}\right)^2 \left(3 - \frac{3}{2}\right)}{4} =
+\frac{\frac{9}{4} \cdot \frac{3}{2}}{4} = \frac{27}{32}</span> <span
+class="math display">F_X(0.5) = F_X\left(\frac{1}{2}\right) =
+\frac{\left(\frac{1}{2}\right)^2 \left(3 - \frac{1}{2}\right)}{4} =
+\frac{\frac{1}{4} \cdot \frac{5}{2}}{4} = \frac{5}{32}</span></p>
+<p><span class="math display">\mathbb{P}(0.5 \le X \le 1.5) = F_X(1.5) -
+F_X(0.5) = \frac{27}{32} - \frac{5}{32} = \frac{22}{32} = \frac{11}{16}
+= 0.6875</span></p>
+<h3 
+id="reconstrucción-de-la-pmf-y-contraste-de-intervalos-en-una-fda-escalonada">5.2.
+Reconstrucción de la PMF y Contraste de Intervalos en una FDA
+Escalonada</h3>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 7:</strong> Reconstrucción de Función de
+Masa y Cálculo de Intervalos Discretos</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">X</span> una variable aleatoria
+discreta que representa el número de llamadas de emergencia recibidas en
+una estación de bomberos durante una guardia nocturna, cuya Función de
+Distribución Acumulada está definida por la siguiente función
+escalonada:</p>
+<p><span class="math display">F_X(x) = \begin{cases} 0 &amp; \text{si }
+x &lt; 0 \\ 0.10 &amp; \text{si } 0 \le x &lt; 1 \\ 0.35 &amp; \text{si
+} 1 \le x &lt; 2 \\ 0.70 &amp; \text{si } 2 \le x &lt; 3 \\ 0.90 &amp;
+\text{si } 3 \le x &lt; 4 \\ 1.00 &amp; \text{si } x \ge 4
+\end{cases}</span></p>
+<ol type="1">
+<li>Reconstruya la Función de Masa de Probabilidad (PMF) puntual <span
+class="math inline">p_X(x)</span> para todo <span class="math inline">x
+\in \mathbb{R}</span>.</li>
+<li>Calcule la probabilidad <span class="math inline">\mathbb{P}(1 &lt;
+X \le 3)</span> y compárela con <span class="math inline">\mathbb{P}(1
+\le X \le 3)</span>, explicando la diferencia entre ambos
+resultados.</li>
+</ol>
+  </div>
+</div>
+<p>En este caso práctico disponemos únicamente de la función acumulada
+escalonada de una variable discreta con recorrido entero <span
+class="math inline">\mathbb{R}_X = \{0, 1, 2, 3, 4\}</span>. La
+finalidad del ejercicio es aplicar el procedimiento de inversión
+discreta para extraer la masa de probabilidad concentrada en cada punto
+aislado a partir de la magnitud de los saltos verticales de <span
+class="math inline">F_X(x)</span>.</p>
+<p>Posteriormente, se busca demostrar por qué los signos de desigualdad
+estricta o no estricta alteran de manera significativa el resultado en
+variables discretas, contrastando la evaluación de un intervalo
+semiabierto frente a un intervalo cerrado sobre los mismos extremos
+enteros.</p>
+<ol type="1">
+<li>Aplicamos la sustracción escalonada <span class="math inline">p_X(x)
+= F_X(x) - F_X(x - 1)</span> en cada punto entero de discontinuidad
+<span class="math inline">x \in \{0, 1, 2, 3, 4\}</span> para aislar el
+tamaño de cada salto vertical, y verificamos que las masas obtenidas
+suman exactamente <span class="math inline">1</span>.</li>
+</ol>
+<p><span class="math display">p_X(0) = F_X(0) - F_X(-1) = 0.10 - 0 =
+0.10</span> <span class="math display">p_X(1) = F_X(1) - F_X(0) = 0.35 -
+0.10 = 0.25</span> <span class="math display">p_X(2) = F_X(2) - F_X(1) =
+0.70 - 0.35 = 0.35</span> <span class="math display">p_X(3) = F_X(3) -
+F_X(2) = 0.90 - 0.70 = 0.20</span> <span class="math display">p_X(4) =
+F_X(4) - F_X(3) = 1.00 - 0.90 = 0.10</span></p>
+<ol start="2" type="1">
+<li>Escribimos la expresión formal por partes de la Función de Masa de
+Probabilidad <span class="math inline">p_X(x)</span> para todo <span
+class="math inline">x \in \mathbb{R}</span>.</li>
+</ol>
+<p><span class="math display">p_X(x) = \begin{cases} 0.10 &amp; \text{si
+} x = 0 \\ 0.25 &amp; \text{si } x = 1 \\ 0.35 &amp; \text{si } x = 2 \\
+0.20 &amp; \text{si } x = 3 \\ 0.10 &amp; \text{si } x = 4 \\ 0 &amp;
+\text{en otro caso} \end{cases}</span></p>
+<ol start="3" type="1">
+<li>Calculamos <span class="math inline">\mathbb{P}(1 &lt; X \le
+3)</span> aplicando directamente la diferencia <span
+class="math inline">F_X(3) - F_X(1)</span>, dado que el signo estricto
+en <span class="math inline">1 &lt; X</span> excluye la masa puntual de
+<span class="math inline">X = 1</span> (equivalente a sumar <span
+class="math inline">p_X(2) + p_X(3)</span>).</li>
+</ol>
+<p><span class="math display">\mathbb{P}(1 &lt; X \le 3) = F_X(3) -
+F_X(1) = 0.90 - 0.35 = 0.55</span></p>
+<ol start="4" type="1">
+<li>Calculamos <span class="math inline">\mathbb{P}(1 \le X \le
+3)</span> incorporando el extremo inferior <span class="math inline">x =
+1</span> mediante la relación <span class="math inline">F_X(3) - F_X(1 -
+1) = F_X(3) - F_X(0) = F_X(3) - F_X(1) + p_X(1)</span>, comprobando que
+ambos resultados difieren exactamente en la masa puntual <span
+class="math inline">p_X(1) = 0.25</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(1 \le X \le 3) = F_X(3) -
+F_X(0) = 0.90 - 0.10 = 0.80</span></p>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Meyer, Paul L.</strong> <em>Probabilidad y Aplicaciones
+Estadísticas</em> (Edición revisada). Addison-Wesley
+Iberoamericana.</p></li>
+<li><p><strong>Feller, William.</strong> <em>An Introduction to
+Probability Theory and Its Applications</em>, Vol. I (3.ª ed.). John
+Wiley &amp; Sons, Inc., Nueva York, 1968. Capítulos 1, 2 y 3.</p></li>
+<li><p><strong>Riordan, John.</strong> <em>An Introduction to
+Combinatorial Analysis</em>. Dover Publications, Mineola, Nueva York,
+2002.</p></li>
+<li><p><strong>Parzen, Emanuel.</strong> <em>Modern Probability Theory
+and Its Applications</em>. John Wiley &amp; Sons, Inc., Nueva York,
+1960.</p></li>
+<li><p><strong>Lipschutz, Seymour.</strong> <em>Probabilidad</em>.
+McGraw-Hill, México, 1970.</p></li>
+<li><p><strong>Universidad Central de Venezuela (UCV), Facultad de
+Ciencias, Escuela de Computación.</strong> <em>Probabilidad y
+Estadística</em>. Caracas, Venezuela, 2023.</p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ley de Probabilidad Total y Teorema de Bayes | Druxorey</title>
+  <meta name="description" content="La Ley de Probabilidad Total permite calcular la probabilidad global de un evento complejo fragmentando el espacio muestral en una partición exhaustiva de escenarios disjuntos. Complementariamente, el Teorema de Bayes facilita la inferencia retrospectiva para actualizar creencias iniciales ante nueva evidencia empírica, fundando la base matemática de los clasificadores probabilísticos y modelos de aprendizaje automatizado como Naïve Bayes.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <!-- KaTeX CSS para renderizado tipográfico idéntico a LaTeX / Obsidian -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script type="module" crossorigin src="/assets/main-Dehq_9UD.js"></script>
+  <script type="module" crossorigin src="/assets/main-BfJ2_Rrr.js"></script>
+  <script type="module" crossorigin src="/assets/article-C9gaHNST.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-u8MMlYs2.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container-article">
+      <a href="/index.html" class="nav-brand" id="navBrandLink">
+        <img src="/images/logo.svg" alt="Druxorey Logo" class="nav-logo-img">
+        <span>druxorey</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/index.html" class="nav-link">Sobre mí</a></li>
+          <li><a href="/projects.html" class="nav-link">Proyectos</a></li>
+          <li><a href="/publications.html" class="nav-link">Publicaciones</a></li>
+          <li><a href="/notes.html" class="nav-link active">Apuntes</a></li>
+          <li><a href="/contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button id="navToggleBtn" class="nav-toggle-btn" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="/index.html" class="nav-link">Sobre mí</a>
+      <a href="/projects.html" class="nav-link">Proyectos</a>
+      <a href="/publications.html" class="nav-link">Publicaciones</a>
+      <a href="/notes.html" class="nav-link active">Apuntes</a>
+      <a href="/contact.html" class="nav-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Main Note Layout Container -->
+  <main class="main-content">
+    <div class="container-article">
+
+      <div class="article-back-nav">
+        <a href="/notes.html" class="article-back-link">
+          ← Volver al catálogo de apuntes
+        </a>
+      </div>
+
+      <!-- 2-Column Grid (Sticky TOC + Note Main) -->
+      <div class="article-grid">
+
+        <!-- Left Column: Sticky Table of Contents -->
+        <aside class="toc-sidebar" aria-label="Índice de contenido">
+          <div class="toc-title">En esta página</div>
+          <ul class="toc-list" id="tocList">
+            <li class="toc-item"><a class="toc-link" href="#particiones-del-espacio-muestral">1. Particiones del Espacio
+Muestral</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#concepto-axiomático-de-partición-exhaustiva">1.1. Concepto
+Axiomático de Partición Exhaustiva</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#la-ley-de-probabilidad-total">1.2. La Ley de Probabilidad
+Total</a></li>
+<li class="toc-item"><a class="toc-link" href="#teorema-de-bayes">2. Teorema de Bayes</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#inversión-de-probabilidades-condicionales">2.1. Inversión de
+Probabilidades Condicionales</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#impacto-de-la-baja-prevalencia">2.2. Impacto de la Baja
+Prevalencia</a></li>
+<li class="toc-item"><a class="toc-link" href="#clasificación-bayesiana-con-múltiples-evidencias-modelo-naïve-bayes">3.
+Clasificación Bayesiana con Múltiples Evidencias (Modelo Naïve
+Bayes)</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#asunción-de-independencia-condicional-y-razón-de-verosimilitud">3.1.
+Asunción de Independencia Condicional y Razón de Verosimilitud</a></li>
+<li class="toc-item toc-sub"><a class="toc-link" href="#ventajas-y-limitaciones-del-supuesto-de-independencia-condicional">3.2.
+Ventajas y Limitaciones del Supuesto de Independencia Condicional</a></li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: Note Main Content -->
+        <article class="article-main">
+          <div class="article-kicker">Apuntes · Probabilidad y Estadistica</div>
+          <h1 class="article-title">Ley de Probabilidad Total y Teorema de Bayes</h1>
+
+          <div class="article-meta">
+            <span class="note-meta-badge">Nota 2.3</span>
+            <span>·</span>
+            <span>Por Guillermo Galavís</span>
+          </div>
+
+          <div class="article-tags-row">
+            
+          </div>
+
+          <!-- Rendered Markdown Body -->
+          <div class="article-content">
+            <div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+    <span class="callout-title-text">SÍNTESIS</span>
+  </div>
+  <div class="callout-content">
+<p>La <strong>Ley de Probabilidad Total</strong> permite calcular la
+probabilidad global de un evento complejo fragmentando el espacio
+muestral en una <strong>partición exhaustiva</strong> de escenarios
+disjuntos. Complementariamente, el <strong>Teorema de
+Bayes</strong> facilita la inferencia retrospectiva para actualizar
+creencias iniciales ante nueva evidencia empírica, fundando la base
+matemática de los <strong>clasificadores probabilísticos</strong> y
+modelos de aprendizaje automatizado como <strong>Naïve
+Bayes</strong>.</p>
+  </div>
+</div>
+<p>En múltiples situaciones cotidianas la causa real de un fenómeno
+permanece oculta en el momento en que ocurre. Un médico no observa
+directamente si un paciente porta un virus específico, sino síntomas
+visibles como fiebre, es decir que existe una distancia entre las causas
+ocultas que originan el suceso y los efectos superficiales que logramos
+observar. Resolver este problema plantea dos retos complementarios:</p>
+<ol type="1">
+<li><p>Cuando un evento observable puede ocurrir por distintas vías con
+diferentes frecuencias, calcular su probabilidad global de forma directa
+resulta difícil si no se divide el conjunto de posibilidades en
+escenarios aislados y manejables.</p></li>
+<li><p>Una vez que se observa un síntoma concreto, hace falta recorrer
+el razonamiento en sentido inverso (desde el efecto observado hacia la
+causa probable) sin dejarse engañar por falsas alarmas cuando el evento
+buscado es poco frecuente.</p></li>
+</ol>
+<h2  id="particiones-del-espacio-muestral">1. Particiones del Espacio
+Muestral</h2>
+<p>El cálculo directo de la probabilidad <span
+class="math inline">\mathbb{P}(A)</span> de un evento complejo <span
+class="math inline">A</span> suele complicarse cuando el fenómeno que lo
+produce opera bajo distintos escenarios o grupos poblacionales. La
+estrategia matemática para simplificarlo consiste en fragmentar el <a
+href="#1-2-el-espacio-muestral-y-los-eventos">espacio muestral</a> <span
+class="math inline">\Omega</span> en subconjuntos que no se solapen
+entre sí y que cubran todas las alternativas posibles sin dejar
+huecos.</p>
+<h3  id="concepto-axiomático-de-partición-exhaustiva">1.1. Concepto
+Axiomático de Partición Exhaustiva</h3>
+<p>Para que dividir un problema en subcasos no introduzca errores de
+doble conteo ni deje por fuera escenarios válidos, los subconjuntos
+empleados deben satisfacer tres condiciones conjuntistas estrictas.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 1:</strong> Partición del Espacio
+Muestral</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">(\Omega, \mathcal{F},
+\mathbb{P})</span> un espacio de probabilidad. Una colección finita (o
+numerable) de eventos <span class="math inline">\{B_1, B_2, \dots, B_n\}
+\subseteq \mathcal{F}</span> constituye una <strong>partición
+exhaustiva</strong> del espacio muestral <span
+class="math inline">\Omega</span> si cumple simultáneamente:</p>
+<ol type="1">
+<li><strong>Exclusión mutua dos a dos:</strong> <span
+class="math inline">B_i \cap B_j = \emptyset \quad \forall i \neq
+j</span>.</li>
+<li><strong>Exhaustividad colectiva:</strong> <span
+class="math inline">\bigcup_{i=1}^n B_i = \Omega</span>.</li>
+<li><strong>Probabilidad positiva:</strong> <span
+class="math inline">\mathbb{P}(B_i) &gt; 0 \quad \forall i \in \{1, 2,
+\dots, n\}</span>.</li>
+</ol>
+  </div>
+</div>
+<p>Una partición equivale a cortar un pastel completo en rebanadas
+limpias sin que sobre ni una migaja y sin que ningún trozo quede montado
+encima de otro. Al realizar el experimento, cualquier resultado
+elemental <span class="math inline">\omega \in \Omega</span> caerá
+obligatoriamente dentro de una (y exactamente una) de las regiones <span
+class="math inline">B_i</span>.</p>
+<p>La tercera condición (<span class="math inline">\mathbb{P}(B_i) &gt;
+0</span>) asegura que cada escenario tenga una probabilidad real de
+ocurrir. Este requisito evita divisiones entre cero cuando más adelante
+se calculen probabilidades condicionadas sobre cada subconjunto <span
+class="math inline">B_i</span>.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 1:</strong> Validación de una Partición
+por Turnos Académicos</span>
+  </div>
+  <div class="callout-content">
+<p>En una facultad universitaria, cada estudiante está inscrito
+exclusivamente en uno de tres turnos de estudio: mañana (<span
+class="math inline">M</span>), tarde (<span
+class="math inline">T</span>) o noche (<span
+class="math inline">N</span>). Los registros de matrícula indican que el
+<span class="math inline">55\%</span> de los alumnos estudia en la
+mañana, el <span class="math inline">30\%</span> en la tarde y el <span
+class="math inline">15\%</span> en la noche. Verifique si la colección
+<span class="math inline">\{M, T, N\}</span> constituye una partición
+válida del espacio muestral <span class="math inline">\Omega</span>.</p>
+  </div>
+</div>
+<p>En este ejercicio analizamos la clasificación de una población
+estudiantil en tres categorías horarias. Lo que se busca es comprobar de
+forma ordenada las tres condiciones formales que definen una partición
+exhaustiva del espacio muestral antes de utilizar estas categorías para
+cálculos de probabilidad posteriores.</p>
+<ol type="1">
+<li>Verificamos la exclusión mutua comprobando que ningún estudiante
+puede pertenecer a dos turnos simultáneamente, por lo que las
+intersecciones por pares son vacías.</li>
+</ol>
+<p><span class="math display">M \cap T = \emptyset, \qquad M \cap N =
+\emptyset, \qquad T \cap N = \emptyset</span></p>
+<ol start="2" type="1">
+<li>Comprobamos la exhaustividad colectiva sumando las proporciones de
+los tres turnos para confirmar que cubren el <span
+class="math inline">100\%</span> de la población estudiantil (<span
+class="math inline">\mathbb{P}(\Omega) = 1</span>).</li>
+</ol>
+<p><span class="math display">\mathbb{P}(M \cup T \cup N) =
+\mathbb{P}(M) + \mathbb{P}(T) + \mathbb{P}(N) = 0.55 + 0.30 + 0.15 =
+1.00 = \mathbb{P}(\Omega)</span></p>
+<ol start="3" type="1">
+<li>Verificamos que cada turno posee una probabilidad estrictamente
+positiva, validando así las tres condiciones de la definición
+formal.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(M) = 0.55 &gt; 0, \qquad
+\mathbb{P}(T) = 0.30 &gt; 0, \qquad \mathbb{P}(N) = 0.15 &gt;
+0</span></p>
+<h3  id="la-ley-de-probabilidad-total">1.2. La Ley de Probabilidad
+Total</h3>
+<p>Una vez establecida una partición <span class="math inline">\{B_1,
+B_2, \dots, B_n\}</span> sobre <span class="math inline">\Omega</span>,
+cualquier evento transversal <span class="math inline">A \subseteq
+\Omega</span> queda dividido automáticamente en <span
+class="math inline">n</span> fragmentos disjuntos <span
+class="math inline">A \cap B_i</span>. Si conocemos qué tan probable es
+cada escenario <span class="math inline">B_i</span> y cuál es la <a
+href="#1-probabilidad-condicional-y-reduccion-del-espacio-muestral">probabilidad
+condicional</a> de <span class="math inline">A</span> dentro de cada
+escenario <span class="math inline">\mathbb{P}(A \mid B_i)</span>,
+podemos reconstruir la probabilidad global <span
+class="math inline">\mathbb{P}(A)</span> sumando los aportes ponderados
+de todas las ramas.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 1:</strong> Ley de Probabilidad Total</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">\{B_1, B_2, \dots, B_n\}</span> una
+partición exhaustiva del espacio muestral <span
+class="math inline">\Omega</span> con <span
+class="math inline">\mathbb{P}(B_i) &gt; 0</span> para todo <span
+class="math inline">i \in \{1, \dots, n\}</span>. Para cualquier evento
+<span class="math inline">A \in \mathcal{F}</span>, su probabilidad
+total está dada por la suma ponderada: <span
+class="math display">\mathbb{P}(A) = \sum_{i=1}^n \mathbb{P}(A \cap B_i)
+= \sum_{i=1}^n \mathbb{P}(A \mid B_i)\,\mathbb{P}(B_i)</span></p>
+  </div>
+</div>
+<p>La Ley de Probabilidad Total funciona como un promedio ponderado de
+escenarios. Imagina una fábrica con tres máquinas de distinta capacidad:
+la probabilidad global de que un artículo elegido al azar del almacén
+salga defectuoso no es el promedio simple de los porcentajes de fallo de
+cada máquina, sino la suma de la tasa de fallo de cada máquina
+multiplicada por la fracción de artículos que produce cada una.</p>
+<p>Para demostrar formalmente el Teorema, combinamos la propiedad
+distributiva de la teoría de conjuntos con los <a
+href="#2-1-los-tres-axiomas-fundamentales">axiomas de Kolmogórov</a> y
+la <a href="#3-ley-multiplicativa-de-la-probabilidad">ley
+multiplicativa</a>:</p>
+<ol type="1">
+<li><strong>Identidad de intersección universal:</strong> Dado que todo
+evento <span class="math inline">A</span> es subconjunto del espacio
+muestral <span class="math inline">\Omega</span> (<span
+class="math inline">A \subseteq \Omega</span>), intersectar <span
+class="math inline">A</span> con el universo deja al conjunto
+inalterado:</li>
+</ol>
+<p><span class="math display">A = A \cap \Omega</span></p>
+<ol start="2" type="1">
+<li><strong>Sustitución por la partición exhaustiva:</strong>
+Reemplazamos <span class="math inline">\Omega</span> por la unión
+disjunta de los <span class="math inline">n</span> eventos que conforman
+la partición:</li>
+</ol>
+<p><span class="math display">A = A \cap \left(\bigcup_{i=1}^n
+B_i\right)</span></p>
+<ol start="3" type="1">
+<li><strong>Propiedad distributiva de la intersección sobre la
+unión:</strong> Distribuimos la intersección con <span
+class="math inline">A</span> a través de cada término de la unión:</li>
+</ol>
+<p><span class="math display">A = \bigcup_{i=1}^n (A \cap
+B_i)</span></p>
+<ol start="4" type="1">
+<li><strong>Aditividad finita de Kolmogórov:</strong> Como los conjuntos
+originales <span class="math inline">B_i</span> son mutuamente
+excluyentes dos a dos (<span class="math inline">B_i \cap B_j =
+\emptyset</span> para <span class="math inline">i \neq j</span>), sus
+fragmentos recortados también son disjuntos: <span
+class="math inline">(A \cap B_i) \cap (A \cap B_j) = A \cap (B_i \cap
+B_j) = A \cap \emptyset = \emptyset</span>. Aplicando el tercer axioma
+de Kolmogórov:</li>
+</ol>
+<p><span class="math display">\mathbb{P}(A) =
+\mathbb{P}\left(\bigcup_{i=1}^n (A \cap B_i)\right) = \sum_{i=1}^n
+\mathbb{P}(A \cap B_i)</span></p>
+<ol start="5" type="1">
+<li><strong>Expansión mediante la ley multiplicativa:</strong> Dado que
+<span class="math inline">\mathbb{P}(B_i) &gt; 0</span> para todo <span
+class="math inline">i</span>, sustituimos cada intersección <span
+class="math inline">\mathbb{P}(A \cap B_i) = \mathbb{P}(A \mid
+B_i)\,\mathbb{P}(B_i)</span>:</li>
+</ol>
+<p><span class="math display">\mathbb{P}(A) = \sum_{i=1}^n \mathbb{P}(A
+\mid B_i)\,\mathbb{P}(B_i) \quad \blacksquare</span></p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 2:</strong> Proporción de Estudiantes
+Fumadores en una Universidad</span>
+  </div>
+  <div class="callout-content">
+<p>De todos los estudiantes de una universidad, el <span
+class="math inline">70\%</span> son mujeres y el <span
+class="math inline">30\%</span> son hombres. Suponga que el <span
+class="math inline">20\%</span> de las mujeres y el <span
+class="math inline">25\%</span> de los hombres fuman cigarrillos. Si se
+selecciona un estudiante al azar, calcule la probabilidad de que
+sea:</p>
+<ol type="1">
+<li>Una mujer fumadora.</li>
+<li>Un hombre fumador.</li>
+<li>Una persona fumadora (sin importar el sexo).</li>
+</ol>
+  </div>
+</div>
+<p>En este ejercicio partimos de una población universitaria dividida
+naturalmente en dos grupos mutuamente excluyentes y exhaustivos (mujeres
+y hombres), donde cada grupo presenta un hábito de consumo distinto. Lo
+que se busca es calcular primero las probabilidades conjuntas de cada
+subgrupo mediante la ley multiplicativa y luego reunir ambos aportes
+usando la Ley de Probabilidad Total para hallar la proporción global de
+fumadores.</p>
+<ol type="1">
+<li>Definimos los eventos <span class="math inline">M</span> («el
+estudiante es mujer»), <span class="math inline">H</span> («el
+estudiante es hombre») y <span class="math inline">F</span> («el
+estudiante fuma cigarrillos»), y expresamos los porcentajes del
+enunciado como probabilidades marginales y condicionales.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(M) = 0.70, \quad \mathbb{P}(H)
+= 0.30, \qquad \mathbb{P}(F \mid M) = 0.20, \quad \mathbb{P}(F \mid H) =
+0.25</span></p>
+<ol start="2" type="1">
+<li>Calculamos la probabilidad de seleccionar una mujer fumadora (<span
+class="math inline">M \cap F</span>) multiplicando la proporción de
+mujeres en la universidad por la tasa condicional de fumadoras dentro de
+ese grupo.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(M \cap F) = \mathbb{P}(F \mid
+M)\,\mathbb{P}(M) = (0.20)(0.70) = 0.14 \quad (14\%)</span></p>
+<ol start="3" type="1">
+<li>Calculamos la probabilidad de seleccionar un hombre fumador (<span
+class="math inline">H \cap F</span>) aplicando el mismo producto sobre
+la rama correspondiente a los hombres.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(H \cap F) = \mathbb{P}(F \mid
+H)\,\mathbb{P}(H) = (0.25)(0.30) = 0.075 \quad (7.5\%)</span></p>
+<ol start="4" type="1">
+<li>Aplicamos la Ley de Probabilidad Total sumando las dos
+intersecciones disjuntas para obtener la probabilidad global de que el
+estudiante elegido al azar sea fumador.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(F) = \mathbb{P}(F \mid
+M)\,\mathbb{P}(M) + \mathbb{P}(F \mid H)\,\mathbb{P}(H) = 0.14 + 0.075 =
+0.215 \quad (21.5\%)</span></p>
+<h2  id="teorema-de-bayes">2. Teorema de Bayes</h2>
+<p>La Ley de Probabilidad Total proyecta el comportamiento de un
+experimento hacia adelante: conocidas las causas <span
+class="math inline">B_i</span> y sus probabilidades de producir el
+efecto <span class="math inline">A</span>, determina la frecuencia
+global del efecto. Sin embargo, en la práctica el problema suele
+plantearse al revés: el efecto <span class="math inline">A</span> ya
+ocurrió y fue observado, y lo que necesitamos averiguar es cuál de las
+causas <span class="math inline">B_k</span> lo produjo.</p>
+<h3  id="inversión-de-probabilidades-condicionales">2.1. Inversión de
+Probabilidades Condicionales</h3>
+<p>Para invertir el sentido del condicionamiento (pasando de <span
+class="math inline">\mathbb{P}(A \mid B_k)</span> a <span
+class="math inline">\mathbb{P}(B_k \mid A)</span>) combinamos la
+definición de probabilidad condicional con la Ley de Probabilidad
+Total.</p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Teorema 2:</strong> Teorema de Bayes (Forma
+Generalizada)</span>
+  </div>
+  <div class="callout-content">
+<p>Sea <span class="math inline">\{B_1, B_2, \dots, B_n\}</span> una
+partición exhaustiva del espacio muestral <span
+class="math inline">\Omega</span> con <span
+class="math inline">\mathbb{P}(B_i) &gt; 0</span> para todo <span
+class="math inline">i \in \{1, \dots, n\}</span>, y sea <span
+class="math inline">A \in \mathcal{F}</span> un evento observable tal
+que <span class="math inline">\mathbb{P}(A) &gt; 0</span>. Para
+cualquier causa específica <span class="math inline">B_k</span> (<span
+class="math inline">1 \le k \le n</span>), la probabilidad condicional
+inversa está dada por:</p>
+<p><span class="math display">\mathbb{P}(B_k \mid A) =
+\frac{\mathbb{P}(A \cap B_k)}{\mathbb{P}(A)} = \frac{\mathbb{P}(A \mid
+B_k)\,\mathbb{P}(B_k)}{\sum_{i=1}^n \mathbb{P}(A \mid
+B_i)\,\mathbb{P}(B_i)}</span></p>
+  </div>
+</div>
+<p>En el caso particular de dos escenarios donde la partición se reduce
+a una hipótesis <span class="math inline">H</span> y su complemento
+<span class="math inline">H^c</span> (<span class="math inline">\Omega =
+H \cup H^c</span>), la expresión toma su forma binaria:</p>
+<p><span class="math display">\mathbb{P}(H \mid A) = \frac{\mathbb{P}(A
+\mid H)\,\mathbb{P}(H)}{\mathbb{P}(A \mid H)\,\mathbb{P}(H) +
+\mathbb{P}(A \mid H^c)\,\mathbb{P}(H^c)}</span></p>
+<p>El Teorema de Bayes es una regla matemática para actualizar nuestras
+estimaciones cuando aparece nueva información. Antes de observar ningún
+síntoma, partimos de una estimación inicial llamada probabilidad a
+priori <span class="math inline">\mathbb{P}(B_k)</span>. Cuando ocurre
+la evidencia <span class="math inline">A</span>, cada causa posible
+<span class="math inline">B_i</span> compite por explicar ese resultado
+según su verosimilitud <span class="math inline">\mathbb{P}(A \mid
+B_i)</span> (qué tan probable es ver el síntoma bajo esa causa). El
+numerador <span class="math inline">\mathbb{P}(A \mid
+B_k)\mathbb{P}(B_k)</span> mide el peso conjunto de la causa <span
+class="math inline">k</span> generando el síntoma, mientras que el
+denominador <span class="math inline">\mathbb{P}(A)</span> suma todas
+las maneras posibles en que el síntoma pudo aparecer, entregando la
+probabilidad a posteriori <span class="math inline">\mathbb{P}(B_k \mid
+A)</span>.</p>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 3:</strong> Control de Fecha de Caducidad
+en una Fábrica de Películas</span>
+  </div>
+  <div class="callout-content">
+<p>Cuatro inspectores de una fábrica de películas colocan la fecha de
+caducidad en cada paquete al final de la línea de montaje. Javier, quien
+revisa el <span class="math inline">20\%</span> de los paquetes, omite
+la fecha una vez cada <span class="math inline">200</span> paquetes;
+Alberto, que revisa el <span class="math inline">60\%</span>, la omite
+una vez cada <span class="math inline">100</span> paquetes; Oscar, que
+revisa el <span class="math inline">15\%</span>, la omite una vez cada
+<span class="math inline">90</span> paquetes; y Gustavo, que revisa el
+<span class="math inline">5\%</span>, la omite una vez cada <span
+class="math inline">200</span> paquetes. Si un consumidor se queja de
+que su paquete no muestra la fecha de caducidad, ¿cuál es la
+probabilidad de que haya sido inspeccionado por Javier?</p>
+  </div>
+</div>
+<p>En este ejercicio de control de calidad industrial, la producción
+total se reparte entre cuatro inspectores con diferentes volúmenes de
+trabajo y distintas tasas de error humano. Lo que se busca es recorrer
+el proceso en sentido inverso: dado que se detectó un paquete sin fecha
+de caducidad, aplicaremos primero la Ley de Probabilidad Total para
+hallar la tasa global de omisión y luego el Teorema de Bayes para
+determinar qué proporción de esos fallos corresponde a Javier.</p>
+<ol type="1">
+<li>Definimos los eventos de la partición según el inspector asignado:
+<span class="math inline">J</span> (Javier), <span
+class="math inline">A</span> (Alberto), <span
+class="math inline">O</span> (Oscar) y <span
+class="math inline">G</span> (Gustavo), junto con el evento observado
+<span class="math inline">S</span> («el paquete no tiene fecha de
+caducidad»), verificando que las probabilidades a priori suman <span
+class="math inline">1</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(J) = 0.20, \quad \mathbb{P}(A)
+= 0.60, \quad \mathbb{P}(O) = 0.15, \quad \mathbb{P}(G) =
+0.05</span></p>
+<ol start="2" type="1">
+<li>Traducimos la frecuencia de error de cada inspector en
+probabilidades condicionales <span class="math inline">\mathbb{P}(S \mid
+B_i)</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(S \mid J) = \frac{1}{200},
+\quad \mathbb{P}(S \mid A) = \frac{1}{100}, \quad \mathbb{P}(S \mid O) =
+\frac{1}{90}, \quad \mathbb{P}(S \mid G) = \frac{1}{200}</span></p>
+<ol start="3" type="1">
+<li>Calculamos la probabilidad total <span
+class="math inline">\mathbb{P}(S)</span> de que un paquete salga sin
+fecha de caducidad ponderando el error de cada inspector por su fracción
+de trabajo, expresando las fracciones sobre un denominador común de
+<span class="math inline">12\,000</span> para evitar errores de
+redondeo.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(S) =
+(0.20)\left(\frac{1}{200}\right) + (0.60)\left(\frac{1}{100}\right) +
+(0.15)\left(\frac{1}{90}\right) +
+(0.05)\left(\frac{1}{200}\right)</span></p>
+<p><span class="math display">\mathbb{P}(S) = \frac{1}{1000} +
+\frac{3}{500} + \frac{1}{600} + \frac{1}{4000} = \frac{12 + 72 + 20 +
+3}{12\,000} = \frac{107}{12\,000} \approx 0.008917</span></p>
+<ol start="4" type="1">
+<li>Aplicamos el Teorema de Bayes dividiendo la contribución específica
+de Javier (<span class="math inline">\mathbb{P}(S \mid J)\mathbb{P}(J) =
+\frac{1}{1000} = \frac{12}{12\,000}</span>) entre la probabilidad total
+<span class="math inline">\mathbb{P}(S)</span>, concluyendo que existe
+aproximadamente un <span class="math inline">11.21\%</span> de
+probabilidad de que Javier haya revisado el paquete defectuoso.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(J \mid S) = \frac{\mathbb{P}(S
+\mid J)\,\mathbb{P}(J)}{\mathbb{P}(S)} =
+\frac{\frac{12}{12\,000}}{\frac{107}{12\,000}} = \frac{12}{107} \approx
+0.1121 \quad (11.21\%)</span></p>
+<h3  id="impacto-de-la-baja-prevalencia">2.2. Impacto de la Baja
+Prevalencia</h3>
+<p>Uno de los resultados más sorprendentes del Teorema de Bayes aparece
+cuando se aplican pruebas de diagnóstico masivo (como exámenes médicos
+de detección temprana, controles antidopaje o pruebas detectoras de
+mentiras) sobre grupos donde la condición buscada tiene una prevalencia
+inicial muy baja (<span class="math inline">\mathbb{P}(C) \ll 1</span>).
+Este fenómeno se conoce como la paradoja del falso positivo o «falacia
+de la tasa base».</p>
+<p>Cuando el <span class="math inline">99\%</span> o el <span
+class="math inline">99.9\%</span> de las personas evaluadas son sanas o
+inocentes (<span class="math inline">\mathbb{P}(C^c) \approx 1</span>),
+incluso una tasa de error muy pequeña en personas sanas (<span
+class="math inline">\mathbb{P}(E \mid C^c) = \alpha \ll 1</span>) se
+multiplica por una población enorme en el denominador de Bayes:</p>
+<p><span class="math display">\mathbb{P}(C \mid E) = \frac{\mathbb{P}(E
+\mid C)\,\mathbb{P}(C)}{\mathbb{P}(E \mid C)\,\mathbb{P}(C) +
+\mathbb{P}(E \mid C^c)\,\mathbb{P}(C^c)}</span></p>
+<p>Si la proporción inicial <span
+class="math inline">\mathbb{P}(C)</span> es parecida o menor que la tasa
+de falsos positivos <span class="math inline">\mathbb{P}(E \mid
+C^c)</span>, el segundo término del denominador domina el cociente y
+desploma la probabilidad real <span class="math inline">\mathbb{P}(C
+\mid E)</span>. Por esta razón, cuando una enfermedad afecta apenas a
+<span class="math inline">1</span> de cada <span
+class="math inline">1000</span> personas, incluso una prueba con <span
+class="math inline">99\%</span> de precisión arroja una mayoría de
+falsos positivos, obligando a los médicos a realizar un segundo examen
+confirmatorio antes de iniciar tratamientos agresivos.</p>
+<figure class="article-figure">
+<img src="/images/notes/PROBA 2-3 Ley de Probabilidad Total y Teorema de Bayes - La Paradoja del Falso Positivo de Bayes.webp" alt="La Paradoja del Falso Positivo de Bayes" loading="lazy" class="article-img">
+<figcaption class="article-figcaption">
+La Paradoja del Falso Positivo de Bayes
+</figcaption>
+</figure>
+<p>La siguiente tabla resume el significado de cada componente del
+Teorema de Bayes y su papel en problemas de diagnóstico y control de
+calidad:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th><strong>Componente Bayesiano</strong></th>
+<th><strong>Símbolo / Expresión</strong></th>
+<th><strong>Significado Estadístico</strong></th>
+<th><strong>Rol en Diagnóstico y Control</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Probabilidad a Priori</strong></td>
+<td><span class="math inline">\mathbb{P}(C_i)</span></td>
+<td>Estimación base antes de observar evidencia</td>
+<td>Proporción histórica de enfermos o piezas defectuosas.</td>
+</tr>
+<tr>
+<td><strong>Verosimilitud</strong></td>
+<td><span class="math inline">\mathbb{P}(E \mid C_i)</span></td>
+<td>Probabilidad del síntoma dado el estado</td>
+<td>Sensibilidad de la prueba médica o tasa de error de un
+operario.</td>
+</tr>
+<tr>
+<td><strong>Probabilidad Total (Evidencia)</strong></td>
+<td><span class="math inline">\mathbb{P}(E) = \sum \mathbb{P}(E \mid
+C_j)\mathbb{P}(C_j)</span></td>
+<td>Frecuencia global del síntoma en toda la población</td>
+<td>Proporción total de exámenes positivos o quejas recibidas.</td>
+</tr>
+<tr>
+<td><strong>Probabilidad a Posteriori</strong></td>
+<td><span class="math inline">\mathbb{P}(C_i \mid E)</span></td>
+<td>Probabilidad actualizada tras observar <span
+class="math inline">E</span></td>
+<td>Certeza final de que el paciente esté enfermo tras dar
+positivo.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 4:</strong> Evaluación de Confiabilidad de
+un Suero de la Verdad</span>
+  </div>
+  <div class="callout-content">
+<p>Un suero de la verdad es suministrado a un sospechoso. Se sabe que
+este suero es <span class="math inline">90\%</span> confiable cuando la
+persona es culpable y <span class="math inline">99\%</span> confiable si
+la persona es inocente. Si el sospechoso fue seleccionado de un grupo de
+sujetos de los cuales solo el <span class="math inline">5\%</span> han
+cometido un crimen y el suero indica que es culpable, ¿cuál es la
+probabilidad de que sea inocente?</p>
+  </div>
+</div>
+<p>En este problema se evalúa una prueba forense aplicada sobre un grupo
+donde la gran mayoría de las personas son inocentes. Lo que se busca es
+calcular la probabilidad inversa de que el sospechoso sea inocente a
+pesar de que el suero lo señale como culpable, demostrando cómo una baja
+proporción inicial de culpables genera una fracción significativa de
+falsos positivos.</p>
+<ol type="1">
+<li>Definimos los eventos <span class="math inline">C</span> («la
+persona es culpable»), <span class="math inline">C^c</span> («la persona
+es inocente») y <span class="math inline">P</span> («el suero indica que
+es culpable»), asignando las probabilidades iniciales del grupo.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(C) = 0.05, \qquad
+\mathbb{P}(C^c) = 1 - 0.05 = 0.95</span></p>
+<ol start="2" type="1">
+<li>Traducimos la confiabilidad del suero en probabilidades
+condicionales: si es <span class="math inline">90\%</span> confiable en
+culpables, acierta indicando culpabilidad con probabilidad <span
+class="math inline">0.90</span>; si es <span
+class="math inline">99\%</span> confiable en inocentes, acierta
+indicando inocencia con probabilidad <span
+class="math inline">0.99</span>, por lo que se equivoca señalando
+culpabilidad (falso positivo) con probabilidad <span
+class="math inline">0.01</span>.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(P \mid C) = 0.90, \qquad
+\mathbb{P}(P^c \mid C^c) = 0.99 \implies \mathbb{P}(P \mid C^c) = 1 -
+0.99 = 0.01</span></p>
+<ol start="3" type="1">
+<li>Aplicamos la Ley de Probabilidad Total para calcular la probabilidad
+global <span class="math inline">\mathbb{P}(P)</span> de que el suero
+indique que el sospechoso es culpable.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(P) = \mathbb{P}(P \mid
+C)\,\mathbb{P}(C) + \mathbb{P}(P \mid C^c)\,\mathbb{P}(C^c) =
+(0.90)(0.05) + (0.01)(0.95) = 0.045 + 0.0095 = 0.0545</span></p>
+<ol start="4" type="1">
+<li>Aplicamos el Teorema de Bayes para hallar la probabilidad a
+posteriori <span class="math inline">\mathbb{P}(C^c \mid P)</span> de
+que el sospechoso sea inocente dado el resultado positivo del suero,
+comprobando que casi <span class="math inline">1</span> de cada <span
+class="math inline">6</span> personas señaladas por la prueba (<span
+class="math inline">17.43\%</span>) es realmente inocente.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(C^c \mid P) =
+\frac{\mathbb{P}(P \mid C^c)\,\mathbb{P}(C^c)}{\mathbb{P}(P)} =
+\frac{0.0095}{0.0545} = \frac{19}{109} \approx 0.1743 \quad
+(17.43\%)</span></p>
+<h2 
+id="clasificación-bayesiana-con-múltiples-evidencias-modelo-naïve-bayes">3.
+Clasificación Bayesiana con Múltiples Evidencias (Modelo Naïve
+Bayes)</h2>
+<p>En muchas decisiones reales no contamos con un único síntoma aislado,
+sino con un conjunto simultáneo de <span class="math inline">d</span>
+observaciones o pistas <span class="math inline">E = \{w_1, w_2, \dots,
+w_d\}</span> (por ejemplo, varios síntomas clínicos en un paciente o
+distintas características físicas en una muestra). Evaluar la
+probabilidad de que el caso pertenezca a una categoría <span
+class="math inline">C_k</span> exige extender el Teorema de Bayes para
+combinar todas esas evidencias a la vez.</p>
+<h3 
+id="asunción-de-independencia-condicional-y-razón-de-verosimilitud">3.1.
+Asunción de Independencia Condicional y Razón de Verosimilitud</h3>
+<p>Cuando se observan <span class="math inline">d</span> síntomas
+simultáneamente, aplicar el Teorema de Bayes requiere conocer la
+probabilidad conjunta <span class="math inline">\mathbb{P}(w_1, w_2,
+\dots, w_d \mid C_k)</span>. Sin embargo, estimar directamente todas las
+combinaciones posibles de <span class="math inline">d</span> síntomas a
+partir de registros históricos exige una cantidad gigantesca de casos
+observados, ya que muchas combinaciones particulares nunca habrán
+ocurrido juntas en el pasado.</p>
+<p>Para resolver esta limitación surge el modelo <strong>Naïve
+Bayes</strong> (Bayes Ingenuo), que simplifica el cálculo asumiendo <a
+href="#2-independencia-estadistica">independencia estadística</a>
+condicional entre los síntomas una vez que se conoce la categoría real
+<span class="math inline">C_k</span>:</p>
+<p><span class="math display">\mathbb{P}(w_1, w_2, \dots, w_d \mid C_k)
+= \prod_{j=1}^d \mathbb{P}(w_j \mid C_k)</span></p>
+<div class="callout-box note">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></span>
+    <span class="callout-title-text"><strong>Definición Formal 2:</strong> Clasificador Binario
+Naïve Bayes</span>
+  </div>
+  <div class="callout-content">
+<p>Dadas dos categorías mutuamente excluyentes y exhaustivas <span
+class="math inline">C_1</span> y <span class="math inline">C_2</span> y
+un conjunto de <span class="math inline">d</span> evidencias observadas
+<span class="math inline">w_1, \dots, w_d</span> condicionalmente
+independientes dada cada categoría, la probabilidad a posteriori de
+pertenecer a la categoría <span class="math inline">C_1</span> está dada
+por la razón de verosimilitud:</p>
+<p><span class="math display">r(w_1, \dots, w_d) = \mathbb{P}(C_1 \mid
+w_1, \dots, w_d) = \frac{\mathbb{P}(C_1) \prod_{j=1}^d \mathbb{P}(w_j
+\mid C_1)}{\mathbb{P}(C_1) \prod_{j=1}^d \mathbb{P}(w_j \mid C_1) +
+\mathbb{P}(C_2) \prod_{j=1}^d \mathbb{P}(w_j \mid C_2)}</span></p>
+  </div>
+</div>
+<p>Esta fórmula multiplica la probabilidad inicial de cada categoría por
+las probabilidades individuales de observar cada síntoma dentro de esa
+categoría. De este modo, cada síntoma aporta su propio peso a favor o en
+contra de la hipótesis sin necesidad de haber observado exactamente la
+misma combinación de síntomas en el historial previo.</p>
+<h3 
+id="ventajas-y-limitaciones-del-supuesto-de-independencia-condicional">3.2.
+Ventajas y Limitaciones del Supuesto de Independencia Condicional</h3>
+<p>Utilizar la hipótesis de independencia condicional implica un
+equilibrio claro entre simplicidad de cálculo y realismo del modelo:</p>
+<ul>
+<li><p><strong>Reducción drástica de datos necesarios:</strong> Si se
+tienen <span class="math inline">d</span> síntomas binarios (presente o
+ausente), calcular todas sus combinaciones conjuntas sin suponer
+independencia requeriría estimar <span class="math inline">2^d -
+1</span> probabilidades distintas por categoría (por ejemplo, para <span
+class="math inline">d = 10</span> síntomas harían falta <span
+class="math inline">1023</span> combinaciones). Al asumir independencia
+condicional, basta con estimar únicamente <span
+class="math inline">d</span> probabilidades individuales <span
+class="math inline">\mathbb{P}(w_j \mid C_k)</span>, pasando de un
+crecimiento exponencial <span class="math inline">O(2^d)</span> a uno
+lineal <span class="math inline">O(d)</span>.</p></li>
+<li><p><strong>Pérdida de relación entre síntomas:</strong> El precio de
+esta simplicidad es que el modelo trata cada síntoma por separado e
+ignora si dos síntomas suelen aparecer vinculados entre sí (por ejemplo,
+en diagnóstico médico la fiebre alta y los escalofríos suelen
+presentarse juntos por un mismo mecanismo fisiológico). A pesar de esta
+simplificación, el modelo suele acertar en la clasificación final porque
+basta con que la categoría correcta acumule mayor probabilidad relativa
+que su alternativa.</p></li>
+</ul>
+<div class="callout-box example">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+    <span class="callout-title-text"><strong>Ejemplo 5:</strong> Diagnóstico Clínico
+Diferencial con Dos Síntomas Simultáneos</span>
+  </div>
+  <div class="callout-content">
+<p>En una clínica se revisa un historial de <span
+class="math inline">3000</span> consultas respiratorias compuestas por
+<span class="math inline">2000</span> casos confirmados de gripe (<span
+class="math inline">G</span>) y <span class="math inline">1000</span>
+casos de alergia estacional (<span class="math inline">A</span>). En los
+pacientes con gripe, el síntoma «fiebre alta» (<span
+class="math inline">w_1</span>) aparece en <span
+class="math inline">500</span> casos y «dolor muscular» (<span
+class="math inline">w_2</span>) en <span class="math inline">600</span>
+casos; en los pacientes con alergia, «fiebre alta» aparece en <span
+class="math inline">20</span> casos y «dolor muscular» en <span
+class="math inline">50</span> casos. Calcule la probabilidad de que un
+paciente que acude a consulta con ambos síntomas simultáneamente tenga
+gripe, asumiendo independencia condicional entre síntomas.</p>
+  </div>
+</div>
+<p>En este ejercicio aplicamos el clasificador binario Naïve Bayes a una
+situación cotidiana de diagnóstico médico con dos categorías posibles y
+dos síntomas observados al mismo tiempo. La finalidad es combinar las
+proporciones iniciales de cada afección en la clínica con las
+frecuencias individuales de cada síntoma para calcular la probabilidad
+actualizada de gripe.</p>
+<ol type="1">
+<li>Calculamos las probabilidades a priori de gripe y alergia estacional
+a partir de las frecuencias totales del historial clínico de <span
+class="math inline">N = 3000</span> pacientes.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(G) = \frac{2000}{3000} =
+\frac{2}{3}, \qquad \mathbb{P}(A) = \frac{1000}{3000} =
+\frac{1}{3}</span></p>
+<ol start="2" type="1">
+<li>Estimamos las probabilidades condicionales (verosimilitudes) de
+observar «fiebre alta» (<span class="math inline">w_1</span>) y «dolor
+muscular» (<span class="math inline">w_2</span>) dentro de cada grupo
+clínico.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(w_1 \mid G) = \frac{500}{2000}
+= 0.25, \qquad \mathbb{P}(w_2 \mid G) = \frac{600}{2000} =
+0.30</span></p>
+<p><span class="math display">\mathbb{P}(w_1 \mid A) = \frac{20}{1000} =
+0.02, \qquad \mathbb{P}(w_2 \mid A) = \frac{50}{1000} = 0.05</span></p>
+<ol start="3" type="1">
+<li>Aplicamos la hipótesis de independencia condicional multiplicando
+las verosimilitudes de ambos síntomas dentro de cada diagnóstico,
+observando que la combinación es <span class="math inline">75</span>
+veces más probable bajo gripe (<span class="math inline">0.075</span>)
+que bajo alergia (<span class="math inline">0.001</span>).</li>
+</ol>
+<p><span class="math display">\mathbb{P}(w_1, w_2 \mid G) = (0.25)(0.30)
+= 0.075, \qquad \mathbb{P}(w_1, w_2 \mid A) = (0.02)(0.05) =
+0.001</span></p>
+<ol start="4" type="1">
+<li>Sustituimos las probabilidades a priori y las verosimilitudes
+conjuntas en la fórmula de Bayes para dos categorías, obteniendo una
+probabilidad del <span class="math inline">99.34\%</span> de que el
+paciente tenga gripe.</li>
+</ol>
+<p><span class="math display">\mathbb{P}(G \mid w_1, w_2) =
+\frac{\frac{2}{3}(0.075)}{\frac{2}{3}(0.075) + \frac{1}{3}(0.001)} =
+\frac{0.05}{0.05 + \frac{0.001}{3}} = \frac{0.15}{0.151} =
+\frac{150}{151} \approx 0.9934 \quad (99.34\%)</span></p>
+<hr />
+<div class="callout-box resources">
+  <div class="callout-title">
+    <span class="callout-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="callout-icon"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+    <span class="callout-title-text">REFERENCIAS</span>
+  </div>
+  <div class="callout-content">
+<ul>
+<li><p><strong>Meyer, Paul L.</strong> <em>Probabilidad y Aplicaciones
+Estadísticas</em> (Edición revisada). Addison-Wesley
+Iberoamericana.</p></li>
+<li><p><strong>Feller, William.</strong> <em>An Introduction to
+Probability Theory and Its Applications</em>, Vol. I (3.ª ed.). John
+Wiley &amp; Sons, Inc., Nueva York, 1968. Capítulos 1, 2 y 3.</p></li>
+<li><p><strong>Riordan, John.</strong> <em>An Introduction to
+Combinatorial Analysis</em>. Dover Publications, Mineola, Nueva York,
+2002.</p></li>
+<li><p><strong>Parzen, Emanuel.</strong> <em>Modern Probability Theory
+and Its Applications</em>. John Wiley &amp; Sons, Inc., Nueva York,
+1960.</p></li>
+<li><p><strong>Lipschutz, Seymour.</strong> <em>Probabilidad</em>.
+McGraw-Hill, México, 1970.</p></li>
+<li><p><strong>Universidad Central de Venezuela (UCV), Facultad de
+Ciencias, Escuela de Computación.</strong> <em>Probabilidad y
+Estadística</em>. Caracas, Venezuela, 2023.</p></li>
+</ul>
+  </div>
+</div>
+
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-article">
+      <div>
+        <span>Druxorey &copy; 2026</span> · <span>GPL-3.0 License</span>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Sobre mí</a>
+        <a href="/projects.html">Proyectos</a>
+        <a href="/publications.html">Publicaciones</a>
+        <a href="/notes.html">Apuntes</a>
+        <a href="/contact.html">Contacto</a>
+        <a href="https://github.com/druxorey" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KaTeX Core JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+</body>
+</html>
